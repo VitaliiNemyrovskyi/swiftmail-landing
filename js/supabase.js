@@ -1,7 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
    Supabase Integration — Waitlist + Analytics
-   Replace YOUR_SUPABASE_URL and YOUR_SUPABASE_ANON_KEY
-   with your actual Supabase project credentials.
    ═══════════════════════════════════════════════════════════ */
 
 const SUPABASE_URL = 'https://umglfmgfsmujggtcxrke.supabase.co';
@@ -9,9 +7,17 @@ const SUPABASE_ANON_KEY = 'sb_publishable_GRJDeE6pVPMa0Ic_pgHH7w_xPFu9Gk0';
 
 let supabase = null;
 
-// Initialize only if keys are configured
-if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && typeof window.supabase !== 'undefined') {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Initialize Supabase client
+try {
+  const sb = window.supabase;
+  if (sb && sb.createClient) {
+    supabase = sb.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+} catch (e) {
+  console.error('[SwiftMail] Supabase init error:', e);
+}
+
+if (supabase) {
   console.log('[SwiftMail] Supabase connected');
 
   // Load real waitlist count on page load
@@ -20,13 +26,12 @@ if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && typeof window.supabase !== 'undefine
       c.dataset.target = String(count);
       c.textContent = String(count);
     });
-    // Also update "spots remaining" (500 - count)
     document.querySelectorAll('.spots-remaining').forEach((el) => {
       el.textContent = String(Math.max(0, 500 - count));
     });
   });
 } else {
-  console.log('[SwiftMail] Supabase not configured — running in demo mode');
+  console.log('[SwiftMail] Supabase not loaded — running in demo mode');
 }
 
 /**
@@ -49,7 +54,6 @@ async function submitWaitlist(email) {
   });
 
   if (error) {
-    // Unique constraint = already signed up
     if (error.code === '23505') {
       console.log('[SwiftMail] Email already on waitlist');
       return;
@@ -100,7 +104,6 @@ async function trackPageViewToSupabase() {
       user_agent: navigator.userAgent.substring(0, 500),
     });
   } catch (err) {
-    // Non-critical, silently fail
     console.error('[SwiftMail] Page view tracking error:', err);
   }
 }
