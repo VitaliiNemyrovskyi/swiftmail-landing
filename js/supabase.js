@@ -16,9 +16,13 @@ if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && typeof window.supabase !== 'undefine
 
   // Load real waitlist count on page load
   getWaitlistCount().then((count) => {
-    document.querySelectorAll('.counter[data-target]').forEach((c) => {
+    document.querySelectorAll('.counter').forEach((c) => {
       c.dataset.target = String(count);
       c.textContent = String(count);
+    });
+    // Also update "spots remaining" (500 - count)
+    document.querySelectorAll('.spots-remaining').forEach((el) => {
+      el.textContent = String(Math.max(0, 500 - count));
     });
   });
 } else {
