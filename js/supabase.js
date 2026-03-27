@@ -22,8 +22,7 @@ if (supabase) {
 
   // Load real waitlist count on page load
   getWaitlistCount().then((count) => {
-    document.querySelectorAll('.counter').forEach((c) => {
-      c.dataset.target = String(count);
+    document.querySelectorAll('.waitlist-count').forEach((c) => {
       c.textContent = String(count);
     });
     document.querySelectorAll('.spots-remaining').forEach((el) => {
