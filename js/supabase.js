@@ -66,16 +66,22 @@ async function submitWaitlist(email) {
 async function getWaitlistCount() {
   if (!supabase) return 0;
 
-  const { count, error } = await supabase
-    .from('waitlist_signups')
-    .select('*', { count: 'exact', head: true });
+  try {
+    const { data, error } = await supabase
+      .from('waitlist_signups')
+      .select('id');
 
-  if (error) {
-    console.error('[SwiftMail] Count error:', error);
+    if (error) {
+      console.error('[SwiftMail] Count error:', error);
+      return 0;
+    }
+
+    console.log('[SwiftMail] Waitlist count:', data.length);
+    return data ? data.length : 0;
+  } catch (err) {
+    console.error('[SwiftMail] Count fetch failed:', err);
     return 0;
   }
-
-  return count || 0;
 }
 
 /**
