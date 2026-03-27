@@ -23,7 +23,8 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-    body{font-family:'Inter',system-ui,sans-serif;color:#191c1e;background:#0b1325;line-height:1.6}
+    body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:#191c1e;background:#0b1325;line-height:1.6}
+    .hero-title{font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;font-size:4.25rem;font-weight:900;letter-spacing:-0.04em;line-height:1.05;color:#fff;margin-bottom:1.5rem}
     .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(11,19,37,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
     .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 6rem;position:relative;overflow:hidden;background:linear-gradient(180deg,#0b1325 0%,#131b2e 100%)}
   </style>
@@ -61,29 +62,29 @@
 
 
     <div class="hero-content">
-      <div class="hero-badge animate-in">
+      <div class="hero-badge">
         <span class="hero-badge-dot"></span>
         Coming Soon — Early Access Opening
       </div>
 
-      <h1 class="hero-title animate-in">
+      <h1 class="hero-title">
         Email Marketing<br>Built for <span class="text-gradient">Small Business.</span>
       </h1>
 
-      <p class="hero-subtitle animate-in">
+      <p class="hero-subtitle">
         Affordable. Simple. Powerful. AI handles your DNS, deliverability, and campaigns — so you can focus on growing your store. Starting from just <strong>$5/mo</strong>.
       </p>
 
-      <form class="hero-form animate-in" id="waitlist-form-hero">
+      <form class="hero-form" id="waitlist-form-hero">
         <input type="email" placeholder="Enter your email" class="hero-input" required>
         <button type="submit" class="btn btn-primary btn-glow">Join the Waitlist</button>
       </form>
 
-      <p class="hero-trust animate-in">
+      <p class="hero-trust">
         ✓ No credit card &nbsp;•&nbsp; ✓ Be first to access &nbsp;•&nbsp; ✓ Early bird pricing
       </p>
 
-      <p class="hero-counter animate-in">
+      <p class="hero-counter">
         Already <strong class="waitlist-count">0</strong> founders on the waitlist
       </p>
     </div>
