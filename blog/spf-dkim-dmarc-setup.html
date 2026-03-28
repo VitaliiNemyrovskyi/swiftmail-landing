@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Set Up SPF, DKIM, and DMARC in Under 60 Seconds — SwiftMail</title>
+  <meta name="description" content="Step-by-step guide to setting up SPF, DKIM, and DMARC email authentication. Protect your domain, improve deliverability, and stop spoofing.">
+  <meta name="keywords" content="SPF setup, DKIM setup, DMARC setup, email authentication, DNS records">
+  <link rel="canonical" href="https://swift-mail.app/blog/spf-dkim-dmarc-setup.html">
+  <meta property="og:title" content="How to Set Up SPF, DKIM, and DMARC — SwiftMail">
+  <meta property="og:description" content="Step-by-step email authentication guide for small businesses.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://swift-mail.app/blog/spf-dkim-dmarc-setup.html">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Set Up SPF, DKIM, and DMARC in Under 60 Seconds","author":{"@type":"Organization","name":"SwiftMail"},"publisher":{"@type":"Organization","name":"SwiftMail"},"datePublished":"2026-03-28","dateModified":"2026-03-28","description":"Step-by-step email authentication guide."}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>body{background:#f7f9fb;color:#191c1e}.blog-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(247,249,251,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.04)}.blog-nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:800;font-style:italic;color:#191c1e}.blog-nav-back{font-size:.875rem;color:#64748b}.blog-nav-back:hover{color:#ea580c}.blog-hero{padding:8rem 2rem 3rem;text-align:center;max-width:800px;margin:0 auto}.blog-category{font-size:.6875rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#ea580c;margin-bottom:1rem}.blog-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:2.75rem;font-weight:900;letter-spacing:-.03em;line-height:1.1;color:#191c1e;margin-bottom:1rem}.blog-meta{font-size:.875rem;color:#64748b;margin-bottom:2rem}.blog-meta span{margin:0 .5rem}.blog-content{max-width:720px;margin:0 auto;padding:0 2rem 4rem}.blog-content h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.75rem;font-weight:800;letter-spacing:-.02em;color:#191c1e;margin:3rem 0 1rem}.blog-content h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:700;color:#191c1e;margin:2rem 0 .75rem}.blog-content p{font-size:1.0625rem;line-height:1.8;color:#475569;margin-bottom:1.25rem}.blog-content ul,.blog-content ol{padding-left:1.5rem;margin-bottom:1.25rem}.blog-content li{font-size:1.0625rem;line-height:1.8;color:#475569;margin-bottom:.5rem}.blog-content strong{color:#191c1e}.blog-content a{color:#ea580c;text-decoration:underline;text-underline-offset:3px}.blog-content blockquote{border-left:3px solid #ea580c;padding:1rem 1.5rem;margin:1.5rem 0;background:#fff;border-radius:0 .5rem .5rem 0}.blog-content blockquote p{color:#64748b;font-style:italic;margin:0}.blog-content code{background:#f1f5f9;padding:.125rem .375rem;border-radius:.25rem;font-size:.9375rem}.blog-content .highlight-box{background:#0b1325;color:#dbe2fb;padding:2rem;border-radius:.75rem;margin:2rem 0}.blog-content .highlight-box h3{color:#fff;margin-top:0}.blog-content .highlight-box p{color:#94a3b8}.blog-content .highlight-box a{color:#ff8c42}.blog-cta{text-align:center;padding:3rem 2rem;margin:2rem 0;background:linear-gradient(135deg,#0b1325 0%,#1a2744 100%);border-radius:1rem}.blog-cta h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:.75rem}.blog-cta p{color:#94a3b8;margin-bottom:1.5rem;font-size:.9375rem}.blog-cta a{display:inline-block;padding:.75rem 2rem;background:linear-gradient(135deg,#ea580c,#cc4900);color:#fff;border-radius:.5rem;font-weight:600;font-size:.9375rem}.blog-footer{text-align:center;padding:2rem;color:#94a3b8;font-size:.8125rem;border-top:1px solid #e8eaef;margin-top:2rem}.blog-footer a{color:#64748b}@media(max-width:768px){.blog-title{font-size:2rem}.blog-content h2{font-size:1.375rem}}</style>
+</head>
+<body>
+  <nav class="blog-nav"><a href="/" class="blog-nav-logo">SwiftMail</a><a href="/blog/" class="blog-nav-back">← All Articles</a></nav>
+
+  <header class="blog-hero">
+    <p class="blog-category">DNS & Deliverability</p>
+    <h1 class="blog-title">How to Set Up SPF, DKIM, and DMARC in Under 60 Seconds</h1>
+    <p class="blog-meta">March 28, 2026 <span>•</span> 8 min read <span>•</span> SwiftMail Team</p>
+  </header>
+
+  <article class="blog-content">
+    <p>Email authentication is the single most important thing you can do to improve your email deliverability. Yet most small business owners skip it because it sounds too technical. <strong>SPF, DKIM, DMARC</strong> — these acronyms feel like they belong in an IT department, not on your to-do list.</p>
+
+    <p>But here's the truth: without these three records, your emails are essentially unsigned letters. Any spam filter worth its salt will treat them with suspicion. Let's break down what each one does and how to set them up.</p>
+
+    <h2>What Is SPF?</h2>
+
+    <p><strong>Sender Policy Framework (SPF)</strong> is a DNS record that tells receiving mail servers which IP addresses are authorized to send emails on behalf of your domain.</p>
+
+    <p>Think of it as a guest list for your email. When Gmail receives an email from @yourdomain.com, it checks your SPF record to see if the sending server is on the approved list.</p>
+
+    <h3>How to Set Up SPF</h3>
+    <ol>
+      <li>Log into your DNS provider (Cloudflare, Namecheap, GoDaddy, etc.)</li>
+      <li>Add a <strong>TXT record</strong> for your domain</li>
+      <li>Set the value to: <code>v=spf1 include:amazonses.com ~all</code></li>
+      <li>Replace <code>amazonses.com</code> with your email provider's domain</li>
+    </ol>
+
+    <blockquote><p>Common providers: include:amazonses.com (Amazon SES), include:_spf.google.com (Google Workspace), include:spf.protection.outlook.com (Microsoft 365)</p></blockquote>
+
+    <h2>What Is DKIM?</h2>
+
+    <p><strong>DomainKeys Identified Mail (DKIM)</strong> adds a digital signature to every email you send. The receiving server can verify that the email wasn't tampered with during transit.</p>
+
+    <p>It's like a wax seal on a letter — it proves the email is authentic and unmodified.</p>
+
+    <h3>How to Set Up DKIM</h3>
+    <ol>
+      <li>Your email provider generates a public/private key pair</li>
+      <li>Add the public key as a <strong>TXT record</strong> in your DNS</li>
+      <li>The record name is usually something like <code>selector._domainkey.yourdomain.com</code></li>
+      <li>Your provider automatically signs outgoing emails with the private key</li>
+    </ol>
+
+    <h2>What Is DMARC?</h2>
+
+    <p><strong>Domain-based Message Authentication, Reporting, and Conformance (DMARC)</strong> builds on SPF and DKIM. It tells receiving servers what to do when authentication fails and provides reporting.</p>
+
+    <h3>How to Set Up DMARC</h3>
+    <ol>
+      <li>Add a <strong>TXT record</strong> for <code>_dmarc.yourdomain.com</code></li>
+      <li>Start with a monitoring-only policy: <code>v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com</code></li>
+      <li>After 2-4 weeks of monitoring, upgrade to <code>p=quarantine</code></li>
+      <li>Eventually move to <code>p=reject</code> for maximum protection</li>
+    </ol>
+
+    <h2>Common Mistakes to Avoid</h2>
+
+    <ul>
+      <li><strong>Multiple SPF records</strong> — you can only have ONE SPF TXT record per domain. Combine all includes into one record.</li>
+      <li><strong>Starting DMARC with p=reject</strong> — always start with <code>p=none</code> to monitor first, or you'll block legitimate emails.</li>
+      <li><strong>Forgetting subdomains</strong> — if you send from mail.yourdomain.com, you need records for that subdomain too.</li>
+      <li><strong>Not monitoring DMARC reports</strong> — the reports tell you if someone is spoofing your domain.</li>
+      <li><strong>SPF lookup limit</strong> — SPF allows max 10 DNS lookups. Too many <code>include:</code> statements will break it.</li>
+    </ul>
+
+    <h2>Why All Three Matter</h2>
+
+    <p>Since February 2024, Gmail and Yahoo <strong>require</strong> all three protocols for bulk senders (5,000+ emails/day). Even if you send fewer emails, having all three dramatically improves your inbox placement rate.</p>
+
+    <p>Here's what happens without them:</p>
+
+    <ul>
+      <li><strong>No SPF</strong> — emails may be rejected or marked as spam</li>
+      <li><strong>No DKIM</strong> — emails can't be verified as authentic</li>
+      <li><strong>No DMARC</strong> — anyone can spoof your domain</li>
+    </ul>
+
+    <div class="highlight-box">
+      <h3>Skip the DNS hassle entirely</h3>
+      <p>SwiftMail automatically discovers your domain's DNS records, identifies what's missing, and configures SPF, DKIM, and DMARC for you — in under 45 seconds. No DNS knowledge required.</p>
+      <p><a href="/#waitlist">Join the waitlist →</a></p>
+    </div>
+
+    <h2>Verification: How to Check Your Setup</h2>
+
+    <p>After adding your records, verify them:</p>
+
+    <ul>
+      <li>Use <code>dig TXT yourdomain.com</code> in terminal to check SPF</li>
+      <li>Use <code>dig TXT selector._domainkey.yourdomain.com</code> for DKIM</li>
+      <li>Use <code>dig TXT _dmarc.yourdomain.com</code> for DMARC</li>
+      <li>Or use free online tools like MXToolbox or Mail-Tester</li>
+    </ul>
+
+    <p>DNS changes can take up to 48 hours to propagate, though most providers update within minutes.</p>
+
+    <div class="blog-cta">
+      <h3>Automated email authentication for $5/mo</h3>
+      <p>SwiftMail handles SPF, DKIM, DMARC, warm-up, and spam scoring — all automatically.</p>
+      <a href="/#waitlist">Join the Waitlist</a>
+    </div>
+
+    <h2>Next Steps</h2>
+
+    <p>Once your authentication is set up, you'll want to:</p>
+    <ul>
+      <li><a href="email-warmup-explained.html">Warm up your email domain</a> to build sender reputation</li>
+      <li><a href="email-spam-score.html">Check your spam score</a> before sending campaigns</li>
+      <li>Read our complete <a href="email-deliverability-guide.html">email deliverability guide</a></li>
+    </ul>
+  </article>
+
+  <footer class="blog-footer"><p>© 2026 SwiftMail. <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p></footer>
+</body>
+</html>

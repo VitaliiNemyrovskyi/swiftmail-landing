@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Deliverability Guide 2026: Everything Small Businesses Need to Know — SwiftMail</title>
+  <meta name="description" content="Learn how to ensure your marketing emails reach the inbox. Complete guide to SPF, DKIM, DMARC, sender reputation, and deliverability best practices for small businesses.">
+  <meta name="keywords" content="email deliverability, inbox placement, sender reputation, SPF, DKIM, DMARC, small business email">
+  <link rel="canonical" href="https://swift-mail.app/blog/email-deliverability-guide.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Email Deliverability Guide 2026 — SwiftMail">
+  <meta property="og:description" content="Everything small businesses need to know about email deliverability. SPF, DKIM, DMARC, warm-up, and inbox placement.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://swift-mail.app/blog/email-deliverability-guide.html">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Email Deliverability Guide 2026: Everything Small Businesses Need to Know",
+    "author": {"@type": "Organization", "name": "SwiftMail"},
+    "publisher": {"@type": "Organization", "name": "SwiftMail"},
+    "datePublished": "2026-03-28",
+    "dateModified": "2026-03-28",
+    "description": "Complete guide to email deliverability for small businesses."
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body { background: #f7f9fb; color: #191c1e; }
+
+    .blog-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(247,249,251,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(0,0,0,0.04); }
+    .blog-nav-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 800; font-style: italic; color: #191c1e; }
+    .blog-nav-back { font-size: 0.875rem; color: #64748b; }
+    .blog-nav-back:hover { color: #ea580c; }
+
+    .blog-hero { padding: 8rem 2rem 3rem; text-align: center; max-width: 800px; margin: 0 auto; }
+    .blog-category { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #ea580c; margin-bottom: 1rem; }
+    .blog-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.75rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; color: #191c1e; margin-bottom: 1rem; }
+    .blog-meta { font-size: 0.875rem; color: #64748b; margin-bottom: 2rem; }
+    .blog-meta span { margin: 0 0.5rem; }
+
+    .blog-content { max-width: 720px; margin: 0 auto; padding: 0 2rem 4rem; }
+    .blog-content h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: #191c1e; margin: 3rem 0 1rem; }
+    .blog-content h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 700; color: #191c1e; margin: 2rem 0 0.75rem; }
+    .blog-content p { font-size: 1.0625rem; line-height: 1.8; color: #475569; margin-bottom: 1.25rem; }
+    .blog-content ul, .blog-content ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .blog-content li { font-size: 1.0625rem; line-height: 1.8; color: #475569; margin-bottom: 0.5rem; }
+    .blog-content strong { color: #191c1e; }
+    .blog-content a { color: #ea580c; text-decoration: underline; text-underline-offset: 3px; }
+    .blog-content blockquote { border-left: 3px solid #ea580c; padding: 1rem 1.5rem; margin: 1.5rem 0; background: #fff; border-radius: 0 0.5rem 0.5rem 0; }
+    .blog-content blockquote p { color: #64748b; font-style: italic; margin: 0; }
+    .blog-content code { background: #f1f5f9; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.9375rem; }
+    .blog-content .highlight-box { background: #0b1325; color: #dbe2fb; padding: 2rem; border-radius: 0.75rem; margin: 2rem 0; }
+    .blog-content .highlight-box h3 { color: #fff; margin-top: 0; }
+    .blog-content .highlight-box p { color: #94a3b8; }
+    .blog-content .highlight-box a { color: #ff8c42; }
+
+    .blog-cta { text-align: center; padding: 3rem 2rem; margin: 2rem 0; background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%); border-radius: 1rem; }
+    .blog-cta h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 0.75rem; }
+    .blog-cta p { color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.9375rem; }
+    .blog-cta a { display: inline-block; padding: 0.75rem 2rem; background: linear-gradient(135deg, #ea580c, #cc4900); color: #fff; border-radius: 0.5rem; font-weight: 600; font-size: 0.9375rem; }
+    .blog-cta a:hover { text-decoration: none; transform: translateY(-1px); }
+
+    .blog-footer { text-align: center; padding: 2rem; color: #94a3b8; font-size: 0.8125rem; border-top: 1px solid #e8eaef; margin-top: 2rem; }
+    .blog-footer a { color: #64748b; }
+
+    @media (max-width: 768px) {
+      .blog-title { font-size: 2rem; }
+      .blog-content h2 { font-size: 1.375rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="blog-nav">
+    <a href="/" class="blog-nav-logo">SwiftMail</a>
+    <a href="/" class="blog-nav-back">← Back to Home</a>
+  </nav>
+
+  <header class="blog-hero">
+    <p class="blog-category">Email Deliverability</p>
+    <h1 class="blog-title">Email Deliverability Guide 2026: Everything Small Businesses Need to Know</h1>
+    <p class="blog-meta">March 28, 2026 <span>•</span> 12 min read <span>•</span> SwiftMail Team</p>
+  </header>
+
+  <article class="blog-content">
+    <p>If you're a small business owner sending marketing emails, there's a harsh reality you need to face: <strong>up to 20% of legitimate emails never reach the inbox</strong>. They end up in spam folders, get blocked by ISPs, or simply vanish into the void.</p>
+
+    <p>Email deliverability isn't just a technical problem — it's a revenue problem. Every email that doesn't reach your customer is a lost sale, a missed connection, and wasted effort.</p>
+
+    <p>This guide covers everything you need to know to ensure your emails actually land where they're supposed to.</p>
+
+    <h2>What Is Email Deliverability?</h2>
+
+    <p>Email deliverability is the ability of your emails to reach your recipients' inboxes. It's different from email delivery, which simply means the email was accepted by the receiving server (it could still end up in spam).</p>
+
+    <p>Think of it this way:</p>
+    <ul>
+      <li><strong>Email delivery</strong> = your package was accepted at the post office</li>
+      <li><strong>Email deliverability</strong> = your package actually reached the person's mailbox</li>
+    </ul>
+
+    <h2>Why Do Emails Go to Spam?</h2>
+
+    <p>There are several reasons your carefully crafted emails might end up in the spam folder:</p>
+
+    <h3>1. Missing or Incorrect DNS Records</h3>
+    <p>SPF, DKIM, and DMARC records tell email providers that you're authorized to send emails from your domain. Without them, you're essentially sending unsigned mail — and providers treat that as suspicious.</p>
+
+    <h3>2. Poor Sender Reputation</h3>
+    <p>Every email sender has a reputation score. If you've been sending to invalid addresses, getting marked as spam, or sending too many emails too quickly, your reputation suffers.</p>
+
+    <h3>3. Spammy Content</h3>
+    <p>Certain words, excessive capitalization, too many images, and suspicious links can trigger spam filters. Even well-intentioned emails can be flagged if the content isn't optimized.</p>
+
+    <h3>4. No Email Warm-up</h3>
+    <p>New domains and IP addresses have no reputation. If you start sending thousands of emails from day one, email providers will flag you immediately.</p>
+
+    <h3>5. High Bounce Rate</h3>
+    <p>If a significant portion of your emails bounce (invalid addresses), it signals to providers that you're not maintaining a clean list.</p>
+
+    <h2>The Three Pillars of Email Authentication</h2>
+
+    <p>Email authentication is the foundation of deliverability. There are three protocols you need to set up:</p>
+
+    <h3>SPF (Sender Policy Framework)</h3>
+    <p>SPF tells receiving servers which mail servers are authorized to send emails on behalf of your domain. It's a DNS TXT record that lists approved IP addresses.</p>
+
+    <blockquote>
+      <p>Example: v=spf1 include:amazonses.com ~all</p>
+    </blockquote>
+
+    <h3>DKIM (DomainKeys Identified Mail)</h3>
+    <p>DKIM adds a digital signature to your emails. The receiving server can verify that the email wasn't tampered with in transit and actually came from your domain.</p>
+
+    <h3>DMARC (Domain-based Message Authentication)</h3>
+    <p>DMARC builds on SPF and DKIM by telling receiving servers what to do when authentication fails. It also provides reporting so you can monitor authentication results.</p>
+
+    <blockquote>
+      <p>Example: v=DMARC1; p=quarantine; rua=mailto:dmarc@yourdomain.com; pct=100</p>
+    </blockquote>
+
+    <div class="highlight-box">
+      <h3>The SwiftMail Difference</h3>
+      <p>Most email platforms require you to manually configure SPF, DKIM, and DMARC — a process that typically takes 3-5 days and requires DNS knowledge. <strong>SwiftMail discovers and configures all three automatically in under 45 seconds.</strong> No technical knowledge required.</p>
+      <p><a href="/#waitlist">Join the waitlist →</a></p>
+    </div>
+
+    <h2>Email Warm-up: Building Your Reputation</h2>
+
+    <p>When you start sending emails from a new domain or IP address, you need to gradually increase your sending volume. This process is called warm-up.</p>
+
+    <p>Here's a typical warm-up schedule:</p>
+
+    <ol>
+      <li><strong>Days 1-3:</strong> 50-100 emails per day</li>
+      <li><strong>Days 4-7:</strong> 200-400 emails per day</li>
+      <li><strong>Days 8-14:</strong> 800-2,000 emails per day</li>
+      <li><strong>Days 15-21:</strong> 5,000-10,000 emails per day</li>
+      <li><strong>Day 22+:</strong> Full volume</li>
+    </ol>
+
+    <p>During warm-up, monitor your bounce rate closely. If it exceeds 5%, pause and investigate.</p>
+
+    <h2>Spam Score: Pre-Send Checking</h2>
+
+    <p>Before sending any campaign, you should check your spam score. A good spam score considers:</p>
+
+    <ul>
+      <li><strong>Technical factors</strong> (25 points): SPF, DKIM, DMARC, and blacklist status</li>
+      <li><strong>Content quality</strong> (25 points): Stop words, capitalization, AI analysis</li>
+      <li><strong>Structure</strong> (20 points): Text-to-image ratio (aim for 60%+ text)</li>
+      <li><strong>Links</strong> (15 points): No URL shorteners, clean domains</li>
+      <li><strong>Compliance</strong> (15 points): Unsubscribe link, physical address</li>
+    </ul>
+
+    <p><strong>Best practice:</strong> Don't send campaigns with a spam score below 75 out of 100.</p>
+
+    <h2>List Hygiene: Keep It Clean</h2>
+
+    <p>Your email list quality directly impacts deliverability. Follow these practices:</p>
+
+    <ul>
+      <li><strong>Use double opt-in</strong> — confirm subscribers actually want your emails</li>
+      <li><strong>Remove bounced addresses</strong> — clean your list after every campaign</li>
+      <li><strong>Re-engage or remove inactive subscribers</strong> — if someone hasn't opened in 90 days, try a win-back campaign or remove them</li>
+      <li><strong>Never buy email lists</strong> — purchased lists destroy your reputation</li>
+      <li><strong>Monitor complaint rates</strong> — keep below 0.1%</li>
+    </ul>
+
+    <h2>Compliance: CAN-SPAM and GDPR</h2>
+
+    <p>Every marketing email must include:</p>
+
+    <ul>
+      <li>A clear <strong>unsubscribe link</strong> (one-click, honored within 48 hours)</li>
+      <li>Your <strong>physical mailing address</strong></li>
+      <li>An accurate <strong>"From" name and address</strong></li>
+      <li>No <strong>deceptive subject lines</strong></li>
+    </ul>
+
+    <p>For GDPR (if you have EU customers): obtain explicit consent, document it, and provide easy data access/deletion.</p>
+
+    <h2>Key Metrics to Monitor</h2>
+
+    <ul>
+      <li><strong>Inbox placement rate</strong> — aim for 95%+</li>
+      <li><strong>Open rate</strong> — industry average 20-25%</li>
+      <li><strong>Click rate</strong> — industry average 2-5%</li>
+      <li><strong>Bounce rate</strong> — keep below 2%</li>
+      <li><strong>Spam complaint rate</strong> — keep below 0.1%</li>
+      <li><strong>Unsubscribe rate</strong> — keep below 0.5%</li>
+    </ul>
+
+    <h2>Checklist: Email Deliverability Setup</h2>
+
+    <ol>
+      <li>✅ Set up SPF record</li>
+      <li>✅ Set up DKIM signing</li>
+      <li>✅ Configure DMARC policy</li>
+      <li>✅ Start email warm-up</li>
+      <li>✅ Clean your email list</li>
+      <li>✅ Enable double opt-in</li>
+      <li>✅ Check spam score before sending</li>
+      <li>✅ Include unsubscribe link</li>
+      <li>✅ Add physical address to footer</li>
+      <li>✅ Monitor bounce and complaint rates</li>
+    </ol>
+
+    <div class="blog-cta">
+      <h3>Skip the manual setup. Let AI handle it.</h3>
+      <p>SwiftMail configures SPF, DKIM, DMARC, and warm-up automatically. Starting at $5/mo.</p>
+      <a href="/#waitlist">Join the Waitlist</a>
+    </div>
+
+    <h2>Conclusion</h2>
+
+    <p>Email deliverability isn't optional — it's the difference between your marketing working and your marketing being invisible. By setting up proper authentication, warming up your domain, maintaining a clean list, and checking your spam score before every send, you can achieve 95%+ inbox placement.</p>
+
+    <p>The good news? You don't have to do all of this manually. Modern tools can automate DNS setup, warm-up scheduling, and spam scoring — so you can focus on writing great emails instead of fighting with technical configuration.</p>
+  </article>
+
+  <footer class="blog-footer">
+    <p>© 2026 SwiftMail. <a href="/">Home</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p>
+  </footer>
+
+</body>
+</html>
