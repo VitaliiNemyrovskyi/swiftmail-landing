@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Your Emails Go to Spam (And How to Fix It) — SwiftMail</title>
+  <meta name="description" content="10 reasons your emails land in spam folders and specific fixes for each. Diagnostic steps, prevention checklist, and tools to improve inbox placement.">
+  <meta name="keywords" content="emails going to spam, fix spam, email not delivered, spam folder, inbox placement">
+  <link rel="canonical" href="https://swift-mail.app/blog/emails-going-to-spam.html">
+  <meta property="og:title" content="Why Your Emails Go to Spam — SwiftMail">
+  <meta property="og:description" content="10 common reasons and specific fixes to get out of the spam folder.">
+  <meta property="og:type" content="article">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Why Your Emails Go to Spam (And How to Fix It)","author":{"@type":"Organization","name":"SwiftMail"},"publisher":{"@type":"Organization","name":"SwiftMail"},"datePublished":"2026-03-28","dateModified":"2026-03-28"}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>body{background:#f7f9fb;color:#191c1e}.blog-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(247,249,251,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.04)}.blog-nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:800;font-style:italic;color:#191c1e}.blog-nav-back{font-size:.875rem;color:#64748b}.blog-nav-back:hover{color:#ea580c}.blog-hero{padding:8rem 2rem 3rem;text-align:center;max-width:800px;margin:0 auto}.blog-category{font-size:.6875rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#ea580c;margin-bottom:1rem}.blog-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:2.75rem;font-weight:900;letter-spacing:-.03em;line-height:1.1;color:#191c1e;margin-bottom:1rem}.blog-meta{font-size:.875rem;color:#64748b;margin-bottom:2rem}.blog-meta span{margin:0 .5rem}.blog-content{max-width:720px;margin:0 auto;padding:0 2rem 4rem}.blog-content h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.75rem;font-weight:800;letter-spacing:-.02em;color:#191c1e;margin:3rem 0 1rem}.blog-content h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:700;color:#191c1e;margin:2rem 0 .75rem}.blog-content p{font-size:1.0625rem;line-height:1.8;color:#475569;margin-bottom:1.25rem}.blog-content ul,.blog-content ol{padding-left:1.5rem;margin-bottom:1.25rem}.blog-content li{font-size:1.0625rem;line-height:1.8;color:#475569;margin-bottom:.5rem}.blog-content strong{color:#191c1e}.blog-content a{color:#ea580c;text-decoration:underline;text-underline-offset:3px}.blog-content blockquote{border-left:3px solid #ea580c;padding:1rem 1.5rem;margin:1.5rem 0;background:#fff;border-radius:0 .5rem .5rem 0}.blog-content blockquote p{color:#64748b;font-style:italic;margin:0}.blog-content .highlight-box{background:#0b1325;color:#dbe2fb;padding:2rem;border-radius:.75rem;margin:2rem 0}.blog-content .highlight-box h3{color:#fff;margin-top:0}.blog-content .highlight-box p{color:#94a3b8}.blog-content .highlight-box a{color:#ff8c42}.blog-cta{text-align:center;padding:3rem 2rem;margin:2rem 0;background:linear-gradient(135deg,#0b1325 0%,#1a2744 100%);border-radius:1rem}.blog-cta h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:.75rem}.blog-cta p{color:#94a3b8;margin-bottom:1.5rem;font-size:.9375rem}.blog-cta a{display:inline-block;padding:.75rem 2rem;background:linear-gradient(135deg,#ea580c,#cc4900);color:#fff;border-radius:.5rem;font-weight:600;font-size:.9375rem}.blog-footer{text-align:center;padding:2rem;color:#94a3b8;font-size:.8125rem;border-top:1px solid #e8eaef;margin-top:2rem}.blog-footer a{color:#64748b}@media(max-width:768px){.blog-title{font-size:2rem}.blog-content h2{font-size:1.375rem}}</style>
+</head>
+<body>
+  <nav class="blog-nav"><a href="/" class="blog-nav-logo">SwiftMail</a><a href="/blog/" class="blog-nav-back">← All Articles</a></nav>
+
+  <header class="blog-hero">
+    <p class="blog-category">Troubleshooting</p>
+    <h1 class="blog-title">Why Your Emails Go to Spam (And How to Fix It)</h1>
+    <p class="blog-meta">March 28, 2026 <span>•</span> 10 min read <span>•</span> SwiftMail Team</p>
+  </header>
+
+  <article class="blog-content">
+    <p>You've checked your sent folder — the email was sent successfully. But your customers aren't opening, clicking, or buying. The reason? <strong>Your emails are sitting in their spam folders</strong>, invisible and unread.</p>
+
+    <p>Here are the 10 most common reasons emails go to spam and exactly how to fix each one.</p>
+
+    <h2>1. Missing Email Authentication</h2>
+    <p><strong>The problem:</strong> Without SPF, DKIM, and DMARC records, email providers can't verify you're a legitimate sender.</p>
+    <p><strong>The fix:</strong> Set up all three DNS records. Our <a href="spf-dkim-dmarc-setup.html">SPF, DKIM, DMARC setup guide</a> walks you through it step by step.</p>
+
+    <h2>2. No Email Warm-up</h2>
+    <p><strong>The problem:</strong> Sending thousands of emails from a new domain or IP immediately triggers spam filters.</p>
+    <p><strong>The fix:</strong> Gradually increase sending volume over 2-3 weeks. Read our <a href="email-warmup-explained.html">email warm-up guide</a> for the exact schedule.</p>
+
+    <h2>3. Poor List Hygiene</h2>
+    <p><strong>The problem:</strong> Sending to invalid, old, or purchased email addresses causes high bounce rates, which destroys sender reputation.</p>
+    <p><strong>The fix:</strong></p>
+    <ul>
+      <li>Never buy email lists — ever</li>
+      <li>Remove hard bounces after every campaign</li>
+      <li>Re-confirm subscribers who haven't engaged in 90+ days</li>
+      <li>Use double opt-in for new subscribers</li>
+    </ul>
+
+    <h2>4. Spammy Subject Lines</h2>
+    <p><strong>The problem:</strong> Subject lines with ALL CAPS, excessive punctuation (!!!), or trigger phrases get flagged.</p>
+    <p><strong>The fix:</strong></p>
+    <ul>
+      <li>Write naturally — as if texting a friend</li>
+      <li>Avoid: "FREE!!!", "ACT NOW", "URGENT", "You've won!"</li>
+      <li>Keep subject lines under 60 characters</li>
+      <li>Be honest — match the subject to the content</li>
+    </ul>
+
+    <h2>5. Image-Heavy Emails</h2>
+    <p><strong>The problem:</strong> Emails that are mostly images with little text look like spam to filters. Some spam filters can't read image text at all.</p>
+    <p><strong>The fix:</strong> Maintain at least 60% text to 40% images ratio. Always include alt text on every image. Never send a single-image email.</p>
+
+    <h2>6. URL Shorteners</h2>
+    <p><strong>The problem:</strong> Links through bit.ly, tinyurl.com, or similar services are associated with phishing because they hide the real destination.</p>
+    <p><strong>The fix:</strong> Always use full URLs to your own domain. If you need tracking, use your email platform's built-in link tracking (which uses your own domain).</p>
+
+    <h2>7. High Complaint Rate</h2>
+    <p><strong>The problem:</strong> When recipients click "Report Spam" in their email client, it directly impacts your sender reputation. Above 0.1% is concerning; above 0.3% is critical.</p>
+    <p><strong>The fix:</strong></p>
+    <ul>
+      <li>Make unsubscribe easy and visible — one click</li>
+      <li>Only email people who explicitly opted in</li>
+      <li>Don't email too frequently — 1-2x per week maximum</li>
+      <li>Send relevant, valuable content — not just promotions</li>
+    </ul>
+
+    <h2>8. Blacklisted IP or Domain</h2>
+    <p><strong>The problem:</strong> Your sending IP or domain has been added to a blocklist (Spamhaus, Barracuda, etc.) due to past spam activity.</p>
+    <p><strong>The fix:</strong></p>
+    <ul>
+      <li>Check your status at mxtoolbox.com/blacklists.aspx</li>
+      <li>Request delisting from each blacklist (follow their process)</li>
+      <li>Fix the underlying issue that caused the listing</li>
+      <li>Consider switching to a clean IP through a reputable email provider</li>
+    </ul>
+
+    <h2>9. No Unsubscribe Link</h2>
+    <p><strong>The problem:</strong> Since February 2024, Gmail and Yahoo require one-click unsubscribe for all marketing emails. Missing it = spam.</p>
+    <p><strong>The fix:</strong> Include a clear, working unsubscribe link in every marketing email. Put it in the footer and make it visible — don't hide it in tiny gray text.</p>
+
+    <h2>10. Inconsistent Sending</h2>
+    <p><strong>The problem:</strong> Sending nothing for months, then blasting 10,000 emails looks exactly like a compromised account or spammer.</p>
+    <p><strong>The fix:</strong> Send on a regular schedule — weekly or biweekly. Consistency builds reputation. If you've been inactive for 30+ days, do a mini warm-up before resuming full volume.</p>
+
+    <div class="highlight-box">
+      <h3>SwiftMail prevents spam problems automatically</h3>
+      <p>Auto DNS setup, built-in warm-up, pre-send spam scoring, bounce monitoring, and complaint tracking — all handled for you. Focus on writing great emails, not fighting spam filters.</p>
+      <p><a href="/#waitlist">Join the waitlist →</a></p>
+    </div>
+
+    <h2>Diagnostic Checklist</h2>
+    <p>If your emails are going to spam right now, work through this list in order:</p>
+    <ol>
+      <li>✅ Check SPF, DKIM, DMARC records (use MXToolbox)</li>
+      <li>✅ Check if your domain/IP is blacklisted</li>
+      <li>✅ Review your bounce rate (should be under 2%)</li>
+      <li>✅ Check your complaint rate (should be under 0.1%)</li>
+      <li>✅ <a href="email-spam-score.html">Run a spam score check</a> on your last email</li>
+      <li>✅ Verify unsubscribe link works</li>
+      <li>✅ Check text-to-image ratio</li>
+      <li>✅ Remove URL shorteners</li>
+      <li>✅ Clean your list — remove bounces and inactive subscribers</li>
+      <li>✅ Start a warm-up if you've been inactive</li>
+    </ol>
+
+    <div class="blog-cta">
+      <h3>Stop fighting spam filters</h3>
+      <p>SwiftMail handles deliverability automatically. DNS, warm-up, spam scoring, list cleaning — all built in from $5/mo.</p>
+      <a href="/#waitlist">Join the Waitlist</a>
+    </div>
+
+    <h2>Related Articles</h2>
+    <ul>
+      <li><a href="email-deliverability-guide.html">Complete Email Deliverability Guide</a></li>
+      <li><a href="spf-dkim-dmarc-setup.html">How to Set Up SPF, DKIM, and DMARC</a></li>
+      <li><a href="email-warmup-explained.html">Email Warm-up Explained</a></li>
+      <li><a href="email-spam-score.html">How to Check Your Spam Score</a></li>
+    </ul>
+  </article>
+
+  <footer class="blog-footer"><p>© 2026 SwiftMail. <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p></footer>
+</body>
+</html>
