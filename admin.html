@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Dashboard — SwiftMail</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #0b1325;
+      --dark2: #131b2e;
+      --orange: #ea580c;
+      --green: #22c55e;
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+      --white: #ffffff;
+      --text: #dbe2fb;
+      --muted: #94a3b8;
+      --surface: #1a2744;
+      --border: rgba(255,255,255,0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); min-height: 100vh; }
+
+    /* Nav */
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 800; font-style: italic; color: var(--white); }
+    .nav-title { font-size: 0.8125rem; color: var(--muted); }
+    .nav-refresh { background: none; border: 1px solid var(--border); color: var(--muted); padding: 0.375rem 0.75rem; border-radius: 0.375rem; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 0.375rem; }
+    .nav-refresh:hover { color: var(--white); border-color: rgba(255,255,255,0.15); }
+
+    /* Layout */
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+    /* Stats cards */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--dark2); border-radius: 0.75rem; padding: 1.5rem; border: 1px solid var(--border); }
+    .stat-card-label { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .stat-card-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.5rem; font-weight: 900; color: var(--white); line-height: 1; }
+    .stat-card-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.375rem; }
+    .stat-card-value--orange { color: var(--orange); }
+    .stat-card-value--green { color: var(--green); }
+    .stat-card-value--blue { color: var(--blue); }
+
+    /* Charts grid */
+    .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .chart-card { background: var(--dark2); border-radius: 0.75rem; padding: 1.5rem; border: 1px solid var(--border); }
+    .chart-card--full { grid-column: 1 / -1; }
+    .chart-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: 1.25rem; }
+
+    /* Bar chart */
+    .bar-chart { display: flex; flex-direction: column; gap: 0.625rem; }
+    .bar-row { display: flex; align-items: center; gap: 0.75rem; }
+    .bar-label { font-size: 0.75rem; color: var(--muted); min-width: 80px; text-align: right; }
+    .bar-track { flex: 1; height: 28px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden; position: relative; }
+    .bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; display: flex; align-items: center; padding-left: 0.5rem; }
+    .bar-fill span { font-size: 0.6875rem; font-weight: 700; color: var(--white); }
+    .bar-fill--orange { background: var(--orange); }
+    .bar-fill--blue { background: var(--blue); }
+    .bar-fill--green { background: var(--green); }
+    .bar-fill--purple { background: var(--purple); }
+
+    /* Table */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th { text-align: left; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+    .data-table td { font-size: 0.875rem; color: var(--text); padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .data-table .email { font-weight: 600; color: var(--white); }
+    .data-table .date { color: var(--muted); font-size: 0.8125rem; }
+    .data-table .tag { display: inline-block; font-size: 0.625rem; font-weight: 700; padding: 0.125rem 0.5rem; border-radius: 9999px; background: rgba(234,88,12,0.15); color: var(--orange); }
+
+    /* Loading */
+    .loading { text-align: center; padding: 3rem; color: var(--muted); }
+    .spin { animation: spin 1s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Empty */
+    .empty { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.875rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .charts-row { grid-template-columns: 1fr; }
+      .stat-card-value { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Auth gate -->
+  <div id="auth-gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center">
+    <div style="text-align:center;max-width:360px;width:100%;padding:0 2rem">
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:0.375rem">SwiftMail</p>
+      <p style="font-size:0.8125rem;color:#94a3b8;margin-bottom:2rem">Analytics Dashboard</p>
+      <input type="email" id="auth-email" placeholder="Email" style="width:100%;padding:0.75rem 1rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:0.5rem;color:#fff;font-size:0.9375rem;outline:none;margin-bottom:0.625rem" autofocus>
+      <input type="password" id="auth-password" placeholder="Password" style="width:100%;padding:0.75rem 1rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:0.5rem;color:#fff;font-size:0.9375rem;outline:none;margin-bottom:0.75rem">
+      <button id="auth-btn" onclick="tryLogin()" style="width:100%;padding:0.75rem;background:linear-gradient(135deg,#ea580c,#cc4900);color:#fff;border:none;border-radius:0.5rem;font-weight:600;font-size:0.875rem;cursor:pointer">Sign In</button>
+      <p id="auth-error" style="color:#ef4444;font-size:0.8125rem;margin-top:0.75rem;display:none"></p>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>
+  <script>
+    const sb = window.supabase.createClient(
+      'https://umglfmgfsmujggtcxrke.supabase.co',
+      'sb_publishable_GRJDeE6pVPMa0Ic_pgHH7w_xPFu9Gk0'
+    );
+
+    async function tryLogin() {
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value;
+      const errEl = document.getElementById('auth-error');
+      const btn = document.getElementById('auth-btn');
+
+      if (!email || !password) { errEl.textContent = 'Enter email and password'; errEl.style.display = 'block'; return; }
+
+      btn.textContent = 'Signing in...';
+      btn.disabled = true;
+      errEl.style.display = 'none';
+
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        errEl.textContent = error.message;
+        errEl.style.display = 'block';
+        btn.textContent = 'Sign In';
+        btn.disabled = false;
+        return;
+      }
+
+      showDashboard();
+    }
+
+    document.getElementById('auth-password').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+
+    function showDashboard() {
+      document.getElementById('auth-gate').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadAll();
+    }
+
+    // Check existing session
+    sb.auth.getSession().then(({ data }) => {
+      if (data.session) showDashboard();
+    });
+  </script>
+
+  <div id="dashboard" style="display:none">
+  <nav class="nav">
+    <div style="display:flex;align-items:center;gap:1rem">
+      <a href="/" class="nav-logo">SwiftMail</a>
+      <span class="nav-title">Analytics Dashboard</span>
+    </div>
+    <button class="nav-refresh" onclick="loadAll()">
+      <span class="material-symbols-outlined" style="font-size:16px">refresh</span>
+      Refresh
+    </button>
+  </nav>
+
+  <div class="container">
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <p class="stat-card-label">Waitlist Signups</p>
+        <p class="stat-card-value stat-card-value--orange" id="total-signups">—</p>
+        <p class="stat-card-sub">Total registered</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card-label">Page Views</p>
+        <p class="stat-card-value stat-card-value--blue" id="total-views">—</p>
+        <p class="stat-card-sub">All time</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card-label">Conversion Rate</p>
+        <p class="stat-card-value stat-card-value--green" id="conversion">—</p>
+        <p class="stat-card-sub">Signups / Views</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card-label">Spots Remaining</p>
+        <p class="stat-card-value" id="spots">—</p>
+        <p class="stat-card-sub">Out of 500 early bird</p>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <h3 class="chart-title">Signups by Day</h3>
+        <div id="signups-chart" class="bar-chart"><div class="loading"><span class="spin">⟳</span> Loading...</div></div>
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">Views by Day</h3>
+        <div id="views-chart" class="bar-chart"><div class="loading"><span class="spin">⟳</span> Loading...</div></div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <h3 class="chart-title">Top UTM Sources</h3>
+        <div id="utm-chart" class="bar-chart"><div class="loading"><span class="spin">⟳</span> Loading...</div></div>
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">Top Referrers</h3>
+        <div id="referrer-chart" class="bar-chart"><div class="loading"><span class="spin">⟳</span> Loading...</div></div>
+      </div>
+    </div>
+
+    <!-- Signups table -->
+    <div class="chart-card chart-card--full" style="margin-bottom:2rem">
+      <h3 class="chart-title">Recent Signups</h3>
+      <div id="signups-table"><div class="loading"><span class="spin">⟳</span> Loading...</div></div>
+    </div>
+  </div>
+
+  <script>
+    async function loadAll() {
+      const [signups, views] = await Promise.all([
+        sb.from('waitlist_signups').select('*').order('created_at', { ascending: false }),
+        sb.from('page_views').select('*').order('created_at', { ascending: false }),
+      ]);
+
+      const s = signups.data || [];
+      const v = views.data || [];
+
+      // Stats
+      document.getElementById('total-signups').textContent = s.length;
+      document.getElementById('total-views').textContent = v.length;
+      document.getElementById('conversion').textContent = v.length > 0 ? (s.length / v.length * 100).toFixed(1) + '%' : '—';
+      document.getElementById('spots').textContent = Math.max(0, 500 - s.length);
+
+      // Signups by day
+      renderDayChart('signups-chart', s, 'orange');
+
+      // Views by day
+      renderDayChart('views-chart', v, 'blue');
+
+      // UTM sources
+      renderGroupChart('utm-chart', s, 'utm_source', 'green');
+
+      // Referrers
+      renderGroupChart('referrer-chart', v, 'referrer', 'purple');
+
+      // Table
+      renderTable(s);
+    }
+
+    function renderDayChart(id, data, color) {
+      const el = document.getElementById(id);
+      if (data.length === 0) { el.innerHTML = '<div class="empty">No data yet</div>'; return; }
+
+      const days = {};
+      data.forEach(r => {
+        const day = r.created_at.substring(0, 10);
+        days[day] = (days[day] || 0) + 1;
+      });
+
+      const sorted = Object.entries(days).sort((a, b) => a[0].localeCompare(b[0])).slice(-14);
+      const max = Math.max(...sorted.map(([, c]) => c));
+
+      el.innerHTML = sorted.map(([day, count]) => `
+        <div class="bar-row">
+          <span class="bar-label">${day.substring(5)}</span>
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--${color}" style="width:${(count/max*100)}%">
+              <span>${count}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderGroupChart(id, data, field, color) {
+      const el = document.getElementById(id);
+      const groups = {};
+      data.forEach(r => {
+        const val = r[field] || '(direct)';
+        if (val === '(direct)' && field === 'referrer') return;
+        groups[val] = (groups[val] || 0) + 1;
+      });
+
+      const sorted = Object.entries(groups).sort((a, b) => b[1] - a[1]).slice(0, 8);
+      if (sorted.length === 0) { el.innerHTML = '<div class="empty">No data yet</div>'; return; }
+      const max = sorted[0][1];
+
+      el.innerHTML = sorted.map(([name, count]) => `
+        <div class="bar-row">
+          <span class="bar-label" title="${name}">${name.length > 12 ? name.substring(0, 12) + '…' : name}</span>
+          <div class="bar-track">
+            <div class="bar-fill bar-fill--${color}" style="width:${(count/max*100)}%">
+              <span>${count}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderTable(data) {
+      const el = document.getElementById('signups-table');
+      if (data.length === 0) { el.innerHTML = '<div class="empty">No signups yet</div>'; return; }
+
+      el.innerHTML = `
+        <table class="data-table">
+          <thead><tr><th>Email</th><th>Source</th><th>Referrer</th><th>Date</th></tr></thead>
+          <tbody>
+            ${data.map(r => `
+              <tr>
+                <td class="email">${r.email}</td>
+                <td>${r.utm_source ? '<span class="tag">' + r.utm_source + '</span>' : '—'}</td>
+                <td class="date">${r.referrer ? r.referrer.replace(/https?:\/\//, '').substring(0, 30) : '(direct)'}</td>
+                <td class="date">${new Date(r.created_at).toLocaleString()}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    loadAll();
+  </script>
+  </div>
+</body>
+</html>
