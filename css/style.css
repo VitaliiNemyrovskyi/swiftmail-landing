@@ -192,7 +192,7 @@ img { max-width: 100%; display: block; }
 .feature-card p { color: var(--text-muted-light); font-size: 0.9375rem; line-height: 1.5; }
 
 /* ── Persona ──────────────────────────────────────────── */
-.persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.persona-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 .persona-card {
   background: var(--gray); border-radius: 1rem; padding: 2.5rem 2rem; text-align: center;
   transition: transform 0.3s;
@@ -201,6 +201,54 @@ img { max-width: 100%; display: block; }
 .persona-icon { font-size: 2.5rem; color: var(--orange); margin-bottom: 1rem; display: block; }
 .persona-card h3 { font-family: var(--font-heading); font-size: 1.125rem; font-weight: 800; margin-bottom: 0.5rem; }
 .persona-card p { color: var(--text-muted-light); font-size: 0.9375rem; }
+
+/* ── BYOI Section ────────────────────────────────────── */
+.byoi-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+}
+.byoi-text h3 {
+  font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800;
+  margin-bottom: 1rem; color: var(--text-light);
+}
+.byoi-text p { color: var(--text-muted-light); font-size: 0.9375rem; line-height: 1.65; margin-bottom: 1rem; }
+.byoi-highlight { font-weight: 600; color: var(--orange); }
+.byoi-compare {
+  background: var(--white); border-radius: 1rem; padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.byoi-compare-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 0; border-bottom: 1px solid #f0f0f5;
+}
+.byoi-compare-row:last-child { border-bottom: none; }
+.byoi-compare-label { font-size: 0.875rem; color: var(--text-muted-light); }
+.byoi-compare-value { font-family: var(--font-heading); font-weight: 800; font-size: 1.25rem; }
+.byoi-compare-value.expensive { color: #94a3b8; text-decoration: line-through; }
+.byoi-compare-value.savings { color: #22c55e; }
+.byoi-compare-footer {
+  margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid var(--orange);
+  text-align: center;
+}
+.byoi-compare-footer .savings-amount {
+  font-family: var(--font-heading); font-size: 2rem; font-weight: 900; color: var(--orange);
+}
+.byoi-compare-footer p { font-size: 0.8125rem; color: var(--text-muted-light); margin-top: 0.25rem; }
+
+/* ── Social Proof Section ────────────────────────────── */
+.proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+.proof-card {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--ghost-border);
+  border-radius: 1rem; padding: 2rem; position: relative;
+}
+.proof-card::before {
+  content: '"'; position: absolute; top: 1rem; left: 1.5rem;
+  font-family: var(--font-heading); font-size: 3rem; color: var(--orange); opacity: 0.3; line-height: 1;
+}
+.proof-quote {
+  font-size: 1rem; color: var(--text-dark); line-height: 1.6;
+  margin-bottom: 1rem; padding-top: 1.5rem; font-style: italic;
+}
+.proof-author { font-size: 0.8125rem; color: var(--text-muted-dark); }
 
 /* ── Stats ────────────────────────────────────────────── */
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; margin-bottom: 2rem; }
@@ -225,7 +273,7 @@ img { max-width: 100%; display: block; }
 .faq-answer {
   max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;
 }
-.faq-item.open .faq-answer { max-height: 200px; padding-bottom: 1.5rem; }
+.faq-item.open .faq-answer { max-height: 300px; padding-bottom: 1.5rem; }
 .faq-answer p { color: var(--text-muted-light); font-size: 0.9375rem; line-height: 1.65; }
 
 /* ── CTA Section ──────────────────────────────────────── */
@@ -259,7 +307,9 @@ img { max-width: 100%; display: block; }
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero-title { font-size: 3.25rem; }
-  .comparison-grid, .features-grid, .persona-grid { grid-template-columns: repeat(2, 1fr); }
+  .comparison-grid, .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .byoi-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .proof-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 3rem; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
@@ -273,6 +323,8 @@ img { max-width: 100%; display: block; }
   .hero-form { flex-direction: column; }
   .hero-input { width: 100%; }
   .comparison-grid, .features-grid, .persona-grid { grid-template-columns: 1fr; }
+  .byoi-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .proof-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .stat-value { font-size: 2.5rem; }
   .cta-title { font-size: 2rem; }
