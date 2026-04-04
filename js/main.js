@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFAQ();
   initForms();
   initCounters();
+  initLangSwitcher();
   trackPageView();
 });
 
@@ -223,6 +224,20 @@ function getUTMParams() {
     utm_medium: params.get('utm_medium') || null,
     utm_campaign: params.get('utm_campaign') || null,
   };
+}
+
+/* ── Language Switcher ─────────────────────────────────── */
+function initLangSwitcher() {
+  const switcher = document.getElementById('lang-switcher');
+  if (!switcher) return;
+  const btn = switcher.querySelector('.lang-btn');
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    switcher.classList.toggle('open');
+  });
+  document.addEventListener('click', function() {
+    switcher.classList.remove('open');
+  });
 }
 
 /* ── Page View Tracking ────────────────────────────────── */
