@@ -12,18 +12,18 @@ const headers = {
   'Prefer': 'return=minimal'
 };
 
-// Load waitlist count on init
-getWaitlistCount().then(function(count) {
-  document.querySelectorAll('.waitlist-count').forEach(function(c) {
-    c.textContent = String(count);
+// Load waitlist count + track page view after DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+  getWaitlistCount().then(function(count) {
+    document.querySelectorAll('.waitlist-count').forEach(function(c) {
+      c.textContent = String(count);
+    });
+    document.querySelectorAll('.spots-remaining').forEach(function(el) {
+      el.textContent = String(Math.max(0, 500 - count));
+    });
   });
-  document.querySelectorAll('.spots-remaining').forEach(function(el) {
-    el.textContent = String(Math.max(0, 500 - count));
-  });
+  trackPageViewToSupabase();
 });
-
-// Track page view
-trackPageViewToSupabase();
 
 /**
  * Submit email to waitlist
