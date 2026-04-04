@@ -576,18 +576,6 @@
 
   <!-- Scripts (deferred) -->
   <script src="js/main.js" defer></script>
-  <script>
-    // Lazy load Supabase after page renders
-    window.addEventListener('load', function() {
-      var s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js';
-      s.onload = function() {
-        var sc = document.createElement('script');
-        sc.src = 'js/supabase.js';
-        document.body.appendChild(sc);
-      };
-      document.body.appendChild(s);
-    });
-  </script>
+  <script src="js/supabase.js" defer></script>
 </body>
 </html>
