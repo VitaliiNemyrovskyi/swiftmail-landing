@@ -28,11 +28,9 @@
   <meta name="twitter:title" content="SwiftMail — Email marketing z AI od $5/mo">
   <meta name="twitter:description" content="Automatyczna konfiguracja DNS, doktor dostarczalności i kampanie — stworzone dla małych firm.">
 
-  <!-- Fonts (preconnect + deferred with swap) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" as="style" onload="this.rel='stylesheet'">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <!-- Fonts (self-hosted) -->
+  <link rel="preload" href="../fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Critical CSS inline (navbar + hero) — eliminates render-blocking + CLS -->
   <style>
@@ -155,6 +153,7 @@
   </script>
 
   <!-- Non-critical CSS (deferred) -->
+  <link rel="stylesheet" href="../css/fonts.css">
   <link rel="stylesheet" href="../css/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"></noscript>
@@ -174,7 +173,7 @@
       <div class="lang-switcher" id="lang-switcher">
         <button class="lang-btn" aria-label="Language">
           <span class="lang-current">PL</span>
-          <span class="material-symbols-outlined" translate="no lang-arrow">expand_more</span>
+          <svg class="lang-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </button>
         <div class="lang-dropdown">
           <a href="/" class="lang-option">English</a>
@@ -256,7 +255,7 @@
 
         <div class="comparison-row animate-in">
           <div class="comparison-col comparison-col--feature">
-            <span class="material-symbols-outlined" translate="no comparison-row-icon">payments</span>
+            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
             <span>Cena początkowa</span>
           </div>
           <div class="comparison-col comparison-col--them">
@@ -270,7 +269,7 @@
 
         <div class="comparison-row animate-in">
           <div class="comparison-col comparison-col--feature">
-            <span class="material-symbols-outlined" translate="no comparison-row-icon">speed</span>
+            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0 9 9 0 1 0-18 0"/><path d="M12 7v5l3 3"/></svg>
             <span>Konfiguracja DNS i e-mail</span>
           </div>
           <div class="comparison-col comparison-col--them">
@@ -284,7 +283,7 @@
 
         <div class="comparison-row animate-in">
           <div class="comparison-col comparison-col--feature">
-            <span class="material-symbols-outlined" translate="no comparison-row-icon">mail</span>
+            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             <span>Limity e-maili</span>
           </div>
           <div class="comparison-col comparison-col--them">
@@ -297,7 +296,7 @@
 
         <div class="comparison-row animate-in">
           <div class="comparison-col comparison-col--feature">
-            <span class="material-symbols-outlined" translate="no comparison-row-icon">security</span>
+            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
             <span>Ochrona przed spamem</span>
           </div>
           <div class="comparison-col comparison-col--them">
@@ -311,7 +310,7 @@
 
         <div class="comparison-row animate-in">
           <div class="comparison-col comparison-col--feature">
-            <span class="material-symbols-outlined" translate="no comparison-row-icon">rocket_launch</span>
+            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
             <span>Rozgrzewka e-mail</span>
           </div>
           <div class="comparison-col comparison-col--them">
@@ -334,32 +333,32 @@
 
       <div class="features-grid">
         <div class="feature-card animate-in">
-          <span class="material-symbols-outlined" translate="no feature-icon">auto_fix_high</span>
+          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.287 1.288L3 12l5.8 1.9a2 2 0 0 1 1.288 1.288L12 21l1.9-5.8a2 2 0 0 1 1.287-1.288L21 12l-5.8-1.9a2 2 0 0 1-1.288-1.288Z"/></svg>
           <h3>Analiza marki z AI</h3>
           <p>Wklej swój URL. Automatycznie wyodrębniamy kolory, czcionki i logo.</p>
         </div>
         <div class="feature-card animate-in">
-          <span class="material-symbols-outlined" translate="no feature-icon">route</span>
+          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
           <h3>Wizualny kreator przepływów</h3>
           <p>Kreator automatyzacji typu przeciągnij i upuść. Wyzwalacze, warunki, opóźnienia. Bez kodowania.</p>
         </div>
         <div class="feature-card animate-in">
-          <span class="material-symbols-outlined" translate="no feature-icon">shopping_cart</span>
+          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           <h3>Integracja z Shopify</h3>
           <p>Połączenie jednym kliknięciem. Klienci i zamówienia synchronizowane w czasie rzeczywistym.</p>
         </div>
         <div class="feature-card animate-in">
-          <span class="material-symbols-outlined" translate="no feature-icon">shield</span>
+          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <h3>Automatyczna konfiguracja DNS</h3>
           <p>SPF, DKIM, DMARC skonfigurowane w kilka sekund. Nie potrzeba umiejętności technicznych.</p>
         </div>
         <div class="feature-card animate-in">
-          <span class="material-symbols-outlined" translate="no feature-icon">local_fire_department</span>
+          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
           <h3>Rozgrzewka e-mail</h3>
           <p>Automatyczne budowanie reputacji. Inteligentne ograniczanie zapobiega blokadom.</p>
         </div>
         <div class="feature-card animate-in">
-          <span class="material-symbols-outlined" translate="no feature-icon">inbox</span>
+          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
           <h3>Ochrona przed spamem</h3>
           <p>AI ocenia każdy e-mail przed wysłaniem. Blokuje kampanie poniżej 75/100.</p>
         </div>
@@ -375,17 +374,17 @@
 
       <div class="persona-grid">
         <div class="persona-card animate-in">
-          <span class="material-symbols-outlined" translate="no persona-icon">store</span>
+          <svg class="persona-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>
           <h3>Właściciele lokalnych firm</h3>
           <p>Restauracje, butiki, konsultanci i firmy usługowe. Wysyłaj piękne e-maile bez żadnej konfiguracji technicznej.</p>
         </div>
         <div class="persona-card animate-in">
-          <span class="material-symbols-outlined" translate="no persona-icon">storefront</span>
+          <svg class="persona-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
           <h3>Właściciele sklepów Shopify</h3>
           <p>Synchronizuj klientów, automatyzuj przepływy po zakupie, odzyskuj porzucone koszyki.</p>
         </div>
         <div class="persona-card animate-in">
-          <span class="material-symbols-outlined" translate="no persona-icon">groups</span>
+          <svg class="persona-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <h3>Małe zespoły marketingowe</h3>
           <p>Jedna osoba może zrobić to, co kiedyś wymagało agencji marketingowej.</p>
         </div>
@@ -429,7 +428,7 @@
         <div class="faq-item animate-in">
           <button class="faq-question" aria-expanded="false">
             <span>Kiedy SwiftMail zostanie uruchomiony?</span>
-            <span class="material-symbols-outlined" translate="no faq-icon">expand_more</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
             <p>Jesteśmy w zamkniętej becie. Dołącz do listy oczekujących, aby uzyskać wczesny dostęp i zamrożoną cenę na zawsze.</p>
@@ -438,7 +437,7 @@
         <div class="faq-item animate-in">
           <button class="faq-question" aria-expanded="false">
             <span>Ile to będzie kosztować?</span>
-            <span class="material-symbols-outlined" translate="no faq-icon">expand_more</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
             <p>Plany zaczynają się od $5/mo. Wszystkie plany obejmują nieograniczone wysyłanie. Pierwszych 500 osób z listy oczekujących otrzyma zamrożoną cenę na zawsze.</p>
@@ -447,7 +446,7 @@
         <div class="faq-item animate-in">
           <button class="faq-question" aria-expanded="false">
             <span>Czy potrzebuję wiedzy technicznej?</span>
-            <span class="material-symbols-outlined" translate="no faq-icon">expand_more</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
             <p>Nie. Nasze AI zajmuje się konfiguracją DNS, rozgrzewką e-maili i analizą marki automatycznie. Jeśli potrafisz kliknąć przycisk, możesz używać SwiftMail.</p>
@@ -456,7 +455,7 @@
         <div class="faq-item animate-in">
           <button class="faq-question" aria-expanded="false">
             <span>Czy działa z Shopify?</span>
-            <span class="material-symbols-outlined" translate="no faq-icon">expand_more</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
             <p>Tak. Integracja jednym kliknięciem przez OAuth synchronizuje klientów, zamówienia i produkty w czasie rzeczywistym.</p>
@@ -465,7 +464,7 @@
         <div class="faq-item animate-in">
           <button class="faq-question" aria-expanded="false">
             <span>Czym różni się od innych platform?</span>
-            <span class="material-symbols-outlined" translate="no faq-icon">expand_more</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
             <p>SwiftMail oferuje bezobsługowe wdrożenie z AI (wklej swój URL i przygotuj pierwszą kampanię w 5 minut), wbudowanego Doktora Dostarczalności, który automatycznie diagnozuje i naprawia problemy z dostarczaniem e-maili, oraz nieograniczone wysyłanie we wszystkich planach — już od $5/mo.</p>
@@ -474,7 +473,7 @@
         <div class="faq-item animate-in">
           <button class="faq-question" aria-expanded="false">
             <span>Czy mogę przenieść się z innej platformy e-mail?</span>
-            <span class="material-symbols-outlined" translate="no faq-icon">expand_more</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
             <p>Tak. SwiftMail obsługuje import jednym kliknięciem kontaktów, szablonów i przepływów automatyzacji z dowolnej platformy e-mail. Większość migracji zajmuje mniej niż 5 minut.</p>
@@ -483,7 +482,7 @@
         <div class="faq-item animate-in">
           <button class="faq-question" aria-expanded="false">
             <span>Jak działa Doktor Dostarczalności?</span>
-            <span class="material-symbols-outlined" translate="no faq-icon">expand_more</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
             <p>Doktor Dostarczalności to system AI, który automatycznie konfiguruje SPF, DKIM i DMARC dla Twojej domeny, ocenia każdą wiadomość przed wysłaniem, aby zapobiec oznaczeniom jako spam, i stale monitoruje reputację nadawcy. Wyłapuje problemy zanim wpłyną na współczynnik dostarczania do skrzynki odbiorczej.</p>
@@ -570,7 +569,7 @@
 
   <!-- Form success overlay -->
   <div class="toast" id="toast">
-    <span class="material-symbols-outlined" translate="no">check_circle</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
     <span>Jesteś na liście! Powiadomimy Cię, gdy wystartujemy.</span>
   </div>
 
