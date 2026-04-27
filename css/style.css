@@ -276,6 +276,8 @@ img { max-width: 100%; display: block; }
 .footer-col a { display: block; font-size: 0.875rem; color: var(--text-muted-dark); margin-bottom: 0.625rem; transition: color 0.2s; }
 .footer-col a:hover { color: var(--white); }
 .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--ghost-border); font-size: 0.8125rem; }
+.footer-legal { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-muted); }
+.footer-legal a { color: var(--text-muted); text-decoration: underline; }
 
 /* ── Toast ─────────────────────────────────────────────── */
 .toast {
