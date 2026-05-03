@@ -192,7 +192,7 @@
         "name": "What behavioral signals does SwiftMail track?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Page views, clicks, scroll depth (per section), form-field focus and abandonment, rage clicks (3+ clicks within 1 second on the same element), dead clicks, runtime errors, fetch failures, time on page, session duration, exit intent, and conversions. Plus standard email opens and clicks. Web SDK is ~4.4KB gzipped, async-loaded, mask-by-default for privacy."
+          "text": "Page views, clicks, scroll depth (per section), form-field focus and abandonment, rage clicks (3+ clicks within 1 second on the same element), dead clicks, runtime errors, fetch failures, time on page, session duration, exit intent, and conversions. Plus standard email opens and clicks. The browser script is tiny (~4KB), loads in the background, and masks form values by default for privacy."
         }
       },
       {
@@ -200,7 +200,7 @@
         "name": "How does the AI 'why' explanation work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Every session is analyzed by AI after it ends. The model reads the full event timeline and produces a structured reason. Abandoned sessions resolve to one of seven reasons (PRICE_HESITATION, FORM_FRICTION, TRUST_CONCERN, COMPARISON_SHOPPING, DISTRACTION, TECHNICAL_FAILURE, UNKNOWN). Converted sessions resolve to one of six (VALUE_FIT, URGENCY, SOCIAL_PROOF, CLEAR_CTA, RETURNING_INTENT, RECOMMENDATION_MATCH). Each reason ships with a narrative paragraph and suggested action."
+          "text": "After each session ends, AI reads the full event timeline and tells you in plain language what was actually going on. Did the visitor hesitate on price? Get stuck on a broken form? Get distracted? Lose trust at checkout? Or convert because of urgency, social proof, or a clear path? You see the reason in one sentence, plus a narrative paragraph that explains it and a suggested next step (send a discount, fix the bug, queue a recovery email). Auto-runs hourly; instant on demand."
         }
       },
       {
@@ -208,7 +208,7 @@
         "name": "Which channels can trigger from a behavior?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Eight channels available from any behavior signal: email, SMS, web push, mobile push (APNs/FCM), on-site popup, retargeting audience sync (Meta + Google), CRM task (Slack/HubSpot), and arbitrary webhook. All wired through the same Flow Builder."
+          "text": "Eight channels available from any behavior signal: email, SMS, web push, mobile push (iOS + Android), on-site popup, retargeting audiences (Meta + Google), CRM task (Slack + HubSpot), and webhooks for everything else. All wired through the same flow builder."
         }
       },
       {
@@ -428,7 +428,13 @@
     .footer-col a { display: block; padding: 0.375rem 0; font-size: 0.875rem; color: var(--text-muted-dark); transition: color 0.15s; }
     .footer-col a:hover { color: var(--white); }
     .footer-bottom { padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.8125rem; color: var(--text-muted-dark); display: flex; flex-direction: column; gap: 0.5rem; }
-    .footer-legal { font-size: 0.75rem; line-height: 1.6; opacity: 0.7; }
+    .legal-details { font-size: 0.8125rem; }
+    .legal-details summary { cursor: pointer; color: var(--text-muted-dark); display: inline-flex; align-items: center; gap: 4px; padding: 4px 0; list-style: none; user-select: none; transition: color 0.15s; }
+    .legal-details summary::-webkit-details-marker { display: none; }
+    .legal-details summary::before { content: '▸'; font-size: 0.7rem; transition: transform 0.2s; opacity: 0.6; }
+    .legal-details[open] summary::before { transform: rotate(90deg); }
+    .legal-details summary:hover { color: var(--white); }
+    .footer-legal { font-size: 0.75rem; line-height: 1.6; opacity: 0.7; margin-top: 0.5rem; }
     @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 
     /* Toast */
@@ -555,7 +561,7 @@
           <span class="feature-headline-em">Even the angry ones.</span>
         </h2>
         <p class="feature-body">
-          Twelve behavioral signals out of the box — page views, clicks, scroll depth, form-field focus, form abandonment, <strong>rage clicks</strong>, dead clicks, runtime errors, fetch failures, time on page, exit intent, conversions. One snippet, ~4.4KB gzipped, async-loaded, mask-by-default for privacy. Drop it on your site. Done. No tag manager, no developer ticket, no consent dance.
+          Twelve behavioral signals out of the box — page views, clicks, scroll depth, form-field focus, form abandonment, <strong>rage clicks</strong>, dead clicks, runtime errors, failed network calls, time on page, exit intent, and conversions. One tiny snippet (~4KB, loads in the background) — form values masked by default for privacy. No tag manager, no developer ticket, no consent dance with three vendors. Drop it on your site. Done.
         </p>
       </div>
       <figure class="feature-demo animate-in">
@@ -578,7 +584,7 @@
           <span class="feature-headline-em">Understand <em>why</em>.</span>
         </h2>
         <p class="feature-body">
-          Every session gets analyzed by AI that reads the full event timeline and produces a structured reason. Abandoned sessions resolve to one of seven reasons: <strong>PRICE_HESITATION</strong>, <strong>FORM_FRICTION</strong>, <strong>TRUST_CONCERN</strong>, <strong>COMPARISON_SHOPPING</strong>, <strong>DISTRACTION</strong>, <strong>TECHNICAL_FAILURE</strong>, or <strong>UNKNOWN</strong>. Converted ones resolve to one of six. Each reason ships with a narrative paragraph and a suggested action.
+          After each session ends, AI reads the full event timeline and tells you what was actually going on — in plain language. Was the visitor <strong>hesitating on price</strong>? Did they hit a <strong>broken form</strong>? Were they <strong>comparison shopping</strong> in another tab? Did they <strong>lose trust</strong> at checkout? Or convert because of <strong>urgency</strong>, <strong>social proof</strong>, or a <strong>clear CTA</strong>? You see the reason in one sentence, a narrative paragraph that explains it, and a suggested next step (send a discount, fix the bug, queue a recovery email).
         </p>
       </div>
       <figure class="feature-demo animate-in">
@@ -587,7 +593,7 @@
         </video>
         <div class="feature-demo-frame"></div>
       </figure>
-      <p class="feature-caption animate-in">AI reads the timeline, resolves to PRICE_HESITATION (87% confidence), and suggests a recovery action.</p>
+      <p class="feature-caption animate-in">AI reads the timeline, identifies it as price hesitation (87% confidence), and suggests sending a discount code.</p>
     </div>
   </section>
 
@@ -687,7 +693,7 @@
           <span class="feature-headline-em">Sync starts in 30 seconds.</span>
         </h2>
         <p class="feature-body">
-          One-click OAuth with <strong>Shopify, WooCommerce, BigCommerce</strong>. Customers, orders, products, and the full catalog sync in real time. Behavioral signals stamp the platform's customer ID at ingest, so cross-device journeys stitch correctly without merchants writing theme code or installing tag-manager scripts. Catalog-aware segments unlock per-SKU cohort reports and <strong>BACK_IN_STOCK</strong> + <strong>PRICE_DROP</strong> triggers that fan out to email, SMS, and push automatically. Migration from any major platform usually completes in under 5 minutes — contacts, segments, templates, and flows all carry over.
+          One-click OAuth with <strong>Shopify, WooCommerce, BigCommerce</strong>. Customers, orders, products, and the full catalog sync in real time. When a shopper logs in on their phone after browsing on desktop, SwiftMail still recognizes them — no theme tinkering, no tag manager required. Catalog-aware segments unlock per-product cohort reports, <strong>back-in-stock alerts</strong>, and <strong>price-drop notifications</strong> that fan out to email, SMS, and push automatically — without you wiring up a single integration. Migration from any major platform usually completes in under 5 minutes; contacts, segments, templates, and automation flows all carry over.
         </p>
       </div>
       <figure class="demo-css animate-in" style="background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%);">
@@ -943,7 +949,7 @@
             <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
-            <p>Page views, clicks, scroll depth (per section), form-field focus and abandonment, rage clicks (3+ clicks within 1 second on the same element), dead clicks, runtime errors, fetch failures, time on page, session duration, exit intent, and conversions. Plus standard email opens and clicks. Web SDK is ~4.4KB gzipped, async-loaded, mask-by-default for privacy.</p>
+            <p>Page views, clicks, scroll depth (per section), form-field focus and abandonment, rage clicks (3+ clicks within 1 second on the same element), dead clicks, runtime errors, fetch failures, time on page, session duration, exit intent, and conversions. Plus standard email opens and clicks. The browser script is tiny (~4KB), loads in the background, and masks form values by default for privacy.</p>
           </div>
         </div>
 
@@ -953,7 +959,7 @@
             <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
-            <p>Every session is analyzed by AI after it ends. The model reads the full event timeline and produces a structured explanation. Abandoned sessions get one of: <code>PRICE_HESITATION</code>, <code>FORM_FRICTION</code>, <code>TRUST_CONCERN</code>, <code>COMPARISON_SHOPPING</code>, <code>DISTRACTION</code>, <code>TECHNICAL_FAILURE</code>. Converted sessions: <code>VALUE_FIT</code>, <code>URGENCY</code>, <code>SOCIAL_PROOF</code>, <code>CLEAR_CTA</code>, <code>RETURNING_INTENT</code>, <code>RECOMMENDATION_MATCH</code>. Plus a narrative and suggested actions.</p>
+            <p>After each session ends, AI reads the full event timeline — every click, scroll, hesitation, and error — and tells you in plain language what was actually going on. Did the visitor hesitate on price? Get stuck on a broken form? Lose trust at checkout? Get distracted? Or convert because of urgency, social proof, or a clear path? You see the reason in one sentence, plus a narrative paragraph and a suggested next step. Auto-runs hourly; instant on demand.</p>
           </div>
         </div>
 
@@ -963,7 +969,7 @@
             <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
-            <p>Eight channels available from any behavior signal: email, SMS, web push, mobile push (APNs/FCM), on-site popup, retargeting audience sync (Meta + Google), CRM task (Slack/HubSpot), and arbitrary webhook. All wired through the same Flow Builder.</p>
+            <p>Eight channels available from any behavior signal: email, SMS, web push, mobile push (iOS + Android), on-site popup, retargeting audiences (Meta + Google), CRM task (Slack + HubSpot), and webhooks for everything else. All wired through the same flow builder.</p>
           </div>
         </div>
 
@@ -983,7 +989,7 @@
             <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
-            <p>Median end-to-end latency from signal-detected to action-fired is around 500ms; p99 stays under 1 second. The pipeline runs through Redis Streams + BullMQ — when a visitor hovers exit on your pricing page, the popup is on screen before they actually click away. 24-hour cooldowns per (visitor, flow) prevent flow storms on viral pages.</p>
+            <p>From the moment SwiftMail spots a behavior signal, it takes about half a second to fire the action — almost always under one second, even on busy days. When a visitor hovers exit on your pricing page, the popup is on screen before they click away. Each visitor is also rate-limited per flow (24-hour cooldown), so a viral page won't spam the same recovery email five times.</p>
           </div>
         </div>
 
@@ -993,7 +999,7 @@
             <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
-            <p>Native one-click OAuth for <strong>Shopify, WooCommerce, and BigCommerce</strong>. REST API + webhooks for everything else. Customers, orders, products, and full catalog sync in real time. Catalog-aware features (PRICE_DROP and BACK_IN_STOCK triggers, per-SKU cohort reports) work across all supported platforms.</p>
+            <p>Native one-click connection for <strong>Shopify, WooCommerce, and BigCommerce</strong>. REST API + webhooks for everything else. Customers, orders, products, and full catalog sync in real time. Catalog-aware features (price-drop and back-in-stock alerts, per-product cohort reports) work across all supported platforms.</p>
           </div>
         </div>
 
@@ -1057,11 +1063,14 @@
       </div>
       <div class="footer-bottom">
         <span>© 2026 SwiftMail. All rights reserved.</span>
-        <div class="footer-legal">
-          <span>Operated by: ФОП Немировський Іван Віталійович · Tax ID: 3860905274</span><br>
-          <span>Registered address: Україна, 23700, Вінницька обл., Гайсинський р-н, місто Гайсин, вул.Гайдара, будинок 4</span><br>
-          <span>Contact: <a href="tel:+380932637515">+38 (093) 263-75-15</a> · <a href="mailto:support@swift-mail.app">support@swift-mail.app</a></span>
-        </div>
+        <details class="legal-details">
+          <summary>Contact details</summary>
+          <div class="footer-legal">
+            <span>Operated by: ФОП Немировський Іван Віталійович · Tax ID: 3860905274</span><br>
+            <span>Registered address: Україна, 23700, Вінницька обл., Гайсинський р-н, місто Гайсин, вул.Гайдара, будинок 4</span><br>
+            <span>Contact: <a href="tel:+380932637515">+38 (093) 263-75-15</a> · <a href="mailto:support@swift-mail.app">support@swift-mail.app</a></span>
+          </div>
+        </details>
       </div>
     </div>
   </footer>

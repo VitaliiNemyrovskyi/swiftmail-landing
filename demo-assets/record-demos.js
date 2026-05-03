@@ -118,7 +118,7 @@ async function feature2(page) {
   // Type narrative
   await page.evaluate(() => window.setCaption('…and resolves to a structured reason'));
   await page.evaluate(() => window.aiTypeNarrative(
-    "The visitor lingered on the product page, applied a discount code that silently failed, and rage-clicked the submit button before bouncing. This pattern matches PRICE_HESITATION — visitors looking for a deal who hit friction at the discount step.",
+    "The visitor lingered on the product page, applied a discount code that silently failed, and rage-clicked the submit button before bouncing. They were looking for a deal and hit friction at the discount step — a classic price-hesitation pattern.",
     16
   ));
   await sleep(800);
