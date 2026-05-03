@@ -11,8 +11,8 @@
     sm('init', 'pk_live_bea0d715ec2ca156ebe31e205c5364fc', { siteId: '2cff4622-a98a-455f-85c5-db0f3f827b25' });
   </script>
   <script src="https://app.swift-mail.app/sdk/sm.js" async></script>
-  <title>SwiftMail — Open Beta · See why visitors leave, then bring them back</title>
-  <meta name="description" content="SwiftMail captures the signals every other tool misses — rage clicks, hesitation, form drops — explains why each visitor abandoned, and triggers email/SMS/push/popup automatically. Open beta: 100 testers, free 6 months.">
+  <title>SwiftMail — Convert More Visitors with AI Marketing Automation</title>
+  <meta name="description" content="AI marketing automation that captures the signals every other tool misses — rage clicks, hesitation, form drops — explains why each visitor abandoned, and triggers email/SMS/push/popup automatically. Open beta: 100 testers, free 6 months.">
   <link rel="canonical" href="https://swift-mail.app/">
   <link rel="alternate" hreflang="en" href="https://swift-mail.app/">
   <link rel="alternate" hreflang="es" href="https://swift-mail.app/es/">
@@ -27,14 +27,14 @@
   <link rel="alternate" hreflang="x-default" href="https://swift-mail.app/">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="SwiftMail — Open Beta · See why visitors leave, then bring them back">
-  <meta property="og:description" content="Capture rage clicks, hesitation, and form drops. AI explains why visitors abandon. Trigger email, SMS, push, or popup automatically. Open beta: 100 testers, 6 months free.">
+  <meta property="og:title" content="SwiftMail — Convert More Visitors with AI Marketing Automation">
+  <meta property="og:description" content="AI marketing automation that captures rage clicks, hesitation, and form drops. AI explains why visitors leave, then triggers email/SMS/push/popup automatically. Open beta: 100 testers, 6 months free.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://swift-mail.app/">
   <meta property="og:site_name" content="SwiftMail">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SwiftMail — Open Beta · See why visitors leave">
-  <meta name="twitter:description" content="Capture rage clicks. AI explains the why. Trigger email/SMS/push/popup automatically. Open beta: 100 testers, 6 months free.">
+  <meta name="twitter:title" content="SwiftMail — Convert More Visitors with AI Marketing Automation">
+  <meta name="twitter:description" content="AI marketing automation built around behavior. Captures the signals other tools miss, AI explains the why, triggers email/SMS/push/popup. Open beta: 100 testers, 6 months free.">
 
   <!-- Fonts (self-hosted) -->
   <link rel="preload" href="fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -260,13 +260,72 @@
     .section-dark .pair-body { color: var(--text-muted-dark); }
     .section-light .pair-body { color: var(--light-muted); }
 
-    /* THE PROBLEM section */
-    .problem-illustration { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 900px; margin: 3rem auto 0; }
-    .problem-frame { background: var(--light-card); border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); border: 1px solid var(--border-light); }
-    .problem-frame-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-    .problem-frame-title { font: 700 1rem var(--font-heading); margin-bottom: 0.5rem; color: var(--light-text); }
-    .problem-frame-text { font-size: 0.9375rem; color: var(--light-muted); line-height: 1.5; }
-    @media (max-width: 768px) { .problem-illustration { grid-template-columns: 1fr; } }
+    /* THE PROBLEM — animated browser scene */
+    .problem-scene { max-width: 720px; margin: 3rem auto 0; position: relative; }
+    .ps-browser { background: #fff; border-radius: 12px; box-shadow: 0 24px 64px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.04); overflow: hidden; aspect-ratio: 16/10; position: relative; border: 1px solid var(--border-light); }
+    .ps-browser-bar { background: #f3f4f6; padding: 8px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border-light); }
+    .ps-bar-dot { width: 9px; height: 9px; border-radius: 50%; background: #d4d4d4; flex-shrink: 0; }
+    .ps-bar-dot:nth-child(1) { background: #ff5f57; }
+    .ps-bar-dot:nth-child(2) { background: #febc2e; }
+    .ps-bar-dot:nth-child(3) { background: #28c840; }
+    .ps-bar-url { background: #fff; flex: 1; padding: 4px 12px; border-radius: 4px; font: 11px/1 'SF Mono', Monaco, monospace; color: #6b7280; margin-left: 6px; }
+    .ps-browser-content { padding: 24px 28px; }
+    .ps-h1 { font: 700 16px 'Plus Jakarta Sans', sans-serif; color: #191c1e; margin-bottom: 16px; }
+    .ps-product { display: flex; gap: 18px; align-items: flex-start; }
+    .ps-product-img { width: 100px; height: 100px; background: linear-gradient(135deg, #c9d4cf, #8da89a); border-radius: 8px; flex-shrink: 0; position: relative; }
+    .ps-product-img::after { content: '👟'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; opacity: 0.6; }
+    .ps-product-info { flex: 1; padding-top: 4px; }
+    .ps-line { height: 9px; background: #e5e7eb; border-radius: 2px; margin-bottom: 8px; }
+    .ps-line-w70 { width: 70%; }
+    .ps-line-w40 { width: 40%; }
+    .ps-product-price { font: 800 18px 'Plus Jakarta Sans', sans-serif; color: var(--orange); margin: 10px 0; }
+    .ps-cta { background: #0a3a2a; color: #fff; padding: 7px 16px; border-radius: 6px; font: 600 12px 'Inter', sans-serif; border: 0; }
+
+    /* Cursor — moves around then exits */
+    .ps-cursor { position: absolute; width: 18px; height: 18px; pointer-events: none; z-index: 10; opacity: 1; left: 30%; top: 70%; animation: psCursorPath 9s ease-in-out infinite; }
+    .ps-cursor::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 0; border-style: solid; border-width: 0 6px 14px 0; border-color: transparent #1a1a1a transparent transparent; transform: rotate(20deg); filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.3)); }
+    @keyframes psCursorPath {
+      0%   { left: 28%; top: 70%; opacity: 0; }
+      4%   { opacity: 1; }
+      18%  { left: 50%; top: 60%; opacity: 1; }
+      30%  { left: 65%; top: 75%; opacity: 1; }
+      38%  { left: 65%; top: 75%; opacity: 1; }
+      42%  { left: 65%; top: 75%; opacity: 0; }
+      100% { left: 65%; top: 75%; opacity: 0; }
+    }
+
+    /* Ghost — appears when cursor exits */
+    .ps-ghost { position: absolute; left: 65%; top: 75%; transform: translate(-50%, -50%); font-size: 28px; opacity: 0; animation: psGhostFloat 9s ease-in-out infinite; pointer-events: none; }
+    @keyframes psGhostFloat {
+      0%, 38%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+      48%       { opacity: 0.85; transform: translate(-50%, -50%) scale(1); }
+      55%       { opacity: 0.85; transform: translate(-50%, -90%) scale(1); }
+      65%       { opacity: 0; transform: translate(-50%, -160%) scale(0.7); }
+      100%      { opacity: 0; transform: translate(-50%, -160%) scale(0.7); }
+    }
+
+    /* AI badge — slides in last */
+    .ps-ai-badge { position: absolute; bottom: 18px; right: 18px; background: linear-gradient(135deg, var(--orange), var(--orange-light)); color: #fff; padding: 12px 16px; border-radius: 12px; box-shadow: 0 12px 32px rgba(234,88,12,0.4); display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateX(40px) scale(0.95); animation: psAiSlideIn 9s ease-in-out infinite; max-width: 280px; }
+    .ps-ai-icon { background: rgba(255,255,255,0.22); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .ps-ai-reason { font: 700 13px 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
+    .ps-ai-action { font: 500 11px 'Inter', sans-serif; opacity: 0.92; margin-top: 2px; }
+    @keyframes psAiSlideIn {
+      0%, 65%   { opacity: 0; transform: translateX(40px) scale(0.95); }
+      72%, 95%  { opacity: 1; transform: translateX(0) scale(1); }
+      100%      { opacity: 0; transform: translateX(40px) scale(0.95); }
+    }
+
+    /* Narration — captions sync with scene */
+    .problem-narration { position: relative; height: 28px; margin: 1.5rem auto 0; max-width: 720px; text-align: center; font-size: 0.9375rem; color: var(--light-muted); font-style: italic; }
+    .pn-step { position: absolute; left: 0; right: 0; opacity: 0; animation: pnFade 9s ease-in-out infinite; }
+    .pn-step-1 { animation-delay: 0s; }
+    .pn-step-2 { animation-delay: 3s; }
+    .pn-step-3 { animation-delay: 6s; }
+    @keyframes pnFade {
+      0%, 33%   { opacity: 1; }
+      36%, 100% { opacity: 0; }
+    }
+    @media (max-width: 768px) { .problem-scene { margin-top: 2rem; } .ps-product { flex-direction: column; align-items: stretch; } .ps-product-img { width: 60px; height: 60px; } .ps-ai-badge { bottom: 12px; right: 12px; padding: 8px 12px; max-width: 200px; } .ps-ai-reason { font-size: 12px; } .ps-ai-action { font-size: 10px; } }
 
     /* FEATURE BLOCK pattern */
     .feature-block { padding: 6rem 0; }
@@ -371,9 +430,22 @@
 
     /* Plus grid (everything else) */
     .plus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
-    .plus-card { background: var(--light-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
-    .plus-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.06); border-color: rgba(234,88,12,0.3); }
-    .plus-card-icon { font-size: 1.5rem; margin-bottom: 0.875rem; }
+    .plus-card { background: var(--light-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.75rem 1.5rem 1.5rem; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, border-color 0.3s; position: relative; overflow: hidden; }
+    .plus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--orange-light)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+    .plus-card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(234, 88, 12, 0.1), 0 4px 16px rgba(0, 0, 0, 0.05); border-color: rgba(234, 88, 12, 0.35); }
+    .plus-card:hover::before { transform: scaleX(1); }
+    .plus-card-icon { font-size: 1.75rem; margin-bottom: 0.875rem; display: inline-block; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s; animation: plusIconFloat 4s ease-in-out infinite; }
+    .plus-card:hover .plus-card-icon { transform: scale(1.25) rotate(-7deg); filter: drop-shadow(0 6px 14px rgba(234, 88, 12, 0.4)); animation-play-state: paused; }
+    @keyframes plusIconFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    .plus-card:nth-child(1) .plus-card-icon { animation-delay: 0s; }
+    .plus-card:nth-child(2) .plus-card-icon { animation-delay: 0.4s; }
+    .plus-card:nth-child(3) .plus-card-icon { animation-delay: 0.8s; }
+    .plus-card:nth-child(4) .plus-card-icon { animation-delay: 1.2s; }
+    .plus-card:nth-child(5) .plus-card-icon { animation-delay: 1.6s; }
+    .plus-card:nth-child(6) .plus-card-icon { animation-delay: 2.0s; }
+    .plus-card:nth-child(7) .plus-card-icon { animation-delay: 2.4s; }
+    .plus-card:nth-child(8) .plus-card-icon { animation-delay: 2.8s; }
+    .plus-card:nth-child(9) .plus-card-icon { animation-delay: 3.2s; }
     .plus-card h3 { font: 700 1rem var(--font-heading); color: var(--light-text); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
     .plus-card p { font-size: 0.875rem; color: var(--light-muted); line-height: 1.55; }
     @media (max-width: 768px) { .plus-grid { grid-template-columns: 1fr; } }
@@ -390,10 +462,69 @@
     /* STATS */
     #stats { background: var(--dark); padding: 5rem 0; position: relative; overflow: hidden; }
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-    .stat-item { text-align: center; }
+    .stat-item { text-align: center; display: flex; flex-direction: column; align-items: center; }
     .stat-value { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 900; line-height: 1; color: var(--white); letter-spacing: -0.04em; }
     .stat-unit { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--orange); letter-spacing: -0.02em; }
     .stat-label { display: block; margin-top: 0.5rem; font-size: 0.8125rem; color: var(--text-muted-dark); letter-spacing: 0.02em; }
+
+    /* Stat visualization base */
+    .stat-viz { width: 90px; height: 90px; margin-bottom: 1.25rem; position: relative; display: flex; align-items: center; justify-content: center; }
+
+    /* 12 signals — pulsing dot grid */
+    .stat-viz-signals { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; padding: 8px; }
+    .stat-viz-signals span { width: 10px; height: 10px; border-radius: 50%; background: rgba(234, 88, 12, 0.18); position: relative; animation: signalPulseDot 5s ease-in-out infinite; }
+    @keyframes signalPulseDot { 0%, 70%, 100% { background: rgba(234,88,12,0.18); transform: scale(1); box-shadow: 0 0 0 rgba(234,88,12,0); } 12% { background: var(--orange); transform: scale(1.5); box-shadow: 0 0 12px rgba(234,88,12,0.7); } 30% { background: var(--orange-light); transform: scale(1.1); box-shadow: 0 0 6px rgba(234,88,12,0.3); } }
+    .stat-viz-signals span:nth-child(1)  { animation-delay: 0s; }
+    .stat-viz-signals span:nth-child(2)  { animation-delay: 0.18s; }
+    .stat-viz-signals span:nth-child(3)  { animation-delay: 0.36s; }
+    .stat-viz-signals span:nth-child(4)  { animation-delay: 0.54s; }
+    .stat-viz-signals span:nth-child(5)  { animation-delay: 0.72s; }
+    .stat-viz-signals span:nth-child(6)  { animation-delay: 0.90s; }
+    .stat-viz-signals span:nth-child(7)  { animation-delay: 1.08s; }
+    .stat-viz-signals span:nth-child(8)  { animation-delay: 1.26s; }
+    .stat-viz-signals span:nth-child(9)  { animation-delay: 1.44s; }
+    .stat-viz-signals span:nth-child(10) { animation-delay: 1.62s; }
+    .stat-viz-signals span:nth-child(11) { animation-delay: 1.80s; }
+    .stat-viz-signals span:nth-child(12) { animation-delay: 1.98s; }
+
+    /* 8 channels — orbital fan-out */
+    .stat-viz-channels { width: 110px; height: 110px; }
+    .ch-hub { position: absolute; top: 50%; left: 50%; width: 12px; height: 12px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 12px rgba(234,88,12,0.6); transform: translate(-50%, -50%); animation: chHubPulse 3s ease-in-out infinite; }
+    @keyframes chHubPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.3); } }
+    .ch-rays { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .ch-ray { stroke: rgba(234, 88, 12, 0.3); stroke-width: 1; stroke-linecap: round; stroke-dasharray: 4; stroke-dashoffset: 0; animation: chRayFlow 3s linear infinite; }
+    @keyframes chRayFlow { to { stroke-dashoffset: -20; } }
+    .ch-ray:nth-child(2) { animation-delay: 0.1s; }
+    .ch-ray:nth-child(3) { animation-delay: 0.2s; }
+    .ch-ray:nth-child(4) { animation-delay: 0.3s; }
+    .ch-ray:nth-child(5) { animation-delay: 0.4s; }
+    .ch-ray:nth-child(6) { animation-delay: 0.5s; }
+    .ch-ray:nth-child(7) { animation-delay: 0.6s; }
+    .ch-ray:nth-child(8) { animation-delay: 0.7s; }
+    .ch-icon { position: absolute; top: 50%; left: 50%; font-size: 12px; transform-origin: 0 0; transform: rotate(var(--a)) translateX(46px) rotate(calc(-1 * var(--a))) translate(-50%, -50%); animation: chIconPulse 3s ease-in-out infinite; opacity: 0.5; }
+    @keyframes chIconPulse { 0%, 60%, 100% { opacity: 0.5; filter: grayscale(0.6); } 30% { opacity: 1; filter: grayscale(0) drop-shadow(0 0 4px rgba(234,88,12,0.5)); } }
+    .ch-icon:nth-child(3)  { animation-delay: 0s; }    /* ✉ */
+    .ch-icon:nth-child(4)  { animation-delay: 0.3s; }  /* 📱 */
+    .ch-icon:nth-child(5)  { animation-delay: 0.6s; }  /* 🔔 */
+    .ch-icon:nth-child(6)  { animation-delay: 0.9s; }  /* 💬 */
+    .ch-icon:nth-child(7)  { animation-delay: 1.2s; }  /* 🎯 */
+    .ch-icon:nth-child(8)  { animation-delay: 1.5s; }  /* 🏷 */
+    .ch-icon:nth-child(9)  { animation-delay: 1.8s; }  /* 📊 */
+    .ch-icon:nth-child(10) { animation-delay: 2.1s; }  /* 🔌 */
+
+    /* 5 attribution — animated bars */
+    .stat-viz-attribution { display: flex; align-items: flex-end; justify-content: center; gap: 6px; height: 80px; padding: 4px 6px; }
+    .attr-bar { width: 10px; height: var(--h); background: linear-gradient(180deg, var(--orange-light), var(--orange)); border-radius: 3px 3px 0 0; transform-origin: bottom; animation: attrBarBreathe 3s ease-in-out infinite var(--d); box-shadow: 0 0 12px rgba(234,88,12,0.2); }
+    @keyframes attrBarBreathe { 0%, 100% { transform: scaleY(0.4); opacity: 0.5; } 50% { transform: scaleY(1); opacity: 1; } }
+
+    /* Price orb — glowing pulse showing how cheap */
+    .stat-viz-price { width: 90px; height: 90px; }
+    .price-orb { position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle, var(--orange-light), var(--orange)); transform: translate(-50%, -50%); box-shadow: 0 0 24px rgba(234,88,12,0.6); animation: priceOrbPulse 2.5s ease-in-out infinite; }
+    @keyframes priceOrbPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 24px rgba(234,88,12,0.6); } 50% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 36px rgba(234,88,12,0.9); } }
+    .price-orb-ring { position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--orange); transform: translate(-50%, -50%) scale(1); opacity: 0; animation: priceOrbRing 2.5s ease-out infinite; }
+    .price-orb-ring-2 { animation-delay: 1.25s; }
+    @keyframes priceOrbRing { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; } 100% { transform: translate(-50%, -50%) scale(4.5); opacity: 0; } }
+
     @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; } }
 
     /* BETA RECRUITMENT */
@@ -497,9 +628,8 @@
       </div>
 
       <h1 class="hero-title">
-        See why visitors leave.<br>
-        Then bring them back.<br>
-        <em>Automatically.</em>
+        <em>Convert more visitors.</em><br>
+        With AI marketing automation.
       </h1>
 
       <p class="hero-subtitle">
@@ -531,22 +661,41 @@
         Most marketing tools show you what visitors did — page views, clicks, conversions. None of them tell you <em>why</em> a visitor stalled on the pricing page, why they bailed mid-form, or why one cohort returns three times before buying. Without the why, every recovery campaign is a guess.
       </p>
 
-      <div class="problem-illustration stagger-children animate-in">
-        <div class="problem-frame">
-          <div class="problem-frame-icon">👀</div>
-          <div class="problem-frame-title">A visitor explores</div>
-          <div class="problem-frame-text">They click around, read reviews, hover the buy button.</div>
+      <div class="problem-scene animate-in" aria-hidden="true">
+        <div class="ps-browser">
+          <div class="ps-browser-bar">
+            <span class="ps-bar-dot"></span>
+            <span class="ps-bar-dot"></span>
+            <span class="ps-bar-dot"></span>
+            <span class="ps-bar-url">store.example.com / product</span>
+          </div>
+          <div class="ps-browser-content">
+            <div class="ps-h1">Your Shopify Store</div>
+            <div class="ps-product">
+              <div class="ps-product-img"></div>
+              <div class="ps-product-info">
+                <div class="ps-line ps-line-w70"></div>
+                <div class="ps-line ps-line-w40"></div>
+                <div class="ps-product-price">$149</div>
+                <button class="ps-cta">Add to cart</button>
+              </div>
+            </div>
+          </div>
+          <div class="ps-cursor"></div>
+          <div class="ps-ghost">👻</div>
+          <div class="ps-ai-badge">
+            <div class="ps-ai-icon">✦</div>
+            <div>
+              <div class="ps-ai-reason">Price hesitation</div>
+              <div class="ps-ai-action">→ Send 10% off in 2h</div>
+            </div>
+          </div>
         </div>
-        <div class="problem-frame">
-          <div class="problem-frame-icon">👻</div>
-          <div class="problem-frame-title">Then they vanish</div>
-          <div class="problem-frame-text">Tab closes. Bounce. No purchase. No clue what happened.</div>
-        </div>
-        <div class="problem-frame">
-          <div class="problem-frame-icon">✦</div>
-          <div class="problem-frame-title">SwiftMail explains why</div>
-          <div class="problem-frame-text">Structured reason · narrative · suggested recovery action.</div>
-        </div>
+      </div>
+      <div class="problem-narration animate-in">
+        <span class="pn-step pn-step-1">A visitor lands on your store, browses, hovers the buy button…</span>
+        <span class="pn-step pn-step-2">Then they vanish. Bounce. No clue what happened.</span>
+        <span class="pn-step pn-step-3">SwiftMail tells you exactly why — and what to send next.</span>
       </div>
     </div>
   </section>
@@ -843,18 +992,56 @@
     <div class="container">
       <div class="stats-grid stagger-children animate-in">
         <div class="stat-item">
+          <div class="stat-viz stat-viz-signals" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
           <span class="stat-value counter" data-target="12">0</span><span class="stat-unit">+</span>
           <span class="stat-label">Behavioral signals tracked</span>
         </div>
         <div class="stat-item">
+          <div class="stat-viz stat-viz-channels" aria-hidden="true">
+            <span class="ch-hub"></span>
+            <svg class="ch-rays" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+              <line class="ch-ray" x1="50" y1="50" x2="86" y2="50"/>
+              <line class="ch-ray" x1="50" y1="50" x2="76" y2="76"/>
+              <line class="ch-ray" x1="50" y1="50" x2="50" y2="86"/>
+              <line class="ch-ray" x1="50" y1="50" x2="24" y2="76"/>
+              <line class="ch-ray" x1="50" y1="50" x2="14" y2="50"/>
+              <line class="ch-ray" x1="50" y1="50" x2="24" y2="24"/>
+              <line class="ch-ray" x1="50" y1="50" x2="50" y2="14"/>
+              <line class="ch-ray" x1="50" y1="50" x2="76" y2="24"/>
+            </svg>
+            <span class="ch-icon" style="--a: 0deg">✉</span>
+            <span class="ch-icon" style="--a: 45deg">📱</span>
+            <span class="ch-icon" style="--a: 90deg">🔔</span>
+            <span class="ch-icon" style="--a: 135deg">💬</span>
+            <span class="ch-icon" style="--a: 180deg">🎯</span>
+            <span class="ch-icon" style="--a: 225deg">🏷</span>
+            <span class="ch-icon" style="--a: 270deg">📊</span>
+            <span class="ch-icon" style="--a: 315deg">🔌</span>
+          </div>
           <span class="stat-value counter" data-target="8">0</span><span class="stat-unit">+</span>
           <span class="stat-label">Channels per trigger</span>
         </div>
         <div class="stat-item">
+          <div class="stat-viz stat-viz-attribution" aria-hidden="true">
+            <div class="attr-bar" style="--h: 95%; --d: 0s"></div>
+            <div class="attr-bar" style="--h: 70%; --d: 0.15s"></div>
+            <div class="attr-bar" style="--h: 50%; --d: 0.3s"></div>
+            <div class="attr-bar" style="--h: 65%; --d: 0.45s"></div>
+            <div class="attr-bar" style="--h: 90%; --d: 0.6s"></div>
+          </div>
           <span class="stat-value counter" data-target="5">0</span>
           <span class="stat-label">Attribution models</span>
         </div>
         <div class="stat-item">
+          <div class="stat-viz stat-viz-price" aria-hidden="true">
+            <div class="price-orb"></div>
+            <div class="price-orb-ring"></div>
+            <div class="price-orb-ring price-orb-ring-2"></div>
+          </div>
           <span class="stat-unit">$</span><span class="stat-value">0.002</span>
           <span class="stat-label">Per AI insight</span>
         </div>
