@@ -289,6 +289,95 @@
     .feature-caption { text-align: center; font-size: 0.875rem; color: var(--text-muted-dark); margin-top: 1rem; font-style: italic; }
     .section-light .feature-caption { color: var(--light-muted); }
 
+    /* CSS-only animated demos for F05/F06/F07 (no video files) */
+    .demo-css { margin: 2rem auto 0; max-width: 1100px; border-radius: 14px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.18); position: relative; aspect-ratio: 16/9; background: var(--dark); display: flex; align-items: center; justify-content: center; }
+    .demo-css-frame { position: absolute; inset: 0; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+
+    /* F05 — real-time intervention demo (mock browser + popup slide-in) */
+    .demo-browser { background: #fafaf7; width: 80%; max-width: 760px; aspect-ratio: 16/10; border-radius: 8px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); position: relative; overflow: hidden; }
+    .demo-browser-bar { background: #e5e5e0; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+    .demo-browser-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; }
+    .demo-browser-dot:nth-child(1) { background: #ff5f57; } .demo-browser-dot:nth-child(2) { background: #febc2e; } .demo-browser-dot:nth-child(3) { background: #28c840; }
+    .demo-browser-url { background: #fff; flex: 1; padding: 4px 12px; border-radius: 4px; font: 11px/1 monospace; color: #6b7280; margin-left: 8px; }
+    .demo-browser-content { padding: 28px 32px; }
+    .demo-browser-h1 { font: 700 16px 'Plus Jakarta Sans', sans-serif; color: #1a1a1a; margin-bottom: 8px; }
+    .demo-browser-p { font: 11px/1.5 'Inter', sans-serif; color: #6b7280; margin-bottom: 12px; max-width: 70%; }
+    .demo-browser-cta { display: inline-block; background: #0a3a2a; color: #fff; padding: 6px 14px; border-radius: 4px; font: 600 11px/1 'Inter', sans-serif; }
+    .demo-cursor { position: absolute; width: 14px; height: 14px; pointer-events: none; transform: translate(-50%, -50%); z-index: 10; }
+    .demo-cursor::before { content: '➤'; position: absolute; transform: rotate(-45deg); color: #1a1a1a; font-size: 16px; line-height: 1; }
+    .demo-popup { position: absolute; bottom: 12px; right: 12px; width: 240px; background: #fff; border: 2px solid var(--orange); border-radius: 8px; padding: 14px 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.2); transform: translateY(120%); opacity: 0; }
+    .demo-popup-title { font: 700 12px 'Plus Jakarta Sans', sans-serif; color: var(--orange); margin-bottom: 4px; }
+    .demo-popup-text { font: 11px/1.4 'Inter', sans-serif; color: #1a1a1a; margin-bottom: 8px; }
+    .demo-popup-code { display: inline-block; background: var(--orange); color: #fff; padding: 4px 10px; border-radius: 3px; font: 600 11px/1 'SF Mono', monospace; }
+    .demo-trigger-chip { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: rgba(220,38,38,0.95); color: #fff; padding: 4px 10px; border-radius: 4px; font: 600 10px/1 monospace; opacity: 0; }
+
+    @keyframes demoCursorPath {
+      0% { left: 60%; top: 60%; }
+      30% { left: 50%; top: 8%; }
+      40% { left: 50%; top: 4%; }
+      100% { left: 50%; top: 4%; }
+    }
+    @keyframes demoTriggerFlash {
+      0%, 30% { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+      45%, 70% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+    }
+    @keyframes demoPopupIn {
+      0%, 50% { transform: translateY(120%); opacity: 0; }
+      65%, 95% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(120%); opacity: 0; }
+    }
+    .demo-cursor.animate { animation: demoCursorPath 6s ease-in-out infinite; }
+    .demo-trigger-chip.animate { animation: demoTriggerFlash 6s ease-in-out infinite; }
+    .demo-popup.animate { animation: demoPopupIn 6s ease-in-out infinite; }
+
+    /* F06 — integrations diagram */
+    .demo-integrations { display: flex; align-items: center; justify-content: center; gap: 60px; padding: 32px; }
+    .demo-int-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .demo-int-logo { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 16px 20px; min-width: 130px; text-align: center; color: var(--text-bright); font: 600 13px 'Inter', sans-serif; position: relative; }
+    .demo-int-logo-icon { display: block; font-size: 22px; margin-bottom: 6px; }
+    .demo-int-logo::after { content: ''; position: absolute; top: 50%; right: -32px; width: 24px; height: 1px; background: linear-gradient(90deg, transparent, var(--orange), transparent); animation: demoIntFlow 2s ease-in-out infinite; }
+    .demo-int-logo:nth-child(2)::after { animation-delay: 0.5s; }
+    .demo-int-logo:nth-child(3)::after { animation-delay: 1s; }
+    .demo-int-logo:nth-child(4)::after { animation-delay: 1.5s; }
+    @keyframes demoIntFlow {
+      0% { transform: scaleX(0); transform-origin: left; opacity: 0; }
+      30% { transform: scaleX(1); transform-origin: left; opacity: 1; }
+      70% { transform: scaleX(1); transform-origin: right; opacity: 1; }
+      100% { transform: scaleX(0); transform-origin: right; opacity: 0; }
+    }
+    .demo-int-hub { background: linear-gradient(135deg, var(--orange), var(--orange-light)); color: #fff; padding: 24px 28px; border-radius: 14px; text-align: center; box-shadow: 0 0 60px rgba(234,88,12,0.4); }
+    .demo-int-hub-title { font: 800 italic 16px 'Plus Jakarta Sans', sans-serif; }
+    .demo-int-hub-meta { font: 500 11px 'Inter', sans-serif; opacity: 0.9; margin-top: 4px; }
+
+    /* F07 — terminal-style email setup demo */
+    .demo-terminal { width: 80%; max-width: 720px; background: #0a0e1a; border-radius: 8px; padding: 20px 24px; font: 13px/1.7 'SF Mono', Monaco, monospace; color: #cbd5e1; box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+    .demo-terminal-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+    .demo-terminal-bar span { width: 10px; height: 10px; border-radius: 50%; background: #444; }
+    .demo-terminal-bar span:nth-child(1) { background: #ff5f57; } .demo-terminal-bar span:nth-child(2) { background: #febc2e; } .demo-terminal-bar span:nth-child(3) { background: #28c840; }
+    .demo-terminal-line { white-space: nowrap; overflow: hidden; }
+    .demo-terminal-prompt { color: #94a3b8; }
+    .demo-terminal-success { color: #22d3ee; }
+    .demo-terminal-check { color: #4ade80; }
+    .demo-terminal-cursor { display: inline-block; width: 8px; height: 14px; background: #cbd5e1; vertical-align: -2px; animation: terminalBlink 1s steps(2) infinite; }
+    @keyframes terminalBlink { 50% { opacity: 0; } }
+    .demo-terminal-line.t1 { animation: terminalType 0.8s steps(40, end) 0.4s backwards; }
+    .demo-terminal-line.t2 { animation: terminalType 0.8s steps(50, end) 1.4s backwards; }
+    .demo-terminal-line.t3 { animation: terminalType 0.8s steps(50, end) 2.4s backwards; }
+    .demo-terminal-line.t4 { animation: terminalType 0.8s steps(50, end) 3.4s backwards; }
+    .demo-terminal-line.t5 { animation: terminalType 0.8s steps(50, end) 4.4s backwards; }
+    .demo-terminal-line.t6 { animation: terminalType 0.8s steps(40, end) 5.6s backwards; }
+    @keyframes terminalType { from { opacity: 0; max-width: 0; } to { opacity: 1; max-width: 100%; } }
+
+    /* Plus grid (everything else) */
+    .plus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
+    .plus-card { background: var(--light-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+    .plus-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.06); border-color: rgba(234,88,12,0.3); }
+    .plus-card-icon { font-size: 1.5rem; margin-bottom: 0.875rem; }
+    .plus-card h3 { font: 700 1rem var(--font-heading); color: var(--light-text); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+    .plus-card p { font-size: 0.875rem; color: var(--light-muted); line-height: 1.55; }
+    @media (max-width: 768px) { .plus-grid { grid-template-columns: 1fr; } }
+
     /* BUILT FOR */
     .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
     .persona-card { background: var(--light-card); border: 1px solid var(--border-light); border-radius: 14px; padding: 2rem; transition: transform 0.2s, box-shadow 0.2s; }
@@ -548,6 +637,170 @@
     </div>
   </section>
 
+  <!-- ═══ FEATURE 05 — Real-time intervention ═══ -->
+  <section class="section-dark feature-block">
+    <div class="container">
+      <div class="animate-in">
+        <span class="feature-eyebrow">FEATURE · 05</span>
+        <h2 class="feature-headline">
+          Don't wait until tomorrow.<br>
+          <span class="feature-headline-em">Act in the moment.</span>
+        </h2>
+        <p class="feature-body">
+          Most marketing tools build campaigns for tomorrow's batch send. SwiftMail intervenes <strong>in under one second</strong> — when someone hovers exit, when a form gets abandoned, when a session goes silent at the pricing page. Show a contextual popup. Fire a personalized email. Push to Slack so your team can pick up the phone. The window between <em>"they're about to leave"</em> and <em>"we lost them"</em> closes automatically, while intent is still warm. <strong>24-hour cooldowns</strong> per visitor prevent flow storms. Conditional logic routes high-value carts to SMS and the rest to popups.
+        </p>
+      </div>
+      <figure class="demo-css animate-in">
+        <div class="demo-browser">
+          <div class="demo-browser-bar">
+            <span class="demo-browser-dot"></span>
+            <span class="demo-browser-dot"></span>
+            <span class="demo-browser-dot"></span>
+            <span class="demo-browser-url">peakathletic.com/products/trailrunner-pro</span>
+          </div>
+          <div class="demo-browser-content">
+            <div class="demo-browser-h1">TrailRunner Pro · $149</div>
+            <div class="demo-browser-p">All-terrain running shoe with carbon plate and Vibram outsole. Lightweight enough for long runs, sturdy enough for technical descents.</div>
+            <div class="demo-browser-cta">Add to cart · $149</div>
+          </div>
+          <div class="demo-cursor animate"></div>
+          <div class="demo-trigger-chip animate">⚡ exit_intent detected · 480ms</div>
+          <div class="demo-popup animate">
+            <div class="demo-popup-title">Wait — don't go yet!</div>
+            <div class="demo-popup-text">Free shipping today only. Your size is in stock.</div>
+            <div class="demo-popup-code">STAY10</div>
+          </div>
+        </div>
+        <div class="demo-css-frame"></div>
+      </figure>
+      <p class="feature-caption animate-in">Cursor heads for the exit. SwiftMail detects intent in 480ms and slides in a contextual popup before the tab closes.</p>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURE 06 — Ecommerce integrations ═══ -->
+  <section class="section-light feature-block">
+    <div class="container">
+      <div class="animate-in">
+        <span class="feature-eyebrow">FEATURE · 06</span>
+        <h2 class="feature-headline">
+          Connect your store.<br>
+          <span class="feature-headline-em">Sync starts in 30 seconds.</span>
+        </h2>
+        <p class="feature-body">
+          One-click OAuth with <strong>Shopify, WooCommerce, BigCommerce</strong>. Customers, orders, products, and the full catalog sync in real time. Behavioral signals stamp the platform's customer ID at ingest, so cross-device journeys stitch correctly without merchants writing theme code or installing tag-manager scripts. Catalog-aware segments unlock per-SKU cohort reports and <strong>BACK_IN_STOCK</strong> + <strong>PRICE_DROP</strong> triggers that fan out to email, SMS, and push automatically. Migration from any major platform usually completes in under 5 minutes — contacts, segments, templates, and flows all carry over.
+        </p>
+      </div>
+      <figure class="demo-css animate-in" style="background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%);">
+        <div class="demo-integrations">
+          <div class="demo-int-grid">
+            <div class="demo-int-logo"><span class="demo-int-logo-icon">🛍️</span>Shopify</div>
+            <div class="demo-int-logo"><span class="demo-int-logo-icon">🏪</span>WooCommerce</div>
+            <div class="demo-int-logo"><span class="demo-int-logo-icon">🛒</span>BigCommerce</div>
+            <div class="demo-int-logo"><span class="demo-int-logo-icon">{ }</span>REST API</div>
+          </div>
+          <div class="demo-int-hub">
+            <div class="demo-int-hub-title">SwiftMail</div>
+            <div class="demo-int-hub-meta">Real-time sync · Catalog-aware</div>
+          </div>
+        </div>
+        <div class="demo-css-frame"></div>
+      </figure>
+      <p class="feature-caption animate-in">Live data flow from your store to SwiftMail. Customers, orders, and product catalog stream in continuously.</p>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURE 07 — Email infrastructure ═══ -->
+  <section class="section-dark feature-block">
+    <div class="container">
+      <div class="animate-in">
+        <span class="feature-eyebrow">FEATURE · 07</span>
+        <h2 class="feature-headline">
+          Email setup.<br>
+          <span class="feature-headline-em">In 45 seconds.</span>
+        </h2>
+        <p class="feature-body">
+          Most email tools make you fight DNS records for a week. SwiftMail handles <strong>SPF, DKIM, and DMARC</strong> through APIs to <strong>Cloudflare, GoDaddy, and Route53</strong> — paste your domain, click connect, watch the records appear automatically. <strong>IP warmup</strong> runs on its own with auto-pause if bounce rates climb above 5%. Every campaign passes through a deliverability doctor that scores it before send and <strong>blocks anything below 75/100</strong>. Inbound DMARC reports stream in via a Cloudflare email worker — you see what mail providers actually think of your domain, not what your tool guesses. Your sender reputation stays intact while you sleep.
+        </p>
+      </div>
+      <figure class="demo-css animate-in" style="background: #050810;">
+        <div class="demo-terminal">
+          <div class="demo-terminal-bar">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="demo-terminal-line t1"><span class="demo-terminal-prompt">$</span> swiftmail dns connect peakathletic.com</div>
+          <div class="demo-terminal-line t2"><span class="demo-terminal-success">→</span> Connecting to api.cloudflare.com...</div>
+          <div class="demo-terminal-line t3"><span class="demo-terminal-check">✓</span> SPF record added · v=spf1 include:_spf.swiftmail.app ~all</div>
+          <div class="demo-terminal-line t4"><span class="demo-terminal-check">✓</span> DKIM key generated · 2048-bit RSA · selector=sm1</div>
+          <div class="demo-terminal-line t5"><span class="demo-terminal-check">✓</span> DMARC policy set · v=DMARC1; p=quarantine; rua=mailto:dmarc@…</div>
+          <div class="demo-terminal-line t6"><span class="demo-terminal-check">✓</span> Setup complete in 42s<span class="demo-terminal-cursor"></span></div>
+        </div>
+        <div class="demo-css-frame"></div>
+      </figure>
+      <p class="feature-caption animate-in">No DNS knowledge required. SPF, DKIM, and DMARC configured via API in under a minute.</p>
+    </div>
+  </section>
+
+  <!-- ═══ EVERYTHING ELSE GRID ═══ -->
+  <section class="section-light">
+    <div class="container">
+      <p class="section-eyebrow animate-in">PLUS EVERYTHING ELSE</p>
+      <h2 class="pair-headline animate-in">
+        A toolbox <span class="pair-headline-em">deep enough</span> to replace your stack.
+      </h2>
+      <p class="pair-body animate-in">
+        Behavioral analytics, AI explanation, and multichannel automation are the headline. The rest of what you'd normally pay 4 vendors for — also included.
+      </p>
+
+      <div class="plus-grid stagger-children animate-in">
+        <div class="plus-card">
+          <div class="plus-card-icon">🎨</div>
+          <h3>AI brand analysis</h3>
+          <p>Paste a URL. We extract your colors, fonts, and logo automatically — every email matches your brand from day one.</p>
+        </div>
+        <div class="plus-card">
+          <div class="plus-card-icon">⚙️</div>
+          <h3>Visual flow builder</h3>
+          <p>20+ node types. Drag-and-drop. Conditional splits, time delays, behavioral triggers. No code, no flowchart certifications required.</p>
+        </div>
+        <div class="plus-card">
+          <div class="plus-card-icon">📧</div>
+          <h3>Multi-client preview</h3>
+          <p>See exactly how each campaign renders in 6 inbox clients (Gmail, Outlook, Apple Mail, Yahoo, etc.) in 3-5 seconds. Built in.</p>
+        </div>
+        <div class="plus-card">
+          <div class="plus-card-icon">🧪</div>
+          <h3>A/B testing with auto-winner</h3>
+          <p>Test variants. The system picks the winner once statistical significance hits, then sends the winning variant to the rest of the list automatically.</p>
+        </div>
+        <div class="plus-card">
+          <div class="plus-card-icon">⚡</div>
+          <h3>AI campaign generation</h3>
+          <p>Describe the campaign in one sentence. AI writes the copy and builds the email. <strong>$0.002</strong> per generated campaign.</p>
+        </div>
+        <div class="plus-card">
+          <div class="plus-card-icon">⏰</div>
+          <h3>Send-time AI</h3>
+          <p>Per-contact optimal hour, computed from each subscriber's engagement history. Everyone gets your email when they're most likely to open it.</p>
+        </div>
+        <div class="plus-card">
+          <div class="plus-card-icon">🛡</div>
+          <h3>Spam-score gate</h3>
+          <p>Every campaign scored 0-100 before send. Anything below 75 gets blocked automatically — no accidentally torching your sender reputation.</p>
+        </div>
+        <div class="plus-card">
+          <div class="plus-card-icon">🌍</div>
+          <h3>Multilingual auto-translate</h3>
+          <p>Write the campaign once. Send in 30+ languages with per-locale variants stored per template. AI handles the translation at send time.</p>
+        </div>
+        <div class="plus-card">
+          <div class="plus-card-icon">🗓</div>
+          <h3>Seasonal calendar</h3>
+          <p>AI generates 25-35 marketing events per year tuned to your industry. Pre-built campaigns for each one — never miss Black Friday again.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ BUILT FOR ═══ -->
   <section class="section-light" id="for-who">
     <div class="container">
@@ -720,7 +973,37 @@
             <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="faq-answer">
-            <p>No. Drop a one-line script tag on your site. DNS auto-setup handles SPF, DKIM, and DMARC in 45 seconds. If you can paste a snippet, you can run SwiftMail.</p>
+            <p>No. Drop a one-line script tag on your site. DNS auto-setup handles SPF, DKIM, and DMARC in 45 seconds via APIs to Cloudflare, GoDaddy, and Route53. If you can paste a snippet, you can run SwiftMail.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How fast does SwiftMail react to a behavior signal?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Median end-to-end latency from signal-detected to action-fired is around 500ms; p99 stays under 1 second. The pipeline runs through Redis Streams + BullMQ — when a visitor hovers exit on your pricing page, the popup is on screen before they actually click away. 24-hour cooldowns per (visitor, flow) prevent flow storms on viral pages.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Which ecommerce platforms do you support?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Native one-click OAuth for <strong>Shopify, WooCommerce, and BigCommerce</strong>. REST API + webhooks for everything else. Customers, orders, products, and full catalog sync in real time. Catalog-aware features (PRICE_DROP and BACK_IN_STOCK triggers, per-SKU cohort reports) work across all supported platforms.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How does email setup actually work?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Paste your domain. Click connect. Watch SwiftMail call your DNS provider's API (Cloudflare, GoDaddy, or Route53) and add SPF, DKIM, and DMARC records in about 45 seconds. After that, IP warmup runs automatically with auto-pause if bounce rates climb above 5%, and every campaign passes through a deliverability doctor that scores it 0-100 and blocks anything below 75. Inbound DMARC reports stream in via a Cloudflare email worker so you see what mail providers actually think of your domain.</p>
           </div>
         </div>
 
