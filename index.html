@@ -137,6 +137,26 @@
     .stagger-children.visible > *:nth-child(9) { transition-delay: 640ms; }
     .stagger-children.visible > *:nth-child(n+10) { transition-delay: 720ms; }
 
+    /* ──────────────────────────────────────────────────────────────────────
+       DEMO ANIMATIONS — paused at frame 0 until the figure scrolls into
+       view. IntersectionObserver adds .visible to .animate-in elements,
+       which un-pauses the animations so each story plays from the start
+       when the user actually sees it (not when the page first loads).
+    ────────────────────────────────────────────────────────────────────── */
+    .animate-in:not(.visible) .demo-terminal-line,
+    .animate-in:not(.visible) .intg-log-row,
+    .animate-in:not(.visible) .intg-event-chip,
+    .animate-in:not(.visible) .ps-cursor,
+    .animate-in:not(.visible) .ps-cta,
+    .animate-in:not(.visible) .ps-ghost,
+    .animate-in:not(.visible) .ps-ai-badge,
+    .animate-in:not(.visible) .rt-trigger,
+    .animate-in:not(.visible) .rt-popup,
+    .animate-in:not(.visible) .rt-popup-cta,
+    .animate-in:not(.visible) .rt-latency {
+      animation-play-state: paused !important;
+    }
+
     @media (max-width: 768px) {
       .hero { padding: 7rem 1.25rem 4rem; }
       .nav-links { display: none; }
