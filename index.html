@@ -531,24 +531,123 @@
       .rt-latency { font-size: 9px; left: 10px; bottom: 10px; padding: 6px 9px; }
     }
 
-    /* F06 — integrations diagram */
-    .demo-integrations { display: flex; align-items: center; justify-content: center; gap: 60px; padding: 32px; }
-    .demo-int-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .demo-int-logo { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 16px 20px; min-width: 130px; text-align: center; color: var(--text-bright); font: 600 13px 'Inter', sans-serif; position: relative; }
-    .demo-int-logo-icon { display: block; font-size: 22px; margin-bottom: 6px; }
-    .demo-int-logo::after { content: ''; position: absolute; top: 50%; right: -32px; width: 24px; height: 1px; background: linear-gradient(90deg, transparent, var(--orange), transparent); animation: demoIntFlow 2s ease-in-out infinite; }
-    .demo-int-logo:nth-child(2)::after { animation-delay: 0.5s; }
-    .demo-int-logo:nth-child(3)::after { animation-delay: 1s; }
-    .demo-int-logo:nth-child(4)::after { animation-delay: 1.5s; }
-    @keyframes demoIntFlow {
-      0% { transform: scaleX(0); transform-origin: left; opacity: 0; }
-      30% { transform: scaleX(1); transform-origin: left; opacity: 1; }
-      70% { transform: scaleX(1); transform-origin: right; opacity: 1; }
-      100% { transform: scaleX(0); transform-origin: right; opacity: 0; }
+    /* F06 — Integrations hub: connected stores + live data flow + SwiftMail target + event log */
+    .intg-scene { width: 100%; max-width: 940px; padding: 28px 26px; position: relative; }
+    .intg-grid { display: grid; grid-template-columns: 1fr 0.9fr 1fr; gap: 22px; align-items: stretch; }
+
+    /* Section labels */
+    .intg-col-label { font: 700 9px 'Inter', sans-serif; color: #64748b; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .intg-col-label-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 6px var(--orange); }
+
+    /* LEFT — connected stores */
+    .intg-stores { display: flex; flex-direction: column; gap: 10px; }
+    .intg-store {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 13px 14px;
+      transition: border-color 0.3s, background 0.3s;
     }
-    .demo-int-hub { background: linear-gradient(135deg, var(--orange), var(--orange-light)); color: #fff; padding: 24px 28px; border-radius: 14px; text-align: center; box-shadow: 0 0 60px rgba(234,88,12,0.4); }
-    .demo-int-hub-title { font: 800 italic 16px 'Plus Jakarta Sans', sans-serif; }
-    .demo-int-hub-meta { font: 500 11px 'Inter', sans-serif; opacity: 0.9; margin-top: 4px; }
+    .intg-store.connected { border-color: rgba(34,197,94,0.28); background: linear-gradient(135deg, rgba(34,197,94,0.07), rgba(255,255,255,0.04)); }
+    .intg-store-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; gap: 8px; }
+    .intg-store-name { font: 700 13px 'Plus Jakarta Sans', sans-serif; color: #fff; display: flex; align-items: center; gap: 7px; letter-spacing: -0.01em; }
+    .intg-store-icon { font-size: 16px; line-height: 1; }
+    .intg-store-status { font: 700 8px/1 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 7px; border-radius: 999px; white-space: nowrap; }
+    .intg-status-live { background: rgba(34,197,94,0.18); color: #4ade80; display: inline-flex; align-items: center; gap: 5px; }
+    .intg-status-live::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; animation: intgPulse 1.5s ease-in-out infinite; }
+    .intg-status-avail { background: rgba(255,255,255,0.08); color: #94a3b8; }
+    .intg-store-meta { font: 500 10px/1.4 'Inter', sans-serif; color: #94a3b8; }
+    .intg-store-meta strong { color: #cbd5e1; font-weight: 700; }
+    .intg-store-cta { display: inline-flex; align-items: center; gap: 5px; background: var(--orange); color: #fff; padding: 5px 11px; border-radius: 6px; font: 700 10px/1 'Inter', sans-serif; margin-top: 8px; box-shadow: 0 4px 10px rgba(234,88,12,0.3); }
+
+    /* CENTER — flying event chips */
+    .intg-flow { position: relative; min-height: 240px; overflow: hidden; }
+    .intg-flow::before, .intg-flow::after {
+      content: ''; position: absolute; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(234,88,12,0.25), transparent);
+    }
+    .intg-flow::before { top: 30%; }
+    .intg-flow::after { bottom: 30%; }
+    .intg-event-chip {
+      background: rgba(11,19,37,0.92);
+      border: 1px solid rgba(234,88,12,0.32);
+      color: #fff; padding: 6px 11px; border-radius: 999px;
+      font: 600 10px/1 'Inter', sans-serif;
+      display: inline-flex; align-items: center; gap: 6px;
+      position: absolute; left: -30%; opacity: 0;
+      white-space: nowrap; box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+      animation: intgChipFly 5s linear infinite;
+      backdrop-filter: blur(4px);
+    }
+    .intg-event-chip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 6px var(--orange); flex-shrink: 0; }
+    .intg-event-chip:nth-child(1) { top: 8%;  animation-delay: 0s; }
+    .intg-event-chip:nth-child(2) { top: 28%; animation-delay: 0.85s; }
+    .intg-event-chip:nth-child(3) { top: 48%; animation-delay: 1.7s; }
+    .intg-event-chip:nth-child(4) { top: 68%; animation-delay: 2.55s; }
+    .intg-event-chip:nth-child(5) { top: 18%; animation-delay: 3.4s; }
+    .intg-event-chip:nth-child(6) { top: 88%; animation-delay: 4.25s; }
+    @keyframes intgChipFly {
+      0%   { left: -30%; opacity: 0; }
+      8%   { opacity: 1; }
+      92%  { opacity: 1; }
+      100% { left: 110%; opacity: 0; }
+    }
+
+    /* RIGHT — SwiftMail target + stats */
+    .intg-target {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
+      border-radius: 14px; padding: 16px 14px;
+      text-align: center; box-shadow: 0 0 70px rgba(234,88,12,0.32), 0 8px 24px rgba(234,88,12,0.25);
+      margin-bottom: 10px;
+      position: relative; overflow: hidden;
+    }
+    .intg-target::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.25), transparent 50%);
+      pointer-events: none;
+    }
+    .intg-target-title { font: 800 italic 18px 'Plus Jakarta Sans', sans-serif; color: #fff; letter-spacing: -0.02em; position: relative; }
+    .intg-target-tps { font: 800 28px/1 'Plus Jakarta Sans', sans-serif; color: #fff; margin-top: 8px; letter-spacing: -0.02em; position: relative; }
+    .intg-target-tps small { font: 600 9px 'Inter', sans-serif; opacity: 0.95; display: block; margin-top: 4px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .intg-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+    .intg-stat-tile { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 11px; text-align: center; }
+    .intg-stat-num { font: 800 18px 'Plus Jakarta Sans', sans-serif; color: #fff; letter-spacing: -0.02em; }
+    .intg-stat-label { font: 700 8px 'Inter', sans-serif; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 3px; }
+
+    /* Bottom — live event log */
+    .intg-log {
+      margin-top: 22px;
+      background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px; padding: 12px 14px;
+    }
+    .intg-log-title { font: 700 9px 'Inter', sans-serif; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 9px; display: flex; align-items: center; gap: 7px; }
+    .intg-log-title::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; animation: intgPulse 1.5s ease-in-out infinite; }
+    .intg-log-row { display: grid; grid-template-columns: 56px 110px 1fr 60px; gap: 10px; padding: 5px 0; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); animation: intgLogIn 0.4s ease-out backwards; }
+    .intg-log-row:first-of-type { border-top: 0; padding-top: 0; }
+    .intg-log-row:nth-of-type(1) { animation-delay: 0.1s; }
+    .intg-log-row:nth-of-type(2) { animation-delay: 0.2s; }
+    .intg-log-row:nth-of-type(3) { animation-delay: 0.3s; }
+    .intg-log-row:nth-of-type(4) { animation-delay: 0.4s; }
+    @keyframes intgLogIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    .intg-log-time { color: #64748b; font: 500 10px 'SF Mono', Monaco, monospace; }
+    .intg-log-event { color: var(--orange-light); font: 700 10px 'Inter', sans-serif; letter-spacing: 0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .intg-log-meta { color: #cbd5e1; font: 500 10px 'Inter', sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .intg-log-source { color: #cbd5e1; font: 700 8px 'Inter', sans-serif; padding: 3px 6px; background: rgba(255,255,255,0.07); border-radius: 4px; text-transform: uppercase; letter-spacing: 0.06em; text-align: center; }
+
+    @keyframes intgPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    @media (max-width: 768px) {
+      .intg-scene { padding: 18px 14px; }
+      .intg-grid { grid-template-columns: 1fr; gap: 14px; }
+      .intg-flow { min-height: 88px; }
+      .intg-event-chip:nth-child(n+4) { display: none; }
+      .intg-stats { grid-template-columns: repeat(4, 1fr); }
+      .intg-stat-tile { padding: 8px 6px; }
+      .intg-stat-num { font-size: 14px; }
+      .intg-stat-label { font-size: 7px; }
+      .intg-log-row { grid-template-columns: 50px 1fr 50px; }
+      .intg-log-row .intg-log-meta { display: none; }
+    }
 
     /* F07 — terminal-style email setup demo */
     .demo-terminal { width: 80%; max-width: 720px; background: #0a0e1a; border-radius: 8px; padding: 20px 24px; font: 13px/1.7 'SF Mono', Monaco, monospace; color: #cbd5e1; box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
@@ -1106,22 +1205,98 @@
           One-click OAuth with <strong>Shopify, WooCommerce, BigCommerce</strong>. Customers, orders, products, and the full catalog sync in real time. When a shopper logs in on their phone after browsing on desktop, SwiftMail still recognizes them — no theme tinkering, no tag manager required. Catalog-aware segments unlock per-product cohort reports, <strong>back-in-stock alerts</strong>, and <strong>price-drop notifications</strong> that fan out to email, SMS, and push automatically — without you wiring up a single integration. Migration from any major platform usually completes in under 5 minutes; contacts, segments, templates, and automation flows all carry over.
         </p>
       </div>
-      <figure class="demo-css animate-in" style="background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%);">
-        <div class="demo-integrations">
-          <div class="demo-int-grid">
-            <div class="demo-int-logo"><span class="demo-int-logo-icon">🛍️</span>Shopify</div>
-            <div class="demo-int-logo"><span class="demo-int-logo-icon">🏪</span>WooCommerce</div>
-            <div class="demo-int-logo"><span class="demo-int-logo-icon">🛒</span>BigCommerce</div>
-            <div class="demo-int-logo"><span class="demo-int-logo-icon">{ }</span>REST API</div>
+      <figure class="demo-css animate-in" style="background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%); aspect-ratio: auto; padding: 0; max-width: 940px;">
+        <div class="intg-scene" aria-hidden="true">
+          <div class="intg-grid">
+            <!-- LEFT: connected stores -->
+            <div>
+              <div class="intg-col-label"><span class="intg-col-label-dot"></span>Your stores</div>
+              <div class="intg-stores">
+                <div class="intg-store connected">
+                  <div class="intg-store-head">
+                    <span class="intg-store-name"><span class="intg-store-icon">🛍️</span>Shopify</span>
+                    <span class="intg-store-status intg-status-live">Live</span>
+                  </div>
+                  <div class="intg-store-meta"><strong>12,847</strong> contacts · <strong>89K</strong> orders<br>synced <strong>1.4s ago</strong></div>
+                </div>
+                <div class="intg-store connected">
+                  <div class="intg-store-head">
+                    <span class="intg-store-name"><span class="intg-store-icon">🏪</span>WooCommerce</span>
+                    <span class="intg-store-status intg-status-live">Live</span>
+                  </div>
+                  <div class="intg-store-meta"><strong>4,201</strong> contacts · <strong>23K</strong> orders<br>synced <strong>2.1s ago</strong></div>
+                </div>
+                <div class="intg-store">
+                  <div class="intg-store-head">
+                    <span class="intg-store-name"><span class="intg-store-icon">🛒</span>BigCommerce</span>
+                    <span class="intg-store-status intg-status-avail">Available</span>
+                  </div>
+                  <div class="intg-store-meta">One-click OAuth · sync starts in 30 seconds</div>
+                  <span class="intg-store-cta">Connect →</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CENTER: animated event flow -->
+            <div>
+              <div class="intg-col-label"><span class="intg-col-label-dot"></span>Live events</div>
+              <div class="intg-flow">
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Order placed · $147</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Cart abandoned · $89</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>New customer</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Product viewed</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Back in stock · size 10</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Price dropped · −21%</div>
+              </div>
+            </div>
+
+            <!-- RIGHT: SwiftMail target + stats -->
+            <div>
+              <div class="intg-col-label"><span class="intg-col-label-dot"></span>One source of truth</div>
+              <div class="intg-target">
+                <div class="intg-target-title">SwiftMail</div>
+                <div class="intg-target-tps">142<small>events / sec ingested</small></div>
+              </div>
+              <div class="intg-stats">
+                <div class="intg-stat-tile"><div class="intg-stat-num">17K</div><div class="intg-stat-label">Contacts</div></div>
+                <div class="intg-stat-tile"><div class="intg-stat-num">112K</div><div class="intg-stat-label">Orders</div></div>
+                <div class="intg-stat-tile"><div class="intg-stat-num">8.2K</div><div class="intg-stat-label">Products</div></div>
+                <div class="intg-stat-tile"><div class="intg-stat-num">42</div><div class="intg-stat-label">Segments</div></div>
+              </div>
+            </div>
           </div>
-          <div class="demo-int-hub">
-            <div class="demo-int-hub-title">SwiftMail</div>
-            <div class="demo-int-hub-meta">Real-time sync · Catalog-aware</div>
+
+          <!-- Live event log -->
+          <div class="intg-log">
+            <div class="intg-log-title">Event stream · last 60 seconds</div>
+            <div class="intg-log-row">
+              <span class="intg-log-time">14:23:01</span>
+              <span class="intg-log-event">Order placed</span>
+              <span class="intg-log-meta">$147 · TrailRunner Pro · sarah.k@runclub.io</span>
+              <span class="intg-log-source">Shopify</span>
+            </div>
+            <div class="intg-log-row">
+              <span class="intg-log-time">14:23:00</span>
+              <span class="intg-log-event">Cart abandoned</span>
+              <span class="intg-log-meta">$89 · 2 items · anon_4f9a · 2 min idle</span>
+              <span class="intg-log-source">Woo</span>
+            </div>
+            <div class="intg-log-row">
+              <span class="intg-log-time">14:22:58</span>
+              <span class="intg-log-event">New customer</span>
+              <span class="intg-log-meta">marcus@runclub.io · organic search</span>
+              <span class="intg-log-source">Shopify</span>
+            </div>
+            <div class="intg-log-row">
+              <span class="intg-log-time">14:22:54</span>
+              <span class="intg-log-event">Stock alert queued</span>
+              <span class="intg-log-meta">TrailRunner Pro · size 10 · 47 customers waiting</span>
+              <span class="intg-log-source">Shopify</span>
+            </div>
           </div>
         </div>
-        <div class="demo-css-frame"></div>
       </figure>
-      <p class="feature-caption animate-in">Live data flow from your store to SwiftMail. Customers, orders, and product catalog stream in continuously.</p>
+      <p class="feature-caption animate-in">Connect a store in one click. Customers, orders, products, and behavior stream in continuously — and out the other side, you get segments and triggers ready to act on.</p>
     </div>
   </section>
 
