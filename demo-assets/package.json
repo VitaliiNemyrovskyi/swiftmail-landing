@@ -1,0 +1,12 @@
+{
+  "name": "swiftmail-demo-recorder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright-driven recording of mock-store + mock-dashboard demos",
+  "scripts": {
+    "record": "node record-demos.js"
+  },
+  "dependencies": {
+    "playwright": "^1.59.0"
+  }
+}

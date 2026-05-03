@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SwiftMail · Flow Builder</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><span class="sidebar-logo-mark"></span>SwiftMail</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Behavior</div>
+      <div class="nav-item"><span class="nav-item-icon">⚡</span> Sessions</div>
+      <div class="nav-item"><span class="nav-item-icon">🧠</span> Insights</div>
+      <div class="nav-item"><span class="nav-item-icon">🗺</span> Journeys</div>
+      <div class="sidebar-section">Automation</div>
+      <div class="nav-item active"><span class="nav-item-icon">⚙</span> Flows</div>
+      <div class="nav-item"><span class="nav-item-icon">✉</span> Campaigns</div>
+      <div class="nav-item"><span class="nav-item-icon">💬</span> Popups</div>
+      <div class="sidebar-section">Insights</div>
+      <div class="nav-item"><span class="nav-item-icon">📊</span> Analytics</div>
+      <div class="nav-item"><span class="nav-item-icon">📈</span> Attribution</div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-avatar">P</div>
+      <div class="user-info">
+        <div class="user-name">PEAK Athletic</div>
+        <div class="user-meta">peakathletic.com</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title">Flow · Rage-click recovery</div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary">Edit</button>
+        <button id="trigger-btn" class="btn btn-primary">Simulate trigger →</button>
+      </div>
+    </div>
+
+    <div class="content" style="display:grid;grid-template-columns:1fr 320px;gap:20px;">
+      <div class="flow-canvas" id="flow-canvas">
+        <div class="flow-grid"></div>
+
+        <!-- Trigger node -->
+        <div class="flow-node flow-node-trigger" id="node-trigger" style="top: 200px; left: 24px;">
+          <div class="flow-node-icon">⚡</div>
+          <div class="flow-node-title">TRIGGER</div>
+          <div class="flow-node-meta">rage_click</div>
+        </div>
+
+        <!-- Decision node -->
+        <div class="flow-node" id="node-decision" style="top: 200px; left: 270px;">
+          <div class="flow-node-icon">🔀</div>
+          <div class="flow-node-title">If signal = rage_click</div>
+          <div class="flow-node-meta">on element button[discount]</div>
+        </div>
+
+        <!-- Channel nodes (4) -->
+        <div class="flow-node flow-node-channel" id="node-email" style="top: 30px; left: 540px;">
+          <div class="flow-node-icon">✉</div>
+          <div class="flow-node-title">Email</div>
+          <div class="flow-node-meta">Recovery template</div>
+        </div>
+
+        <div class="flow-node flow-node-channel" id="node-sms" style="top: 145px; left: 540px;">
+          <div class="flow-node-icon">📱</div>
+          <div class="flow-node-title">SMS</div>
+          <div class="flow-node-meta">If phone known</div>
+        </div>
+
+        <div class="flow-node flow-node-channel" id="node-push" style="top: 260px; left: 540px;">
+          <div class="flow-node-icon">🔔</div>
+          <div class="flow-node-title">Web push</div>
+          <div class="flow-node-meta">If subscribed</div>
+        </div>
+
+        <div class="flow-node flow-node-channel" id="node-popup" style="top: 375px; left: 540px;">
+          <div class="flow-node-icon">💬</div>
+          <div class="flow-node-title">On-site popup</div>
+          <div class="flow-node-meta">If returns within 24h</div>
+        </div>
+
+        <!-- SVG connection lines -->
+        <svg class="flow-svg" id="flow-svg" viewBox="0 0 720 480" preserveAspectRatio="none">
+          <!-- Trigger to Decision -->
+          <path id="line-1" class="flow-line" d="M 220 232 L 270 232" />
+          <!-- Decision to channels -->
+          <path id="line-2" class="flow-line" d="M 460 232 L 500 62 L 540 62" />
+          <path id="line-3" class="flow-line" d="M 460 232 L 500 177 L 540 177" />
+          <path id="line-4" class="flow-line" d="M 460 232 L 500 292 L 540 292" />
+          <path id="line-5" class="flow-line" d="M 460 232 L 500 407 L 540 407" />
+        </svg>
+      </div>
+
+      <div class="flow-log" id="flow-log">
+        <div class="flow-log-title">Execution log</div>
+        <div id="log-entries">
+          <div style="color:#94a3b8;font-style:italic;font-size:12px;padding:8px 0;">No events yet. Click "Simulate trigger" to fire.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="demo-caption" id="caption"><span id="caption-text"></span></div>
+<div class="cursor-pulse" id="cursor-pulse"></div>
+
+<script>
+  window.setCaption = (text) => {
+    const cap = document.getElementById('caption');
+    const txt = document.getElementById('caption-text');
+    if (!text) { cap.classList.remove('visible'); return; }
+    txt.textContent = text;
+    cap.classList.remove('visible');
+    void cap.offsetWidth;
+    cap.classList.add('visible');
+  };
+
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+  const log = (time, status, text) => {
+    const entries = document.getElementById('log-entries');
+    // Clear "no events" placeholder on first log
+    if (entries.querySelector('div')?.style.fontStyle === 'italic') entries.innerHTML = '';
+    const el = document.createElement('div');
+    el.className = 'flow-log-entry';
+    el.innerHTML = `<span class="flow-log-time">${time}</span><span class="flow-log-status">✓</span><span>${text}</span>`;
+    entries.appendChild(el);
+  };
+
+  window.flowSimulate = async () => {
+    // Reset
+    document.querySelectorAll('.flow-node').forEach(n => n.classList.remove('fired'));
+    document.querySelectorAll('.flow-line').forEach(l => l.classList.remove('active'));
+    document.getElementById('log-entries').innerHTML = '';
+
+    // Step 1: trigger fires
+    document.getElementById('node-trigger').classList.add('fired');
+    document.getElementById('line-1').classList.add('active');
+    log('00:00', '✓', 'Trigger fired: rage_click on button[discount]');
+    await sleep(700);
+
+    // Step 2: decision evaluates true
+    document.getElementById('node-decision').classList.add('fired');
+    log('00:00.04', '✓', 'Condition matched · routing to channels');
+    await sleep(500);
+
+    // Step 3: fan out to channels
+    ['line-2', 'line-3', 'line-4', 'line-5'].forEach(id => document.getElementById(id).classList.add('active'));
+    await sleep(400);
+
+    document.getElementById('node-email').classList.add('fired');
+    log('00:00.12', '✓', 'Email sent to anon_f9b3@inferred · Recovery template');
+    await sleep(350);
+
+    document.getElementById('node-sms').classList.add('fired');
+    log('00:00.18', '✓', 'SMS skipped · phone unknown');
+    await sleep(350);
+
+    document.getElementById('node-push').classList.add('fired');
+    log('00:00.24', '✓', 'Web push queued · permission granted');
+    await sleep(350);
+
+    document.getElementById('node-popup').classList.add('fired');
+    log('00:00.31', '✓', 'On-site popup armed · fires on next visit within 24h');
+  };
+
+  document.getElementById('trigger-btn').addEventListener('click', window.flowSimulate);
+</script>
+
+</body>
+</html>

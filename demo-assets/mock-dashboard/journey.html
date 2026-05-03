@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SwiftMail · Customer Journey</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><span class="sidebar-logo-mark"></span>SwiftMail</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Behavior</div>
+      <div class="nav-item"><span class="nav-item-icon">⚡</span> Sessions</div>
+      <div class="nav-item"><span class="nav-item-icon">🧠</span> Insights</div>
+      <div class="nav-item active"><span class="nav-item-icon">🗺</span> Journeys</div>
+      <div class="sidebar-section">Automation</div>
+      <div class="nav-item"><span class="nav-item-icon">⚙</span> Flows</div>
+      <div class="nav-item"><span class="nav-item-icon">✉</span> Campaigns</div>
+      <div class="nav-item"><span class="nav-item-icon">💬</span> Popups</div>
+      <div class="sidebar-section">Insights</div>
+      <div class="nav-item"><span class="nav-item-icon">📊</span> Analytics</div>
+      <div class="nav-item"><span class="nav-item-icon">📈</span> Attribution</div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-avatar">P</div>
+      <div class="user-info">
+        <div class="user-name">PEAK Athletic</div>
+        <div class="user-meta">peakathletic.com</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title">Customer journey · maria.k@runlab.io</div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary">Filter</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="card">
+        <div class="journey-customer">
+          <div class="user-avatar" style="background:linear-gradient(135deg,#047857,#10b981);">MK</div>
+          <div>
+            <div class="journey-customer-name">Maria K. · maria.k@runlab.io</div>
+            <div class="journey-customer-meta">First seen 12 days ago · 4 sessions · 7 touchpoints · Toronto, CA</div>
+          </div>
+          <div class="journey-conversion">Converted · $149 · 2 days ago</div>
+        </div>
+
+        <div class="journey-toolbar">
+          <span class="journey-toolbar-label">Attribution model</span>
+          <button class="attribution-btn active" data-model="linear">Linear</button>
+          <button class="attribution-btn" data-model="first">First-touch</button>
+          <button class="attribution-btn" data-model="last">Last-touch</button>
+          <button class="attribution-btn" data-model="position">Position-based</button>
+          <button class="attribution-btn" data-model="time">Time-decay</button>
+        </div>
+
+        <!-- Timeline -->
+        <div class="journey-timeline">
+          <div class="journey-axis"></div>
+          <div class="journey-touchpoint" style="left:8%;">
+            <div class="journey-dot organic" title="Organic search"></div>
+            <div class="journey-dot-label">Day 1<br>Organic search</div>
+          </div>
+          <div class="journey-touchpoint" style="left:32%;">
+            <div class="journey-dot paid" title="Paid social"></div>
+            <div class="journey-dot-label">Day 4<br>Paid social</div>
+          </div>
+          <div class="journey-touchpoint" style="left:60%;">
+            <div class="journey-dot direct" title="Direct visit"></div>
+            <div class="journey-dot-label">Day 8<br>Direct</div>
+          </div>
+          <div class="journey-touchpoint" style="left:90%;">
+            <div class="journey-dot email" title="Email click"></div>
+            <div class="journey-dot-label">Day 12<br>Email · Converted</div>
+          </div>
+        </div>
+
+        <!-- Attribution bars (per channel) -->
+        <div class="journey-attribution-table" style="margin-top: 56px;">
+          <div style="font-size:13px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Credit by channel · $149 conversion</div>
+
+          <div class="journey-channel-row">
+            <div class="journey-channel-name">
+              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#047857;margin-right:8px;vertical-align:middle;"></span>
+              Organic search
+            </div>
+            <div class="journey-bar-track"><div class="journey-bar-fill" id="bar-organic" style="width:25%;background:#047857;"></div></div>
+            <div class="journey-channel-pct" id="pct-organic">25%</div>
+          </div>
+
+          <div class="journey-channel-row">
+            <div class="journey-channel-name">
+              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2563eb;margin-right:8px;vertical-align:middle;"></span>
+              Paid social
+            </div>
+            <div class="journey-bar-track"><div class="journey-bar-fill" id="bar-paid" style="width:25%;background:#2563eb;"></div></div>
+            <div class="journey-channel-pct" id="pct-paid">25%</div>
+          </div>
+
+          <div class="journey-channel-row">
+            <div class="journey-channel-name">
+              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#7e22ce;margin-right:8px;vertical-align:middle;"></span>
+              Direct
+            </div>
+            <div class="journey-bar-track"><div class="journey-bar-fill" id="bar-direct" style="width:25%;background:#7e22ce;"></div></div>
+            <div class="journey-channel-pct" id="pct-direct">25%</div>
+          </div>
+
+          <div class="journey-channel-row">
+            <div class="journey-channel-name">
+              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ea580c;margin-right:8px;vertical-align:middle;"></span>
+              Email
+            </div>
+            <div class="journey-bar-track"><div class="journey-bar-fill" id="bar-email" style="width:25%;background:#ea580c;"></div></div>
+            <div class="journey-channel-pct" id="pct-email">25%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="demo-caption" id="caption"><span id="caption-text"></span></div>
+<div class="cursor-pulse" id="cursor-pulse"></div>
+
+<script>
+  window.setCaption = (text) => {
+    const cap = document.getElementById('caption');
+    const txt = document.getElementById('caption-text');
+    if (!text) { cap.classList.remove('visible'); return; }
+    txt.textContent = text;
+    cap.classList.remove('visible');
+    void cap.offsetWidth;
+    cap.classList.add('visible');
+  };
+
+  // Attribution models — credit splits per the 4 channels in order: organic, paid, direct, email
+  const MODELS = {
+    linear:   [25, 25, 25, 25],
+    first:    [100, 0, 0, 0],
+    last:     [0, 0, 0, 100],
+    position: [40, 10, 10, 40],
+    time:     [5, 12, 28, 55],   // exponential decay weighted to recent
+  };
+
+  const setAttribution = (modelKey) => {
+    const [o, p, d, e] = MODELS[modelKey];
+    document.getElementById('bar-organic').style.width = o + '%';
+    document.getElementById('bar-paid').style.width = p + '%';
+    document.getElementById('bar-direct').style.width = d + '%';
+    document.getElementById('bar-email').style.width = e + '%';
+    document.getElementById('pct-organic').textContent = o + '%';
+    document.getElementById('pct-paid').textContent = p + '%';
+    document.getElementById('pct-direct').textContent = d + '%';
+    document.getElementById('pct-email').textContent = e + '%';
+
+    // Update active button
+    document.querySelectorAll('.attribution-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.model === modelKey);
+    });
+  };
+
+  window.setAttributionModel = setAttribution;
+
+  // Wire button clicks
+  document.querySelectorAll('.attribution-btn').forEach(btn => {
+    btn.addEventListener('click', () => setAttribution(btn.dataset.model));
+  });
+</script>
+
+</body>
+</html>

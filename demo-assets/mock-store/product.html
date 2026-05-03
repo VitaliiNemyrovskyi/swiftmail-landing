@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEAK — TrailRunner Pro Running Shoes</title>
+<style>
+  /* PEAK brand — deliberately different palette from SwiftMail (deep green + yellow accent) */
+  :root {
+    --peak-green: #0a3a2a;
+    --peak-green-dark: #062319;
+    --peak-yellow: #fdd835;
+    --peak-bg: #fafaf7;
+    --peak-text: #1a1a1a;
+    --peak-muted: #6b7280;
+    --peak-border: #e5e5e0;
+    --peak-error: #dc2626;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font: 15px/1.5 'Inter', -apple-system, sans-serif; color: var(--peak-text); background: var(--peak-bg); }
+
+  /* Top bar */
+  .top-bar { background: var(--peak-green-dark); color: #fff; padding: 8px 0; text-align: center; font-size: 12px; letter-spacing: 0.05em; }
+
+  /* Nav */
+  .nav { background: #fff; border-bottom: 1px solid var(--peak-border); padding: 18px 0; position: sticky; top: 0; z-index: 50; }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font: 900 24px/1 'Plus Jakarta Sans', sans-serif; color: var(--peak-green); letter-spacing: -0.02em; }
+  .logo .logo-mark { display: inline-block; width: 12px; height: 12px; background: var(--peak-yellow); border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--peak-text); text-decoration: none; font-weight: 500; font-size: 14px; }
+  .nav-actions { display: flex; align-items: center; gap: 18px; }
+  .nav-icon { color: var(--peak-text); cursor: pointer; }
+  .cart-badge { background: var(--peak-green); color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 10px; margin-left: -6px; }
+
+  /* Breadcrumbs */
+  .crumbs { max-width: 1200px; margin: 24px auto 0; padding: 0 32px; font-size: 13px; color: var(--peak-muted); }
+  .crumbs a { color: var(--peak-muted); text-decoration: none; }
+  .crumbs a:hover { color: var(--peak-green); }
+
+  /* Product layout */
+  .product { max-width: 1200px; margin: 24px auto 64px; padding: 0 32px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; }
+
+  .product-images { display: flex; flex-direction: column; gap: 12px; }
+  .product-img-main { aspect-ratio: 4/5; background: linear-gradient(135deg, #c9d4cf 0%, #8da89a 100%); border-radius: 8px; position: relative; overflow: hidden; }
+  .product-img-main::after { content: '👟'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 180px; opacity: 0.5; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15)); }
+  .product-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .product-thumb { aspect-ratio: 1; background: linear-gradient(135deg, #d3ddd8, #94a89c); border-radius: 6px; cursor: pointer; }
+  .product-thumb:nth-child(2) { background: linear-gradient(135deg, #b8c5be, #7d9489); }
+  .product-thumb:nth-child(3) { background: linear-gradient(135deg, #a3b3aa, #6c8377); }
+  .product-thumb:nth-child(4) { background: linear-gradient(135deg, #91a298, #5b7466); }
+
+  /* Product info */
+  .product-meta-tag { display: inline-block; background: var(--peak-yellow); color: var(--peak-green-dark); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+  .product-title { font: 800 32px/1.15 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .product-subtitle { color: var(--peak-muted); font-size: 16px; margin-bottom: 16px; }
+  .rating { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; font-size: 14px; }
+  .stars { color: var(--peak-yellow); letter-spacing: 2px; }
+  .rating-count { color: var(--peak-muted); }
+
+  .price-block { padding: 16px 0; border-top: 1px solid var(--peak-border); border-bottom: 1px solid var(--peak-border); margin-bottom: 24px; display: flex; align-items: baseline; gap: 12px; }
+  .price-current { font: 800 28px 'Plus Jakarta Sans', sans-serif; color: var(--peak-green); }
+  .price-was { font-size: 16px; color: var(--peak-muted); text-decoration: line-through; }
+  .price-save { background: var(--peak-error); color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+
+  /* Size selector */
+  .selector-label { font-size: 13px; font-weight: 600; margin-bottom: 10px; display: flex; justify-content: space-between; }
+  .selector-label a { color: var(--peak-green); text-decoration: none; font-weight: 500; }
+  .size-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 24px; }
+  .size-opt { padding: 12px 0; border: 1px solid var(--peak-border); border-radius: 6px; background: #fff; cursor: pointer; font-size: 14px; font-weight: 500; text-align: center; transition: all 0.15s; }
+  .size-opt:hover { border-color: var(--peak-green); }
+  .size-opt.selected { background: var(--peak-green); color: #fff; border-color: var(--peak-green); }
+  .size-opt.unavailable { color: #c0c0c0; text-decoration: line-through; cursor: not-allowed; }
+
+  /* Discount field — DELIBERATELY broken for rage-click demo */
+  .discount-row { display: flex; gap: 8px; margin-bottom: 24px; }
+  .discount-input { flex: 1; padding: 12px 14px; border: 1px solid var(--peak-border); border-radius: 6px; font-size: 14px; font-family: inherit; }
+  .discount-input:focus { outline: none; border-color: var(--peak-green); }
+  .discount-btn { padding: 12px 24px; background: var(--peak-text); color: #fff; border: 0; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.1s; }
+  .discount-btn:active { transform: scale(0.96); }
+  .discount-msg { color: var(--peak-error); font-size: 13px; margin-top: -16px; margin-bottom: 24px; min-height: 18px; }
+
+  /* CTAs */
+  .cta-row { display: grid; grid-template-columns: 3fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .add-to-cart { padding: 16px; background: var(--peak-green); color: #fff; border: 0; border-radius: 6px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+  .add-to-cart:hover { background: var(--peak-green-dark); }
+  .wishlist { padding: 16px; background: #fff; border: 1px solid var(--peak-border); border-radius: 6px; cursor: pointer; font-size: 18px; }
+
+  /* Trust badges */
+  .trust-row { display: flex; gap: 24px; flex-wrap: wrap; padding: 16px 0; border-top: 1px solid var(--peak-border); margin-top: 24px; font-size: 13px; color: var(--peak-muted); }
+  .trust-item { display: flex; align-items: center; gap: 6px; }
+
+  /* Reviews */
+  .reviews { max-width: 1200px; margin: 0 auto 64px; padding: 32px; background: #fff; border-radius: 8px; }
+  .reviews h2 { font: 800 22px 'Plus Jakarta Sans', sans-serif; margin-bottom: 24px; }
+  .review { padding: 20px 0; border-bottom: 1px solid var(--peak-border); }
+  .review:last-child { border-bottom: 0; }
+  .review-head { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
+  .review-author { font-weight: 600; }
+  .review-rating { color: var(--peak-yellow); }
+  .review-text { color: var(--peak-text); margin-top: 6px; }
+
+  /* Footer */
+  .footer { background: var(--peak-green-dark); color: #fff; padding: 48px 32px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+  .footer-col h4 { font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; margin-bottom: 8px; }
+  .footer-bottom { max-width: 1200px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; font-size: 13px; color: rgba(255,255,255,0.5); }
+  .footer-legal a { color: rgba(255,255,255,0.5); text-decoration: none; margin-left: 16px; }
+
+  /* Demo caption overlay (controlled by Playwright via window.setCaption) */
+  .demo-caption { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(11, 19, 37, 0.94); color: #fff; padding: 14px 22px; border-radius: 10px; font: 500 15px/1.4 'Inter', sans-serif; max-width: 80%; text-align: center; z-index: 9999; box-shadow: 0 8px 24px rgba(0,0,0,0.3); display: none; }
+  .demo-caption.visible { display: block; animation: captionIn 0.4s ease-out; }
+  @keyframes captionIn { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+  /* Cursor highlight (visible during recording for emphasis) */
+  .cursor-pulse { position: fixed; width: 32px; height: 32px; border-radius: 50%; background: rgba(234, 88, 12, 0.4); border: 2px solid #ea580c; pointer-events: none; transform: translate(-50%, -50%); z-index: 9998; transition: opacity 0.2s; opacity: 0; }
+  .cursor-pulse.active { opacity: 1; animation: cursorPulse 0.5s ease-out; }
+  @keyframes cursorPulse { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(2); opacity: 0; } }
+</style>
+</head>
+<body>
+
+<div class="top-bar">Free shipping on orders over $75 · 30-day returns</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-mark"></span>PEAK</div>
+    <div class="nav-links">
+      <a href="#">Running</a>
+      <a href="#">Training</a>
+      <a href="#">Yoga</a>
+      <a href="#">Outdoor</a>
+      <a href="#">Sale</a>
+    </div>
+    <div class="nav-actions">
+      <span class="nav-icon">🔍</span>
+      <span class="nav-icon">👤</span>
+      <span class="nav-icon">🛒<span class="cart-badge">0</span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="crumbs">
+  <a href="#">Home</a> · <a href="#">Running</a> · <a href="#">Shoes</a> · <span>TrailRunner Pro</span>
+</div>
+
+<div class="product">
+  <div class="product-images">
+    <div class="product-img-main"></div>
+    <div class="product-thumbs">
+      <div class="product-thumb"></div>
+      <div class="product-thumb"></div>
+      <div class="product-thumb"></div>
+      <div class="product-thumb"></div>
+    </div>
+  </div>
+
+  <div class="product-info">
+    <span class="product-meta-tag">Bestseller</span>
+    <h1 class="product-title">TrailRunner Pro</h1>
+    <p class="product-subtitle">All-terrain running shoe · Carbon plate · Vibram outsole</p>
+
+    <div class="rating">
+      <span class="stars">★★★★★</span>
+      <span>4.8</span>
+      <span class="rating-count">· 412 reviews</span>
+    </div>
+
+    <div class="price-block">
+      <span class="price-current">$149</span>
+      <span class="price-was">$189</span>
+      <span class="price-save">SAVE 21%</span>
+    </div>
+
+    <div class="selector-label">
+      Size · <span>US Men's</span>
+      <a href="#">Size guide</a>
+    </div>
+    <div class="size-grid">
+      <button class="size-opt unavailable">7</button>
+      <button class="size-opt">8</button>
+      <button class="size-opt">9</button>
+      <button class="size-opt selected">10</button>
+      <button class="size-opt">11</button>
+      <button class="size-opt unavailable">12</button>
+      <button class="size-opt">13</button>
+    </div>
+
+    <!-- DELIBERATELY BROKEN: discount button does nothing on click for first 2 attempts (rage-click trigger) -->
+    <div class="discount-row">
+      <input type="text" id="discount-input" class="discount-input" placeholder="Discount code" value="SAVE15">
+      <button id="discount-btn" class="discount-btn">Apply</button>
+    </div>
+    <p class="discount-msg" id="discount-msg"></p>
+
+    <div class="cta-row">
+      <button class="add-to-cart">Add to cart · $149</button>
+      <button class="wishlist">♡</button>
+    </div>
+
+    <div class="trust-row">
+      <span class="trust-item">🚚 Free shipping over $75</span>
+      <span class="trust-item">↩ 30-day returns</span>
+      <span class="trust-item">🔒 Secure checkout</span>
+    </div>
+  </div>
+</div>
+
+<div class="reviews">
+  <h2>Recent reviews</h2>
+
+  <div class="review">
+    <div class="review-head">
+      <span class="review-author">Marcus K. · Verified buyer</span>
+      <span class="review-rating">★★★★★</span>
+    </div>
+    <div>Most comfortable trail shoe I've owned. Hit 50 miles already, no break-in needed.</div>
+  </div>
+
+  <div class="review">
+    <div class="review-head">
+      <span class="review-author">Priya S. · Verified buyer</span>
+      <span class="review-rating">★★★★★</span>
+    </div>
+    <div>Carbon plate makes a real difference on uphills. Light enough for long runs, sturdy enough for technical descents.</div>
+  </div>
+
+  <div class="review">
+    <div class="review-head">
+      <span class="review-author">Tom R. · Verified buyer</span>
+      <span class="review-rating">★★★★☆</span>
+    </div>
+    <div>Sizing runs slightly small — order half a size up. Otherwise excellent build quality.</div>
+  </div>
+
+  <div class="review">
+    <div class="review-head">
+      <span class="review-author">Lena M. · Verified buyer</span>
+      <span class="review-rating">★★★★★</span>
+    </div>
+    <div>Took these on a 30km wet trail. Vibram grip held up perfectly, zero blisters. Worth every dollar.</div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="logo" style="color: #fff; margin-bottom: 12px;"><span class="logo-mark"></span>PEAK</div>
+      <p style="color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.6;">Performance gear for everyday athletes.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="#">Running</a>
+      <a href="#">Training</a>
+      <a href="#">Yoga</a>
+      <a href="#">Sale</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="#">Shipping</a>
+      <a href="#">Returns</a>
+      <a href="#">Size guide</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Sustainability</a>
+      <a href="#">Careers</a>
+      <a href="#">Press</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 PEAK Athletic Co.</span>
+    <div class="footer-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Caption overlay controlled by Playwright -->
+<div class="demo-caption" id="caption"><span id="caption-text"></span></div>
+
+<!-- Cursor pulse highlighter for visual emphasis during recording -->
+<div class="cursor-pulse" id="cursor-pulse"></div>
+
+<script>
+  // Demo controls — invoked by Playwright via page.evaluate()
+  window.setCaption = (text) => {
+    const cap = document.getElementById('caption');
+    const txt = document.getElementById('caption-text');
+    if (!text) { cap.classList.remove('visible'); return; }
+    txt.textContent = text;
+    cap.classList.remove('visible');
+    void cap.offsetWidth; // restart animation
+    cap.classList.add('visible');
+  };
+
+  window.pulseCursor = (x, y) => {
+    const c = document.getElementById('cursor-pulse');
+    c.style.left = x + 'px';
+    c.style.top = y + 'px';
+    c.classList.remove('active');
+    void c.offsetWidth;
+    c.classList.add('active');
+  };
+
+  // Discount field state — broken for first 2 clicks to enable rage-click demo
+  let discountClickCount = 0;
+  document.getElementById('discount-btn').addEventListener('click', () => {
+    discountClickCount++;
+    const msg = document.getElementById('discount-msg');
+    if (discountClickCount < 3) {
+      // First 2 clicks: silent failure (the broken UX)
+      msg.textContent = '';
+    } else {
+      msg.textContent = 'Code expired. Try a different one.';
+    }
+  });
+</script>
+
+</body>
+</html>

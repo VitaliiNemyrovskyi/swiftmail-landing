@@ -1,2 +1,6 @@
 .wrangler/
 node_modules/
+
+# Demo recording artifacts (large, regenerable from scripts)
+demo-assets/recordings/
+demo-assets/node_modules/

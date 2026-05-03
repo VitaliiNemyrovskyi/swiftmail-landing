@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SwiftMail · Session Insight</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><span class="sidebar-logo-mark"></span>SwiftMail</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Behavior</div>
+      <div class="nav-item"><span class="nav-item-icon">⚡</span> Sessions</div>
+      <div class="nav-item active"><span class="nav-item-icon">🧠</span> Insights</div>
+      <div class="nav-item"><span class="nav-item-icon">🗺</span> Journeys</div>
+      <div class="sidebar-section">Automation</div>
+      <div class="nav-item"><span class="nav-item-icon">⚙</span> Flows</div>
+      <div class="nav-item"><span class="nav-item-icon">✉</span> Campaigns</div>
+      <div class="nav-item"><span class="nav-item-icon">💬</span> Popups</div>
+      <div class="sidebar-section">Insights</div>
+      <div class="nav-item"><span class="nav-item-icon">📊</span> Analytics</div>
+      <div class="nav-item"><span class="nav-item-icon">📈</span> Attribution</div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-avatar">P</div>
+      <div class="user-info">
+        <div class="user-name">PEAK Athletic</div>
+        <div class="user-meta">peakathletic.com</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title">Session · anon_f9b3</div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary">← Back to sessions</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="insights-grid">
+        <!-- Left: session detail + timeline -->
+        <div>
+          <div class="card" style="margin-bottom:20px;">
+            <div class="session-header">
+              <div class="session-avatar">F9</div>
+              <div>
+                <div class="session-id">anon_f9b3 · First visit</div>
+                <div class="session-meta">Source: Organic search · "trail running shoes review" · Landing: /products/trailrunner-pro</div>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px;">
+              <div>
+                <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Duration</div>
+                <div style="font-weight:600;font-size:15px;">1m 02s</div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Pageviews</div>
+                <div style="font-weight:600;font-size:15px;">1</div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Rage clicks</div>
+                <div style="font-weight:600;font-size:15px;color:#dc2626;">3</div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Outcome</div>
+                <div><span class="chip chip-abandoned">Abandoned</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Event timeline</div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-time">00:00</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-event">page_view</div>
+                  <div class="timeline-detail">/products/trailrunner-pro · Organic search</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-time">00:08</div>
+                <div class="timeline-dot scroll"></div>
+                <div class="timeline-content">
+                  <div class="timeline-event">scroll_depth · 65%</div>
+                  <div class="timeline-detail">Reached reviews section</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-time">00:24</div>
+                <div class="timeline-dot click"></div>
+                <div class="timeline-content">
+                  <div class="timeline-event">click · button#size-opt</div>
+                  <div class="timeline-detail">Selected size 10</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-time">00:38</div>
+                <div class="timeline-dot click"></div>
+                <div class="timeline-content">
+                  <div class="timeline-event">click · input#discount-input</div>
+                  <div class="timeline-detail">Field focus · typed "SAVE15"</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-time">00:48</div>
+                <div class="timeline-dot rage"></div>
+                <div class="timeline-content">
+                  <div class="timeline-event" style="color:#dc2626;">rage_click · button#discount-btn</div>
+                  <div class="timeline-detail">3 clicks within 0.8 sec — no DOM change after click</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-time">00:55</div>
+                <div class="timeline-dot click"></div>
+                <div class="timeline-content">
+                  <div class="timeline-event">click · button#wishlist (away from primary CTA)</div>
+                  <div class="timeline-detail">Cursor drifted away from "Add to cart"</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-time">01:02</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="timeline-event">session_end · exit_intent</div>
+                  <div class="timeline-detail">Mouse moved to top edge · tab switched</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: AI insight panel -->
+        <div class="card ai-panel">
+          <div class="ai-panel-title">
+            <span class="ai-icon">✦</span>
+            <span>AI · Why this session</span>
+          </div>
+
+          <div id="ai-state" class="ai-state">
+            <!-- State 0: empty (default) -->
+            <div id="ai-empty" class="ai-empty">
+              <div style="font-size:36px;margin-bottom:12px;">🤔</div>
+              <div>Click <strong>Explain</strong> to analyze this session.</div>
+              <button id="ai-explain-btn" class="btn btn-primary" style="margin-top:16px;">Explain</button>
+            </div>
+
+            <!-- State 1: thinking (hidden by default) -->
+            <div id="ai-thinking" style="display:none;">
+              <div class="ai-thinking">
+                <div class="ai-thinking-dot"></div>
+                <div class="ai-thinking-dot"></div>
+                <div class="ai-thinking-dot"></div>
+              </div>
+              <div style="text-align:center;color:#64748b;font-size:13px;margin-top:-16px;">Reading event timeline · Resolving reason</div>
+            </div>
+
+            <!-- State 2: result (hidden by default) -->
+            <div id="ai-result" style="display:none;">
+              <div class="ai-reason">
+                <div class="ai-reason-code">PRICE_HESITATION</div>
+                <div class="ai-reason-confidence">87% confidence</div>
+              </div>
+
+              <div class="ai-narrative" id="ai-narrative"></div>
+
+              <div id="ai-actions" style="display:none;">
+                <div class="ai-actions-title">Suggested actions</div>
+                <div class="ai-action suggested">
+                  <span class="ai-action-icon">✉</span>
+                  <span><strong>Send recovery email with 24h discount</strong> · Recover 18% of price-hesitation sessions on average</span>
+                </div>
+                <div class="ai-action">
+                  <span class="ai-action-icon">💬</span>
+                  <span>Show on-site popup with shipping info</span>
+                </div>
+                <div class="ai-action">
+                  <span class="ai-action-icon">📤</span>
+                  <span>Add to "price-sensitive" segment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="demo-caption" id="caption"><span id="caption-text"></span></div>
+<div class="cursor-pulse" id="cursor-pulse"></div>
+
+<script>
+  window.setCaption = (text) => {
+    const cap = document.getElementById('caption');
+    const txt = document.getElementById('caption-text');
+    if (!text) { cap.classList.remove('visible'); return; }
+    txt.textContent = text;
+    cap.classList.remove('visible');
+    void cap.offsetWidth;
+    cap.classList.add('visible');
+  };
+
+  // AI panel state machine — driven by Playwright
+  window.aiSetState = (state) => {
+    document.getElementById('ai-empty').style.display = state === 'empty' ? 'block' : 'none';
+    document.getElementById('ai-thinking').style.display = state === 'thinking' ? 'block' : 'none';
+    document.getElementById('ai-result').style.display = state === 'result' ? 'block' : 'none';
+  };
+
+  // Type narrative one character at a time
+  window.aiTypeNarrative = (text, speedMs = 18) => {
+    return new Promise(resolve => {
+      const el = document.getElementById('ai-narrative');
+      el.textContent = '';
+      let i = 0;
+      const tick = () => {
+        if (i >= text.length) { resolve(); return; }
+        el.textContent += text[i++];
+        setTimeout(tick, speedMs);
+      };
+      tick();
+    });
+  };
+
+  window.aiShowActions = () => {
+    document.getElementById('ai-actions').style.display = 'block';
+  };
+</script>
+
+</body>
+</html>

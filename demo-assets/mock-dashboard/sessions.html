@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SwiftMail · Sessions</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo"><span class="sidebar-logo-mark"></span>SwiftMail</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">Behavior</div>
+      <div class="nav-item active"><span class="nav-item-icon">⚡</span> Sessions</div>
+      <div class="nav-item"><span class="nav-item-icon">🧠</span> Insights</div>
+      <div class="nav-item"><span class="nav-item-icon">🗺</span> Journeys</div>
+      <div class="sidebar-section">Automation</div>
+      <div class="nav-item"><span class="nav-item-icon">⚙</span> Flows</div>
+      <div class="nav-item"><span class="nav-item-icon">✉</span> Campaigns</div>
+      <div class="nav-item"><span class="nav-item-icon">💬</span> Popups</div>
+      <div class="sidebar-section">Insights</div>
+      <div class="nav-item"><span class="nav-item-icon">📊</span> Analytics</div>
+      <div class="nav-item"><span class="nav-item-icon">📈</span> Attribution</div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-avatar">P</div>
+      <div class="user-info">
+        <div class="user-name">PEAK Athletic</div>
+        <div class="user-meta">peakathletic.com</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title">Live sessions</div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary">Filter</button>
+        <button class="btn btn-secondary">Export</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <table class="table" id="sessions-table">
+          <thead>
+            <tr>
+              <th>Visitor</th>
+              <th>Channel</th>
+              <th>Signals</th>
+              <th>Duration</th>
+              <th>Outcome</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="sessions-body">
+            <!-- Rows injected by JS for demo -->
+            <tr>
+              <td><strong>maria.k@…</strong><div style="font-size:11px;color:#64748b">Returning · Customer</div></td>
+              <td><span class="chip chip-channel-organic">Organic search</span></td>
+              <td><span class="chip chip-click">click ×4</span> <span class="chip chip-scroll">scroll 80%</span></td>
+              <td>3m 42s</td>
+              <td><span class="chip chip-converted">Converted · $149</span></td>
+              <td>2 min ago</td>
+            </tr>
+            <tr>
+              <td><strong>anon_a8f2</strong><div style="font-size:11px;color:#64748b">First visit</div></td>
+              <td><span class="chip chip-channel-paid">Paid social</span></td>
+              <td><span class="chip chip-click">click ×6</span> <span class="chip chip-form">form focus ×2</span></td>
+              <td>5m 12s</td>
+              <td><span class="chip chip-abandoned">Abandoned</span></td>
+              <td>4 min ago</td>
+            </tr>
+            <tr>
+              <td><strong>anon_b3e1</strong><div style="font-size:11px;color:#64748b">First visit</div></td>
+              <td><span class="chip chip-channel-direct">Direct</span></td>
+              <td><span class="chip chip-click">click ×3</span> <span class="chip chip-scroll">scroll 45%</span></td>
+              <td>1m 18s</td>
+              <td><span class="chip chip-abandoned">Bounced</span></td>
+              <td>7 min ago</td>
+            </tr>
+            <tr>
+              <td><strong>tom@example.com</strong><div style="font-size:11px;color:#64748b">Returning · Lead</div></td>
+              <td><span class="chip chip-channel-email">Email click</span></td>
+              <td><span class="chip chip-click">click ×8</span> <span class="chip chip-scroll">scroll 100%</span></td>
+              <td>6m 22s</td>
+              <td><span class="chip chip-converted">Converted · $89</span></td>
+              <td>11 min ago</td>
+            </tr>
+            <tr>
+              <td><strong>anon_c4d2</strong><div style="font-size:11px;color:#64748b">First visit</div></td>
+              <td><span class="chip chip-channel-organic">Organic search</span></td>
+              <td><span class="chip chip-click">click ×2</span></td>
+              <td>0m 24s</td>
+              <td><span class="chip chip-abandoned">Bounced</span></td>
+              <td>14 min ago</td>
+            </tr>
+            <tr>
+              <td><strong>luis.f@…</strong><div style="font-size:11px;color:#64748b">Returning · Customer</div></td>
+              <td><span class="chip chip-channel-direct">Direct</span></td>
+              <td><span class="chip chip-form">form complete</span> <span class="chip chip-click">click ×5</span></td>
+              <td>4m 50s</td>
+              <td><span class="chip chip-converted">Converted · $189</span></td>
+              <td>22 min ago</td>
+            </tr>
+            <tr>
+              <td><strong>anon_e7c8</strong><div style="font-size:11px;color:#64748b">First visit</div></td>
+              <td><span class="chip chip-channel-paid">Paid search</span></td>
+              <td><span class="chip chip-click">click ×4</span> <span class="chip chip-scroll">scroll 60%</span></td>
+              <td>2m 11s</td>
+              <td><span class="chip chip-abandoned">Abandoned</span></td>
+              <td>31 min ago</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="demo-caption" id="caption"><span id="caption-text"></span></div>
+<div class="cursor-pulse" id="cursor-pulse"></div>
+
+<script>
+  window.setCaption = (text) => {
+    const cap = document.getElementById('caption');
+    const txt = document.getElementById('caption-text');
+    if (!text) { cap.classList.remove('visible'); return; }
+    txt.textContent = text;
+    cap.classList.remove('visible');
+    void cap.offsetWidth;
+    cap.classList.add('visible');
+  };
+
+  // Insert a fresh "rage click" session at the top — used by Playwright demo
+  window.insertRageClickSession = () => {
+    const tbody = document.getElementById('sessions-body');
+    const newRow = document.createElement('tr');
+    newRow.className = 'highlight';
+    newRow.style.animation = 'captionIn 0.5s ease-out';
+    newRow.innerHTML = `
+      <td><strong>anon_f9b3</strong><div style="font-size:11px;color:#64748b">First visit · Live now</div></td>
+      <td><span class="chip chip-channel-organic">Organic search</span></td>
+      <td>
+        <span class="chip chip-rage">rage_click ×3</span>
+        <span class="chip chip-form">form focus</span>
+        <span class="chip chip-click">click ×7</span>
+      </td>
+      <td>1m 02s</td>
+      <td><span class="chip chip-abandoned">Active</span></td>
+      <td>just now</td>
+    `;
+    tbody.insertBefore(newRow, tbody.firstChild);
+  };
+</script>
+
+</body>
+</html>
