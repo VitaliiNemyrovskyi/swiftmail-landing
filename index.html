@@ -261,71 +261,107 @@
     .section-light .pair-body { color: var(--light-muted); }
 
     /* THE PROBLEM — animated browser scene */
-    .problem-scene { max-width: 720px; margin: 3rem auto 0; position: relative; }
-    .ps-browser { background: #fff; border-radius: 12px; box-shadow: 0 24px 64px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.04); overflow: hidden; aspect-ratio: 16/10; position: relative; border: 1px solid var(--border-light); }
-    .ps-browser-bar { background: #f3f4f6; padding: 8px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border-light); }
-    .ps-bar-dot { width: 9px; height: 9px; border-radius: 50%; background: #d4d4d4; flex-shrink: 0; }
+    .problem-scene { max-width: 820px; margin: 3rem auto 0; position: relative; }
+    .ps-browser { background: #fff; border-radius: 14px; box-shadow: 0 32px 80px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.05); overflow: hidden; aspect-ratio: 16/10; position: relative; border: 1px solid var(--border-light); }
+
+    /* Browser chrome */
+    .ps-browser-bar { background: #f3f4f6; padding: 9px 14px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid var(--border-light); }
+    .ps-bar-dot { width: 10px; height: 10px; border-radius: 50%; background: #d4d4d4; flex-shrink: 0; }
     .ps-bar-dot:nth-child(1) { background: #ff5f57; }
     .ps-bar-dot:nth-child(2) { background: #febc2e; }
     .ps-bar-dot:nth-child(3) { background: #28c840; }
-    .ps-bar-url { background: #fff; flex: 1; padding: 4px 12px; border-radius: 4px; font: 11px/1 'SF Mono', Monaco, monospace; color: #6b7280; margin-left: 6px; }
-    .ps-browser-content { padding: 24px 28px; }
-    .ps-h1 { font: 700 16px 'Plus Jakarta Sans', sans-serif; color: #191c1e; margin-bottom: 16px; }
-    .ps-product { display: flex; gap: 18px; align-items: flex-start; }
-    .ps-product-img { width: 100px; height: 100px; background: linear-gradient(135deg, #c9d4cf, #8da89a); border-radius: 8px; flex-shrink: 0; position: relative; }
-    .ps-product-img::after { content: '👟'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; opacity: 0.6; }
-    .ps-product-info { flex: 1; padding-top: 4px; }
-    .ps-line { height: 9px; background: #e5e7eb; border-radius: 2px; margin-bottom: 8px; }
-    .ps-line-w70 { width: 70%; }
-    .ps-line-w40 { width: 40%; }
-    .ps-product-price { font: 800 18px 'Plus Jakarta Sans', sans-serif; color: var(--orange); margin: 10px 0; }
-    .ps-cta { background: #0a3a2a; color: #fff; padding: 7px 16px; border-radius: 6px; font: 600 12px 'Inter', sans-serif; border: 0; }
+    .ps-bar-url { background: #fff; flex: 1; padding: 4px 12px; border-radius: 4px; font: 11px/1 'SF Mono', Monaco, monospace; color: #6b7280; margin-left: 8px; border: 1px solid #e5e7eb; }
 
-    /* Cursor — moves around then exits */
-    .ps-cursor { position: absolute; width: 18px; height: 18px; pointer-events: none; z-index: 10; opacity: 1; left: 30%; top: 70%; animation: psCursorPath 9s ease-in-out infinite; }
-    .ps-cursor::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 0; border-style: solid; border-width: 0 6px 14px 0; border-color: transparent #1a1a1a transparent transparent; transform: rotate(20deg); filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.3)); }
+    /* Shop nav inside the page */
+    .ps-shop-header { display: flex; align-items: center; padding: 12px 20px; border-bottom: 1px solid #f3f4f6; gap: 18px; }
+    .ps-shop-logo { font: 800 italic 14px 'Plus Jakarta Sans', sans-serif; color: #0a3a2a; letter-spacing: -0.02em; }
+    .ps-shop-logo::before { content: '◆'; color: #fdd835; margin-right: 4px; font-size: 11px; }
+    .ps-shop-nav { display: flex; gap: 14px; flex: 1; }
+    .ps-shop-nav a { font: 500 11px 'Inter', sans-serif; color: #1a1a1a; }
+    .ps-shop-cart { display: flex; align-items: center; gap: 4px; font: 600 12px 'Inter', sans-serif; color: #1a1a1a; }
+    .ps-cart-icon { font-size: 14px; }
+    .ps-cart-badge { background: #0a3a2a; color: #fff; font: 700 9px 'Inter', sans-serif; padding: 2px 5px; border-radius: 8px; min-width: 14px; text-align: center; transition: transform 0.3s; }
+
+    /* Product layout */
+    .ps-browser-content { padding: 18px 22px; }
+    .ps-breadcrumb { font: 500 10px 'Inter', sans-serif; color: #94a3b8; margin-bottom: 10px; }
+    .ps-product { display: grid; grid-template-columns: 130px 1fr; gap: 18px; align-items: flex-start; }
+    .ps-product-img { width: 130px; height: 130px; background: linear-gradient(135deg, #c9d4cf 0%, #8da89a 100%); border-radius: 10px; flex-shrink: 0; position: relative; box-shadow: inset 0 -8px 16px rgba(0,0,0,0.08); }
+    .ps-product-img::after { content: '👟'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 64px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); }
+    .ps-product-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 6px; }
+    .ps-product-thumb { aspect-ratio: 1; background: linear-gradient(135deg, #c9d4cf, #8da89a); border-radius: 4px; opacity: 0.8; }
+    .ps-product-thumb.active { box-shadow: 0 0 0 2px var(--orange); opacity: 1; }
+    .ps-product-info { padding-top: 2px; min-width: 0; }
+    .ps-rating { display: flex; align-items: center; gap: 6px; font: 500 11px 'Inter', sans-serif; color: #6b7280; margin-bottom: 4px; }
+    .ps-rating-stars { color: #fdd835; letter-spacing: 1px; font-size: 12px; }
+    .ps-product-title { font: 800 18px 'Plus Jakarta Sans', sans-serif; color: #191c1e; letter-spacing: -0.02em; margin-bottom: 3px; }
+    .ps-product-subtitle { font: 500 11px 'Inter', sans-serif; color: #6b7280; margin-bottom: 10px; }
+    .ps-product-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+    .ps-product-price { font: 800 22px 'Plus Jakarta Sans', sans-serif; color: #0a3a2a; letter-spacing: -0.02em; }
+    .ps-product-price-old { font: 600 12px 'Inter', sans-serif; color: #94a3b8; text-decoration: line-through; }
+    .ps-product-badge { background: #dc2626; color: #fff; font: 700 9px 'Inter', sans-serif; padding: 2px 6px; border-radius: 3px; }
+    .ps-sizes { display: flex; gap: 5px; margin-bottom: 12px; }
+    .ps-size { width: 26px; height: 26px; border: 1px solid #e5e7eb; border-radius: 5px; display: flex; align-items: center; justify-content: center; font: 600 11px 'Inter', sans-serif; color: #1a1a1a; background: #fff; transition: all 0.2s; }
+    .ps-size.active { background: #0a3a2a; color: #fff; border-color: #0a3a2a; }
+    .ps-cta { background: #0a3a2a; color: #fff; padding: 10px 20px; border-radius: 6px; font: 700 13px 'Inter', sans-serif; border: 0; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(10, 58, 42, 0.2); }
+    .ps-cta.hovered { background: #062319; transform: scale(1.02); box-shadow: 0 6px 18px rgba(10, 58, 42, 0.35); }
+    .ps-trust-row { display: flex; gap: 14px; margin-top: 10px; font: 500 10px 'Inter', sans-serif; color: #6b7280; }
+
+    /* Real Mac-style cursor as inline SVG */
+    .ps-cursor { position: absolute; width: 22px; height: 22px; pointer-events: none; z-index: 20; opacity: 0; left: 22%; top: 75%; animation: psCursorPath 9s ease-in-out infinite; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
+    .ps-cursor svg { display: block; width: 22px; height: 22px; }
     @keyframes psCursorPath {
-      0%   { left: 28%; top: 70%; opacity: 0; }
-      4%   { opacity: 1; }
-      18%  { left: 50%; top: 60%; opacity: 1; }
-      30%  { left: 65%; top: 75%; opacity: 1; }
-      38%  { left: 65%; top: 75%; opacity: 1; }
-      42%  { left: 65%; top: 75%; opacity: 0; }
-      100% { left: 65%; top: 75%; opacity: 0; }
+      0%   { left: 22%; top: 90%; opacity: 0; }
+      5%   { left: 22%; top: 90%; opacity: 1; }
+      18%  { left: 18%; top: 55%; opacity: 1; }                  /* over product image */
+      32%  { left: 50%; top: 50%; opacity: 1; }                  /* over title/rating */
+      48%  { left: 36%; top: 78%; opacity: 1; }                  /* over Add to cart */
+      60%  { left: 36%; top: 78%; opacity: 1; }                  /* hover pause */
+      72%  { left: 95%; top: 10%; opacity: 1; }                  /* drift toward exit */
+      76%  { left: 100%; top: -5%; opacity: 0; }                 /* off screen */
+      100% { left: 100%; top: -5%; opacity: 0; }
     }
 
-    /* Ghost — appears when cursor exits */
-    .ps-ghost { position: absolute; left: 65%; top: 75%; transform: translate(-50%, -50%); font-size: 28px; opacity: 0; animation: psGhostFloat 9s ease-in-out infinite; pointer-events: none; }
+    /* Cart count animates 0 → 1 in sync with cursor "click" — but visitor still hesitates and leaves */
+    /* Hover state on Add-to-cart button */
+    .ps-cta { animation: psCtaHover 9s ease-in-out infinite; }
+    @keyframes psCtaHover {
+      0%, 47% { background: #0a3a2a; transform: scale(1); box-shadow: 0 4px 12px rgba(10, 58, 42, 0.2); }
+      55%, 65% { background: #062319; transform: scale(1.03); box-shadow: 0 8px 22px rgba(10, 58, 42, 0.4); }
+      72%, 100% { background: #0a3a2a; transform: scale(1); box-shadow: 0 4px 12px rgba(10, 58, 42, 0.2); }
+    }
+
+    /* Ghost — appears at the Add to Cart position (where cursor died) */
+    .ps-ghost { position: absolute; left: 36%; top: 78%; transform: translate(-50%, -50%); font-size: 32px; opacity: 0; animation: psGhostFloat 9s ease-in-out infinite; pointer-events: none; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); z-index: 15; }
     @keyframes psGhostFloat {
-      0%, 38%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
-      48%       { opacity: 0.85; transform: translate(-50%, -50%) scale(1); }
-      55%       { opacity: 0.85; transform: translate(-50%, -90%) scale(1); }
-      65%       { opacity: 0; transform: translate(-50%, -160%) scale(0.7); }
-      100%      { opacity: 0; transform: translate(-50%, -160%) scale(0.7); }
+      0%, 72%   { opacity: 0; transform: translate(-50%, -30%) scale(0.6); }
+      78%       { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
+      85%       { opacity: 0.9; transform: translate(-50%, -110%) scale(1); }
+      94%, 100% { opacity: 0; transform: translate(-50%, -200%) scale(0.7); }
     }
 
-    /* AI badge — slides in last */
-    .ps-ai-badge { position: absolute; bottom: 18px; right: 18px; background: linear-gradient(135deg, var(--orange), var(--orange-light)); color: #fff; padding: 12px 16px; border-radius: 12px; box-shadow: 0 12px 32px rgba(234,88,12,0.4); display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateX(40px) scale(0.95); animation: psAiSlideIn 9s ease-in-out infinite; max-width: 280px; }
+    /* AI badge — slides in last with pricing-hesitation explanation */
+    .ps-ai-badge { position: absolute; bottom: 16px; right: 16px; background: linear-gradient(135deg, var(--orange), var(--orange-light)); color: #fff; padding: 12px 16px; border-radius: 12px; box-shadow: 0 12px 32px rgba(234,88,12,0.45); display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px) scale(0.95); animation: psAiSlideIn 9s ease-in-out infinite; max-width: 290px; z-index: 12; }
     .ps-ai-icon { background: rgba(255,255,255,0.22); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
     .ps-ai-reason { font: 700 13px 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
     .ps-ai-action { font: 500 11px 'Inter', sans-serif; opacity: 0.92; margin-top: 2px; }
     @keyframes psAiSlideIn {
-      0%, 65%   { opacity: 0; transform: translateX(40px) scale(0.95); }
-      72%, 95%  { opacity: 1; transform: translateX(0) scale(1); }
-      100%      { opacity: 0; transform: translateX(40px) scale(0.95); }
+      0%, 78%   { opacity: 0; transform: translateY(20px) scale(0.95); }
+      85%, 96%  { opacity: 1; transform: translateY(0) scale(1); }
+      100%      { opacity: 0; transform: translateY(20px) scale(0.95); }
     }
 
     /* Narration — captions sync with scene */
-    .problem-narration { position: relative; height: 28px; margin: 1.5rem auto 0; max-width: 720px; text-align: center; font-size: 0.9375rem; color: var(--light-muted); font-style: italic; }
+    .problem-narration { position: relative; height: 28px; margin: 1.5rem auto 0; max-width: 820px; text-align: center; font-size: 0.9375rem; color: var(--light-muted); font-style: italic; }
     .pn-step { position: absolute; left: 0; right: 0; opacity: 0; animation: pnFade 9s ease-in-out infinite; }
     .pn-step-1 { animation-delay: 0s; }
     .pn-step-2 { animation-delay: 3s; }
     .pn-step-3 { animation-delay: 6s; }
     @keyframes pnFade {
-      0%, 33%   { opacity: 1; }
-      36%, 100% { opacity: 0; }
+      0%, 30%   { opacity: 1; }
+      33%, 100% { opacity: 0; }
     }
-    @media (max-width: 768px) { .problem-scene { margin-top: 2rem; } .ps-product { flex-direction: column; align-items: stretch; } .ps-product-img { width: 60px; height: 60px; } .ps-ai-badge { bottom: 12px; right: 12px; padding: 8px 12px; max-width: 200px; } .ps-ai-reason { font-size: 12px; } .ps-ai-action { font-size: 10px; } }
+    @media (max-width: 768px) { .problem-scene { margin-top: 2rem; } .ps-shop-nav { display: none; } .ps-product { grid-template-columns: 90px 1fr; gap: 12px; } .ps-product-img { width: 90px; height: 90px; } .ps-product-img::after { font-size: 44px; } .ps-product-title { font-size: 15px; } .ps-product-price { font-size: 18px; } .ps-ai-badge { bottom: 12px; right: 12px; padding: 8px 12px; max-width: 200px; } .ps-ai-reason { font-size: 12px; } .ps-ai-action { font-size: 10px; } }
 
     /* FEATURE BLOCK pattern */
     .feature-block { padding: 6rem 0; }
@@ -667,21 +703,69 @@
             <span class="ps-bar-dot"></span>
             <span class="ps-bar-dot"></span>
             <span class="ps-bar-dot"></span>
-            <span class="ps-bar-url">store.example.com / product</span>
+            <span class="ps-bar-url">peakathletic.com / products / trailrunner-pro</span>
+          </div>
+          <div class="ps-shop-header">
+            <span class="ps-shop-logo">PEAK</span>
+            <nav class="ps-shop-nav">
+              <a>Running</a>
+              <a>Training</a>
+              <a>Yoga</a>
+              <a>Sale</a>
+            </nav>
+            <span class="ps-shop-cart">
+              <span class="ps-cart-icon">🛒</span>
+              <span class="ps-cart-badge">0</span>
+            </span>
           </div>
           <div class="ps-browser-content">
-            <div class="ps-h1">Your Shopify Store</div>
+            <div class="ps-breadcrumb">Home / Running / Shoes / TrailRunner Pro</div>
             <div class="ps-product">
-              <div class="ps-product-img"></div>
+              <div>
+                <div class="ps-product-img"></div>
+                <div class="ps-product-thumbs">
+                  <div class="ps-product-thumb active"></div>
+                  <div class="ps-product-thumb"></div>
+                  <div class="ps-product-thumb"></div>
+                  <div class="ps-product-thumb"></div>
+                </div>
+              </div>
               <div class="ps-product-info">
-                <div class="ps-line ps-line-w70"></div>
-                <div class="ps-line ps-line-w40"></div>
-                <div class="ps-product-price">$149</div>
-                <button class="ps-cta">Add to cart</button>
+                <div class="ps-rating">
+                  <span class="ps-rating-stars">★★★★★</span>
+                  <span>4.8 · 412 reviews</span>
+                </div>
+                <div class="ps-product-title">TrailRunner Pro</div>
+                <div class="ps-product-subtitle">All-terrain · Carbon plate · Vibram outsole</div>
+                <div class="ps-product-price-row">
+                  <span class="ps-product-price">$149</span>
+                  <span class="ps-product-price-old">$189</span>
+                  <span class="ps-product-badge">-21%</span>
+                </div>
+                <div class="ps-sizes">
+                  <span class="ps-size">8</span>
+                  <span class="ps-size">9</span>
+                  <span class="ps-size active">10</span>
+                  <span class="ps-size">11</span>
+                  <span class="ps-size">12</span>
+                </div>
+                <button class="ps-cta">Add to cart · $149</button>
+                <div class="ps-trust-row">
+                  <span>✓ Free shipping</span>
+                  <span>✓ 30-day returns</span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="ps-cursor"></div>
+          <div class="ps-cursor">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 3 L5 21 L10 17 L13 23 L16 22 L13 16 L19 16 Z"
+                    fill="#ffffff"
+                    stroke="#1a1a1a"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"/>
+            </svg>
+          </div>
           <div class="ps-ghost">👻</div>
           <div class="ps-ai-badge">
             <div class="ps-ai-icon">✦</div>
