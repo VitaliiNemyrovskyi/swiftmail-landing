@@ -304,7 +304,7 @@
     .ps-shop-logo { font: 800 italic 14px 'Plus Jakarta Sans', sans-serif; color: #0a3a2a; letter-spacing: -0.02em; }
     .ps-shop-logo::before { content: '◆'; color: #fdd835; margin-right: 4px; font-size: 11px; }
     .ps-shop-nav { display: flex; gap: 14px; flex: 1; }
-    .ps-shop-nav a { font: 500 11px 'Inter', sans-serif; color: #1a1a1a; }
+    .ps-shop-nav > * { font: 500 11px 'Inter', sans-serif; color: #1a1a1a; }
     .ps-shop-cart { display: flex; align-items: center; gap: 4px; font: 600 12px 'Inter', sans-serif; color: #1a1a1a; }
     .ps-cart-icon { font-size: 14px; }
     .ps-cart-badge { background: #0a3a2a; color: #fff; font: 700 9px 'Inter', sans-serif; padding: 2px 5px; border-radius: 8px; min-width: 14px; text-align: center; transition: transform 0.3s; }
@@ -847,7 +847,7 @@
 
   <!-- ═══ NAVBAR ═══ -->
   <nav class="navbar" id="navbar">
-    <a href="#" class="nav-logo"><img src="assets/logo-orange.svg" alt="SwiftMail" class="nav-logo-icon">SwiftMail</a>
+    <a href="/" class="nav-logo"><img src="assets/logo-orange.svg" alt="SwiftMail" class="nav-logo-icon">SwiftMail</a>
     <div class="nav-links" id="nav-links">
       <a href="#features">Features</a>
       <a href="#beta">Open Beta</a>
@@ -932,10 +932,10 @@
           <div class="ps-shop-header">
             <span class="ps-shop-logo">PEAK</span>
             <nav class="ps-shop-nav">
-              <a>Running</a>
-              <a>Training</a>
-              <a>Yoga</a>
-              <a>Sale</a>
+              <span>Running</span>
+              <span>Training</span>
+              <span>Yoga</span>
+              <span>Sale</span>
             </nav>
             <span class="ps-shop-cart">
               <span class="ps-cart-icon">🛒</span>
@@ -1125,10 +1125,10 @@
             <div class="ps-shop-header">
               <span class="ps-shop-logo">PEAK</span>
               <nav class="ps-shop-nav">
-                <a>Running</a>
-                <a>Training</a>
-                <a>Outdoor</a>
-                <a>Sale</a>
+                <span>Running</span>
+                <span>Training</span>
+                <span>Outdoor</span>
+                <span>Sale</span>
               </nav>
               <span class="ps-shop-cart">
                 <span class="ps-cart-icon">🛒</span>
