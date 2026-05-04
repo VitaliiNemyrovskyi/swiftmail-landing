@@ -54,6 +54,25 @@
       font-display: swap;
       src: url(fonts/inter-var-latin.woff2) format('woff2');
     }
+    /* Metric-matched system-font fallbacks: render in fallback at FCP, then
+       seamlessly swap to the web font with no layout shift. Stops Lighthouse
+       from pushing LCP to the post-swap paint moment. */
+    @font-face {
+      font-family: 'Plus Jakarta Sans Fallback';
+      src: local('Arial');
+      ascent-override: 96.3%;
+      descent-override: 25.4%;
+      line-gap-override: 0%;
+      size-adjust: 102.4%;
+    }
+    @font-face {
+      font-family: 'Inter Fallback';
+      src: local('Arial');
+      ascent-override: 90%;
+      descent-override: 22.43%;
+      line-gap-override: 0%;
+      size-adjust: 107.64%;
+    }
   </style>
 
   <!-- Critical CSS — navbar + hero -->
@@ -72,8 +91,8 @@
       --light-text: #191c1e;
       --light-muted: #64748b;
       --border-light: #e5e7eb;
-      --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
-      --font-body: 'Inter', system-ui, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', system-ui, sans-serif;
+      --font-body: 'Inter', 'Inter Fallback', system-ui, sans-serif;
     }
     *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
