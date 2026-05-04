@@ -457,6 +457,34 @@
   <link rel="stylesheet" href="../css/landing-features.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="../css/landing-features.css"></noscript>
 
+
+<style>
+  /* Feature card grid + visual cards */
+  .feat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .feat-card { display: flex; flex-direction: column; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 16px; text-decoration: none; color: var(--light-text); overflow: hidden; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s; position: relative; }
+  .feat-card:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(234,88,12,0.18), 0 6px 20px rgba(0,0,0,0.06); border-color: rgba(234,88,12,0.4); }
+  .feat-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--orange-light)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 2; }
+  .feat-card:hover::after { transform: scaleX(1); }
+
+  .feat-card-visual { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; color: var(--orange); position: relative; overflow: hidden; }
+  .feat-card-visual svg { width: 100px; height: 100px; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); filter: drop-shadow(0 4px 12px rgba(234,88,12,0.18)); }
+  .feat-card:hover .feat-card-visual svg { transform: scale(1.08); }
+  .feat-card-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.5), transparent 60%); pointer-events: none; }
+
+  .feat-card-body { padding: 1.5rem 1.5rem 1.625rem; display: flex; flex-direction: column; flex: 1; gap: 0.5rem; }
+  .feat-card-eyebrow { font: 700 0.6875rem var(--font-body); color: var(--orange); letter-spacing: 0.14em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
+  .feat-card-eyebrow::before { content: ''; width: 18px; height: 2px; background: currentColor; border-radius: 1px; }
+  .feat-card-title { font: 800 1.25rem var(--font-heading); color: var(--light-text); letter-spacing: -0.02em; line-height: 1.2; margin: 0; }
+  .feat-card-title-em { background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .feat-card-desc { font-size: 0.9375rem; line-height: 1.55; color: var(--light-muted); margin: 0; flex: 1; }
+  .feat-card-cta { font: 700 0.875rem var(--font-body); color: var(--orange); display: inline-flex; align-items: center; gap: 6px; margin-top: 0.5rem; transition: gap 0.2s; }
+  .feat-card:hover .feat-card-cta { gap: 10px; }
+
+  @media (max-width: 768px) {
+    .feat-grid { grid-template-columns: 1fr; }
+    .feat-card-visual svg { width: 84px; height: 84px; }
+  }
+</style>
 </head>
 <body>
 
@@ -501,49 +529,169 @@
 
     <section class="section-light" style="padding: 3rem 0 6rem;">
       <div class="container">
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
-          <a href="behavioral-capture/" style="display: block; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 1.75rem 1.5rem; text-decoration: none; color: var(--light-text); transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(234,88,12,0.12)';this.style.borderColor='rgba(234,88,12,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(0,0,0,0.06)'">
-            <div style="font: 700 0.6875rem var(--font-body); color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;">FUNCIÓN 01</div>
-            <h3 style="font: 800 1.25rem var(--font-heading); color: var(--light-text); letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.2;">Captura cada clic. <span style="background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Hasta los enfadados.</span></h3>
-            <p style="font-size: 0.9375rem; line-height: 1.55; color: var(--light-muted); margin-bottom: 1rem;">La mayoría de herramientas de analítica cuentan páginas vistas y rebotes. SwiftMail observa la textura: profundidad de scroll, vacilación al pasar el cursor, clics de rabia, formularios abandonados, copia al portapapeles, intención de sali…</p>
-            <span style="font: 700 0.875rem var(--font-body); color: var(--orange);">Leer más →</span>
-          </a>
-          <a href="ai-explanation/" style="display: block; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 1.75rem 1.5rem; text-decoration: none; color: var(--light-text); transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(234,88,12,0.12)';this.style.borderColor='rgba(234,88,12,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(0,0,0,0.06)'">
-            <div style="font: 700 0.6875rem var(--font-body); color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;">FUNCIÓN 02</div>
-            <h3 style="font: 800 1.25rem var(--font-heading); color: var(--light-text); letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.2;">Deja de adivinar. <span style="background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Obtén el porqué.</span></h3>
-            <p style="font-size: 0.9375rem; line-height: 1.55; color: var(--light-muted); margin-bottom: 1rem;">Cada sesión abandonada recibe una razón estructurada y un nivel de confianza — no solo un dato de "se fueron". La IA lee toda la línea de tiempo de eventos, lo resuelve en una catego…</p>
-            <span style="font: 700 0.875rem var(--font-body); color: var(--orange);">Leer más →</span>
-          </a>
-          <a href="multichannel/" style="display: block; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 1.75rem 1.5rem; text-decoration: none; color: var(--light-text); transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(234,88,12,0.12)';this.style.borderColor='rgba(234,88,12,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(0,0,0,0.06)'">
-            <div style="font: 700 0.6875rem var(--font-body); color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;">FUNCIÓN 03</div>
-            <h3 style="font: 800 1.25rem var(--font-heading); color: var(--light-text); letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.2;">Un solo trigger. <span style="background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Cuatro canales.</span></h3>
-            <p style="font-size: 0.9375rem; line-height: 1.55; color: var(--light-muted); margin-bottom: 1rem;">Email, SMS, push web, popup en el sitio — todo se ramifica desde una regla de comportamiento. Sin middleware, sin código pegamento. La lógica condicional manda los carritos de alto valor a SMS y el res…</p>
-            <span style="font: 700 0.875rem var(--font-body); color: var(--orange);">Leer más →</span>
-          </a>
-          <a href="customer-journey/" style="display: block; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 1.75rem 1.5rem; text-decoration: none; color: var(--light-text); transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(234,88,12,0.12)';this.style.borderColor='rgba(234,88,12,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(0,0,0,0.06)'">
-            <div style="font: 700 0.6875rem var(--font-body); color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;">FUNCIÓN 04</div>
-            <h3 style="font: 800 1.25rem var(--font-heading); color: var(--light-text); letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.2;">Mira el camino completo. <span style="background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">En cada dispositivo.</span></h3>
-            <p style="font-size: 0.9375rem; line-height: 1.55; color: var(--light-muted); margin-bottom: 1rem;">Cada visitante se cose en un único customer journey a través de sesiones, dispositivos y canales. Alterna modelos de atribución — first-touch, last-touch, time-decay, posi…</p>
-            <span style="font: 700 0.875rem var(--font-body); color: var(--orange);">Leer más →</span>
-          </a>
-          <a href="realtime-intervention/" style="display: block; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 1.75rem 1.5rem; text-decoration: none; color: var(--light-text); transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(234,88,12,0.12)';this.style.borderColor='rgba(234,88,12,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(0,0,0,0.06)'">
-            <div style="font: 700 0.6875rem var(--font-body); color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;">FUNCIÓN 05</div>
-            <h3 style="font: 800 1.25rem var(--font-heading); color: var(--light-text); letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.2;">No esperes hasta mañana. <span style="background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Actúa en el momento.</span></h3>
-            <p style="font-size: 0.9375rem; line-height: 1.55; color: var(--light-muted); margin-bottom: 1rem;">Cuando alguien mueve el cursor para salir, abandona un formulario o se queda en silencio en la página de precios, SwiftMail interviene en menos de un segundo. Popup personalizado, email de recuperación o…</p>
-            <span style="font: 700 0.875rem var(--font-body); color: var(--orange);">Leer más →</span>
-          </a>
-          <a href="integrations/" style="display: block; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 1.75rem 1.5rem; text-decoration: none; color: var(--light-text); transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(234,88,12,0.12)';this.style.borderColor='rgba(234,88,12,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(0,0,0,0.06)'">
-            <div style="font: 700 0.6875rem var(--font-body); color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;">FUNCIÓN 06</div>
-            <h3 style="font: 800 1.25rem var(--font-heading); color: var(--light-text); letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.2;">Conecta tu tienda. <span style="background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Sincronización en 30 segundos.</span></h3>
-            <p style="font-size: 0.9375rem; line-height: 1.55; color: var(--light-muted); margin-bottom: 1rem;">OAuth de un clic con Shopify, WooCommerce y BigCommerce. Clientes, pedidos, productos y catálogo completo se sincronizan en tiempo real. Reconocimiento entre dispositivos integ…</p>
-            <span style="font: 700 0.875rem var(--font-body); color: var(--orange);">Leer más →</span>
-          </a>
-          <a href="email-setup/" style="display: block; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 1.75rem 1.5rem; text-decoration: none; color: var(--light-text); transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(234,88,12,0.12)';this.style.borderColor='rgba(234,88,12,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(0,0,0,0.06)'">
-            <div style="font: 700 0.6875rem var(--font-body); color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;">FUNCIÓN 07</div>
-            <h3 style="font: 800 1.25rem var(--font-heading); color: var(--light-text); letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.2;">Configuración de email. <span style="background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">En 45 segundos.</span></h3>
-            <p style="font-size: 0.9375rem; line-height: 1.55; color: var(--light-muted); margin-bottom: 1rem;">La mayoría de herramientas de email te hacen pelear con registros DNS durante una semana. SwiftMail gestiona SPF, DKIM y DMARC mediante APIs a Cloudflare, GoDaddy y Route53. El calentamiento de IP corre…</p>
-            <span style="font: 700 0.875rem var(--font-body); color: var(--orange);">Leer más →</span>
-          </a>
+        <div class="feat-grid">
+        <a href="behavioral-capture/" class="feat-card">
+          <div class="feat-card-visual" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);">
+            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- cursor + click ripples conveying behavioral capture -->
+    <path d="M28 20 L28 56 L36 50 L41 60 L46 58 L41 48 L52 48 Z" fill="currentColor" fill-opacity="0.15"/>
+    <circle cx="56" cy="22" r="4"/>
+    <circle cx="56" cy="22" r="9" stroke-opacity="0.4" stroke-dasharray="2 4"/>
+    <circle cx="56" cy="22" r="14" stroke-opacity="0.2" stroke-dasharray="2 6"/>
+    <line x1="14" y1="14" x2="18" y2="18" stroke-opacity="0.5"/>
+    <line x1="20" y1="14" x2="22" y2="14" stroke-opacity="0.5"/>
+    <line x1="14" y1="22" x2="14" y2="20" stroke-opacity="0.5"/>
+  </svg>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-card-eyebrow">FUNCIÓN 01</span>
+            <h3 class="feat-card-title">Captura cada clic. <span class="feat-card-title-em">Hasta los enfadados.</span></h3>
+            <p class="feat-card-desc">La mayoría de herramientas de analítica cuentan páginas vistas y rebotes. SwiftMail observa la textura: profundidad de scroll, vacilación al pasar el cursor, clics de rabia, formularios abandonados, copia al portapapeles, intención de sali…</p>
+            <span class="feat-card-cta">Leer más →</span>
+          </div>
+        </a>
+        <a href="ai-explanation/" class="feat-card">
+          <div class="feat-card-visual" style="background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);">
+            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- speech bubble with sparkle indicating AI insight -->
+    <path d="M16 26 L52 26 Q58 26 58 32 L58 50 Q58 56 52 56 L34 56 L24 64 L24 56 L16 56 Q10 56 10 50 L10 32 Q10 26 16 26 Z" fill="currentColor" fill-opacity="0.08"/>
+    <line x1="20" y1="36" x2="48" y2="36" stroke-opacity="0.5"/>
+    <line x1="20" y1="44" x2="38" y2="44" stroke-opacity="0.5"/>
+    <!-- sparkle -->
+    <path d="M64 14 L64 22 M60 18 L68 18" stroke-width="2.5"/>
+    <path d="M70 30 L70 34 M68 32 L72 32"/>
+  </svg>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-card-eyebrow">FUNCIÓN 02</span>
+            <h3 class="feat-card-title">Deja de adivinar. <span class="feat-card-title-em">Obtén el porqué.</span></h3>
+            <p class="feat-card-desc">Cada sesión abandonada recibe una razón estructurada y un nivel de confianza — no solo un dato de "se fueron". La IA lee toda la línea de tiempo de eventos, lo resuelve en una catego…</p>
+            <span class="feat-card-cta">Leer más →</span>
+          </div>
+        </a>
+        <a href="multichannel/" class="feat-card">
+          <div class="feat-card-visual" style="background: linear-gradient(135deg, #fff7ed 0%, #fde68a 100%);">
+            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- one trigger fanning out to 4 channels -->
+    <circle cx="18" cy="40" r="6" fill="currentColor" fill-opacity="0.18"/>
+    <circle cx="18" cy="40" r="6"/>
+    <line x1="24" y1="40" x2="56" y2="16"/>
+    <line x1="24" y1="40" x2="56" y2="32"/>
+    <line x1="24" y1="40" x2="56" y2="48"/>
+    <line x1="24" y1="40" x2="56" y2="64"/>
+    <!-- 4 channel nodes -->
+    <rect x="56" y="11" width="14" height="10" rx="2" fill="currentColor" fill-opacity="0.12"/>
+    <rect x="56" y="11" width="14" height="10" rx="2"/>
+    <rect x="56" y="27" width="14" height="10" rx="2" fill="currentColor" fill-opacity="0.12"/>
+    <rect x="56" y="27" width="14" height="10" rx="2"/>
+    <rect x="56" y="43" width="14" height="10" rx="2" fill="currentColor" fill-opacity="0.12"/>
+    <rect x="56" y="43" width="14" height="10" rx="2"/>
+    <rect x="56" y="59" width="14" height="10" rx="2" fill="currentColor" fill-opacity="0.12"/>
+    <rect x="56" y="59" width="14" height="10" rx="2"/>
+  </svg>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-card-eyebrow">FUNCIÓN 03</span>
+            <h3 class="feat-card-title">Un solo trigger. <span class="feat-card-title-em">Cuatro canales.</span></h3>
+            <p class="feat-card-desc">Email, SMS, push web, popup en el sitio — todo se ramifica desde una regla de comportamiento. Sin middleware, sin código pegamento. La lógica condicional manda los carritos de alto valor a SMS y el res…</p>
+            <span class="feat-card-cta">Leer más →</span>
+          </div>
+        </a>
+        <a href="customer-journey/" class="feat-card">
+          <div class="feat-card-visual" style="background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);">
+            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- timeline of touchpoints across sessions -->
+    <path d="M8 40 Q22 24 36 40 T64 40 T76 40" stroke-opacity="0.4"/>
+    <circle cx="12" cy="40" r="5" fill="currentColor" fill-opacity="0.15"/>
+    <circle cx="12" cy="40" r="5"/>
+    <circle cx="32" cy="40" r="5" fill="currentColor" fill-opacity="0.15"/>
+    <circle cx="32" cy="40" r="5"/>
+    <circle cx="52" cy="40" r="5" fill="currentColor" fill-opacity="0.15"/>
+    <circle cx="52" cy="40" r="5"/>
+    <circle cx="72" cy="40" r="5" fill="currentColor"/>
+    <!-- journey labels above -->
+    <line x1="12" y1="32" x2="12" y2="20" stroke-opacity="0.4" stroke-dasharray="2 2"/>
+    <line x1="72" y1="32" x2="72" y2="20" stroke-opacity="0.4" stroke-dasharray="2 2"/>
+    <text x="12" y="16" font-family="Inter, sans-serif" font-size="7" fill="currentColor" stroke="none" text-anchor="middle" font-weight="700">First</text>
+    <text x="72" y="16" font-family="Inter, sans-serif" font-size="7" fill="currentColor" stroke="none" text-anchor="middle" font-weight="700">Last</text>
+  </svg>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-card-eyebrow">FUNCIÓN 04</span>
+            <h3 class="feat-card-title">Mira el camino completo. <span class="feat-card-title-em">En cada dispositivo.</span></h3>
+            <p class="feat-card-desc">Cada visitante se cose en un único customer journey a través de sesiones, dispositivos y canales. Alterna modelos de atribución — first-touch, last-touch, time-decay, posi…</p>
+            <span class="feat-card-cta">Leer más →</span>
+          </div>
+        </a>
+        <a href="realtime-intervention/" class="feat-card">
+          <div class="feat-card-visual" style="background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);">
+            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- lightning bolt + intervention popup -->
+    <path d="M30 10 L14 38 L26 38 L22 64 L46 32 L34 32 L38 10 Z" fill="currentColor" fill-opacity="0.18"/>
+    <path d="M30 10 L14 38 L26 38 L22 64 L46 32 L34 32 L38 10 Z"/>
+    <!-- popup card on the side -->
+    <rect x="50" y="42" width="22" height="22" rx="3" fill="currentColor" fill-opacity="0.08"/>
+    <rect x="50" y="42" width="22" height="22" rx="3"/>
+    <line x1="54" y1="49" x2="68" y2="49" stroke-opacity="0.5"/>
+    <line x1="54" y1="54" x2="64" y2="54" stroke-opacity="0.5"/>
+    <rect x="54" y="58" width="10" height="3" rx="1" fill="currentColor"/>
+  </svg>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-card-eyebrow">FUNCIÓN 05</span>
+            <h3 class="feat-card-title">No esperes hasta mañana. <span class="feat-card-title-em">Actúa en el momento.</span></h3>
+            <p class="feat-card-desc">Cuando alguien mueve el cursor para salir, abandona un formulario o se queda en silencio en la página de precios, SwiftMail interviene en menos de un segundo. Popup personalizado, email de recuperación o…</p>
+            <span class="feat-card-cta">Leer más →</span>
+          </div>
+        </a>
+        <a href="integrations/" class="feat-card">
+          <div class="feat-card-visual" style="background: linear-gradient(135deg, #ffedd5 0%, #fdba74 100%);">
+            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- 3 platforms connecting to central hub -->
+    <rect x="8" y="16" width="18" height="12" rx="2" fill="currentColor" fill-opacity="0.1"/>
+    <rect x="8" y="16" width="18" height="12" rx="2"/>
+    <rect x="8" y="34" width="18" height="12" rx="2" fill="currentColor" fill-opacity="0.1"/>
+    <rect x="8" y="34" width="18" height="12" rx="2"/>
+    <rect x="8" y="52" width="18" height="12" rx="2" fill="currentColor" fill-opacity="0.1"/>
+    <rect x="8" y="52" width="18" height="12" rx="2"/>
+    <!-- connecting lines -->
+    <path d="M26 22 Q40 22 50 38" stroke-opacity="0.5"/>
+    <path d="M26 40 L50 40" stroke-opacity="0.5"/>
+    <path d="M26 58 Q40 58 50 42" stroke-opacity="0.5"/>
+    <!-- hub -->
+    <circle cx="60" cy="40" r="12" fill="currentColor" fill-opacity="0.18"/>
+    <circle cx="60" cy="40" r="12"/>
+    <path d="M55 36 L57 41 L62 39 L60 44 L65 46" stroke-width="2.5"/>
+  </svg>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-card-eyebrow">FUNCIÓN 06</span>
+            <h3 class="feat-card-title">Conecta tu tienda. <span class="feat-card-title-em">Sincronización en 30 segundos.</span></h3>
+            <p class="feat-card-desc">OAuth de un clic con Shopify, WooCommerce y BigCommerce. Clientes, pedidos, productos y catálogo completo se sincronizan en tiempo real. Reconocimiento entre dispositivos integ…</p>
+            <span class="feat-card-cta">Leer más →</span>
+          </div>
+        </a>
+        <a href="email-setup/" class="feat-card">
+          <div class="feat-card-visual" style="background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);">
+            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- envelope with shield/check mark = secured email -->
+    <rect x="12" y="22" width="44" height="32" rx="3" fill="currentColor" fill-opacity="0.08"/>
+    <rect x="12" y="22" width="44" height="32" rx="3"/>
+    <path d="M12 26 L34 42 L56 26"/>
+    <!-- shield with check on top-right -->
+    <path d="M52 44 L62 44 L62 54 Q62 60 57 62 Q52 60 52 54 Z" fill="white" stroke="white" stroke-width="3"/>
+    <path d="M52 44 L62 44 L62 54 Q62 60 57 62 Q52 60 52 54 Z" fill="currentColor" fill-opacity="0.2"/>
+    <path d="M52 44 L62 44 L62 54 Q62 60 57 62 Q52 60 52 54 Z"/>
+    <path d="M54 53 L56 55 L60 50" stroke-width="2"/>
+  </svg>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-card-eyebrow">FUNCIÓN 07</span>
+            <h3 class="feat-card-title">Configuración de email. <span class="feat-card-title-em">En 45 segundos.</span></h3>
+            <p class="feat-card-desc">La mayoría de herramientas de email te hacen pelear con registros DNS durante una semana. SwiftMail gestiona SPF, DKIM y DMARC mediante APIs a Cloudflare, GoDaddy y Route53. El calentamiento de IP corre…</p>
+            <span class="feat-card-cta">Leer más →</span>
+          </div>
+        </a>
         </div>
       </div>
     </section>
