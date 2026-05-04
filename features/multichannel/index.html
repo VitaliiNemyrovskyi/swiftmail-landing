@@ -11,43 +11,37 @@
     sm('init', 'pk_live_bea0d715ec2ca156ebe31e205c5364fc', { siteId: '2cff4622-a98a-455f-85c5-db0f3f827b25' });
   </script>
   <script src="https://app.swift-mail.app/sdk/sm.js" async></script>
-  <title>SwiftMail — Convert More Visitors with AI Marketing Automation</title>
-  <meta name="description" content="AI marketing automation that captures the signals every other tool misses — rage clicks, hesitation, form drops — explains why each visitor abandoned, and triggers email/SMS/push/popup automatically. Open beta: 100 testers, free 6 months.">
-  <link rel="canonical" href="https://swift-mail.app/">
-  <link rel="alternate" hreflang="en" href="https://swift-mail.app/">
-  <link rel="alternate" hreflang="es" href="https://swift-mail.app/es/">
-  <link rel="alternate" hreflang="fr" href="https://swift-mail.app/fr/">
-  <link rel="alternate" hreflang="de" href="https://swift-mail.app/de/">
-  <link rel="alternate" hreflang="pt" href="https://swift-mail.app/pt/">
-  <link rel="alternate" hreflang="x-default" href="https://swift-mail.app/">
+  <title>Multichannel triggers · One rule, four channels — SwiftMail</title>
+  <meta name="description" content="Email, SMS, web push, on-site popup — all fire from one behavior rule. No middleware, no glue code. Cooldowns and conditional routing built in.">
+  <link rel="canonical" href="https://swift-mail.app/features/multichannel/">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="SwiftMail — Convert More Visitors with AI Marketing Automation">
-  <meta property="og:description" content="AI marketing automation that captures rage clicks, hesitation, and form drops. AI explains why visitors leave, then triggers email/SMS/push/popup automatically. Open beta: 100 testers, 6 months free.">
+  <meta property="og:title" content="Multichannel triggers · One rule, four channels — SwiftMail">
+  <meta property="og:description" content="Email, SMS, web push, on-site popup — all fire from one behavior rule. No middleware, no glue code. Cooldowns and conditional routing built in.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://swift-mail.app/">
+  <meta property="og:url" content="https://swift-mail.app/features/multichannel/">
   <meta property="og:site_name" content="SwiftMail">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SwiftMail — Convert More Visitors with AI Marketing Automation">
-  <meta name="twitter:description" content="AI marketing automation built around behavior. Captures the signals other tools miss, AI explains the why, triggers email/SMS/push/popup. Open beta: 100 testers, 6 months free.">
+  <meta name="twitter:title" content="Multichannel triggers · One rule, four channels — SwiftMail">
+  <meta name="twitter:description" content="Email, SMS, web push, on-site popup — all fire from one behavior rule. No middleware, no glue code. Cooldowns and conditional routing built in.">
 
   <!-- Fonts (self-hosted, Latin-only subsets — 80 KB + 33 KB instead of 225 + 47) -->
-  <link rel="preload" href="fonts/plus-jakarta-sans-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../fonts/plus-jakarta-sans-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <style>
     @font-face {
       font-family: 'Plus Jakarta Sans';
       font-style: normal;
       font-weight: 700 900;
       font-display: swap;
-      src: url(fonts/plus-jakarta-sans-var-latin.woff2) format('woff2');
+      src: url(../../fonts/plus-jakarta-sans-var-latin.woff2) format('woff2');
     }
     @font-face {
       font-family: 'Inter';
       font-style: normal;
       font-weight: 400 600;
       font-display: swap;
-      src: url(fonts/inter-var-latin.woff2) format('woff2');
+      src: url(../../fonts/inter-var-latin.woff2) format('woff2');
     }
     /* Metric-matched system-font fallbacks: render in fallback at FCP, then
        seamlessly swap to the web font with no layout shift. Stops Lighthouse
@@ -299,9 +293,9 @@
 
   <!-- Note: @font-face declared inline above (Latin subset). fonts.css NOT loaded
        here — UK/JA pages still load it for their Cyrillic/CJK glyph coverage. -->
-  <link rel="stylesheet" href="css/style.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/animations.css"></noscript>
+  <link rel="stylesheet" href="../../css/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="../../css/animations.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/animations.css"></noscript>
 
   <!-- Section-specific styles -->
   <style>
@@ -454,16 +448,19 @@
     .lang-option:hover { background: rgba(255,255,255,0.04); color: var(--white); }
     .lang-option.active { color: var(--orange-light); }
   </style>
+  <link rel="stylesheet" href="../../css/landing-features.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../../css/landing-features.css"></noscript>
+
 </head>
 <body>
 
   <!-- ═══ NAVBAR ═══ -->
   <nav class="navbar" id="navbar">
-    <a href="/" class="nav-logo"><img src="assets/logo-orange.svg" alt="SwiftMail" class="nav-logo-icon">SwiftMail</a>
+    <a href="/" class="nav-logo"><img src="../../assets/logo-orange.svg" alt="SwiftMail" class="nav-logo-icon">SwiftMail</a>
     <div class="nav-links" id="nav-links">
       <a href="/features/">Features</a>
-      <a href="#beta">Open Beta</a>
-      <a href="#faq">FAQ</a>
+      <a href="/#beta">Open Beta</a>
+      <a href="/#faq">FAQ</a>
       <a href="/blog/">Blog</a>
     </div>
     <div class="nav-right">
@@ -480,306 +477,44 @@
           <a href="/pt/" class="lang-option">Português</a>
         </div>
       </div>
-      <a href="#beta" class="nav-cta">Apply for beta</a>
+      <a href="/#beta" class="nav-cta">Apply for beta</a>
     </div>
     <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
 
-  <!-- ═══ HERO ═══ -->
-  <section class="hero" id="hero">
-    <div class="signal-grid" id="signal-grid"></div>
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        Open Beta · 100 spots
+
+  <main>
+
+  <!-- Per-feature hero -->
+  <section class="hero" style="padding: 8rem 0 3.5rem;">
+    <div class="hero-content" style="max-width: 920px; margin: 0 auto; text-align: center;">
+      <span class="hero-badge"><span class="hero-badge-dot"></span>FEATURE 03</span>
+      <h1 class="hero-title">One trigger.<br><span class="hero-title-em">Four channels.</span></h1>
+      <p class="hero-subtitle" style="max-width: 760px; margin-left: auto; margin-right: auto;">Email, SMS, web push, on-site popup — all fan out from one behavior rule. No middleware, no glue code. Conditional logic routes high-value carts to SMS and the rest to popups; per-visitor cooldowns prevent flow storms.</p>
+      <div style="margin-top: 2rem;">
+        <a href="/#beta" class="btn btn-primary">Apply for beta →</a>
       </div>
-
-      <h1 class="hero-title">
-        <em>Convert more visitors.</em><br>
-        With AI marketing automation.
-      </h1>
-
-      <p class="hero-subtitle">
-        SwiftMail captures the signals every other tool misses — <strong>rage clicks, hesitation, form drops</strong> — explains the <em>why</em> behind each session, and triggers the right message across email, SMS, push, or popup. <strong>All from one snippet.</strong>
-      </p>
-
-      <form class="hero-form" id="waitlist-form-hero">
-        <input type="email" placeholder="your@email.com" class="hero-input" required>
-        <button type="submit" class="btn btn-primary">Apply for beta</button>
-      </form>
-
-      <p class="hero-trust">
-        ✓ No credit card &nbsp;•&nbsp; ✓ 6 months free &nbsp;•&nbsp; ✓ Locked-in price for life
-      </p>
-
-      <a href="#problem" class="hero-secondary-cta">See it in action ↓</a>
     </div>
   </section>
 
-  <!-- ═══ BUILT FOR ═══ -->
-  <section class="section-light" id="for-who">
+
+  <!-- Demo -->
+  <section class="section-light feature-block">
     <div class="container">
-      <p class="section-eyebrow animate-in">BUILT FOR</p>
-      <h2 class="pair-headline animate-in">
-        Operators who want to know <span class="pair-headline-em">why</span>.
-      </h2>
-      <p class="pair-body animate-in">
-        Whether you run a Shopify store, a SaaS product, or an agency — if your funnel has a leak, you'll see it the moment it forms.
-      </p>
 
-      <div class="persona-grid stagger-children animate-in">
-        <div class="persona-card">
-          <div class="persona-icon">🛒</div>
-          <h3>Ecommerce founders</h3>
-          <p>Solo or small-team shops watching conversion fall by 1% and not knowing why. See the signal before you spend on more traffic.</p>
-        </div>
-        <div class="persona-card">
-          <div class="persona-icon">⚡</div>
-          <h3>Product-led SaaS</h3>
-          <p>Turn behavioral signals into in-product nudges and lifecycle email automatically. Without writing a single integration.</p>
-        </div>
-        <div class="persona-card">
-          <div class="persona-icon">🎯</div>
-          <h3>Agencies</h3>
-          <p>Manage 10+ client sites under one workspace. Per-client behavioral segments, per-client reports, per-client AI insight quotas.</p>
-        </div>
-      </div>
+
     </div>
   </section>
 
-  <!-- ═══ STATS ═══ -->
-  <section id="stats">
-    <div class="container">
-      <div class="stats-grid stagger-children animate-in">
-        <div class="stat-item">
-          <div class="stat-viz stat-viz-signals" aria-hidden="true">
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-          </div>
-          <span class="stat-value counter" data-target="12">0</span><span class="stat-unit">+</span>
-          <span class="stat-label">Behavioral signals tracked</span>
-        </div>
-        <div class="stat-item">
-          <div class="stat-viz stat-viz-channels" aria-hidden="true">
-            <span class="ch-hub"></span>
-            <svg class="ch-rays" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-              <line class="ch-ray" x1="50" y1="50" x2="86" y2="50"/>
-              <line class="ch-ray" x1="50" y1="50" x2="76" y2="76"/>
-              <line class="ch-ray" x1="50" y1="50" x2="50" y2="86"/>
-              <line class="ch-ray" x1="50" y1="50" x2="24" y2="76"/>
-              <line class="ch-ray" x1="50" y1="50" x2="14" y2="50"/>
-              <line class="ch-ray" x1="50" y1="50" x2="24" y2="24"/>
-              <line class="ch-ray" x1="50" y1="50" x2="50" y2="14"/>
-              <line class="ch-ray" x1="50" y1="50" x2="76" y2="24"/>
-            </svg>
-            <span class="ch-icon" style="--a: 0deg">✉</span>
-            <span class="ch-icon" style="--a: 45deg">📱</span>
-            <span class="ch-icon" style="--a: 90deg">🔔</span>
-            <span class="ch-icon" style="--a: 135deg">💬</span>
-            <span class="ch-icon" style="--a: 180deg">🎯</span>
-            <span class="ch-icon" style="--a: 225deg">🏷</span>
-            <span class="ch-icon" style="--a: 270deg">📊</span>
-            <span class="ch-icon" style="--a: 315deg">🔌</span>
-          </div>
-          <span class="stat-value counter" data-target="8">0</span><span class="stat-unit">+</span>
-          <span class="stat-label">Channels per trigger</span>
-        </div>
-        <div class="stat-item">
-          <div class="stat-viz stat-viz-attribution" aria-hidden="true">
-            <div class="attr-bar" style="--h: 95%; --d: 0s"></div>
-            <div class="attr-bar" style="--h: 70%; --d: 0.15s"></div>
-            <div class="attr-bar" style="--h: 50%; --d: 0.3s"></div>
-            <div class="attr-bar" style="--h: 65%; --d: 0.45s"></div>
-            <div class="attr-bar" style="--h: 90%; --d: 0.6s"></div>
-          </div>
-          <span class="stat-value counter" data-target="5">0</span>
-          <span class="stat-label">Attribution models</span>
-        </div>
-        <div class="stat-item">
-          <div class="stat-viz stat-viz-price" aria-hidden="true">
-            <div class="price-orb"></div>
-            <div class="price-orb-ring"></div>
-            <div class="price-orb-ring price-orb-ring-2"></div>
-          </div>
-          <span class="stat-unit">$</span><span class="stat-value">0.002</span>
-          <span class="stat-label">Per AI insight</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  </main>
 
-  <!-- ═══ BETA RECRUITMENT ═══ -->
-  <section class="beta-section" id="beta">
-    <div class="container">
-      <div class="beta-card animate-in">
-        <p class="section-eyebrow" style="text-align:left;color:var(--orange-light);">OPEN BETA</p>
-        <h2 class="pair-headline" style="color:var(--white);text-align:left;margin-bottom:1.25rem;">
-          We're picking <span class="pair-headline-em">100 testers</span>.<br>
-          Free for 6 months. Locked-in price after.
-        </h2>
-        <p class="pair-body" style="text-align:left;color:var(--text-muted-dark);margin-bottom:2rem;max-width:none;">
-          SwiftMail is in active development with a working product. We need 100 small-business operators to use it daily, file bugs, and tell us what's missing.
-        </p>
 
-        <div class="beta-perks">
-          <div class="beta-perk">
-            <span class="beta-perk-check">✓</span>
-            <span><strong>Free for the first 6 months</strong> · Full feature access · No credit card required</span>
-          </div>
-          <div class="beta-perk">
-            <span class="beta-perk-check">✓</span>
-            <span><strong>Locked-in $20/mo after launch</strong> · For life · Standard pricing will be higher</span>
-          </div>
-          <div class="beta-perk">
-            <span class="beta-perk-check">✓</span>
-            <span><strong>Direct line to the founder</strong> · Slack channel · Monthly call · Your feedback shapes the roadmap</span>
-          </div>
-          <div class="beta-perk">
-            <span class="beta-perk-check">✓</span>
-            <span><strong>Co-marketing if you want it</strong> · Case study · Founder quote · Logo on site (opt-in)</span>
-          </div>
-        </div>
-
-        <form class="hero-form" id="waitlist-form-footer" style="margin: 2rem 0 1rem;">
-          <input type="email" placeholder="your@email.com" class="hero-input" required>
-          <button type="submit" class="btn btn-primary">Apply for beta</button>
-        </form>
-
-        <p style="font-size:0.875rem;color:var(--text-muted-dark);margin-top:1.25rem;">
-          What we ask in return: use it, file bugs, fill a 5-min monthly survey, opt into the Slack.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ FAQ ═══ -->
-  <section class="faq-section" id="faq">
-    <div class="container container-narrow">
-      <p class="section-eyebrow animate-in">FAQ</p>
-      <h2 class="pair-headline animate-in">Common questions.</h2>
-
-      <div class="faq-list stagger-children animate-in">
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>What does Open Beta mean?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>SwiftMail is in active development with a working product. Open Beta means we're picking 100 small-business operators to use it daily, file bugs, and tell us what's missing. In return: 6 months free, locked-in $20/mo price for life, direct line to the founder, and optional co-marketing.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>How long is the beta?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Six months from your activation date. After that, you keep your locked-in $20/mo price forever. Standard pricing at full launch will be higher.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Do I need a credit card to apply?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>No. Apply with just your email. We'll review applications and onboard accepted testers without payment info. Card only required when the 6-month beta ends and you choose to continue.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>What behavioral signals does SwiftMail track?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Page views, clicks, scroll depth (per section), form-field focus and abandonment, rage clicks (3+ clicks within 1 second on the same element), dead clicks, runtime errors, fetch failures, time on page, session duration, exit intent, and conversions. Plus standard email opens and clicks. The browser script is tiny (~4KB), loads in the background, and masks form values by default for privacy.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>How does the AI &ldquo;why&rdquo; explanation work?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>After each session ends, AI reads the full event timeline — every click, scroll, hesitation, and error — and tells you in plain language what was actually going on. Did the visitor hesitate on price? Get stuck on a broken form? Lose trust at checkout? Get distracted? Or convert because of urgency, social proof, or a clear path? You see the reason in one sentence, plus a narrative paragraph and a suggested next step. Auto-runs hourly; instant on demand.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Which channels can trigger from a behavior?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Eight channels available from any behavior signal: email, SMS, web push, mobile push (iOS + Android), on-site popup, retargeting audiences (Meta + Google), CRM task (Slack + HubSpot), and webhooks for everything else. All wired through the same flow builder.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Do I need technical knowledge?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>No. Drop a one-line script tag on your site. DNS auto-setup handles SPF, DKIM, and DMARC in 45 seconds via APIs to Cloudflare, GoDaddy, and Route53. If you can paste a snippet, you can run SwiftMail.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>How fast does SwiftMail react to a behavior signal?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>From the moment SwiftMail spots a behavior signal, it takes about half a second to fire the action — almost always under one second, even on busy days. When a visitor hovers exit on your pricing page, the popup is on screen before they click away. Each visitor is also rate-limited per flow (24-hour cooldown), so a viral page won't spam the same recovery email five times.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Which ecommerce platforms do you support?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Native one-click connection for <strong>Shopify, WooCommerce, and BigCommerce</strong>. REST API + webhooks for everything else. Customers, orders, products, and full catalog sync in real time. Catalog-aware features (price-drop and back-in-stock alerts, per-product cohort reports) work across all supported platforms.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>How does email setup actually work?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Paste your domain. Click connect. Watch SwiftMail call your DNS provider's API (Cloudflare, GoDaddy, or Route53) and add SPF, DKIM, and DMARC records in about 45 seconds. After that, IP warmup runs automatically with auto-pause if bounce rates climb above 5%, and every campaign passes through a deliverability doctor that scores it 0-100 and blocks anything below 75. Inbound DMARC reports stream in via a Cloudflare email worker so you see what mail providers actually think of your domain.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Does it work with Shopify?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Yes. One-click OAuth integration syncs customers, orders, and products in real time. Behavioral signals stamp Shopify customer IDs at ingest, so cross-device journeys stitch correctly without merchants writing Liquid theme code.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Can I switch from another email tool?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Yes. One-click migration imports contacts, segments, templates, and automation flows from any major email platform. Most migrations complete in under 5 minutes with all flows preserved.</p>
-          </div>
-        </div>
-      </div>
+  <!-- Per-feature nav -->
+  <section style="background: var(--dark); padding: 3.5rem 0; border-top: 1px solid rgba(255,255,255,0.06);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <a href="../ai-explanation/" style="color: var(--text-muted-dark); font-weight: 600; font-size: 0.9375rem; text-decoration: none;">← Stop guessing.</a>
+      <a href="/#beta" class="btn btn-primary" style="margin: 0;">Apply for beta →</a>
+      <a href="../customer-journey/" style="color: var(--text-muted-dark); font-weight: 600; font-size: 0.9375rem; text-decoration: none;">See the full path. →</a>
     </div>
   </section>
 
@@ -794,8 +529,8 @@
         <div class="footer-col">
           <p class="footer-col-title">Product</p>
           <a href="/features/">Features</a>
-          <a href="#beta">Open Beta</a>
-          <a href="#faq">FAQ</a>
+          <a href="/#beta">Open Beta</a>
+          <a href="/#faq">FAQ</a>
         </div>
         <div class="footer-col">
           <p class="footer-col-title">Company</p>
@@ -847,7 +582,8 @@
   </script>
 
   <!-- Scripts (deferred) -->
-  <script src="js/main.js" defer></script>
-  <script src="js/supabase.js" defer></script>
+  <script src="../../js/main.js" defer></script>
+  <script src="../../js/supabase.js" defer></script>
+
 </body>
 </html>
