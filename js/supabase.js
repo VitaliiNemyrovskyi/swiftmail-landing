@@ -12,8 +12,12 @@ const headers = {
   'Prefer': 'return=minimal'
 };
 
-// Load waitlist count + track page view after DOM ready
-document.addEventListener('DOMContentLoaded', function() {
+// Load waitlist count + track page view AFTER LCP — these are not visible
+// above the fold on mobile (they live deep in the FAQ/footer section), so
+// running fetches during initial render only steals main-thread time from
+// the LCP. requestIdleCallback waits for an idle slice; if unsupported (older
+// Safari), fall back to a 2s setTimeout — still well past first paint.
+function __runDeferred() {
   getWaitlistCount().then(function(count) {
     document.querySelectorAll('.waitlist-count').forEach(function(c) {
       c.textContent = String(count);
@@ -23,7 +27,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   trackPageViewToSupabase();
-});
+}
+if (document.readyState === 'complete') {
+  (window.requestIdleCallback || function (cb) { return setTimeout(cb, 2000); })(__runDeferred, { timeout: 4000 });
+} else {
+  window.addEventListener('load', function () {
+    (window.requestIdleCallback || function (cb) { return setTimeout(cb, 2000); })(__runDeferred, { timeout: 4000 });
+  });
+}
 
 /**
  * Submit email to waitlist

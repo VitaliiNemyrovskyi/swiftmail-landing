@@ -75,9 +75,27 @@ function initNavbar() {
   const toggle = document.getElementById('nav-toggle');
   const links = document.getElementById('nav-links');
 
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
-  });
+  if (navbar) {
+    // rAF-throttled, passive scroll listener. Only writes to the DOM when the
+    // boolean state actually flips — avoids the per-scroll classList.toggle()
+    // forced-reflow Lighthouse flagged on mobile.
+    let isScrolled = false;
+    let ticking = false;
+    const onFrame = () => {
+      const next = window.scrollY > 50;
+      if (next !== isScrolled) {
+        isScrolled = next;
+        navbar.classList.toggle('scrolled', next);
+      }
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(onFrame);
+      }
+    }, { passive: true });
+  }
 
   if (toggle && links) {
     toggle.addEventListener('click', () => {

@@ -10,7 +10,7 @@
     !function(s){s.sm=s.sm||function(){(s.sm.q=s.sm.q||[]).push(arguments)}}(window);
     sm('init', 'pk_live_bea0d715ec2ca156ebe31e205c5364fc', { siteId: '2cff4622-a98a-455f-85c5-db0f3f827b25' });
   </script>
-  <script src="https://app.swift-mail.app/sdk/sm.js" async></script>
+  <script>(function(){function l(){var s=document.createElement('script');s.src='https://app.swift-mail.app/sdk/sm.js';s.async=true;document.head.appendChild(s);}function q(){(window.requestIdleCallback||function(cb){return setTimeout(cb,2000);})(l,{timeout:4000});}if(document.readyState==='complete'){q();}else{window.addEventListener('load',q);}})();</script>
   <title>SwiftMail — Convert More Visitors with AI Marketing Automation</title>
   <meta name="description" content="AI marketing automation that captures the signals every other tool misses — rage clicks, hesitation, form drops — explains why each visitor abandoned, and triggers email/SMS/push/popup automatically. Open beta: 100 testers, free 6 months.">
   <link rel="canonical" href="https://swift-mail.app/">
@@ -528,7 +528,7 @@
 
   <!-- ═══ NAVBAR ═══ -->
   <nav class="navbar" id="navbar">
-    <a href="/" class="nav-logo"><img src="assets/logo-orange.svg" alt="" class="nav-logo-icon">SwiftMail</a>
+    <a href="/" class="nav-logo"><img src="assets/logo-orange.svg" alt="" class="nav-logo-icon" width="24" height="24">SwiftMail</a>
     <div class="nav-links" id="nav-links">
       <a href="/features/">Features</a>
       <a href="#beta">Open Beta</a>
@@ -991,21 +991,48 @@
     <span id="toast-text">Application received! We'll review and email you within 48 hours.</span>
   </div>
 
-  <!-- Hero signal-grid pulse generator -->
+  <!-- Hero signal-grid pulse generator
+       Only runs when the hero is in viewport AND the tab is visible.
+       Otherwise the setInterval mutates the DOM ~5×/sec forever, hammering
+       style/layout (forced-reflow + main-thread work in Lighthouse). -->
   <script>
     (function initSignalGrid() {
-      const grid = document.getElementById('signal-grid');
-      if (!grid) return;
+      var grid = document.getElementById('signal-grid');
+      var hero = document.getElementById('hero') || (grid && grid.closest('.hero'));
+      if (!grid || !hero) return;
+      var timer = null;
+      var visible = true;
+      var inView = false;
       function pulse() {
-        const dot = document.createElement('div');
+        var dot = document.createElement('div');
         dot.className = 'signal-pulse';
         dot.style.left = (Math.random() * 100) + '%';
         dot.style.top = (Math.random() * 100) + '%';
         grid.appendChild(dot);
-        setTimeout(() => dot.remove(), 1700);
+        setTimeout(function () { dot.remove(); }, 1700);
       }
-      // Spawn 4-6 pulses/sec
-      setInterval(pulse, 220);
+      function start() {
+        if (timer || !inView || !visible) return;
+        timer = setInterval(pulse, 220);
+      }
+      function stop() {
+        if (!timer) return;
+        clearInterval(timer);
+        timer = null;
+      }
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          inView = entries[0].isIntersecting;
+          inView ? start() : stop();
+        }, { threshold: 0 }).observe(hero);
+      } else {
+        inView = true;
+        start();
+      }
+      document.addEventListener('visibilitychange', function () {
+        visible = document.visibilityState === 'visible';
+        visible ? start() : stop();
+      });
     })();
   </script>
 
