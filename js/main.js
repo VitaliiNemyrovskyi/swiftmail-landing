@@ -5,6 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
+  initLazyVideos();
   initNavbar();
   initFAQ();
   initForms();
@@ -13,13 +14,24 @@ document.addEventListener('DOMContentLoaded', () => {
   trackPageView();
 });
 
-/* ── Scroll Animations (Intersection Observer) ─────────── */
+/* ── Scroll Animations (Intersection Observer) ───────────
+   Two classes are applied:
+   - .visible: added ONCE on first intersect, never removed.
+     Used for one-shot fade-in transitions (opacity/transform).
+   - .in-view: toggled BIDIRECTIONALLY based on intersection.
+     Used to pause CSS animations + video playback when an
+     element scrolls off-screen (massive TBT/CPU win — without
+     this, every infinite animation in the page keeps running
+     forever after first being seen). */
 function initScrollAnimations() {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
         }
       });
     },
@@ -27,6 +39,34 @@ function initScrollAnimations() {
   );
 
   document.querySelectorAll('.animate-in').forEach((el) => observer.observe(el));
+}
+
+/* ── Lazy video play/pause ───────────────────────────────
+   Videos start with preload="none" + no autoplay attribute,
+   so the browser doesn't fetch them on page load. We call
+   .play() when the video enters the viewport (which triggers
+   the network fetch on demand) and .pause() when it leaves.
+   This saves ~1.4 MB of upfront transfer + decoder CPU time. */
+function initLazyVideos() {
+  const videos = document.querySelectorAll('video[data-lazy]');
+  if (!videos.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          // Fetch & play (will buffer first frame then start)
+          video.play().catch(() => { /* autoplay blocked — ignore */ });
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  videos.forEach((v) => observer.observe(v));
 }
 
 /* ── Navbar scroll effect ──────────────────────────────── */
