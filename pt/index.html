@@ -11,69 +11,190 @@
     sm('init', 'pk_live_bea0d715ec2ca156ebe31e205c5364fc', { siteId: '2cff4622-a98a-455f-85c5-db0f3f827b25' });
   </script>
   <script src="https://app.swift-mail.app/sdk/sm.js" async></script>
-  <title>SwiftMail — Marketing Automation com IA para Pequenos Negócios. A partir de $20/mo.</title>
-  <meta name="description" content="A primeira plataforma de marketing comportamental ao preço PME. Rastreie rage clicks, hesitação, formulários abandonados. A IA explica por que os visitantes saem. Dispare email, SMS, push ou popups — tudo de um único snippet. A partir de $20/mo.">
+  <title>SwiftMail — Converta mais visitantes com marketing automation por IA</title>
+  <meta name="description" content="Marketing automation por IA que captura os sinais que toda outra ferramenta perde — rage clicks, hesitação, abandonos de formulário — explica o porquê de cada visitante e dispara e-mail/SMS/push/popup automaticamente. Beta aberto: 100 testers, 6 meses grátis.">
   <link rel="canonical" href="https://swift-mail.app/pt/">
   <link rel="alternate" hreflang="en" href="https://swift-mail.app/">
   <link rel="alternate" hreflang="es" href="https://swift-mail.app/es/">
   <link rel="alternate" hreflang="fr" href="https://swift-mail.app/fr/">
   <link rel="alternate" hreflang="de" href="https://swift-mail.app/de/">
-  <link rel="alternate" hreflang="it" href="https://swift-mail.app/it/">
   <link rel="alternate" hreflang="pt" href="https://swift-mail.app/pt/">
-  <link rel="alternate" hreflang="nl" href="https://swift-mail.app/nl/">
-  <link rel="alternate" hreflang="pl" href="https://swift-mail.app/pl/">
-  <link rel="alternate" hreflang="ja" href="https://swift-mail.app/ja/">
-  <link rel="alternate" hreflang="uk" href="https://swift-mail.app/uk/">
   <link rel="alternate" hreflang="x-default" href="https://swift-mail.app/">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="SwiftMail — Marketing Automation com IA para Pequenos Negócios">
-  <meta property="og:description" content="A primeira plataforma de marketing comportamental ao preço PME. Rastreie rage clicks e hesitação. A IA explica por que os visitantes saem. Dispare email, SMS, push ou popups de um snippet. A partir de $20/mo.">
+  <meta property="og:title" content="SwiftMail — Converta mais visitantes com marketing automation por IA">
+  <meta property="og:description" content="Marketing automation por IA que captura rage clicks, hesitação e abandonos de formulário. A IA explica por que os visitantes vão embora, depois dispara e-mail/SMS/push/popup automaticamente. Beta aberto: 100 testers, 6 meses grátis.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://swift-mail.app/pt/">
   <meta property="og:site_name" content="SwiftMail">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SwiftMail — Marketing Automation com IA para Pequenos Negócios">
-  <meta name="twitter:description" content="Rastreie rage clicks e hesitação. A IA explica por que os visitantes saem. Dispare email, SMS, push, popups de um snippet. $20/mo.">
+  <meta name="twitter:title" content="SwiftMail — Converta mais visitantes com marketing automation por IA">
+  <meta name="twitter:description" content="Marketing automation por IA construído em torno do comportamento. Captura sinais que outras ferramentas perdem, IA explica o porquê, dispara e-mail/SMS/push/popup. Beta aberto: 100 testers, 6 meses grátis.">
 
-  <!-- Fonts (self-hosted) -->
-  <link rel="preload" href="../fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-
-  <!-- Critical CSS inline (navbar + hero) — eliminates render-blocking + CLS -->
+  <!-- Fonts (self-hosted, Latin-only subsets — 80 KB + 33 KB instead of 225 + 47) -->
+  <link rel="preload" href="../fonts/plus-jakarta-sans-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <style>
-    :root{--dark:#0b1325;--orange:#ea580c;--white:#ffffff;--font-heading:'Plus Jakarta Sans',system-ui,sans-serif;--font-body:'Inter',system-ui,sans-serif}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-    body{font-family:var(--font-body);color:#191c1e;background:var(--dark);line-height:1.6}
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1200px;margin:0 auto;padding:0 2rem}
-    .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(11,19,37,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
-    .nav-logo{display:flex;align-items:center;gap:0.5rem;font-family:var(--font-heading);font-size:1.375rem;font-weight:800;font-style:italic;color:var(--white);letter-spacing:-0.02em}.nav-logo-icon{height:1.5rem;width:auto}
-    .nav-links{display:flex;gap:2rem}
-    .nav-links a{color:#94a3b8;font-size:0.875rem;font-weight:500}
-    .nav-right{display:flex;align-items:center;gap:1.25rem}.nav-cta{padding:0.5rem 1.25rem;background:#c24b08;color:#fff;border-radius:0.5rem;font-size:0.8125rem;font-weight:700;border:none}
-    .nav-mobile-toggle{display:none}
-    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 6rem;position:relative;overflow:hidden;background:linear-gradient(180deg,#0b1325 0%,#131b2e 100%)}
-    .hero-content{position:relative;z-index:2;max-width:720px}
-    .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.375rem 1rem;border-radius:9999px;font-size:0.8125rem;font-weight:500;color:#ff8c42;background:rgba(234,88,12,0.1);border:1px solid rgba(234,88,12,0.2);margin-bottom:2rem}
-    .hero-title{font-family:var(--font-heading);font-size:4.25rem;font-weight:900;letter-spacing:-0.04em;line-height:1.05;color:var(--white);margin-bottom:1.5rem}
-    .text-gradient{background:linear-gradient(135deg,#ea580c,#ff8c42);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .hero-subtitle{font-size:1.1875rem;color:#94a3b8;margin-bottom:2.5rem;line-height:1.65;max-width:560px;margin-left:auto;margin-right:auto}
-    .hero-subtitle strong{color:var(--white)}
-    .hero-form{display:flex;gap:0.75rem;justify-content:center;margin-bottom:1.5rem;max-width:480px;margin-left:auto;margin-right:auto}
-    .hero-input{flex:1;padding:0.875rem 1.25rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:0.625rem;color:var(--white);font-size:0.9375rem;outline:none}
-    .hero-input::placeholder{color:#94a3b8}
-    .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.875rem 1.75rem;border:none;border-radius:0.625rem;font-family:var(--font-body);font-weight:600;font-size:0.9375rem;cursor:pointer;white-space:nowrap}
-    .btn-primary{background:linear-gradient(135deg,#ea580c 0%,#cc4900 100%);color:var(--white)}
-    .hero-trust{font-size:0.8125rem;color:#94a3b8;margin-bottom:1rem}
-    .hero-counter{font-size:0.9375rem;color:#94a3b8}
-    .hero-counter strong{color:var(--white);font-size:1.125rem}
-    .hero-orbs{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-    .hero-grid-dots{position:absolute;inset:0;z-index:0;background-image:radial-gradient(rgba(255,255,255,0.03) 1px,transparent 1px);background-size:32px 32px}
-    .animate-in{opacity:0;transform:translateY(30px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}
-    .animate-in.visible{opacity:1;transform:translateY(0)}
-    @media(max-width:768px){.hero-title{font-size:2.5rem}.hero-form{flex-direction:column}.nav-links{display:none}.nav-mobile-toggle{display:flex;background:none;border:none;flex-direction:column;gap:4px;padding:4px}.nav-mobile-toggle span{display:block;width:20px;height:2px;background:var(--white);border-radius:2px}.nav-right .nav-cta{display:none}}
+    @font-face {
+      font-family: 'Plus Jakarta Sans';
+      font-style: normal;
+      font-weight: 700 900;
+      font-display: optional;
+      src: url(../fonts/plus-jakarta-sans-var-latin.woff2) format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400 600;
+      font-display: optional;
+      src: url(../fonts/inter-var-latin.woff2) format('woff2');
+    }
+    /* Metric-matched system-font fallbacks: render in fallback at FCP, then
+       seamlessly swap to the web font with no layout shift. Stops Lighthouse
+       from pushing LCP to the post-swap paint moment. */
+    @font-face {
+      font-family: 'Plus Jakarta Sans Fallback';
+      src: local('Arial');
+      ascent-override: 96.3%;
+      descent-override: 25.4%;
+      line-gap-override: 0%;
+      size-adjust: 102.4%;
+    }
+    @font-face {
+      font-family: 'Inter Fallback';
+      src: local('Arial');
+      ascent-override: 90%;
+      descent-override: 22.43%;
+      line-gap-override: 0%;
+      size-adjust: 107.64%;
+    }
+  </style>
+
+  <!-- Critical CSS — navbar + hero -->
+  <style>
+    :root {
+      --dark: #0b1325;
+      --dark-2: #131b2e;
+      --orange: #ea580c;
+      --orange-light: #ff8c42;
+      --orange-glow: rgba(234, 88, 12, 0.18);
+      --white: #ffffff;
+      --text-light: #cbd5e1;
+      --text-bright: #e8eef9;
+      --light-bg: #f7f9fb;
+      --light-card: #ffffff;
+      --light-text: #191c1e;
+      --light-muted: #64748b;
+      --border-light: #e5e7eb;
+      --font-heading: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', system-ui, sans-serif;
+      --font-body: 'Inter', 'Inter Fallback', system-ui, sans-serif;
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); color: var(--light-text); background: var(--dark); line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .container-narrow { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+
+    /* Navbar */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(11,19,37,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06); transition: padding 0.2s; }
+    .navbar.scrolled { padding: 0.625rem 2rem; background: rgba(11,19,37,0.92); }
+    .nav-logo { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-heading); font-size: 1.375rem; font-weight: 800; font-style: italic; color: var(--white); letter-spacing: -0.02em; }
+    .nav-logo-icon { height: 1.5rem; width: auto; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { color: var(--text-muted-dark); font-size: 0.875rem; font-weight: 500; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-cta { padding: 0.5rem 1.125rem; background: var(--orange); color: #fff; border-radius: 0.5rem; font-size: 0.8125rem; font-weight: 700; border: none; transition: background 0.15s; }
+    .nav-cta:hover { background: #cc4900; }
+    .nav-mobile-toggle { display: none; background: none; border: 0; flex-direction: column; gap: 4px; padding: 4px; cursor: pointer; }
+    .nav-mobile-toggle span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 6rem; position: relative; overflow: hidden; background: linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 100%); }
+
+    /* Hero signal grid — CSS pulses */
+    .signal-grid { position: absolute; inset: 0; z-index: 0; background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 28px 28px; mask: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 100%); -webkit-mask: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 100%); }
+    .signal-pulse { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--orange-light); box-shadow: 0 0 0 0 var(--orange-glow); animation: signalPulse 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
+    @keyframes signalPulse {
+      0% { transform: scale(0.5); opacity: 0; box-shadow: 0 0 0 0 rgba(234,88,12,0.6); }
+      30% { opacity: 1; }
+      100% { transform: scale(1.2); opacity: 0; box-shadow: 0 0 0 32px rgba(234,88,12,0); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 880px; }
+
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.125rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; color: var(--orange-light); background: rgba(234,88,12,0.1); border: 1px solid rgba(234,88,12,0.25); margin-bottom: 2.25rem; }
+    .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange-light); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+
+    .hero-title { font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4.75rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.02; color: var(--white); margin-bottom: 1.75rem; }
+    .hero-title em { font-style: normal; background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .hero-subtitle { font-size: 1.1875rem; color: var(--text-muted-dark); margin-bottom: 2.5rem; line-height: 1.7; max-width: 640px; margin-left: auto; margin-right: auto; }
+    .hero-subtitle strong { color: var(--white); font-weight: 600; }
+
+    .hero-form { display: flex; gap: 0.625rem; justify-content: center; margin-bottom: 1.25rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .hero-input { flex: 1; padding: 0.875rem 1.25rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.625rem; color: var(--white); font-size: 0.9375rem; outline: none; font-family: inherit; }
+    .hero-input::placeholder { color: var(--text-muted-dark); }
+    .hero-input:focus { border-color: rgba(234,88,12,0.5); }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.75rem; border: 0; border-radius: 0.625rem; font-family: var(--font-body); font-weight: 600; font-size: 0.9375rem; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s; }
+    .btn-primary { background: linear-gradient(135deg, var(--orange) 0%, #cc4900 100%); color: var(--white); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(234,88,12,0.3); }
+    .btn-secondary { background: rgba(255,255,255,0.04); color: var(--white); border: 1px solid rgba(255,255,255,0.1); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+
+    .hero-trust { font-size: 0.8125rem; color: var(--text-muted-dark); margin-top: 1rem; }
+    .hero-secondary-cta { display: inline-block; margin-top: 1.5rem; color: var(--text-muted-dark); font-size: 0.875rem; font-weight: 500; transition: color 0.15s; }
+    .hero-secondary-cta:hover { color: var(--white); }
+
+    /* Animation reveal */
+    .animate-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .animate-in.visible { opacity: 1; transform: translateY(0); }
+    .stagger-children > * { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+    /* Catch-all: any child becomes visible once parent has .visible — guarantees nothing stays at opacity:0 */
+    .stagger-children.visible > * { opacity: 1; transform: translateY(0); transition-delay: 400ms; }
+    .stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; }
+    .stagger-children.visible > *:nth-child(2) { transition-delay: 80ms; }
+    .stagger-children.visible > *:nth-child(3) { transition-delay: 160ms; }
+    .stagger-children.visible > *:nth-child(4) { transition-delay: 240ms; }
+    .stagger-children.visible > *:nth-child(5) { transition-delay: 320ms; }
+    .stagger-children.visible > *:nth-child(6) { transition-delay: 400ms; }
+    .stagger-children.visible > *:nth-child(7) { transition-delay: 480ms; }
+    .stagger-children.visible > *:nth-child(8) { transition-delay: 560ms; }
+    .stagger-children.visible > *:nth-child(9) { transition-delay: 640ms; }
+    .stagger-children.visible > *:nth-child(n+10) { transition-delay: 720ms; }
+
+    /* ──────────────────────────────────────────────────────────────────────
+       DEMO ANIMATIONS — paused unless the figure is in viewport.
+       IntersectionObserver toggles .in-view bidirectionally, so animations
+       only burn CPU while the user can actually see them. Massive TBT win:
+       without this, every infinite cursor/popup/chip animation across the
+       entire page keeps recalculating styles forever after first scroll.
+    ────────────────────────────────────────────────────────────────────── */
+    .animate-in:not(.in-view) .demo-terminal-line,
+    .animate-in:not(.in-view) .intg-log-row,
+    .animate-in:not(.in-view) .intg-event-chip,
+    .animate-in:not(.in-view) .ps-cursor,
+    .animate-in:not(.in-view) .ps-cta,
+    .animate-in:not(.in-view) .ps-ghost,
+    .animate-in:not(.in-view) .ps-ai-badge,
+    .animate-in:not(.in-view) .rt-trigger,
+    .animate-in:not(.in-view) .rt-popup,
+    .animate-in:not(.in-view) .rt-popup-cta,
+    .animate-in:not(.in-view) .rt-latency {
+      animation-play-state: paused !important;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 7rem 1.25rem 4rem; }
+      .nav-links { display: none; }
+      .nav-mobile-toggle { display: flex; }
+      .nav-right .nav-cta { display: none; }
+      .hero-form { flex-direction: column; }
+    }
   </style>
 
   <!-- Structured Data -->
@@ -83,7 +204,7 @@
     "@type": "Organization",
     "name": "SwiftMail",
     "url": "https://swift-mail.app",
-    "description": "Plataforma de email marketing com IA para pequenos negócios."
+    "description": "Plataforma de marketing comportamental para pequenas empresas. Captura rage clicks, hesitação e abandonos de formulário; IA explica por que os visitantes vão embora; dispara e-mail, SMS, push e popups de um único snippet."
   }
   </script>
   <script type="application/ld+json">
@@ -92,7 +213,7 @@
     "@type": "WebSite",
     "name": "SwiftMail",
     "url": "https://swift-mail.app",
-    "description": "Email marketing com IA acessível para pequenos negócios. Configuração DNS automática, doutor de entregabilidade, integração com Shopify."
+    "description": "Beta aberto · 100 testers · 6 meses grátis. Marketing automation por IA para pequenas empresas — captura comportamento, explica por que os visitantes vão embora, dispara e-mail/SMS/push/popup automaticamente."
   }
   </script>
   <script type="application/ld+json">
@@ -102,18 +223,50 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Quando o SwiftMail será lançado?",
+        "name": "O que significa Beta Aberto?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Estamos em beta fechado. Entre na lista de espera para ter acesso antecipado e seu preço congelado para sempre."
+          "text": "O SwiftMail está em desenvolvimento ativo com um produto que já funciona. Beta Aberto significa que estamos escolhendo 100 operadores de pequenas empresas para usá-lo todo dia, reportar bugs e nos dizer o que falta. Em troca: 6 meses grátis, preço travado de $20/mês para sempre, linha direta com o fundador e co-marketing opcional."
         }
       },
       {
         "@type": "Question",
-        "name": "Quanto vai custar?",
+        "name": "Quanto tempo dura a beta?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Os planos começam em $20/mo. Todos os planos incluem envios ilimitados. Os primeiros 500 membros da lista de espera terão o preço congelado para sempre."
+          "text": "Seis meses a partir da data da sua ativação. Depois disso, você mantém seu preço travado de $20/mês para sempre. O preço padrão no lançamento completo será mais alto."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Preciso de cartão de crédito para me inscrever?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Não. Inscreva-se só com seu e-mail. Vamos revisar as inscrições e ativar os testers aceitos sem dados de pagamento. Cartão só é exigido quando a beta de 6 meses termina e você decide continuar."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quais sinais comportamentais o SwiftMail rastreia?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Page views, cliques, profundidade de scroll (por seção), foco e abandono de campos de formulário, rage clicks (3+ cliques em 1 segundo no mesmo elemento), dead clicks, erros de runtime, falhas de fetch, tempo na página, duração da sessão, intenção de saída e conversões. Mais aberturas e cliques de e-mail padrão. O script do navegador é minúsculo (~4KB), carrega em background e mascara valores de formulário por padrão para privacidade."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Como funciona a explicação 'porquê' da IA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Quando cada sessão termina, a IA lê toda a timeline de eventos — cada clique, scroll, hesitação e erro — e te diz em linguagem simples o que estava acontecendo de verdade. O visitante hesitou no preço? Ficou preso num formulário quebrado? Perdeu confiança no checkout? Se distraiu? Ou converteu por causa de urgência, prova social ou um caminho claro? Você vê o motivo numa frase, mais um parágrafo narrativo e um próximo passo sugerido. Roda automaticamente toda hora; instantâneo sob demanda."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quais canais podem disparar a partir de um comportamento?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oito canais disponíveis a partir de qualquer sinal de comportamento: e-mail, SMS, push web, push mobile (iOS + Android), popup no site, audiências de retargeting (Meta + Google), tarefa de CRM (Slack + HubSpot) e webhooks para todo o resto. Tudo conectado pelo mesmo flow builder."
         }
       },
       {
@@ -121,7 +274,7 @@
         "name": "Preciso de conhecimento técnico?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Não. Nossa IA cuida da configuração DNS, aquecimento de email e análise de marca automaticamente. Se você sabe clicar em um botão, você pode usar o SwiftMail."
+          "text": "Não. Cole uma tag de script de uma linha no seu site. A configuração automática de DNS cuida de SPF, DKIM e DMARC em 45 segundos via APIs do Cloudflare, GoDaddy e Route53. Se você sabe colar um snippet, sabe usar o SwiftMail."
         }
       },
       {
@@ -129,295 +282,326 @@
         "name": "Funciona com Shopify?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Sim. A integração OAuth com um clique sincroniza clientes, pedidos e produtos em tempo real."
+          "text": "Sim. A integração OAuth de um clique sincroniza clientes, pedidos e produtos em tempo real. Sinais comportamentais carimbam IDs de cliente do Shopify na ingestão, então jornadas cross-device se costuram corretamente sem que os lojistas precisem escrever código Liquid de tema."
         }
       },
       {
         "@type": "Question",
-        "name": "Como é diferente das outras plataformas?",
+        "name": "Posso migrar de outra ferramenta de e-mail?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "O SwiftMail oferece onboarding com IA sem configuração (cole sua URL e tenha sua primeira campanha pronta em 5 minutos), um Doutor de Entregabilidade integrado que diagnostica e corrige automaticamente problemas de entrega de email, e envios ilimitados em todos os planos — a partir de apenas $20/mo."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Posso migrar de outra plataforma de email?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Sim. O SwiftMail suporta importação com um clique dos seus contatos, templates e fluxos de automação de qualquer plataforma de email. A maioria das migrações leva menos de 5 minutos."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Como funciona o Doutor de Entregabilidade?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "O Doutor de Entregabilidade é um sistema de IA que configura automaticamente SPF, DKIM e DMARC para o seu domínio, avalia cada email antes do envio para prevenir marcações de spam, e monitora continuamente sua reputação como remetente. Ele detecta problemas antes que afetem sua taxa de posicionamento na caixa de entrada."
+          "text": "Sim. A migração de um clique importa contatos, segmentos, templates e flows de automação de qualquer plataforma de e-mail importante. A maioria das migrações termina em menos de 5 minutos com todos os flows preservados."
         }
       }
     ]
   }
   </script>
 
-  <!-- Non-critical CSS (deferred) -->
-  <link rel="stylesheet" href="../css/fonts.css">
+  <!-- Note: @font-face declared inline above (Latin subset). fonts.css NOT loaded
+       here — UK/JA pages still load it for their Cyrillic/CJK glyph coverage. -->
   <link rel="stylesheet" href="../css/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="../css/animations.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"></noscript>
+
+  <!-- Section-specific styles -->
+  <style>
+    /* Sections */
+    section.section-dark { background: var(--dark); color: var(--text-bright); padding: 6rem 0; }
+    section.section-light { background: var(--light-bg); color: var(--light-text); padding: 6rem 0; }
+    section.section-eyebrow { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; text-align: center; }
+
+    /* Paired-headline pattern (rootapp-inspired) */
+    .pair-headline { font-family: var(--font-heading); font-size: clamp(1.875rem, 4vw, 2.875rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.12; text-align: center; max-width: 800px; margin: 0 auto 1.5rem; }
+    .pair-headline-em { background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .section-dark .pair-headline { color: var(--white); }
+
+    .pair-body { font-size: 1.0625rem; max-width: 720px; margin: 0 auto 3rem; text-align: center; line-height: 1.7; }
+    .section-dark .pair-body { color: var(--text-muted-dark); }
+    .section-light .pair-body { color: var(--light-muted); }
+
+    /* (Plus grid section removed for perf — 9 cards × infinite icon-float anims +
+       150 DOM nodes were redundant after the 7 detailed feature blocks.) */
+
+    /* BUILT FOR */
+    .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .persona-card { background: var(--light-card); border: 1px solid var(--border-light); border-radius: 14px; padding: 2rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .persona-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+    .persona-icon { width: 44px; height: 44px; background: var(--orange-glow); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--orange); margin-bottom: 1rem; font-size: 1.25rem; }
+    .persona-card h3 { font: 700 1.125rem var(--font-heading); color: var(--light-text); margin-bottom: 0.625rem; letter-spacing: -0.01em; }
+    .persona-card p { font-size: 0.9375rem; color: var(--light-muted); line-height: 1.6; }
+    @media (max-width: 768px) { .persona-grid { grid-template-columns: 1fr; } }
+
+    /* STATS */
+    #stats { background: var(--dark); padding: 5rem 0; position: relative; overflow: hidden; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .stat-item { text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .stat-value { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 900; line-height: 1; color: var(--white); letter-spacing: -0.04em; }
+    .stat-unit { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--orange); letter-spacing: -0.02em; }
+    .stat-label { display: block; margin-top: 0.5rem; font-size: 0.8125rem; color: var(--text-muted-dark); letter-spacing: 0.02em; }
+
+    /* Stat visualization base */
+    .stat-viz { width: 90px; height: 90px; margin-bottom: 1.25rem; position: relative; display: flex; align-items: center; justify-content: center; }
+
+    /* 12 signals — pulsing dot grid */
+    .stat-viz-signals { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; padding: 8px; }
+    .stat-viz-signals span { width: 10px; height: 10px; border-radius: 50%; background: rgba(234, 88, 12, 0.18); position: relative; animation: signalPulseDot 5s ease-in-out infinite; }
+    @keyframes signalPulseDot { 0%, 70%, 100% { background: rgba(234,88,12,0.18); transform: scale(1); box-shadow: 0 0 0 rgba(234,88,12,0); } 12% { background: var(--orange); transform: scale(1.5); box-shadow: 0 0 12px rgba(234,88,12,0.7); } 30% { background: var(--orange-light); transform: scale(1.1); box-shadow: 0 0 6px rgba(234,88,12,0.3); } }
+    .stat-viz-signals span:nth-child(1)  { animation-delay: 0s; }
+    .stat-viz-signals span:nth-child(2)  { animation-delay: 0.18s; }
+    .stat-viz-signals span:nth-child(3)  { animation-delay: 0.36s; }
+    .stat-viz-signals span:nth-child(4)  { animation-delay: 0.54s; }
+    .stat-viz-signals span:nth-child(5)  { animation-delay: 0.72s; }
+    .stat-viz-signals span:nth-child(6)  { animation-delay: 0.90s; }
+    .stat-viz-signals span:nth-child(7)  { animation-delay: 1.08s; }
+    .stat-viz-signals span:nth-child(8)  { animation-delay: 1.26s; }
+    .stat-viz-signals span:nth-child(9)  { animation-delay: 1.44s; }
+    .stat-viz-signals span:nth-child(10) { animation-delay: 1.62s; }
+    .stat-viz-signals span:nth-child(11) { animation-delay: 1.80s; }
+    .stat-viz-signals span:nth-child(12) { animation-delay: 1.98s; }
+
+    /* 8 channels — orbital fan-out */
+    .stat-viz-channels { width: 110px; height: 110px; }
+    .ch-hub { position: absolute; top: 50%; left: 50%; width: 12px; height: 12px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 12px rgba(234,88,12,0.6); transform: translate(-50%, -50%); animation: chHubPulse 3s ease-in-out infinite; }
+    @keyframes chHubPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.3); } }
+    .ch-rays { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .ch-ray { stroke: rgba(234, 88, 12, 0.3); stroke-width: 1; stroke-linecap: round; stroke-dasharray: 4; stroke-dashoffset: 0; animation: chRayFlow 3s linear infinite; }
+    @keyframes chRayFlow { to { stroke-dashoffset: -20; } }
+    .ch-ray:nth-child(2) { animation-delay: 0.1s; }
+    .ch-ray:nth-child(3) { animation-delay: 0.2s; }
+    .ch-ray:nth-child(4) { animation-delay: 0.3s; }
+    .ch-ray:nth-child(5) { animation-delay: 0.4s; }
+    .ch-ray:nth-child(6) { animation-delay: 0.5s; }
+    .ch-ray:nth-child(7) { animation-delay: 0.6s; }
+    .ch-ray:nth-child(8) { animation-delay: 0.7s; }
+    .ch-icon { position: absolute; top: 50%; left: 50%; font-size: 12px; transform-origin: 0 0; transform: rotate(var(--a)) translateX(46px) rotate(calc(-1 * var(--a))) translate(-50%, -50%); animation: chIconPulse 3s ease-in-out infinite; opacity: 0.5; }
+    @keyframes chIconPulse { 0%, 60%, 100% { opacity: 0.5; filter: grayscale(0.6); } 30% { opacity: 1; filter: grayscale(0) drop-shadow(0 0 4px rgba(234,88,12,0.5)); } }
+    .ch-icon:nth-child(3)  { animation-delay: 0s; }    /* ✉ */
+    .ch-icon:nth-child(4)  { animation-delay: 0.3s; }  /* 📱 */
+    .ch-icon:nth-child(5)  { animation-delay: 0.6s; }  /* 🔔 */
+    .ch-icon:nth-child(6)  { animation-delay: 0.9s; }  /* 💬 */
+    .ch-icon:nth-child(7)  { animation-delay: 1.2s; }  /* 🎯 */
+    .ch-icon:nth-child(8)  { animation-delay: 1.5s; }  /* 🏷 */
+    .ch-icon:nth-child(9)  { animation-delay: 1.8s; }  /* 📊 */
+    .ch-icon:nth-child(10) { animation-delay: 2.1s; }  /* 🔌 */
+
+    /* 5 attribution — animated bars */
+    .stat-viz-attribution { display: flex; align-items: flex-end; justify-content: center; gap: 6px; height: 80px; padding: 4px 6px; }
+    .attr-bar { width: 10px; height: var(--h); background: linear-gradient(180deg, var(--orange-light), var(--orange)); border-radius: 3px 3px 0 0; transform-origin: bottom; animation: attrBarBreathe 3s ease-in-out infinite var(--d); box-shadow: 0 0 12px rgba(234,88,12,0.2); }
+    @keyframes attrBarBreathe { 0%, 100% { transform: scaleY(0.4); opacity: 0.5; } 50% { transform: scaleY(1); opacity: 1; } }
+
+    /* Price orb — glowing pulse showing how cheap */
+    .stat-viz-price { width: 90px; height: 90px; }
+    .price-orb { position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle, var(--orange-light), var(--orange)); transform: translate(-50%, -50%); box-shadow: 0 0 24px rgba(234,88,12,0.6); animation: priceOrbPulse 2.5s ease-in-out infinite; }
+    @keyframes priceOrbPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 24px rgba(234,88,12,0.6); } 50% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 36px rgba(234,88,12,0.9); } }
+    .price-orb-ring { position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--orange); transform: translate(-50%, -50%) scale(1); opacity: 0; animation: priceOrbRing 2.5s ease-out infinite; }
+    .price-orb-ring-2 { animation-delay: 1.25s; }
+    @keyframes priceOrbRing { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; } 100% { transform: translate(-50%, -50%) scale(4.5); opacity: 0; } }
+
+    @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; } }
+
+    /* BETA RECRUITMENT */
+    .beta-section { background: linear-gradient(180deg, var(--dark) 0%, #1a2744 100%); padding: 7rem 0; position: relative; overflow: hidden; }
+    .beta-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 3.5rem; max-width: 880px; margin: 0 auto; backdrop-filter: blur(8px); }
+    .beta-perks { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; margin: 2rem 0; }
+    .beta-perk { display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-bright); font-size: 0.9375rem; }
+    .beta-perk-check { color: var(--orange-light); flex-shrink: 0; font-weight: 700; padding-top: 2px; }
+    .beta-perk strong { color: var(--white); font-weight: 600; }
+    @media (max-width: 768px) { .beta-card { padding: 2rem; } .beta-perks { grid-template-columns: 1fr; gap: 0.75rem; } }
+
+    /* FAQ */
+    .faq-section { background: var(--light-bg); padding: 6rem 0; }
+    .faq-list { max-width: 720px; margin: 3rem auto 0; }
+    .faq-item { border-bottom: 1px solid var(--border-light); }
+    .faq-item:first-child { border-top: 1px solid var(--border-light); }
+    .faq-question { width: 100%; padding: 1.25rem 0; background: none; border: 0; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font: 600 1rem var(--font-body); color: var(--light-text); }
+    .faq-question:hover { color: var(--orange); }
+    .faq-icon { width: 24px; height: 24px; transition: transform 0.25s; flex-shrink: 0; }
+    .faq-item.open .faq-icon { transform: rotate(180deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .faq-item.open .faq-answer { max-height: 600px; }
+    .faq-answer p { padding: 0 0 1.25rem; font-size: 0.9375rem; color: var(--light-muted); line-height: 1.7; }
+    .faq-answer code { background: #f1f5f9; padding: 1px 6px; border-radius: 3px; font: 0.85em 'SF Mono', Monaco, monospace; }
+
+    /* FOOTER */
+    .footer { background: var(--dark); color: var(--text-muted-dark); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+    .footer-brand .footer-logo { font: 800 italic 1.5rem var(--font-heading); color: var(--white); letter-spacing: -0.02em; }
+    .footer-tagline { font-size: 0.875rem; color: var(--text-muted-dark); margin-top: 0.5rem; max-width: 280px; line-height: 1.5; }
+    .footer-col-title { font-size: 0.75rem; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .footer-col a { display: block; padding: 0.375rem 0; font-size: 0.875rem; color: var(--text-muted-dark); transition: color 0.15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom { padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.8125rem; color: var(--text-muted-dark); display: flex; flex-direction: column; gap: 0.5rem; }
+    .legal-details { font-size: 0.8125rem; }
+    .legal-details summary { cursor: pointer; color: var(--text-muted-dark); display: inline-flex; align-items: center; gap: 4px; padding: 4px 0; list-style: none; user-select: none; transition: color 0.15s; }
+    .legal-details summary::-webkit-details-marker { display: none; }
+    .legal-details summary::before { content: '▸'; font-size: 0.7rem; transition: transform 0.2s; opacity: 0.6; }
+    .legal-details[open] summary::before { transform: rotate(90deg); }
+    .legal-details summary:hover { color: var(--white); }
+    .footer-legal { font-size: 0.75rem; line-height: 1.6; opacity: 0.7; margin-top: 0.5rem; }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(120%); background: var(--orange); color: #fff; padding: 0.875rem 1.5rem; border-radius: 0.625rem; font-size: 0.9375rem; font-weight: 500; box-shadow: 0 12px 32px rgba(0,0,0,0.2); z-index: 9999; display: flex; align-items: center; gap: 0.625rem; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Lang switcher */
+    .lang-switcher { position: relative; }
+    .lang-btn { display: flex; align-items: center; gap: 4px; background: none; border: 0; color: var(--text-muted-dark); font-size: 0.8125rem; font-weight: 500; cursor: pointer; padding: 4px 8px; }
+    .lang-btn:hover { color: var(--white); }
+    .lang-dropdown { position: absolute; top: calc(100% + 6px); right: 0; background: var(--dark-2); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 6px; min-width: 140px; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: all 0.15s; box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+    .lang-switcher.open .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .lang-option { display: block; padding: 7px 12px; font-size: 0.8125rem; color: var(--text-muted-dark); border-radius: 4px; }
+    .lang-option:hover { background: rgba(255,255,255,0.04); color: var(--white); }
+    .lang-option.active { color: var(--orange-light); }
+  </style>
 </head>
 <body>
 
   <!-- ═══ NAVBAR ═══ -->
   <nav class="navbar" id="navbar">
-    <a href="#" class="nav-logo"><img src="../assets/logo-orange.svg" alt="SwiftMail" class="nav-logo-icon">SwiftMail</a>
+    <a href="/pt/" class="nav-logo"><img src="../assets/logo-orange.svg" alt="" class="nav-logo-icon">SwiftMail</a>
     <div class="nav-links" id="nav-links">
-      <a href="#features">Recursos</a>
-      <a href="#for-who">Para Quem</a>
+      <a href="/pt/features/">Recursos</a>
+      <a href="#beta">Beta aberto</a>
       <a href="#faq">FAQ</a>
       <a href="/blog/">Blog</a>
     </div>
     <div class="nav-right">
       <div class="lang-switcher" id="lang-switcher">
-        <button class="lang-btn" aria-label="Language">
+        <button class="lang-btn" aria-label="Change language, currently English" aria-haspopup="true" aria-expanded="false">
           <span class="lang-current">PT</span>
-          <svg class="lang-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          <svg class="lang-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </button>
         <div class="lang-dropdown">
           <a href="/" class="lang-option">English</a>
           <a href="/es/" class="lang-option">Español</a>
           <a href="/fr/" class="lang-option">Français</a>
           <a href="/de/" class="lang-option">Deutsch</a>
-          <a href="/it/" class="lang-option">Italiano</a>
           <a href="/pt/" class="lang-option active">Português</a>
-          <a href="/nl/" class="lang-option">Nederlands</a>
-          <a href="/pl/" class="lang-option">Polski</a>
-          <a href="/ja/" class="lang-option">日本語</a>
-          <a href="/uk/" class="lang-option">Українська</a>
         </div>
       </div>
-      <a href="#waitlist" class="nav-cta">Entrar na Lista</a>
+      <a href="#beta" class="nav-cta">Inscrever-se na beta</a>
     </div>
-    <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="hero">
-    <div class="hero-orbs">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
-    </div>
-    <div class="hero-grid-dots"></div>
-
-
+    <div class="signal-grid" id="signal-grid"></div>
     <div class="hero-content">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
-        Behavioral Marketing OS — para PMEs
+        Beta aberto · 100 vagas
       </div>
 
       <h1 class="hero-title">
-        Marketing automation com IA para pequenos negócios.<br>A partir de <span class="text-gradient">$20/mo</span>.
+        <em>Converta mais visitantes.</em><br>
+        Com marketing automation por IA.
       </h1>
 
       <p class="hero-subtitle">
-        SwiftMail é a primeira plataforma de marketing automation para pequenos negócios com IA comportamental: captura rage clicks, hesitação e formulários abandonados, depois explica <em>por que</em> cada visitante sai ou converte. Dispara email, SMS, push ou popups automaticamente. Tracking comportamental de nível empresarial ao preço de pequenos negócios.
+        O SwiftMail captura os sinais que toda outra ferramenta perde — <strong>rage clicks, hesitação, abandonos de formulário</strong> — explica o <em>porquê</em> por trás de cada sessão e dispara a mensagem certa por e-mail, SMS, push ou popup. <strong>Tudo de um único snippet.</strong>
       </p>
 
       <form class="hero-form" id="waitlist-form-hero">
-        <input type="email" placeholder="Digite seu email" class="hero-input" required>
-        <button type="submit" class="btn btn-primary btn-glow">Obter Acesso Antecipado</button>
+        <input type="email" placeholder="voce@email.com" class="hero-input" required>
+        <button type="submit" class="btn btn-primary">Inscrever-se na beta</button>
       </form>
 
       <p class="hero-trust">
-        ✓ Migre do Klaviyo ou Mailchimp em 5 min &nbsp;•&nbsp; ✓ Sem cartão de crédito &nbsp;•&nbsp; ✓ Preço fixo para os primeiros 500
+        ✓ Sem cartão &nbsp;•&nbsp; ✓ 6 meses grátis &nbsp;•&nbsp; ✓ Preço travado para sempre
       </p>
 
-      <p class="hero-counter" style="display:none">
-        Já <strong class="waitlist-count">0</strong> fundadores na lista de espera
-      </p>
-    </div>
-  </section>
-
-  <!-- ═══ WHY SWIFTMAIL ═══ -->
-  <section class="section section-light" id="why">
-    <div class="container">
-      <p class="section-label animate-in">POR QUE SWIFTMAIL</p>
-      <h2 class="section-title animate-in">Recursos enterprise.<br>A um preço que você realmente pode pagar.</h2>
-
-      <div class="comparison-table animate-in">
-        <div class="comparison-header">
-          <div class="comparison-col comparison-col--feature"></div>
-          <div class="comparison-col comparison-col--them">
-            <span class="comparison-col-label">Outros</span>
-            <span class="comparison-col-sub">Plataformas tradicionais</span>
-          </div>
-          <div class="comparison-col comparison-col--us">
-            <span class="comparison-col-label">SwiftMail</span>
-            <span class="comparison-col-sub">Feito para pequenos negócios</span>
-          </div>
-        </div>
-
-        <div class="comparison-row animate-in">
-          <div class="comparison-col comparison-col--feature">
-            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            <span>Preço inicial</span>
-          </div>
-          <div class="comparison-col comparison-col--them">
-            <span class="comparison-bad">$45+/mo</span>
-          </div>
-          <div class="comparison-col comparison-col--us">
-            <span class="comparison-good">$20/mo</span>
-            <span class="comparison-tag">9x mais barato</span>
-          </div>
-        </div>
-
-        <div class="comparison-row animate-in">
-          <div class="comparison-col comparison-col--feature">
-            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0 9 9 0 1 0-18 0"/><path d="M12 7v5l3 3"/></svg>
-            <span>Configuração DNS e Email</span>
-          </div>
-          <div class="comparison-col comparison-col--them">
-            <span class="comparison-bad">Manual, 3-5 dias</span>
-          </div>
-          <div class="comparison-col comparison-col--us">
-            <span class="comparison-good">Automática, 45 sec</span>
-            <span class="comparison-tag">Zero configuração</span>
-          </div>
-        </div>
-
-        <div class="comparison-row animate-in">
-          <div class="comparison-col comparison-col--feature">
-            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            <span>Limites de email</span>
-          </div>
-          <div class="comparison-col comparison-col--them">
-            <span class="comparison-bad">Pague por email enviado</span>
-          </div>
-          <div class="comparison-col comparison-col--us">
-            <span class="comparison-good">Envios ilimitados</span>
-          </div>
-        </div>
-
-        <div class="comparison-row animate-in">
-          <div class="comparison-col comparison-col--feature">
-            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-            <span>Prevenção de spam</span>
-          </div>
-          <div class="comparison-col comparison-col--them">
-            <span class="comparison-bad">Básica ou nenhuma</span>
-          </div>
-          <div class="comparison-col comparison-col--us">
-            <span class="comparison-good">Pontuação IA antes do envio</span>
-            <span class="comparison-tag">Verificação pré-envio</span>
-          </div>
-        </div>
-
-        <div class="comparison-row animate-in">
-          <div class="comparison-col comparison-col--feature">
-            <svg class="comparison-row-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
-            <span>Aquecimento de email</span>
-          </div>
-          <div class="comparison-col comparison-col--them">
-            <span class="comparison-bad">Não incluído</span>
-          </div>
-          <div class="comparison-col comparison-col--us">
-            <span class="comparison-good">Integrado, automático</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ FEATURES ═══ -->
-  <section class="section section-gray" id="features">
-    <div class="container">
-      <p class="section-label animate-in">O QUE VOCÊ RECEBE</p>
-      <h2 class="section-title animate-in">Ferramentas poderosas, zero complexidade.</h2>
-
-      <div class="features-grid">
-        <div class="feature-card animate-in">
-          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.287 1.288L3 12l5.8 1.9a2 2 0 0 1 1.288 1.288L12 21l1.9-5.8a2 2 0 0 1 1.287-1.288L21 12l-5.8-1.9a2 2 0 0 1-1.288-1.288Z"/></svg>
-          <h3>Análise de Marca com IA</h3>
-          <p>Cole sua URL. Extraímos cores, fontes e logo automaticamente.</p>
-        </div>
-        <div class="feature-card animate-in">
-          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
-          <h3>Construtor de Fluxos Visual</h3>
-          <p>Construtor de automação drag-and-drop. Gatilhos, condições, atrasos. Sem código necessário.</p>
-        </div>
-        <div class="feature-card animate-in">
-          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-          <h3>Integração Shopify</h3>
-          <p>Conexão com um clique. Clientes e pedidos sincronizados em tempo real.</p>
-        </div>
-        <div class="feature-card animate-in">
-          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <h3>Configuração DNS Automática</h3>
-          <p>SPF, DKIM, DMARC configurados em segundos. Sem necessidade de habilidades técnicas.</p>
-        </div>
-        <div class="feature-card animate-in">
-          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-          <h3>Aquecimento de Email</h3>
-          <p>Construção automática de reputação. Throttling inteligente previne blacklisting.</p>
-        </div>
-        <div class="feature-card animate-in">
-          <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
-          <h3>Prevenção de Spam</h3>
-          <p>A IA avalia cada email antes do envio. Bloqueia campanhas abaixo de 75/100.</p>
-        </div>
-      </div>
+      <a href="/pt/features/" class="hero-secondary-cta">Veja em ação ↓</a>
     </div>
   </section>
 
   <!-- ═══ BUILT FOR ═══ -->
-  <section class="section section-light" id="for-who">
+  <section class="section-light" id="for-who">
     <div class="container">
-      <p class="section-label animate-in">FEITO PARA</p>
-      <h2 class="section-title animate-in">Feito para negócios que querem resultados sem complexidade.</h2>
+      <p class="section-eyebrow animate-in">FEITO PARA</p>
+      <h2 class="pair-headline animate-in">
+        Operadores que querem saber <span class="pair-headline-em">porquê</span>.
+      </h2>
+      <p class="pair-body animate-in">
+        Não importa se você toca uma loja Shopify, um produto SaaS ou uma agência — se o seu funil tem um vazamento, você vê no momento em que ele se forma.
+      </p>
 
-      <div class="persona-grid">
-        <div class="persona-card animate-in">
-          <svg class="persona-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>
-          <h3>Donos de Negócios Locais</h3>
-          <p>Restaurantes, boutiques, consultores e empresas de serviços. Envie emails bonitos sem nenhuma configuração técnica.</p>
+      <div class="persona-grid stagger-children animate-in">
+        <div class="persona-card">
+          <div class="persona-icon">🛒</div>
+          <h3>Fundadores de e-commerce</h3>
+          <p>Lojas solo ou de equipe pequena vendo a conversão cair 1% sem saber por quê. Veja o sinal antes de gastar mais em tráfego.</p>
         </div>
-        <div class="persona-card animate-in">
-          <svg class="persona-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
-          <h3>Donos de Lojas Shopify</h3>
-          <p>Sincronize clientes, automatize fluxos pós-compra, recupere carrinhos abandonados.</p>
+        <div class="persona-card">
+          <div class="persona-icon">⚡</div>
+          <h3>SaaS product-led</h3>
+          <p>Transforme sinais comportamentais em nudges in-product e e-mails de ciclo de vida automaticamente. Sem escrever uma única integração.</p>
         </div>
-        <div class="persona-card animate-in">
-          <svg class="persona-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <h3>Pequenas Equipes de Marketing</h3>
-          <p>Uma pessoa pode fazer o que antes exigia uma agência de marketing.</p>
+        <div class="persona-card">
+          <div class="persona-icon">🎯</div>
+          <h3>Agências</h3>
+          <p>Gerencie 10+ sites de clientes em um só workspace. Segmentos comportamentais por cliente, relatórios por cliente, cotas de insights de IA por cliente.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ═══ STATS ═══ -->
-  <section class="section section-dark" id="stats">
-    <div class="hero-grid-dots"></div>
+  <section id="stats">
     <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item animate-in">
+      <div class="stats-grid stagger-children animate-in">
+        <div class="stat-item">
+          <div class="stat-viz stat-viz-signals" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
           <span class="stat-value counter" data-target="12">0</span><span class="stat-unit">+</span>
-          <span class="stat-label">Sinais comportamentais</span>
+          <span class="stat-label">Sinais comportamentais rastreados</span>
         </div>
-        <div class="stat-item animate-in">
+        <div class="stat-item">
+          <div class="stat-viz stat-viz-channels" aria-hidden="true">
+            <span class="ch-hub"></span>
+            <svg class="ch-rays" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+              <line class="ch-ray" x1="50" y1="50" x2="86" y2="50"/>
+              <line class="ch-ray" x1="50" y1="50" x2="76" y2="76"/>
+              <line class="ch-ray" x1="50" y1="50" x2="50" y2="86"/>
+              <line class="ch-ray" x1="50" y1="50" x2="24" y2="76"/>
+              <line class="ch-ray" x1="50" y1="50" x2="14" y2="50"/>
+              <line class="ch-ray" x1="50" y1="50" x2="24" y2="24"/>
+              <line class="ch-ray" x1="50" y1="50" x2="50" y2="14"/>
+              <line class="ch-ray" x1="50" y1="50" x2="76" y2="24"/>
+            </svg>
+            <span class="ch-icon" style="--a: 0deg">✉</span>
+            <span class="ch-icon" style="--a: 45deg">📱</span>
+            <span class="ch-icon" style="--a: 90deg">🔔</span>
+            <span class="ch-icon" style="--a: 135deg">💬</span>
+            <span class="ch-icon" style="--a: 180deg">🎯</span>
+            <span class="ch-icon" style="--a: 225deg">🏷</span>
+            <span class="ch-icon" style="--a: 270deg">📊</span>
+            <span class="ch-icon" style="--a: 315deg">🔌</span>
+          </div>
           <span class="stat-value counter" data-target="8">0</span><span class="stat-unit">+</span>
           <span class="stat-label">Canais por trigger</span>
         </div>
-        <div class="stat-item animate-in">
+        <div class="stat-item">
+          <div class="stat-viz stat-viz-attribution" aria-hidden="true">
+            <div class="attr-bar" style="--h: 95%; --d: 0s"></div>
+            <div class="attr-bar" style="--h: 70%; --d: 0.15s"></div>
+            <div class="attr-bar" style="--h: 50%; --d: 0.3s"></div>
+            <div class="attr-bar" style="--h: 65%; --d: 0.45s"></div>
+            <div class="attr-bar" style="--h: 90%; --d: 0.6s"></div>
+          </div>
           <span class="stat-value counter" data-target="5">0</span>
           <span class="stat-label">Modelos de atribuição</span>
         </div>
-        <div class="stat-item animate-in">
+        <div class="stat-item">
+          <div class="stat-viz stat-viz-price" aria-hidden="true">
+            <div class="price-orb"></div>
+            <div class="price-orb-ring"></div>
+            <div class="price-orb-ring price-orb-ring-2"></div>
+          </div>
           <span class="stat-unit">$</span><span class="stat-value">0.002</span>
           <span class="stat-label">Por insight de IA</span>
         </div>
@@ -425,96 +609,176 @@
     </div>
   </section>
 
-  <!-- ═══ FAQ ═══ -->
-  <section class="section section-light" id="faq">
-    <div class="container container-narrow">
-      <p class="section-label animate-in">FAQ</p>
-      <h2 class="section-title animate-in">Perguntas frequentes.</h2>
+  <!-- ═══ BETA RECRUITMENT ═══ -->
+  <section class="beta-section" id="beta">
+    <div class="container">
+      <div class="beta-card animate-in">
+        <p class="section-eyebrow" style="text-align:left;color:var(--orange-light);">BETA ABERTO</p>
+        <h2 class="pair-headline" style="color:var(--white);text-align:left;margin-bottom:1.25rem;">
+          Estamos escolhendo <span class="pair-headline-em">100 testers</span>.<br>Grátis por 6 meses. Preço travado depois.
+        </h2>
+        <p class="pair-body" style="text-align:left;color:var(--text-muted-dark);margin-bottom:2rem;max-width:none;">
+          O SwiftMail está em desenvolvimento ativo com um produto que já funciona. Precisamos de 100 operadores de pequenas empresas para usá-lo todo dia, reportar bugs e nos dizer o que falta.
+        </p>
 
-      <div class="faq-list">
-        <div class="faq-item animate-in">
-          <button class="faq-question" aria-expanded="false">
-            <span>Quando o SwiftMail será lançado?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Estamos em beta fechado. Entre na lista de espera para ter acesso antecipado e seu preço congelado para sempre.</p>
+        <div class="beta-perks">
+          <div class="beta-perk">
+            <span class="beta-perk-check">✓</span>
+            <span><strong>Grátis nos primeiros 6 meses</strong> · Acesso completo · Sem cartão</span>
+          </div>
+          <div class="beta-perk">
+            <span class="beta-perk-check">✓</span>
+            <span><strong>$20/mês travado depois do lançamento</strong> · Para sempre · O preço padrão será mais alto</span>
+          </div>
+          <div class="beta-perk">
+            <span class="beta-perk-check">✓</span>
+            <span><strong>Linha direta com o fundador</strong> · Canal no Slack · Call mensal · Seu feedback molda o roadmap</span>
+          </div>
+          <div class="beta-perk">
+            <span class="beta-perk-check">✓</span>
+            <span><strong>Co-marketing se você quiser</strong> · Case · Citação do fundador · Logo no site (opt-in)</span>
           </div>
         </div>
-        <div class="faq-item animate-in">
-          <button class="faq-question" aria-expanded="false">
-            <span>Quanto vai custar?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Os planos começam em $20/mo. Todos os planos incluem envios ilimitados. Os primeiros 500 membros da lista de espera terão o preço congelado para sempre.</p>
-          </div>
-        </div>
-        <div class="faq-item animate-in">
-          <button class="faq-question" aria-expanded="false">
-            <span>Preciso de conhecimento técnico?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Não. Nossa IA cuida da configuração DNS, aquecimento de email e análise de marca automaticamente. Se você sabe clicar em um botão, você pode usar o SwiftMail.</p>
-          </div>
-        </div>
-        <div class="faq-item animate-in">
-          <button class="faq-question" aria-expanded="false">
-            <span>Funciona com Shopify?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Sim. A integração OAuth com um clique sincroniza clientes, pedidos e produtos em tempo real.</p>
-          </div>
-        </div>
-        <div class="faq-item animate-in">
-          <button class="faq-question" aria-expanded="false">
-            <span>Como é diferente das outras plataformas?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>O SwiftMail oferece onboarding com IA sem configuração (cole sua URL e tenha sua primeira campanha pronta em 5 minutos), um Doutor de Entregabilidade integrado que diagnostica e corrige automaticamente problemas de entrega de email, e envios ilimitados em todos os planos — a partir de apenas $20/mo.</p>
-          </div>
-        </div>
-        <div class="faq-item animate-in">
-          <button class="faq-question" aria-expanded="false">
-            <span>Posso migrar de outra plataforma de email?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>Sim. O SwiftMail suporta importação com um clique dos seus contatos, templates e fluxos de automação de qualquer plataforma de email. A maioria das migrações leva menos de 5 minutos.</p>
-          </div>
-        </div>
-        <div class="faq-item animate-in">
-          <button class="faq-question" aria-expanded="false">
-            <span>Como funciona o Doutor de Entregabilidade?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>O Doutor de Entregabilidade é um sistema de IA que configura automaticamente SPF, DKIM e DMARC para o seu domínio, avalia cada email antes do envio para prevenir marcações de spam, e monitora continuamente sua reputação como remetente. Ele detecta problemas antes que afetem sua taxa de posicionamento na caixa de entrada.</p>
-          </div>
-        </div>
+
+        <form class="hero-form" id="waitlist-form-footer" style="margin: 2rem 0 1rem;">
+          <input type="email" placeholder="voce@email.com" class="hero-input" required>
+          <button type="submit" class="btn btn-primary">Inscrever-se na beta</button>
+        </form>
+
+        <p style="font-size:0.875rem;color:var(--text-muted-dark);margin-top:1.25rem;">
+          O que pedimos em troca: use, reporte bugs, responda uma pesquisa mensal de 5 min, entre no Slack.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- ═══ FINAL CTA ═══ -->
-  <section class="section section-cta" id="waitlist">
-    <div class="hero-orbs">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-    </div>
-    <div class="container">
-      <h2 class="cta-title animate-in">Pronto para ver por que os visitantes saem?</h2>
-      <p class="cta-subtitle animate-in">Coloque um snippet no seu site. SwiftMail captura os sinais, a IA explica o <em>porquê</em>, e seus fluxos disparam automaticamente. <strong>Preço fixo</strong> para os primeiros 500 membros do acesso antecipado.</p>
+  <!-- ═══ FAQ ═══ -->
+  <section class="faq-section" id="faq">
+    <div class="container container-narrow">
+      <p class="section-eyebrow animate-in">FAQ</p>
+      <h2 class="pair-headline animate-in">Perguntas frequentes.</h2>
 
-      <form class="hero-form cta-form animate-in" id="waitlist-form-footer">
-        <input type="email" placeholder="Digite seu email" class="hero-input" required>
-        <button type="submit" class="btn btn-primary btn-glow">Obter Acesso Antecipado</button>
-      </form>
+      <div class="faq-list stagger-children animate-in">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>O que significa Beta Aberto?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>O SwiftMail está em desenvolvimento ativo com um produto que já funciona. Beta Aberto significa que estamos escolhendo 100 operadores de pequenas empresas para usá-lo todo dia, reportar bugs e nos dizer o que falta. Em troca: 6 meses grátis, preço travado de $20/mês para sempre, linha direta com o fundador e co-marketing opcional.</p>
+          </div>
+        </div>
 
-      <p class="cta-meta animate-in">Lançamento Q2 2026 &nbsp;•&nbsp; <span class="spots-remaining">500</span> vagas restantes</p>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Quanto tempo dura a beta?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Seis meses a partir da data da sua ativação. Depois disso, você mantém seu preço travado de $20/mês para sempre. O preço padrão no lançamento completo será mais alto.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Preciso de cartão de crédito para me inscrever?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Não. Inscreva-se só com seu e-mail. Vamos revisar as inscrições e ativar os testers aceitos sem dados de pagamento. Cartão só é exigido quando a beta de 6 meses termina e você decide continuar.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Quais sinais comportamentais o SwiftMail rastreia?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Page views, cliques, profundidade de scroll (por seção), foco e abandono de campos de formulário, rage clicks (3+ cliques em 1 segundo no mesmo elemento), dead clicks, erros de runtime, falhas de fetch, tempo na página, duração da sessão, intenção de saída e conversões. Mais aberturas e cliques de e-mail padrão. O script do navegador é minúsculo (~4KB), carrega em background e mascara valores de formulário por padrão para privacidade.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Como funciona a explicação 'porquê' da IA?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Quando cada sessão termina, a IA lê toda a timeline de eventos — cada clique, scroll, hesitação e erro — e te diz em linguagem simples o que estava acontecendo de verdade. O visitante hesitou no preço? Ficou preso num formulário quebrado? Perdeu confiança no checkout? Se distraiu? Ou converteu por causa de urgência, prova social ou um caminho claro? Você vê o motivo numa frase, mais um parágrafo narrativo e um próximo passo sugerido. Roda automaticamente toda hora; instantâneo sob demanda.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Quais canais podem disparar a partir de um comportamento?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Oito canais disponíveis a partir de qualquer sinal de comportamento: e-mail, SMS, push web, push mobile (iOS + Android), popup no site, audiências de retargeting (Meta + Google), tarefa de CRM (Slack + HubSpot) e webhooks para todo o resto. Tudo conectado pelo mesmo flow builder.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Preciso de conhecimento técnico?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Não. Cole uma tag de script de uma linha no seu site. A configuração automática de DNS cuida de SPF, DKIM e DMARC em 45 segundos via APIs do Cloudflare, GoDaddy e Route53. Se você sabe colar um snippet, sabe usar o SwiftMail.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Em quanto tempo o SwiftMail reage a um sinal de comportamento?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Do momento em que o SwiftMail detecta um sinal de comportamento, leva cerca de meio segundo para disparar a ação — quase sempre menos de um segundo, mesmo em dias movimentados. Quando um visitante passa o cursor pra sair da sua página de preços, o popup já está na tela antes dele clicar pra fora. Cada visitante também tem rate-limit por flow (cooldown de 24 horas), então uma página viral não vai mandar o mesmo e-mail de recuperação cinco vezes.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Quais plataformas de e-commerce vocês suportam?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Conexão nativa de um clique para <strong>Shopify, WooCommerce e BigCommerce</strong>. REST API + webhooks para todo o resto. Clientes, pedidos, produtos e catálogo completo sincronizam em tempo real. Recursos baseados em catálogo (alertas de queda de preço e back-in-stock, relatórios de cohort por produto) funcionam em todas as plataformas suportadas.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Como a configuração de e-mail funciona na prática?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Cole seu domínio. Clique conectar. Veja o SwiftMail chamar a API do seu provedor DNS (Cloudflare, GoDaddy ou Route53) e adicionar registros SPF, DKIM e DMARC em cerca de 45 segundos. Depois disso, o warmup de IP roda automaticamente com auto-pause se o bounce subir acima de 5%, e cada campanha passa por um deliverability doctor que dá nota de 0 a 100 e bloqueia qualquer coisa abaixo de 75. Relatórios DMARC entrantes chegam via email worker do Cloudflare, então você vê o que os provedores de e-mail realmente acham do seu domínio.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Funciona com Shopify?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Sim. A integração OAuth de um clique sincroniza clientes, pedidos e produtos em tempo real. Sinais comportamentais carimbam IDs de cliente do Shopify na ingestão, então jornadas cross-device se costuram corretamente sem que os lojistas precisem escrever código Liquid de tema.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Posso migrar de outra ferramenta de e-mail?</span>
+            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Sim. A migração de um clique importa contatos, segmentos, templates e flows de automação de qualquer plataforma de e-mail importante. A maioria das migrações termina em menos de 5 minutos com todos os flows preservados.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -524,37 +788,62 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <span class="footer-logo">SwiftMail</span>
-          <p class="footer-tagline">Behavioral Marketing OS para pequenos negócios.</p>
+          <p class="footer-tagline">Marketing automation comportamental para pequenas empresas. Beta aberto · 100 testers · 6 meses grátis.</p>
         </div>
         <div class="footer-col">
           <p class="footer-col-title">Produto</p>
-          <a href="#features">Recursos</a>
-          <a href="#">Preços</a>
-          <a href="#">Integrações</a>
+          <a href="/pt/features/">Recursos</a>
+          <a href="#beta">Beta aberto</a>
+          <a href="#faq">FAQ</a>
         </div>
         <div class="footer-col">
           <p class="footer-col-title">Empresa</p>
-          <a href="#">Sobre</a>
           <a href="/blog/">Blog</a>
-          <a href="#">Contato</a>
+          <a href="mailto:support@swift-mail.app">Contato</a>
         </div>
         <div class="footer-col">
           <p class="footer-col-title">Legal</p>
-          <a href="/privacy.html">Política de Privacidade</a>
-          <a href="/terms.html">Termos de Serviço</a>
+          <a href="/privacy.html">Privacidade</a>
+          <a href="/terms.html">Termos</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2026 SwiftMail. Feito para pequenos negócios com ❤️</span>
+        <span>© 2026 SwiftMail. Todos os direitos reservados.</span>
+        <details class="legal-details">
+          <summary>Dados de contato</summary>
+          <div class="footer-legal">
+            <span>Operado por: ФОП Немировський Іван Віталійович · Nº fiscal: 3860905274</span><br>
+            <span>Endereço registrado: Україна, 23700, Вінницька обл., Гайсинський р-н, місто Гайсин, вул.Гайдара, будинок 4</span><br>
+            <span>Contato: <a href="tel:+380932637515">+38 (093) 263-75-15</a> · <a href="mailto:support@swift-mail.app">support@swift-mail.app</a></span>
+          </div>
+        </details>
       </div>
     </div>
   </footer>
 
-  <!-- Form success overlay -->
+  <!-- Toast -->
   <div class="toast" id="toast">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-    <span>Você está na lista! Avisaremos quando lançarmos.</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+    <span id="toast-text">Inscrição recebida! Vamos analisar e te respondemos por e-mail em até 48 horas.</span>
   </div>
+
+  <!-- Hero signal-grid pulse generator -->
+  <script>
+    (function initSignalGrid() {
+      const grid = document.getElementById('signal-grid');
+      if (!grid) return;
+      function pulse() {
+        const dot = document.createElement('div');
+        dot.className = 'signal-pulse';
+        dot.style.left = (Math.random() * 100) + '%';
+        dot.style.top = (Math.random() * 100) + '%';
+        grid.appendChild(dot);
+        setTimeout(() => dot.remove(), 1700);
+      }
+      // Spawn 4-6 pulses/sec
+      setInterval(pulse, 220);
+    })();
+  </script>
 
   <!-- Scripts (deferred) -->
   <script src="../js/main.js" defer></script>
