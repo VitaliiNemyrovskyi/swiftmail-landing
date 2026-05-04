@@ -36,9 +36,25 @@
   <meta name="twitter:title" content="SwiftMail — Convert More Visitors with AI Marketing Automation">
   <meta name="twitter:description" content="AI marketing automation built around behavior. Captures the signals other tools miss, AI explains the why, triggers email/SMS/push/popup. Open beta: 100 testers, 6 months free.">
 
-  <!-- Fonts (self-hosted) -->
-  <link rel="preload" href="fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Fonts (self-hosted, Latin-only subsets — 80 KB + 33 KB instead of 225 + 47) -->
+  <link rel="preload" href="fonts/plus-jakarta-sans-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Plus Jakarta Sans';
+      font-style: normal;
+      font-weight: 700 900;
+      font-display: swap;
+      src: url(fonts/plus-jakarta-sans-var-latin.woff2) format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400 600;
+      font-display: swap;
+      src: url(fonts/inter-var-latin.woff2) format('woff2');
+    }
+  </style>
 
   <!-- Critical CSS — navbar + hero -->
   <style>
@@ -267,7 +283,8 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/fonts.css">
+  <!-- Note: @font-face declared inline above (Latin subset). fonts.css NOT loaded
+       here — UK/JA pages still load it for their Cyrillic/CJK glyph coverage. -->
   <link rel="stylesheet" href="css/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/animations.css"></noscript>
