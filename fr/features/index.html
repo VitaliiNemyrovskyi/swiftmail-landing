@@ -108,6 +108,8 @@
     .nav-right { display: flex; align-items: center; gap: 1rem; }
     .nav-cta { padding: 0.5rem 1.125rem; background: var(--orange); color: #fff; border-radius: 0.5rem; font-size: 0.8125rem; font-weight: 700; border: none; transition: background 0.15s; }
     .nav-cta:hover { background: #cc4900; }
+    .nav-login { padding: 0.5rem 0.875rem; color: var(--text-muted-dark); font-size: 0.8125rem; font-weight: 600; transition: color 0.15s; border-radius: 0.5rem; }
+    .nav-login:hover { color: var(--white); }
     .nav-mobile-toggle { display: none; background: none; border: 0; flex-direction: column; gap: 4px; padding: 4px; cursor: pointer; }
     .nav-mobile-toggle span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
 
@@ -192,7 +194,7 @@
       .hero { padding: 7rem 1.25rem 4rem; }
       .nav-links { display: none; }
       .nav-mobile-toggle { display: flex; }
-      .nav-right .nav-cta { display: none; }
+      .nav-right .nav-cta, .nav-right .nav-login { display: none; }
       .hero-form { flex-direction: column; }
     }
   </style>
@@ -511,6 +513,7 @@
           <a href="/pt/features/" class="lang-option">Português</a>
         </div>
       </div>
+      <a href="https://app.swift-mail.app/" class="nav-login">Se connecter</a>
       <a href="/fr/#beta" class="nav-cta">Postuler à la bêta</a>
     </div>
     <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
