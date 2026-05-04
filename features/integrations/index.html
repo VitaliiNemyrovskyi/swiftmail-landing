@@ -477,10 +477,10 @@
         </button>
         <div class="lang-dropdown">
           <a href="/" class="lang-option active">English</a>
-          <a href="/es/" class="lang-option">Español</a>
-          <a href="/fr/" class="lang-option">Français</a>
-          <a href="/de/" class="lang-option">Deutsch</a>
-          <a href="/pt/" class="lang-option">Português</a>
+          <a href="/es/features/integrations/" class="lang-option">Español</a>
+          <a href="/fr/features/integrations/" class="lang-option">Français</a>
+          <a href="/de/features/integrations/" class="lang-option">Deutsch</a>
+          <a href="/pt/features/integrations/" class="lang-option">Português</a>
         </div>
       </div>
       <a href="/#beta" class="nav-cta">Apply for beta</a>
@@ -507,8 +507,100 @@
   <!-- Demo -->
   <section class="section-light feature-block">
     <div class="container">
+<figure class="demo-css animate-in" style="background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%); aspect-ratio: auto; padding: 0; max-width: 940px;">
+        <div class="intg-scene" aria-hidden="true">
+          <div class="intg-grid">
+            <!-- LEFT: connected stores -->
+            <div>
+              <div class="intg-col-label"><span class="intg-col-label-dot"></span>Your stores</div>
+              <div class="intg-stores">
+                <div class="intg-store connected">
+                  <div class="intg-store-head">
+                    <span class="intg-store-name"><span class="intg-store-icon">🛍️</span>Shopify</span>
+                    <span class="intg-store-status intg-status-live">Live</span>
+                  </div>
+                  <div class="intg-store-meta"><strong>12,847</strong> contacts · <strong>89K</strong> orders<br>synced <strong>1.4s ago</strong></div>
+                </div>
+                <div class="intg-store connected">
+                  <div class="intg-store-head">
+                    <span class="intg-store-name"><span class="intg-store-icon">🏪</span>WooCommerce</span>
+                    <span class="intg-store-status intg-status-live">Live</span>
+                  </div>
+                  <div class="intg-store-meta"><strong>4,201</strong> contacts · <strong>23K</strong> orders<br>synced <strong>2.1s ago</strong></div>
+                </div>
+                <div class="intg-store">
+                  <div class="intg-store-head">
+                    <span class="intg-store-name"><span class="intg-store-icon">🛒</span>BigCommerce</span>
+                    <span class="intg-store-status intg-status-avail">Available</span>
+                  </div>
+                  <div class="intg-store-meta">One-click OAuth · sync starts in 30 seconds</div>
+                  <span class="intg-store-cta">Connect →</span>
+                </div>
+              </div>
+            </div>
 
+            <!-- CENTER: animated event flow -->
+            <div>
+              <div class="intg-col-label"><span class="intg-col-label-dot"></span>Live events</div>
+              <div class="intg-flow">
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Order placed · <section class="section-light feature-block">
+    <div class="container">47</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Cart abandoned · $89</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>New customer</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Product viewed</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Back in stock · size 10</div>
+                <div class="intg-event-chip"><span class="intg-event-chip-dot"></span>Price dropped · −21%</div>
+              </div>
+            </div>
 
+            <!-- RIGHT: SwiftMail target + stats -->
+            <div>
+              <div class="intg-col-label"><span class="intg-col-label-dot"></span>One source of truth</div>
+              <div class="intg-target">
+                <div class="intg-target-title">SwiftMail</div>
+                <div class="intg-target-tps">142<small>events / sec ingested</small></div>
+              </div>
+              <div class="intg-stats">
+                <div class="intg-stat-tile"><div class="intg-stat-num">17K</div><div class="intg-stat-label">Contacts</div></div>
+                <div class="intg-stat-tile"><div class="intg-stat-num">112K</div><div class="intg-stat-label">Orders</div></div>
+                <div class="intg-stat-tile"><div class="intg-stat-num">8.2K</div><div class="intg-stat-label">Products</div></div>
+                <div class="intg-stat-tile"><div class="intg-stat-num">42</div><div class="intg-stat-label">Segments</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live event log -->
+          <div class="intg-log">
+            <div class="intg-log-title">Event stream · last 60 seconds</div>
+            <div class="intg-log-row">
+              <span class="intg-log-time">14:23:01</span>
+              <span class="intg-log-event">Order placed</span>
+              <span class="intg-log-meta"><section class="section-light feature-block">
+    <div class="container">47 · TrailRunner Pro · sarah.k@runclub.io</span>
+              <span class="intg-log-source">Shopify</span>
+            </div>
+            <div class="intg-log-row">
+              <span class="intg-log-time">14:23:00</span>
+              <span class="intg-log-event">Cart abandoned</span>
+              <span class="intg-log-meta">$89 · 2 items · anon_4f9a · 2 min idle</span>
+              <span class="intg-log-source">Woo</span>
+            </div>
+            <div class="intg-log-row">
+              <span class="intg-log-time">14:22:58</span>
+              <span class="intg-log-event">New customer</span>
+              <span class="intg-log-meta">marcus@runclub.io · organic search</span>
+              <span class="intg-log-source">Shopify</span>
+            </div>
+            <div class="intg-log-row">
+              <span class="intg-log-time">14:22:54</span>
+              <span class="intg-log-event">Stock alert queued</span>
+              <span class="intg-log-meta">TrailRunner Pro · size 10 · 47 customers waiting</span>
+              <span class="intg-log-source">Shopify</span>
+            </div>
+          </div>
+        </div>
+      </figure>
+<p class="feature-caption animate-in">Connect a store in one click. Customers, orders, products, and behavior stream in continuously — and out the other side, you get segments and triggers ready to act on.</p>
     </div>
   </section>
 

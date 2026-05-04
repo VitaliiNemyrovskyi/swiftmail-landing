@@ -477,10 +477,10 @@
         </button>
         <div class="lang-dropdown">
           <a href="/" class="lang-option active">English</a>
-          <a href="/es/" class="lang-option">Español</a>
-          <a href="/fr/" class="lang-option">Français</a>
-          <a href="/de/" class="lang-option">Deutsch</a>
-          <a href="/pt/" class="lang-option">Português</a>
+          <a href="/es/features/email-setup/" class="lang-option">Español</a>
+          <a href="/fr/features/email-setup/" class="lang-option">Français</a>
+          <a href="/de/features/email-setup/" class="lang-option">Deutsch</a>
+          <a href="/pt/features/email-setup/" class="lang-option">Português</a>
         </div>
       </div>
       <a href="/#beta" class="nav-cta">Apply for beta</a>
@@ -507,8 +507,21 @@
   <!-- Demo -->
   <section class="section-light feature-block">
     <div class="container">
-
-
+<figure class="demo-css animate-in" style="background: #050810;">
+        <div class="demo-terminal">
+          <div class="demo-terminal-bar">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="demo-terminal-line t1"><span class="demo-terminal-prompt">$</span> swiftmail dns connect peakathletic.com</div>
+          <div class="demo-terminal-line t2"><span class="demo-terminal-success">→</span> Connecting to api.cloudflare.com...</div>
+          <div class="demo-terminal-line t3"><span class="demo-terminal-check">✓</span> SPF record added · v=spf1 include:_spf.swiftmail.app ~all</div>
+          <div class="demo-terminal-line t4"><span class="demo-terminal-check">✓</span> DKIM key generated · 2048-bit RSA · selector=sm1</div>
+          <div class="demo-terminal-line t5"><span class="demo-terminal-check">✓</span> DMARC policy set · v=DMARC1; p=quarantine; rua=mailto:dmarc@…</div>
+          <div class="demo-terminal-line t6"><span class="demo-terminal-check">✓</span> Setup complete in 42s<span class="demo-terminal-cursor"></span></div>
+        </div>
+        <div class="demo-css-frame"></div>
+      </figure>
+<p class="feature-caption animate-in">No DNS knowledge required. SPF, DKIM, and DMARC configured via API in under a minute.</p>
     </div>
   </section>
 
