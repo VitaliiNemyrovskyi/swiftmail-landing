@@ -468,10 +468,11 @@
   .feat-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--orange-light)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 2; }
   .feat-card:hover::after { transform: scaleX(1); }
 
-  .feat-card-visual { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; color: var(--orange); position: relative; overflow: hidden; }
-  .feat-card-visual svg { width: 100px; height: 100px; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); filter: drop-shadow(0 4px 12px rgba(234,88,12,0.18)); }
-  .feat-card:hover .feat-card-visual svg { transform: scale(1.08); }
-  .feat-card-visual::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.5), transparent 60%); pointer-events: none; }
+  /* Photo-based card visuals (replacing the previous SVG illustrations) */
+  .feat-card-visual { aspect-ratio: 16/9; overflow: hidden; position: relative; background: #f3f4f6; }
+  .feat-card-visual img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  .feat-card:hover .feat-card-visual img { transform: scale(1.06); }
+  .feat-card-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.08)); pointer-events: none; }
 
   .feat-card-body { padding: 1.5rem 1.5rem 1.625rem; display: flex; flex-direction: column; flex: 1; gap: 0.5rem; }
   .feat-card-eyebrow { font: 700 0.6875rem var(--font-body); color: var(--orange); letter-spacing: 0.14em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
@@ -535,16 +536,7 @@
         <div class="feat-grid">
         <a href="behavioral-capture/" class="feat-card">
           <div class="feat-card-visual" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);">
-            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <!-- cursor + click ripples conveying behavioral capture -->
-    <path d="M28 20 L28 56 L36 50 L41 60 L46 58 L41 48 L52 48 Z" fill="currentColor" fill-opacity="0.15"/>
-    <circle cx="56" cy="22" r="4"/>
-    <circle cx="56" cy="22" r="9" stroke-opacity="0.4" stroke-dasharray="2 4"/>
-    <circle cx="56" cy="22" r="14" stroke-opacity="0.2" stroke-dasharray="2 6"/>
-    <line x1="14" y1="14" x2="18" y2="18" stroke-opacity="0.5"/>
-    <line x1="20" y1="14" x2="22" y2="14" stroke-opacity="0.5"/>
-    <line x1="14" y1="22" x2="14" y2="20" stroke-opacity="0.5"/>
-  </svg>
+            <img src="../../assets/features/behavioral-capture.webp" alt="Finger drückt eine Taste auf einem Laptop" width="800" height="450" loading="lazy" decoding="async">
           </div>
           <div class="feat-card-body">
             <span class="feat-card-eyebrow">FEATURE 01</span>
@@ -555,15 +547,7 @@
         </a>
         <a href="ai-explanation/" class="feat-card">
           <div class="feat-card-visual" style="background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);">
-            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <!-- speech bubble with sparkle indicating AI insight -->
-    <path d="M16 26 L52 26 Q58 26 58 32 L58 50 Q58 56 52 56 L34 56 L24 64 L24 56 L16 56 Q10 56 10 50 L10 32 Q10 26 16 26 Z" fill="currentColor" fill-opacity="0.08"/>
-    <line x1="20" y1="36" x2="48" y2="36" stroke-opacity="0.5"/>
-    <line x1="20" y1="44" x2="38" y2="44" stroke-opacity="0.5"/>
-    <!-- sparkle -->
-    <path d="M64 14 L64 22 M60 18 L68 18" stroke-width="2.5"/>
-    <path d="M70 30 L70 34 M68 32 L72 32"/>
-  </svg>
+            <img src="../../assets/features/ai-explanation.webp" alt="Glühbirne mit einem Gehirn und einem KI-Chip darin" width="800" height="450" loading="lazy" decoding="async">
           </div>
           <div class="feat-card-body">
             <span class="feat-card-eyebrow">FEATURE 02</span>
@@ -574,24 +558,7 @@
         </a>
         <a href="multichannel/" class="feat-card">
           <div class="feat-card-visual" style="background: linear-gradient(135deg, #fff7ed 0%, #fde68a 100%);">
-            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <!-- one trigger fanning out to 4 channels -->
-    <circle cx="18" cy="40" r="6" fill="currentColor" fill-opacity="0.18"/>
-    <circle cx="18" cy="40" r="6"/>
-    <line x1="24" y1="40" x2="56" y2="16"/>
-    <line x1="24" y1="40" x2="56" y2="32"/>
-    <line x1="24" y1="40" x2="56" y2="48"/>
-    <line x1="24" y1="40" x2="56" y2="64"/>
-    <!-- 4 channel nodes -->
-    <rect x="56" y="11" width="14" height="10" rx="2" fill="currentColor" fill-opacity="0.12"/>
-    <rect x="56" y="11" width="14" height="10" rx="2"/>
-    <rect x="56" y="27" width="14" height="10" rx="2" fill="currentColor" fill-opacity="0.12"/>
-    <rect x="56" y="27" width="14" height="10" rx="2"/>
-    <rect x="56" y="43" width="14" height="10" rx="2" fill="currentColor" fill-opacity="0.12"/>
-    <rect x="56" y="43" width="14" height="10" rx="2"/>
-    <rect x="56" y="59" width="14" height="10" rx="2" fill="currentColor" fill-opacity="0.12"/>
-    <rect x="56" y="59" width="14" height="10" rx="2"/>
-  </svg>
+            <img src="../../assets/features/multichannel.webp" alt="Smartphone und Laptops nebeneinander auf einem Schreibtisch" width="800" height="450" loading="lazy" decoding="async">
           </div>
           <div class="feat-card-body">
             <span class="feat-card-eyebrow">FEATURE 03</span>
@@ -602,22 +569,7 @@
         </a>
         <a href="customer-journey/" class="feat-card">
           <div class="feat-card-visual" style="background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);">
-            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <!-- timeline of touchpoints across sessions -->
-    <path d="M8 40 Q22 24 36 40 T64 40 T76 40" stroke-opacity="0.4"/>
-    <circle cx="12" cy="40" r="5" fill="currentColor" fill-opacity="0.15"/>
-    <circle cx="12" cy="40" r="5"/>
-    <circle cx="32" cy="40" r="5" fill="currentColor" fill-opacity="0.15"/>
-    <circle cx="32" cy="40" r="5"/>
-    <circle cx="52" cy="40" r="5" fill="currentColor" fill-opacity="0.15"/>
-    <circle cx="52" cy="40" r="5"/>
-    <circle cx="72" cy="40" r="5" fill="currentColor"/>
-    <!-- journey labels above -->
-    <line x1="12" y1="32" x2="12" y2="20" stroke-opacity="0.4" stroke-dasharray="2 2"/>
-    <line x1="72" y1="32" x2="72" y2="20" stroke-opacity="0.4" stroke-dasharray="2 2"/>
-    <text x="12" y="16" font-family="Inter, sans-serif" font-size="7" fill="currentColor" stroke="none" text-anchor="middle" font-weight="700">First</text>
-    <text x="72" y="16" font-family="Inter, sans-serif" font-size="7" fill="currentColor" stroke="none" text-anchor="middle" font-weight="700">Last</text>
-  </svg>
+            <img src="../../assets/features/customer-journey.webp" alt="Luftaufnahme einer kurvigen Bergstraße" width="800" height="450" loading="lazy" decoding="async">
           </div>
           <div class="feat-card-body">
             <span class="feat-card-eyebrow">FEATURE 04</span>
@@ -628,17 +580,7 @@
         </a>
         <a href="realtime-intervention/" class="feat-card">
           <div class="feat-card-visual" style="background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);">
-            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <!-- lightning bolt + intervention popup -->
-    <path d="M30 10 L14 38 L26 38 L22 64 L46 32 L34 32 L38 10 Z" fill="currentColor" fill-opacity="0.18"/>
-    <path d="M30 10 L14 38 L26 38 L22 64 L46 32 L34 32 L38 10 Z"/>
-    <!-- popup card on the side -->
-    <rect x="50" y="42" width="22" height="22" rx="3" fill="currentColor" fill-opacity="0.08"/>
-    <rect x="50" y="42" width="22" height="22" rx="3"/>
-    <line x1="54" y1="49" x2="68" y2="49" stroke-opacity="0.5"/>
-    <line x1="54" y1="54" x2="64" y2="54" stroke-opacity="0.5"/>
-    <rect x="54" y="58" width="10" height="3" rx="1" fill="currentColor"/>
-  </svg>
+            <img src="../../assets/features/realtime-intervention.webp" alt="Blitz vor einem orangefarbenen Himmel" width="800" height="450" loading="lazy" decoding="async">
           </div>
           <div class="feat-card-body">
             <span class="feat-card-eyebrow">FEATURE 05</span>
@@ -649,23 +591,7 @@
         </a>
         <a href="integrations/" class="feat-card">
           <div class="feat-card-visual" style="background: linear-gradient(135deg, #ffedd5 0%, #fdba74 100%);">
-            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <!-- 3 platforms connecting to central hub -->
-    <rect x="8" y="16" width="18" height="12" rx="2" fill="currentColor" fill-opacity="0.1"/>
-    <rect x="8" y="16" width="18" height="12" rx="2"/>
-    <rect x="8" y="34" width="18" height="12" rx="2" fill="currentColor" fill-opacity="0.1"/>
-    <rect x="8" y="34" width="18" height="12" rx="2"/>
-    <rect x="8" y="52" width="18" height="12" rx="2" fill="currentColor" fill-opacity="0.1"/>
-    <rect x="8" y="52" width="18" height="12" rx="2"/>
-    <!-- connecting lines -->
-    <path d="M26 22 Q40 22 50 38" stroke-opacity="0.5"/>
-    <path d="M26 40 L50 40" stroke-opacity="0.5"/>
-    <path d="M26 58 Q40 58 50 42" stroke-opacity="0.5"/>
-    <!-- hub -->
-    <circle cx="60" cy="40" r="12" fill="currentColor" fill-opacity="0.18"/>
-    <circle cx="60" cy="40" r="12"/>
-    <path d="M55 36 L57 41 L62 39 L60 44 L65 46" stroke-width="2.5"/>
-  </svg>
+            <img src="../../assets/features/integrations.webp" alt="Hand hält Kreditkarte neben einem Laptop" width="800" height="450" loading="lazy" decoding="async">
           </div>
           <div class="feat-card-body">
             <span class="feat-card-eyebrow">FEATURE 06</span>
@@ -676,17 +602,7 @@
         </a>
         <a href="email-setup/" class="feat-card">
           <div class="feat-card-visual" style="background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);">
-            <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <!-- envelope with shield/check mark = secured email -->
-    <rect x="12" y="22" width="44" height="32" rx="3" fill="currentColor" fill-opacity="0.08"/>
-    <rect x="12" y="22" width="44" height="32" rx="3"/>
-    <path d="M12 26 L34 42 L56 26"/>
-    <!-- shield with check on top-right -->
-    <path d="M52 44 L62 44 L62 54 Q62 60 57 62 Q52 60 52 54 Z" fill="white" stroke="white" stroke-width="3"/>
-    <path d="M52 44 L62 44 L62 54 Q62 60 57 62 Q52 60 52 54 Z" fill="currentColor" fill-opacity="0.2"/>
-    <path d="M52 44 L62 44 L62 54 Q62 60 57 62 Q52 60 52 54 Z"/>
-    <path d="M54 53 L56 55 L60 50" stroke-width="2"/>
-  </svg>
+            <img src="../../assets/features/email-setup.webp" alt="Alter Briefumschlag auf dunklem Hintergrund" width="800" height="450" loading="lazy" decoding="async">
           </div>
           <div class="feat-card-body">
             <span class="feat-card-eyebrow">FEATURE 07</span>
