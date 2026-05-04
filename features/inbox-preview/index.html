@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -11,25 +11,25 @@
     sm('init', 'pk_live_bea0d715ec2ca156ebe31e205c5364fc', { siteId: '2cff4622-a98a-455f-85c5-db0f3f827b25' });
   </script>
   <script src="https://app.swift-mail.app/sdk/sm.js" async></script>
-  <title>Configuration email en 45 secondes · SPF, DKIM, DMARC pris en charge — SwiftMail</title>
-  <meta name="description" content="Aucune connaissance DNS requise. SwiftMail gère SPF, DKIM et DMARC via des intégrations API avec Cloudflare, GoDaddy et Route53. Warm-up IP et scoring de délivrabilité inclus.">
-  <link rel="canonical" href="https://swift-mail.app/fr/features/email-setup/">
-  <link rel="alternate" hreflang="en" href="https://swift-mail.app/features/email-setup/">
-  <link rel="alternate" hreflang="es" href="https://swift-mail.app/es/features/email-setup/">
-  <link rel="alternate" hreflang="fr" href="https://swift-mail.app/fr/features/email-setup/">
-  <link rel="alternate" hreflang="de" href="https://swift-mail.app/de/features/email-setup/">
-  <link rel="alternate" hreflang="pt" href="https://swift-mail.app/pt/features/email-setup/">
-  <link rel="alternate" hreflang="x-default" href="https://swift-mail.app/features/email-setup/">
+  <title>Inbox preview · Render across 80+ clients before you send — SwiftMail</title>
+  <meta name="description" content="Render your email across 80+ clients — Gmail, Outlook, Apple Mail, mobile, desktop, light, dark mode — in seconds. Spot the broken layout before your customer does.">
+  <link rel="canonical" href="https://swift-mail.app/features/inbox-preview/">
+  <link rel="alternate" hreflang="en" href="https://swift-mail.app/features/inbox-preview/">
+  <link rel="alternate" hreflang="es" href="https://swift-mail.app/es/features/inbox-preview/">
+  <link rel="alternate" hreflang="fr" href="https://swift-mail.app/fr/features/inbox-preview/">
+  <link rel="alternate" hreflang="de" href="https://swift-mail.app/de/features/inbox-preview/">
+  <link rel="alternate" hreflang="pt" href="https://swift-mail.app/pt/features/inbox-preview/">
+    <link rel="alternate" hreflang="x-default" href="https://swift-mail.app/features/inbox-preview/">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Configuration email en 45 secondes · SPF, DKIM, DMARC pris en charge — SwiftMail">
-  <meta property="og:description" content="Aucune connaissance DNS requise. SwiftMail gère SPF, DKIM et DMARC via des intégrations API avec Cloudflare, GoDaddy et Route53. Warm-up IP et scoring de délivrabilité inclus.">
+  <meta property="og:title" content="Inbox preview · Render across 80+ clients before you send — SwiftMail">
+  <meta property="og:description" content="Render your email across 80+ clients — Gmail, Outlook, Apple Mail, mobile, desktop, light, dark mode — in seconds. Spot the broken layout before your customer does.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://swift-mail.app/fr/features/email-setup/">
+  <meta property="og:url" content="https://swift-mail.app/features/inbox-preview/">
   <meta property="og:site_name" content="SwiftMail">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Configuration email en 45 secondes · SPF, DKIM, DMARC pris en charge — SwiftMail">
-  <meta name="twitter:description" content="Aucune connaissance DNS requise. SwiftMail gère SPF, DKIM et DMARC via des intégrations API avec Cloudflare, GoDaddy et Route53. Warm-up IP et scoring de délivrabilité inclus.">
+  <meta name="twitter:title" content="Inbox preview · Render across 80+ clients before you send — SwiftMail">
+  <meta name="twitter:description" content="Render your email across 80+ clients — Gmail, Outlook, Apple Mail, mobile, desktop, light, dark mode — in seconds. Spot the broken layout before your customer does.">
 
   <!-- Fonts (self-hosted, Latin-only subsets — 80 KB + 33 KB instead of 225 + 47) -->
   <link rel="preload" href="../../fonts/plus-jakarta-sans-var-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -206,7 +206,7 @@
     "@type": "Organization",
     "name": "SwiftMail",
     "url": "https://swift-mail.app",
-    "description": "Plateforme de marketing comportemental pour petites entreprises. Capte rage clicks, hésitation et abandons de formulaire ; l'IA explique pourquoi les visiteurs partent ; déclenche email, SMS, push et popups depuis un seul snippet."
+    "description": "Behavioral marketing platform for small business. Captures rage clicks, hesitation, and form drops; AI explains why visitors leave; triggers email, SMS, push, and popups from one snippet."
   }
   </script>
   <script type="application/ld+json">
@@ -215,7 +215,7 @@
     "@type": "WebSite",
     "name": "SwiftMail",
     "url": "https://swift-mail.app",
-    "description": "Bêta ouverte · 100 testeurs · 6 mois gratuits. Marketing automation IA pour petites entreprises — capte le comportement, explique pourquoi les visiteurs partent, déclenche email/SMS/push/popup automatiquement."
+    "description": "Open beta · 100 testers · 6 months free. AI marketing automation for small business — captures behavior, explains why visitors leave, triggers email/SMS/push/popup automatically."
   }
   </script>
   <script type="application/ld+json">
@@ -225,74 +225,74 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Que veut dire Bêta Ouverte ?",
+        "name": "What does Open Beta mean?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "SwiftMail est en développement actif avec un produit qui marche. Bêta Ouverte signifie que nous choisissons 100 opérateurs de petites entreprises pour l'utiliser au quotidien, remonter les bugs et nous dire ce qui manque. En retour : 6 mois gratuits, tarif bloqué à 20 $/mois à vie, ligne directe avec le fondateur et co-marketing optionnel."
+          "text": "SwiftMail is in active development with a working product. Open Beta means we're picking 100 small-business operators to use it daily, file bugs, and tell us what's missing. In return: 6 months free, locked-in $20/mo price for life, direct line to the founder, and optional co-marketing."
         }
       },
       {
         "@type": "Question",
-        "name": "Combien de temps dure la bêta ?",
+        "name": "How long is the beta?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Six mois à partir de votre date d'activation. Ensuite, vous gardez votre tarif bloqué à 20 $/mois pour toujours. Le tarif standard au lancement complet sera plus élevé."
+          "text": "Six months from your activation date. After that, you keep your locked-in $20/mo price forever. Standard pricing at full launch will be higher."
         }
       },
       {
         "@type": "Question",
-        "name": "Faut-il une carte bancaire pour postuler ?",
+        "name": "Do I need a credit card to apply?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Non. Postulez avec juste votre email. Nous examinerons les candidatures et accueillerons les testeurs acceptés sans informations de paiement. Carte requise uniquement quand la bêta de 6 mois se termine et que vous choisissez de continuer."
+          "text": "No. Apply with just your email. We'll review applications and onboard accepted testers without payment info. Card only required when the 6-month beta ends and you choose to continue."
         }
       },
       {
         "@type": "Question",
-        "name": "Quels signaux comportementaux SwiftMail suit-il ?",
+        "name": "What behavioral signals does SwiftMail track?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pages vues, clics, profondeur de scroll (par section), focus et abandon de champs de formulaire, rage clicks (3+ clics en 1 seconde sur le même élément), dead clicks, erreurs runtime, échecs de fetch, temps sur la page, durée de session, intention de sortie, et conversions. Plus les ouvertures et clics email standards. Le script navigateur est minuscule (~4KB), charge en arrière-plan, et masque les valeurs de formulaire par défaut pour la confidentialité."
+          "text": "Page views, clicks, scroll depth (per section), form-field focus and abandonment, rage clicks (3+ clicks within 1 second on the same element), dead clicks, runtime errors, fetch failures, time on page, session duration, exit intent, and conversions. Plus standard email opens and clicks. The browser script is tiny (~4KB), loads in the background, and masks form values by default for privacy."
         }
       },
       {
         "@type": "Question",
-        "name": "Comment fonctionne l'explication « pourquoi » de l'IA ?",
+        "name": "How does the AI 'why' explanation work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "À la fin de chaque session, l'IA lit toute la timeline d'événements — chaque clic, scroll, hésitation, et erreur — et vous dit en langage clair ce qui se passait vraiment. Le visiteur a-t-il hésité sur le prix ? Bloqué sur un formulaire cassé ? Perdu confiance au checkout ? S'est-il distrait ? Ou a-t-il converti à cause d'urgence, preuve sociale ou un chemin clair ? Vous voyez la raison en une phrase, plus un paragraphe narratif et une prochaine étape suggérée. Tourne automatiquement chaque heure ; instantané à la demande."
+          "text": "After each session ends, AI reads the full event timeline and tells you in plain language what was actually going on. Did the visitor hesitate on price? Get stuck on a broken form? Get distracted? Lose trust at checkout? Or convert because of urgency, social proof, or a clear path? You see the reason in one sentence, plus a narrative paragraph that explains it and a suggested next step (send a discount, fix the bug, queue a recovery email). Auto-runs hourly; instant on demand."
         }
       },
       {
         "@type": "Question",
-        "name": "Quels canaux peut-on déclencher depuis un comportement ?",
+        "name": "Which channels can trigger from a behavior?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Huit canaux disponibles depuis n'importe quel signal comportemental : email, SMS, push web, push mobile (iOS + Android), popup sur site, audiences de retargeting (Meta + Google), tâche CRM (Slack + HubSpot), et webhooks pour tout le reste. Tout connecté via le même flow builder."
+          "text": "Eight channels available from any behavior signal: email, SMS, web push, mobile push (iOS + Android), on-site popup, retargeting audiences (Meta + Google), CRM task (Slack + HubSpot), and webhooks for everything else. All wired through the same flow builder."
         }
       },
       {
         "@type": "Question",
-        "name": "Faut-il des connaissances techniques ?",
+        "name": "Do I need technical knowledge?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Non. Collez une balise script d'une ligne sur votre site. La configuration DNS auto gère SPF, DKIM et DMARC en 45 secondes via les APIs de Cloudflare, GoDaddy et Route53. Si vous savez coller un snippet, vous savez utiliser SwiftMail."
+          "text": "No. Drop a one-line script tag on your site. DNS auto-setup via Cloudflare/GoDaddy/Route53 APIs handles SPF, DKIM, and DMARC in 45 seconds. If you can paste a snippet, you can run SwiftMail."
         }
       },
       {
         "@type": "Question",
-        "name": "Ça marche avec Shopify ?",
+        "name": "Does it work with Shopify?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Oui. L'intégration OAuth en un clic synchronise clients, commandes et produits en temps réel. Les signaux comportementaux estampillent les IDs client Shopify à l'ingestion, donc les parcours cross-device se cousent correctement sans que les marchands écrivent du code thème Liquid."
+          "text": "Yes. One-click OAuth integration syncs customers, orders, and products in real time. Behavioral signals stamp Shopify customer IDs at ingest, so cross-device journeys stitch correctly without merchants writing Liquid theme code."
         }
       },
       {
         "@type": "Question",
-        "name": "Puis-je migrer depuis un autre outil email ?",
+        "name": "Can I switch from another email tool?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Oui. La migration en un clic importe contacts, segments, templates et flows d'automatisation depuis n'importe quelle plateforme email majeure. La plupart des migrations se terminent en moins de 5 minutes avec tous les flows préservés."
+          "text": "Yes. One-click migration imports contacts, segments, templates, and automation flows from any major email platform. Most migrations complete in under 5 minutes with all flows preserved."
         }
       }
     ]
@@ -464,29 +464,29 @@
 
   <!-- ═══ NAVBAR ═══ -->
   <nav class="navbar" id="navbar">
-    <a href="/fr/" class="nav-logo"><img src="../../assets/logo-orange.svg" alt="SwiftMail" class="nav-logo-icon">SwiftMail</a>
+    <a href="/" class="nav-logo"><img src="../../assets/logo-orange.svg" alt="SwiftMail" class="nav-logo-icon">SwiftMail</a>
     <div class="nav-links" id="nav-links">
-      <a href="/fr/features/">Fonctionnalités</a>
-      <a href="/fr/#beta">Bêta ouverte</a>
-      <a href="/fr/#faq">FAQ</a>
+      <a href="/features/">Features</a>
+      <a href="/#beta">Open Beta</a>
+      <a href="/#faq">FAQ</a>
       <a href="/blog/">Blog</a>
     </div>
     <div class="nav-right">
       <div class="lang-switcher" id="lang-switcher">
-        <button class="lang-btn" aria-label="Langue">
-          <span class="lang-current">FR</span>
+        <button class="lang-btn" aria-label="Language">
+          <span class="lang-current">EN</span>
           <svg class="lang-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </button>
         <div class="lang-dropdown">
-          <a href="/features/email-setup/" class="lang-option">English</a>
+          <a href="/" class="lang-option active">English</a>
           <a href="/es/features/email-setup/" class="lang-option">Español</a>
-          <a href="/fr/features/email-setup/" class="lang-option active">Français</a>
+          <a href="/fr/features/email-setup/" class="lang-option">Français</a>
           <a href="/de/features/email-setup/" class="lang-option">Deutsch</a>
           <a href="/pt/features/email-setup/" class="lang-option">Português</a>
         </div>
       </div>
-      <a href="https://app.swift-mail.app/" class="nav-login">Se connecter</a>
-      <a href="/fr/#beta" class="nav-cta">Postuler à la bêta</a>
+      <a href="https://app.swift-mail.app/" class="nav-login">Log in</a>
+      <a href="/#beta" class="nav-cta">Apply for beta</a>
     </div>
     <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
@@ -497,11 +497,11 @@
   <!-- Per-feature hero -->
   <section class="hero" style="padding: 8rem 0 3.5rem;">
     <div class="hero-content" style="max-width: 920px; margin: 0 auto; text-align: center;">
-      <span class="hero-badge"><span class="hero-badge-dot"></span>FONCTIONNALITÉ 07</span>
-      <h1 class="hero-title">Configuration email.<br><span class="hero-title-em">En 45 secondes.</span></h1>
-      <p class="hero-subtitle" style="max-width: 760px; margin-left: auto; margin-right: auto;">La plupart des outils d'email vous font batailler avec les enregistrements DNS pendant une semaine. SwiftMail gère SPF, DKIM et DMARC via les APIs de Cloudflare, GoDaddy et Route53. Le warm-up IP tourne tout seul ; chaque campagne passe par un deliverability doctor qui la note avant l'envoi.</p>
+      <span class="hero-badge"><span class="hero-badge-dot"></span>FEATURE 09</span>
+      <h1 class="hero-title">Render every inbox.<br><span class="hero-title-em">Before you send.</span></h1>
+      <p class="hero-subtitle" style="max-width: 760px; margin-left: auto; margin-right: auto;">See your email in 80+ clients — Gmail, Outlook, Apple Mail, mobile and desktop, light and dark mode. Catch the broken table or the dark-mode disaster before your customer does.</p>
       <div style="margin-top: 2rem;">
-        <a href="/fr/#beta" class="btn btn-primary">Postuler à la bêta →</a>
+        <a href="/#beta" class="btn btn-primary">Apply for beta →</a>
       </div>
     </div>
   </section>
@@ -510,21 +510,10 @@
   <!-- Demo -->
   <section class="section-light feature-block">
     <div class="container">
-<figure class="demo-css animate-in" style="background: #050810;">
-        <div class="demo-terminal">
-          <div class="demo-terminal-bar">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="demo-terminal-line t1"><span class="demo-terminal-prompt">$</span> swiftmail dns connect peakathletic.com</div>
-          <div class="demo-terminal-line t2"><span class="demo-terminal-success">→</span> Connecting to api.cloudflare.com...</div>
-          <div class="demo-terminal-line t3"><span class="demo-terminal-check">✓</span> SPF record added · v=spf1 include:_spf.swiftmail.app ~all</div>
-          <div class="demo-terminal-line t4"><span class="demo-terminal-check">✓</span> DKIM key generated · 2048-bit RSA · selector=sm1</div>
-          <div class="demo-terminal-line t5"><span class="demo-terminal-check">✓</span> DMARC policy set · v=DMARC1; p=quarantine; rua=mailto:dmarc@…</div>
-          <div class="demo-terminal-line t6"><span class="demo-terminal-check">✓</span> Setup complete in 42s<span class="demo-terminal-cursor"></span></div>
-        </div>
-        <div class="demo-css-frame"></div>
+<figure class="demo-css animate-in" style="background: #050810; padding: 0; overflow: hidden; max-width: 940px; aspect-ratio: 16/9;">
+        <img src="../../assets/features/inbox-preview.webp" alt="Two phones side by side showing different content" width="940" height="529" loading="lazy" decoding="async" style="width: 100%; height: 100%; display: block; object-fit: cover;">
       </figure>
-<p class="feature-caption animate-in">No DNS knowledge required. SPF, DKIM, and DMARC configured via API in under a minute.</p>
+<p class="feature-caption animate-in">80+ render targets, deep-tested. Pixel-diff alerts highlight any client where the layout breaks.</p>
     </div>
   </section>
 
@@ -534,9 +523,9 @@
   <!-- Per-feature nav -->
   <section style="background: var(--dark); padding: 3.5rem 0; border-top: 1px solid rgba(255,255,255,0.06);">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-      <a href="../integrations/" style="color: var(--text-muted-dark); font-weight: 600; font-size: 0.9375rem; text-decoration: none;">← Branchez votre boutique.</a>
-      <a href="/fr/#beta" class="btn btn-primary" style="margin: 0;">Postuler à la bêta →</a>
-      <a href="../migration/" style="color: var(--text-muted-dark); font-weight: 600; font-size: 0.9375rem; text-decoration: none;">Changez en un clic. →</a>
+      <a href="../migration/" style="color: var(--text-muted-dark); font-weight: 600; font-size: 0.9375rem; text-decoration: none;">← Switch in one click.</a>
+      <a href="/#beta" class="btn btn-primary" style="margin: 0;">Apply for beta →</a>
+      <a href="/features/" style="color: var(--text-muted-dark); font-weight: 600; font-size: 0.9375rem; text-decoration: none;">All features →</a>
     </div>
   </section>
 
@@ -546,34 +535,34 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <span class="footer-logo">SwiftMail</span>
-          <p class="footer-tagline">Marketing automation comportemental pour les petites entreprises. Bêta ouverte · 100 testeurs · 6 mois gratuits.</p>
+          <p class="footer-tagline">Behavioral marketing automation for small business. Open beta · 100 testers · 6 months free.</p>
         </div>
         <div class="footer-col">
-          <p class="footer-col-title">Produit</p>
-          <a href="/fr/features/">Fonctionnalités</a>
-          <a href="/fr/#beta">Bêta ouverte</a>
-          <a href="/fr/#faq">FAQ</a>
+          <p class="footer-col-title">Product</p>
+          <a href="/features/">Features</a>
+          <a href="/#beta">Open Beta</a>
+          <a href="/#faq">FAQ</a>
         </div>
         <div class="footer-col">
-          <p class="footer-col-title">Entreprise</p>
+          <p class="footer-col-title">Company</p>
           <a href="/blog/">Blog</a>
           <a href="mailto:support@swift-mail.app">Contact</a>
         </div>
         <div class="footer-col">
-          <p class="footer-col-title">Légal</p>
-          <a href="/privacy.html">Confidentialité</a>
-          <a href="/terms.html">Conditions</a>
+          <p class="footer-col-title">Legal</p>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2026 SwiftMail. Tous droits réservés.</span>      </div>
+        <span>© 2026 SwiftMail. All rights reserved.</span>      </div>
     </div>
   </footer>
 
   <!-- Toast -->
   <div class="toast" id="toast">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-    <span id="toast-text">Candidature reçue ! Nous l'examinerons et vous écrirons sous 48 heures.</span>
+    <span id="toast-text">Application received! We'll review and email you within 48 hours.</span>
   </div>
 
   <!-- Hero signal-grid pulse generator -->
