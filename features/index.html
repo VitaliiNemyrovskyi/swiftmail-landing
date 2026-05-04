@@ -31,9 +31,8 @@
   <meta name="twitter:title" content="All features — SwiftMail">
   <meta name="twitter:description" content="Behavioral capture, AI explanation, multichannel triggers, customer journey, real-time intervention, ecommerce integrations, email setup. Everything SwiftMail does, in detail.">
 
-  <!-- Fonts (self-hosted, Latin-only subsets — 80 KB + 33 KB instead of 225 + 47) -->
+  <!-- Fonts: only Plus Jakarta Sans (33 KB) for headings — body uses system-ui stack to skip an 80 KB font fetch on slow mobile. -->
   <link rel="preload" href="../fonts/plus-jakarta-sans-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <style>
     @font-face {
       font-family: 'Plus Jakarta Sans';
@@ -42,14 +41,7 @@
       font-display: swap;
       src: url(../fonts/plus-jakarta-sans-var-latin.woff2) format('woff2');
     }
-    @font-face {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400 600;
-      font-display: swap;
-      src: url(../fonts/inter-var-latin.woff2) format('woff2');
-    }
-    /* Metric-matched system-font fallbacks: render in fallback at FCP, then
+/* Metric-matched system-font fallbacks: render in fallback at FCP, then
        seamlessly swap to the web font with no layout shift. Stops Lighthouse
        from pushing LCP to the post-swap paint moment. */
     @font-face {
@@ -59,14 +51,6 @@
       descent-override: 25.4%;
       line-gap-override: 0%;
       size-adjust: 102.4%;
-    }
-    @font-face {
-      font-family: 'Inter Fallback';
-      src: local('Arial');
-      ascent-override: 90%;
-      descent-override: 22.43%;
-      line-gap-override: 0%;
-      size-adjust: 107.64%;
     }
   </style>
 
@@ -87,7 +71,7 @@
       --light-muted: #64748b;
       --border-light: #e5e7eb;
       --font-heading: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', system-ui, sans-serif;
-      --font-body: 'Inter', 'Inter Fallback', system-ui, sans-serif;
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     }
     *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
@@ -176,18 +160,23 @@
        without this, every infinite cursor/popup/chip animation across the
        entire page keeps recalculating styles forever after first scroll.
     ────────────────────────────────────────────────────────────────────── */
-    .animate-in:not(.in-view) .demo-terminal-line,
-    .animate-in:not(.in-view) .intg-log-row,
-    .animate-in:not(.in-view) .intg-event-chip,
-    .animate-in:not(.in-view) .ps-cursor,
-    .animate-in:not(.in-view) .ps-cta,
-    .animate-in:not(.in-view) .ps-ghost,
-    .animate-in:not(.in-view) .ps-ai-badge,
-    .animate-in:not(.in-view) .rt-trigger,
-    .animate-in:not(.in-view) .rt-popup,
-    .animate-in:not(.in-view) .rt-popup-cta,
-    .animate-in:not(.in-view) .rt-latency {
-      animation-play-state: paused !important;
+    .demo-terminal-line, .intg-log-row, .intg-event-chip,
+    .ps-cursor, .ps-cta, .ps-ghost, .ps-ai-badge,
+    .rt-trigger, .rt-popup, .rt-popup-cta, .rt-latency {
+      animation-play-state: paused;
+    }
+    .animate-in.in-view .demo-terminal-line,
+    .animate-in.in-view .intg-log-row,
+    .animate-in.in-view .intg-event-chip,
+    .animate-in.in-view .ps-cursor,
+    .animate-in.in-view .ps-cta,
+    .animate-in.in-view .ps-ghost,
+    .animate-in.in-view .ps-ai-badge,
+    .animate-in.in-view .rt-trigger,
+    .animate-in.in-view .rt-popup,
+    .animate-in.in-view .rt-popup-cta,
+    .animate-in.in-view .rt-latency {
+      animation-play-state: running;
     }
 
     @media (max-width: 768px) {
