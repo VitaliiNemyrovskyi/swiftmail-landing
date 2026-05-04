@@ -11,200 +11,758 @@
     sm('init', 'pk_live_bea0d715ec2ca156ebe31e205c5364fc', { siteId: '2cff4622-a98a-455f-85c5-db0f3f827b25' });
   </script>
   <script>(function(){var loaded=false;var evs=['scroll','touchstart','keydown','mousemove','pointerdown'];function l(){if(loaded)return;loaded=true;evs.forEach(function(e){window.removeEventListener(e,l,{passive:true});});var s=document.createElement('script');s.src='https://app.swift-mail.app/sdk/sm.js';s.async=true;document.head.appendChild(s);}evs.forEach(function(e){window.addEventListener(e,l,{passive:true,once:true});});setTimeout(l,8000);})();</script>
-  <title>Blog — SwiftMail | Email Marketing Tips for Small Business</title>
-  <meta name="description" content="Learn email marketing, deliverability, automation, and growth strategies for small businesses. Expert guides from SwiftMail.">
+
+  <title>Blog — SwiftMail · Behavioral Marketing &amp; Email Strategy for Small Business</title>
+  <meta name="description" content="Behavioral marketing, AI explanations, deliverability, e-commerce flows, and budget strategy. 19 in-depth guides for small businesses moving past basic email tools.">
+  <meta name="keywords" content="behavioral marketing, email marketing, deliverability, ecommerce email, klaviyo alternatives, mailchimp alternatives, email automation, abandoned cart, SPF DKIM DMARC">
   <link rel="canonical" href="https://swift-mail.app/blog/">
 
-  <meta property="og:title" content="SwiftMail Blog — Email Marketing for Small Business">
-  <meta property="og:description" content="Expert guides on email deliverability, automation, and growth.">
+  <!-- Open Graph -->
+  <meta property="og:title" content="SwiftMail Blog — Behavioral Marketing &amp; Email Strategy">
+  <meta property="og:description" content="Why email-only marketing is half-blind, how AI explains visitor behavior, and how the $50K Bloomreach category dropped to $20/mo.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://swift-mail.app/blog/">
+  <meta property="og:site_name" content="SwiftMail">
+  <meta property="og:image" content="https://swift-mail.app/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SwiftMail Blog — Behavioral Marketing &amp; Email Strategy">
+  <meta name="twitter:description" content="In-depth guides for small businesses moving past basic email tools.">
 
   <link rel="stylesheet" href="../css/style.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="../css/style.css"></noscript>
   <style>
-    body { background: #f7f9fb; color: #191c1e; }
+    :root {
+      --ink: #0f172a;
+      --ink-muted: #64748b;
+      --ink-soft: #94a3b8;
+      --rule: #e8eaef;
+      --paper: #f7f9fb;
+      --card: #ffffff;
+      --orange: #ea580c;
+      --orange-deep: #c2410c;
+      --orange-tint: rgba(234, 88, 12, 0.08);
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 24px 48px rgba(15, 23, 42, 0.10);
+      --radius: 14px;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font); background: var(--paper); color: var(--ink); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
 
-    .blog-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(247,249,251,0.97); border-bottom: 1px solid rgba(0,0,0,0.04); }
-    .blog-nav-logo { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.25rem; font-weight: 800; font-style: italic; color: #191c1e; }
-    .blog-nav-back { font-size: 0.875rem; color: #64748b; }
-    .blog-nav-back:hover { color: #ea580c; }
+    /* ── Nav ───────────────────────────────────────────────── */
+    .blog-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: rgba(247, 249, 251, 0.97);
+      border-bottom: 1px solid var(--rule);
+    }
+    .blog-nav-logo {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-weight: 800; font-style: italic; font-size: 1.25rem;
+      letter-spacing: -0.02em; color: var(--ink);
+    }
+    .blog-nav-logo img { width: 24px; height: 24px; }
+    .blog-nav-back {
+      font-size: 0.875rem; color: var(--ink-muted); font-weight: 500;
+      transition: color 0.15s;
+    }
+    .blog-nav-back:hover { color: var(--orange-deep); }
 
-    .blog-header { padding: 8rem 2rem 3rem; text-align: center; max-width: 800px; margin: 0 auto; }
-    .blog-header-label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #ea580c; margin-bottom: 0.75rem; }
-    .blog-header h1 { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 2.75rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem; }
-    .blog-header p { font-size: 1.0625rem; color: #64748b; max-width: 560px; margin: 0 auto; }
+    /* ── Header ───────────────────────────────────────────── */
+    .blog-header {
+      max-width: 760px; margin: 0 auto;
+      padding: 7rem 1.5rem 2.5rem;
+      text-align: center;
+    }
+    .blog-eyebrow {
+      font-size: 0.6875rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--orange-deep); margin-bottom: 1rem;
+    }
+    .blog-header h1 {
+      font-size: clamp(2.25rem, 5vw, 3.25rem);
+      font-weight: 900; letter-spacing: -0.03em;
+      line-height: 1.08; margin-bottom: 1rem;
+    }
+    .blog-header-lead {
+      font-size: 1.0625rem; color: var(--ink-muted);
+      max-width: 580px; margin: 0 auto;
+    }
 
-    .blog-grid { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+    /* ── Filter chips ─────────────────────────────────────── */
+    .blog-filter {
+      max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 2rem;
+      display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;
+    }
+    .blog-chip {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      padding: 0.5rem 1rem; border-radius: 9999px;
+      background: transparent; border: 1px solid var(--rule);
+      font: 600 0.8125rem var(--font); color: var(--ink-muted);
+      cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .blog-chip:hover { color: var(--ink); border-color: #cbd5e1; }
+    .blog-chip[aria-pressed="true"] {
+      background: var(--ink); color: #fff; border-color: var(--ink);
+    }
+    .blog-chip-count {
+      font-size: 0.6875rem; opacity: 0.7;
+    }
 
-    .blog-card { display: block; background: #fff; border-radius: 0.75rem; padding: 2rem; transition: transform 0.2s, box-shadow 0.2s; }
-    .blog-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-    .blog-card-category { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #ea580c; margin-bottom: 0.5rem; }
-    .blog-card-title { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.375rem; font-weight: 800; letter-spacing: -0.02em; color: #191c1e; margin-bottom: 0.5rem; }
-    .blog-card-desc { font-size: 0.9375rem; color: #64748b; line-height: 1.6; margin-bottom: 0.75rem; }
-    .blog-card-meta { font-size: 0.8125rem; color: #94a3b8; }
-    .blog-card-read { font-size: 0.8125rem; font-weight: 600; color: #ea580c; }
+    /* ── Featured (hero card) ─────────────────────────────── */
+    .blog-featured {
+      max-width: 1080px; margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+    }
+    .blog-featured-card {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 0;
+      background: var(--card); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow-md);
+      transition: transform 0.2s, box-shadow 0.25s;
+    }
+    .blog-featured-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    .blog-featured-card a { display: contents; }
+    .blog-featured-thumb { position: relative; aspect-ratio: 16/10; overflow: hidden; }
+    .blog-featured-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .blog-featured-card:hover .blog-featured-thumb img { transform: scale(1.04); }
+    .blog-featured-tag {
+      position: absolute; top: 1rem; left: 1rem;
+      padding: 0.25rem 0.625rem; border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.92);
+      font: 700 0.625rem var(--font); letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--orange-deep);
+    }
+    .blog-featured-body {
+      padding: 2.5rem 2.5rem 2rem; display: flex; flex-direction: column; justify-content: center;
+    }
+    .blog-featured-pretitle {
+      font-size: 0.6875rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--orange-deep); margin-bottom: 0.625rem;
+    }
+    .blog-featured-title {
+      font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+      font-weight: 800; letter-spacing: -0.02em; line-height: 1.2;
+      color: var(--ink); margin-bottom: 0.875rem;
+    }
+    .blog-featured-desc {
+      font-size: 0.9375rem; color: var(--ink-muted);
+      line-height: 1.65; margin-bottom: 1.25rem;
+    }
+    .blog-featured-meta {
+      display: flex; gap: 0.5rem; align-items: center;
+      font-size: 0.8125rem; color: var(--ink-soft);
+    }
+    .blog-featured-meta time { color: var(--ink-muted); font-weight: 500; }
 
-    .blog-footer { text-align: center; padding: 2rem; color: #94a3b8; font-size: 0.8125rem; border-top: 1px solid #e8eaef; }
-    .blog-footer a { color: #64748b; }
+    /* ── Card grid ────────────────────────────────────────── */
+    .blog-grid {
+      max-width: 1080px; margin: 0 auto;
+      padding: 0 1.5rem 2.5rem;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .blog-card {
+      background: var(--card); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.25s;
+      display: flex; flex-direction: column;
+    }
+    .blog-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .blog-card a { display: flex; flex-direction: column; height: 100%; }
+    .blog-card-thumb { position: relative; aspect-ratio: 16/10; overflow: hidden; background: #e2e8f0; }
+    .blog-card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .blog-card:hover .blog-card-thumb img { transform: scale(1.05); }
+    .blog-card-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .blog-card-cat {
+      display: inline-block; align-self: flex-start;
+      padding: 0.1875rem 0.5rem; border-radius: 4px;
+      background: var(--orange-tint);
+      font: 700 0.625rem var(--font);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--orange-deep); margin-bottom: 0.875rem;
+    }
+    .blog-card-title {
+      font-size: 1.125rem; font-weight: 800;
+      letter-spacing: -0.015em; line-height: 1.3;
+      color: var(--ink); margin-bottom: 0.625rem;
+    }
+    .blog-card-desc {
+      font-size: 0.875rem; color: var(--ink-muted);
+      line-height: 1.6; margin-bottom: 1rem;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .blog-card-meta {
+      margin-top: auto;
+      display: flex; gap: 0.5rem; align-items: center;
+      font-size: 0.8125rem; color: var(--ink-soft);
+    }
+    .blog-card-meta time { font-weight: 500; }
 
-    @media (max-width: 768px) {
-      .blog-header h1 { font-size: 2rem; }
+    /* Hidden cards (revealed by load-more) */
+    .blog-card[hidden] { display: none !important; }
+
+    /* ── Load more ────────────────────────────────────────── */
+    .blog-loadmore-wrap {
+      max-width: 1080px; margin: 0 auto;
+      padding: 0 1.5rem 4rem; text-align: center;
+    }
+    .blog-loadmore {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem; border-radius: 9999px;
+      background: var(--ink); color: #fff;
+      border: 0; cursor: pointer;
+      font: 600 0.875rem var(--font);
+      transition: transform 0.15s, background 0.15s;
+    }
+    .blog-loadmore:hover { transform: translateY(-1px); background: #1e293b; }
+    .blog-loadmore:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .blog-empty {
+      max-width: 1080px; margin: 0 auto;
+      padding: 3rem 1.5rem; text-align: center;
+      color: var(--ink-muted); font-size: 0.9375rem;
+    }
+    .blog-empty[hidden] { display: none; }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .blog-footer {
+      max-width: 1080px; margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--ink-soft); font-size: 0.8125rem;
+      border-top: 1px solid var(--rule);
+    }
+    .blog-footer a { color: var(--ink-muted); transition: color 0.15s; }
+    .blog-footer a:hover { color: var(--orange-deep); }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+      .blog-featured-card { grid-template-columns: 1fr; }
+      .blog-featured-body { padding: 1.75rem; }
+    }
+    @media (max-width: 640px) {
+      .blog-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .blog-header { padding: 6rem 1.25rem 1.75rem; }
+      .blog-filter { padding: 0 1rem 1.5rem; gap: 0.375rem; }
+      .blog-chip { padding: 0.4375rem 0.875rem; font-size: 0.75rem; }
+      .blog-featured-body { padding: 1.5rem; }
     }
   </style>
+
+  <!-- ItemList structured data — helps Google surface the blog index in
+       search results and link sub-articles -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": "https://swift-mail.app/blog/",
+    "name": "SwiftMail Blog",
+    "description": "Behavioral marketing, deliverability, and email strategy guides for small businesses.",
+    "url": "https://swift-mail.app/blog/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "SwiftMail",
+      "url": "https://swift-mail.app/",
+      "logo": "https://swift-mail.app/assets/logo-orange.svg"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "url": "https://swift-mail.app/blog/behavioral-marketing-vs-email-marketing.html", "name": "Your Email Tool Can See 4 Signals. Behavioral Marketing Sees 12."},
+      {"@type": "ListItem", "position": 2, "url": "https://swift-mail.app/blog/ai-explains-why-visitors-abandon.html", "name": "How AI Tells You Exactly Why a Visitor Abandoned Your Checkout"},
+      {"@type": "ListItem", "position": 3, "url": "https://swift-mail.app/blog/customer-journey-moat.html", "name": "Customer Journey: Why Your CRM Lies About What Customers Actually Do"},
+      {"@type": "ListItem", "position": 4, "url": "https://swift-mail.app/blog/behavioral-marketing-50k-category.html", "name": "Why Behavioral Marketing Was a $50K/Year Category — Until Now"},
+      {"@type": "ListItem", "position": 5, "url": "https://swift-mail.app/blog/switch-email-marketing-platform.html", "name": "How to Switch Email Marketing Platforms Without Losing Subscribers"},
+      {"@type": "ListItem", "position": 6, "url": "https://swift-mail.app/blog/klaviyo-alternatives.html", "name": "7 Best Klaviyo Alternatives in 2026 (After the Pricing Change)"},
+      {"@type": "ListItem", "position": 7, "url": "https://swift-mail.app/blog/mailchimp-alternatives.html", "name": "9 Best Mailchimp Alternatives in 2026 (Free & Paid)"},
+      {"@type": "ListItem", "position": 8, "url": "https://swift-mail.app/blog/best-email-marketing-platforms.html", "name": "10 Best Email Marketing Platforms in 2026 (Honest Comparison)"},
+      {"@type": "ListItem", "position": 9, "url": "https://swift-mail.app/blog/email-marketing-local-business.html", "name": "Email Marketing for Local Businesses: A No-Tech Guide"},
+      {"@type": "ListItem", "position": 10, "url": "https://swift-mail.app/blog/email-deliverability-guide.html", "name": "Email Deliverability Guide 2026"},
+      {"@type": "ListItem", "position": 11, "url": "https://swift-mail.app/blog/spf-dkim-dmarc-setup.html", "name": "How to Set Up SPF, DKIM, and DMARC in Under 60 Seconds"},
+      {"@type": "ListItem", "position": 12, "url": "https://swift-mail.app/blog/shopify-email-marketing.html", "name": "Shopify Email Marketing: The Complete Guide for Small Stores"},
+      {"@type": "ListItem", "position": 13, "url": "https://swift-mail.app/blog/email-warmup-explained.html", "name": "Email Warm-up Explained: Why Your New Domain Lands in Spam"},
+      {"@type": "ListItem", "position": 14, "url": "https://swift-mail.app/blog/ecommerce-email-flows.html", "name": "5 Email Automation Flows Every E-commerce Store Needs"},
+      {"@type": "ListItem", "position": 15, "url": "https://swift-mail.app/blog/email-spam-score.html", "name": "How to Check Your Email Spam Score Before Sending"},
+      {"@type": "ListItem", "position": 16, "url": "https://swift-mail.app/blog/budget-email-marketing.html", "name": "Small Business Email Marketing on a Budget"},
+      {"@type": "ListItem", "position": 17, "url": "https://swift-mail.app/blog/abandoned-cart-email.html", "name": "Abandoned Cart Email: How to Recover 15% of Lost Sales"},
+      {"@type": "ListItem", "position": 18, "url": "https://swift-mail.app/blog/emails-going-to-spam.html", "name": "Why Your Emails Go to Spam (And How to Fix It)"},
+      {"@type": "ListItem", "position": 19, "url": "https://swift-mail.app/blog/email-vs-social-media.html", "name": "Email Marketing vs Social Media: ROI Comparison for Small Business"}
+    ]
+  }
+  </script>
 </head>
 <body>
 
-  <nav class="blog-nav">
-    <a href="/" class="blog-nav-logo">SwiftMail</a>
+  <nav class="blog-nav" aria-label="Site navigation">
+    <a href="/" class="blog-nav-logo">
+      <img src="/assets/logo-orange.svg" alt="" width="24" height="24">SwiftMail
+    </a>
     <a href="/" class="blog-nav-back">← Back to Home</a>
   </nav>
 
   <header class="blog-header">
-    <p class="blog-header-label">SWIFTMAIL BLOG</p>
+    <p class="blog-eyebrow">SwiftMail Blog</p>
     <h1>Behavioral Marketing for Small Business</h1>
-    <p>Why email-only marketing is half-blind, how AI explains visitor behavior, and how the $50K Bloomreach category dropped to $20/mo. Plus migration guides, deliverability deep-dives, and ecommerce playbooks.</p>
+    <p class="blog-header-lead">Why email-only marketing is half-blind, how AI explains visitor behavior, and how the $50K Bloomreach category dropped to $20/mo. Plus migration guides, deliverability deep-dives, and ecommerce playbooks.</p>
   </header>
 
-  <div class="blog-grid">
+  <!-- Featured article -->
+  <section class="blog-featured" aria-label="Featured article">
+    <article class="blog-featured-card" data-cat="behavioral">
+      <a href="behavioral-marketing-vs-email-marketing.html" aria-labelledby="featured-title">
+        <div class="blog-featured-thumb">
+          <span class="blog-featured-tag">Featured</span>
+          <img src="/assets/features/behavioral-capture.webp" alt="Abstract data visualization representing the 12 behavioral signals a marketing platform tracks" width="800" height="500" loading="eager" decoding="async">
+        </div>
+        <div class="blog-featured-body">
+          <p class="blog-featured-pretitle">Behavioral marketing</p>
+          <h2 id="featured-title" class="blog-featured-title">Your Email Tool Can See 4 Signals. Behavioral Marketing Sees 12.</h2>
+          <p class="blog-featured-desc">Klaviyo, Mailchimp, and friends track 4 signals. Behavioral marketing platforms track 12+ — rage clicks, dead clicks, form drops, scroll depth, and more. Here's the actual difference.</p>
+          <div class="blog-featured-meta">
+            <time datetime="2026-05-03">May 3, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>8 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
+  </section>
 
-    <a href="behavioral-marketing-vs-email-marketing.html" class="blog-card">
-      <p class="blog-card-category">Behavioral Marketing</p>
-      <h2 class="blog-card-title">Your Email Tool Can See 4 Signals. Behavioral Marketing Sees 12.</h2>
-      <p class="blog-card-desc">Klaviyo, Mailchimp, and friends track 4 signals. Behavioral marketing platforms track 12+ — rage clicks, dead clicks, form drops, scroll depth, and more. Here's the actual difference.</p>
-      <span class="blog-card-meta">May 3, 2026 · 8 min read</span>
-    </a>
+  <!-- Filter -->
+  <nav class="blog-filter" id="blog-filter" aria-label="Filter articles by topic">
+    <button class="blog-chip" type="button" data-cat="all" aria-pressed="true">All <span class="blog-chip-count">(19)</span></button>
+    <button class="blog-chip" type="button" data-cat="behavioral" aria-pressed="false">Behavioral &amp; AI <span class="blog-chip-count">(3)</span></button>
+    <button class="blog-chip" type="button" data-cat="comparison" aria-pressed="false">Comparisons <span class="blog-chip-count">(3)</span></button>
+    <button class="blog-chip" type="button" data-cat="deliverability" aria-pressed="false">Deliverability <span class="blog-chip-count">(5)</span></button>
+    <button class="blog-chip" type="button" data-cat="ecommerce" aria-pressed="false">E-commerce <span class="blog-chip-count">(3)</span></button>
+    <button class="blog-chip" type="button" data-cat="strategy" aria-pressed="false">Strategy <span class="blog-chip-count">(5)</span></button>
+  </nav>
 
-    <a href="ai-explains-why-visitors-abandon.html" class="blog-card">
-      <p class="blog-card-category">Behavioral AI</p>
-      <h2 class="blog-card-title">How AI Tells You Exactly Why a Visitor Abandoned Your Checkout</h2>
-      <p class="blog-card-desc">7 abandonment reasons with structured taxonomy: PRICE_HESITATION, FORM_FRICTION, TRUST_CONCERN, and 4 more. Plus narrative explanations and suggested fixes per reason.</p>
-      <span class="blog-card-meta">May 3, 2026 · 9 min read</span>
-    </a>
+  <!-- Card grid -->
+  <main class="blog-grid" id="blog-grid">
 
-    <a href="customer-journey-moat.html" class="blog-card">
-      <p class="blog-card-category">Attribution &amp; Journey</p>
-      <h2 class="blog-card-title">Customer Journey: Why Your CRM Lies About What Customers Actually Do</h2>
-      <p class="blog-card-desc">Multi-session stitching, channel resolution, 5 attribution models, journey-based triggers. The moat your CRM doesn't have — and how it works.</p>
-      <span class="blog-card-meta">May 3, 2026 · 10 min read</span>
-    </a>
+    <!-- Behavioral & AI -->
+    <article class="blog-card" data-cat="behavioral">
+      <a href="ai-explains-why-visitors-abandon.html" aria-labelledby="card-1">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/ai-explanation.webp" alt="Abstract pattern representing AI inference over visitor behavior" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Behavioral AI</span>
+          <h2 id="card-1" class="blog-card-title">How AI Tells You Exactly Why a Visitor Abandoned Your Checkout</h2>
+          <p class="blog-card-desc">7 abandonment reasons with structured taxonomy: PRICE_HESITATION, FORM_FRICTION, TRUST_CONCERN, and 4 more. Plus narrative explanations and suggested fixes per reason.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-05-03">May 3, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>9 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="behavioral-marketing-50k-category.html" class="blog-card">
-      <p class="blog-card-category">Market Analysis</p>
-      <h2 class="blog-card-title">Why Behavioral Marketing Was a $50K/Year Category — Until Now</h2>
-      <p class="blog-card-desc">Bloomreach charges $50K/yr. Contentsquare is enterprise-only. The four-quadrant gap of deep signals + multichannel + SMB price + easy setup has been empty for years. Here's what changed.</p>
-      <span class="blog-card-meta">May 3, 2026 · 8 min read</span>
-    </a>
+    <article class="blog-card" data-cat="behavioral">
+      <a href="customer-journey-moat.html" aria-labelledby="card-2">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/customer-journey.webp" alt="Connected nodes illustrating multi-session customer journey stitching" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Journey &amp; Attribution</span>
+          <h2 id="card-2" class="blog-card-title">Customer Journey: Why Your CRM Lies About What Customers Actually Do</h2>
+          <p class="blog-card-desc">Multi-session stitching, channel resolution, 5 attribution models, journey-based triggers. The moat your CRM doesn't have — and how it works.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-05-03">May 3, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>10 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="switch-email-marketing-platform.html" class="blog-card">
-      <p class="blog-card-category">Migration</p>
-      <h2 class="blog-card-title">How to Switch Email Marketing Platforms Without Losing Subscribers</h2>
-      <p class="blog-card-desc">Step-by-step migration guide covering Mailchimp, Klaviyo, ActiveCampaign, and more. Export, import, DNS, and warm-up — all covered.</p>
-      <span class="blog-card-meta">April 11, 2026 · 9 min read</span>
-    </a>
+    <article class="blog-card" data-cat="behavioral">
+      <a href="behavioral-marketing-50k-category.html" aria-labelledby="card-3">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/integrations.webp" alt="Pricing tiers visualization for behavioral marketing platforms" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Market Analysis</span>
+          <h2 id="card-3" class="blog-card-title">Why Behavioral Marketing Was a $50K/Year Category — Until Now</h2>
+          <p class="blog-card-desc">Bloomreach charges $50K/yr. Contentsquare is enterprise-only. The four-quadrant gap of deep signals + multichannel + SMB price + easy setup has been empty for years. Here's what changed.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-05-03">May 3, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>8 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="klaviyo-alternatives.html" class="blog-card">
-      <p class="blog-card-category">Comparison</p>
-      <h2 class="blog-card-title">7 Best Klaviyo Alternatives in 2026 (After the Pricing Change)</h2>
-      <p class="blog-card-desc">Klaviyo's active-profiles pricing caused 25% bill increases. Compare 7 alternatives with honest pricing and feature breakdowns.</p>
-      <span class="blog-card-meta">April 9, 2026 · 10 min read</span>
-    </a>
+    <!-- Comparisons -->
+    <article class="blog-card" data-cat="comparison">
+      <a href="klaviyo-alternatives.html" aria-labelledby="card-4">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/integrations.webp" alt="Side-by-side comparison concept for email marketing platforms" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Comparison</span>
+          <h2 id="card-4" class="blog-card-title">7 Best Klaviyo Alternatives in 2026 (After the Pricing Change)</h2>
+          <p class="blog-card-desc">Klaviyo's active-profiles pricing caused 25% bill increases. Compare 7 alternatives with honest pricing and feature breakdowns.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-04-09">April 9, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>10 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="mailchimp-alternatives.html" class="blog-card">
-      <p class="blog-card-category">Comparison</p>
-      <h2 class="blog-card-title">9 Best Mailchimp Alternatives in 2026 (Free & Paid)</h2>
-      <p class="blog-card-desc">Mailchimp's prices keep rising. Compare 9 alternatives with real pricing, pros/cons, and migration tips for small businesses.</p>
-      <span class="blog-card-meta">April 7, 2026 · 12 min read</span>
-    </a>
+    <article class="blog-card" data-cat="comparison">
+      <a href="mailchimp-alternatives.html" aria-labelledby="card-5">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/multichannel.webp" alt="Decision matrix illustration for choosing an email service provider" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Comparison</span>
+          <h2 id="card-5" class="blog-card-title">9 Best Mailchimp Alternatives in 2026 (Free &amp; Paid)</h2>
+          <p class="blog-card-desc">Mailchimp's prices keep rising. Compare 9 alternatives with real pricing, pros/cons, and migration tips for small businesses.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-04-07">April 7, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>12 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="best-email-marketing-platforms.html" class="blog-card">
-      <p class="blog-card-category">Comparison</p>
-      <h2 class="blog-card-title">10 Best Email Marketing Platforms in 2026 (Honest Comparison)</h2>
-      <p class="blog-card-desc">Honest comparison of 10 email marketing platforms. Pricing, features, deliverability, and pros/cons for every budget.</p>
-      <span class="blog-card-meta">April 5, 2026 · 15 min read</span>
-    </a>
+    <article class="blog-card" data-cat="comparison">
+      <a href="best-email-marketing-platforms.html" aria-labelledby="card-6">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/inbox-preview.webp" alt="Top email marketing platforms ranked side-by-side" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Comparison</span>
+          <h2 id="card-6" class="blog-card-title">10 Best Email Marketing Platforms in 2026 (Honest Comparison)</h2>
+          <p class="blog-card-desc">Honest comparison of 10 email marketing platforms. Pricing, features, deliverability, and pros/cons for every budget.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-04-05">April 5, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>15 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="email-marketing-local-business.html" class="blog-card">
-      <p class="blog-card-category">Email Marketing</p>
-      <h2 class="blog-card-title">Email Marketing for Local Businesses: A No-Tech Guide</h2>
-      <p class="blog-card-desc">A complete guide for restaurants, boutiques, consultants, and service businesses. No technical skills required. Start in 5 minutes.</p>
-      <span class="blog-card-meta">April 1, 2026 · 10 min read</span>
-    </a>
+    <!-- Deliverability -->
+    <article class="blog-card" data-cat="deliverability">
+      <a href="email-deliverability-guide.html" aria-labelledby="card-7">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/realtime-intervention.webp" alt="Envelope arriving in an inbox" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Deliverability</span>
+          <h2 id="card-7" class="blog-card-title">Email Deliverability Guide 2026: Everything Small Businesses Need to Know</h2>
+          <p class="blog-card-desc">Learn how to ensure your marketing emails reach the inbox. Complete guide to SPF, DKIM, DMARC, sender reputation, and best practices.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-28">March 28, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>12 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="email-deliverability-guide.html" class="blog-card">
-      <p class="blog-card-category">Email Deliverability</p>
-      <h2 class="blog-card-title">Email Deliverability Guide 2026: Everything Small Businesses Need to Know</h2>
-      <p class="blog-card-desc">Learn how to ensure your marketing emails reach the inbox. Complete guide to SPF, DKIM, DMARC, sender reputation, and best practices.</p>
-      <span class="blog-card-meta">March 28, 2026 · 12 min read</span>
-    </a>
+    <article class="blog-card" data-cat="deliverability">
+      <a href="spf-dkim-dmarc-setup.html" aria-labelledby="card-8">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/email-setup.webp" alt="DNS records and authentication shield concept" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">DNS &amp; Auth</span>
+          <h2 id="card-8" class="blog-card-title">How to Set Up SPF, DKIM, and DMARC in Under 60 Seconds</h2>
+          <p class="blog-card-desc">Step-by-step guide to email authentication. What each protocol does, common mistakes, and how to automate the entire process.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-25">March 25, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>8 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="spf-dkim-dmarc-setup.html" class="blog-card">
-      <p class="blog-card-category">DNS & Deliverability</p>
-      <h2 class="blog-card-title">How to Set Up SPF, DKIM, and DMARC in Under 60 Seconds</h2>
-      <p class="blog-card-desc">Step-by-step guide to email authentication. What each protocol does, common mistakes, and how to automate the entire process.</p>
-      <span class="blog-card-meta">March 25, 2026 · 8 min read</span>
-    </a>
+    <article class="blog-card" data-cat="deliverability">
+      <a href="email-warmup-explained.html" aria-labelledby="card-9">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/ai-explanation.webp" alt="Sender reputation gauge climbing during domain warm-up" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Deliverability</span>
+          <h2 id="card-9" class="blog-card-title">Email Warm-up Explained: Why Your New Domain Lands in Spam</h2>
+          <p class="blog-card-desc">What email warm-up is, the ideal schedule, what happens without it, and how to monitor your sender reputation.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-21">March 21, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>7 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="shopify-email-marketing.html" class="blog-card">
-      <p class="blog-card-category">E-commerce</p>
-      <h2 class="blog-card-title">Shopify Email Marketing: The Complete Guide for Small Stores</h2>
-      <p class="blog-card-desc">Why email beats social media for Shopify stores. Essential flows, integration tips, and abandoned cart recovery strategies.</p>
-      <span class="blog-card-meta">March 23, 2026 · 10 min read</span>
-    </a>
+    <article class="blog-card" data-cat="deliverability">
+      <a href="email-spam-score.html" aria-labelledby="card-10">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/realtime-intervention.webp" alt="Spam score meter showing risk level" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Deliverability</span>
+          <h2 id="card-10" class="blog-card-title">How to Check Your Email Spam Score Before Sending</h2>
+          <p class="blog-card-desc">Understanding spam scoring factors: technical setup, content quality, structure, links, and compliance requirements.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-17">March 17, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>6 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="email-warmup-explained.html" class="blog-card">
-      <p class="blog-card-category">Deliverability</p>
-      <h2 class="blog-card-title">Email Warm-up Explained: Why Your New Domain Lands in Spam</h2>
-      <p class="blog-card-desc">What email warm-up is, the ideal schedule, what happens without it, and how to monitor your sender reputation.</p>
-      <span class="blog-card-meta">March 21, 2026 · 7 min read</span>
-    </a>
+    <article class="blog-card" data-cat="deliverability">
+      <a href="emails-going-to-spam.html" aria-labelledby="card-11">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/behavioral-capture.webp" alt="Email diverted to spam folder with red warning" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Troubleshooting</span>
+          <h2 id="card-11" class="blog-card-title">Why Your Emails Go to Spam (And How to Fix It)</h2>
+          <p class="blog-card-desc">10 common reasons, diagnostic steps, specific fixes for each problem, and a prevention checklist.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-10">March 10, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>10 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="ecommerce-email-flows.html" class="blog-card">
-      <p class="blog-card-category">Automation</p>
-      <h2 class="blog-card-title">5 Email Automation Flows Every E-commerce Store Needs</h2>
-      <p class="blog-card-desc">Welcome series, abandoned cart, post-purchase, win-back, and VIP flows — with triggers, timing, and content tips.</p>
-      <span class="blog-card-meta">March 19, 2026 · 9 min read</span>
-    </a>
+    <!-- E-commerce -->
+    <article class="blog-card" data-cat="ecommerce">
+      <a href="shopify-email-marketing.html" aria-labelledby="card-12">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/multichannel.webp" alt="Shopify storefront and an outgoing email triggered by purchase events" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">E-commerce</span>
+          <h2 id="card-12" class="blog-card-title">Shopify Email Marketing: The Complete Guide for Small Stores</h2>
+          <p class="blog-card-desc">Why email beats social media for Shopify stores. Essential flows, integration tips, and abandoned cart recovery strategies.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-23">March 23, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>10 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="email-spam-score.html" class="blog-card">
-      <p class="blog-card-category">Deliverability</p>
-      <h2 class="blog-card-title">How to Check Your Email Spam Score Before Sending</h2>
-      <p class="blog-card-desc">Understanding spam scoring factors: technical setup, content quality, structure, links, and compliance requirements.</p>
-      <span class="blog-card-meta">March 17, 2026 · 6 min read</span>
-    </a>
+    <article class="blog-card" data-cat="ecommerce">
+      <a href="ecommerce-email-flows.html" aria-labelledby="card-13">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/migration.webp" alt="Five-step automation flow diagram for an e-commerce store" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Automation</span>
+          <h2 id="card-13" class="blog-card-title">5 Email Automation Flows Every E-commerce Store Needs</h2>
+          <p class="blog-card-desc">Welcome series, abandoned cart, post-purchase, win-back, and VIP flows — with triggers, timing, and content tips.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-19">March 19, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>9 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="budget-email-marketing.html" class="blog-card">
-      <p class="blog-card-category">Strategy</p>
-      <h2 class="blog-card-title">Small Business Email Marketing on a Budget: The $20/mo Strategy</h2>
-      <p class="blog-card-desc">Why email is the cheapest marketing channel with the highest ROI. A complete $20/mo email strategy for small businesses.</p>
-      <span class="blog-card-meta">March 14, 2026 · 8 min read</span>
-    </a>
+    <article class="blog-card" data-cat="ecommerce">
+      <a href="abandoned-cart-email.html" aria-labelledby="card-14">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/customer-journey.webp" alt="Empty shopping cart and an envelope, recovering an abandoned checkout" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">E-commerce</span>
+          <h2 id="card-14" class="blog-card-title">Abandoned Cart Email: How to Recover 15% of Lost Sales</h2>
+          <p class="blog-card-desc">Cart abandonment stats, optimal timing, subject line formulas, discount strategies, and real-world examples.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-12">March 12, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>9 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="abandoned-cart-email.html" class="blog-card">
-      <p class="blog-card-category">E-commerce</p>
-      <h2 class="blog-card-title">Abandoned Cart Email: How to Recover 15% of Lost Sales</h2>
-      <p class="blog-card-desc">Cart abandonment stats, optimal timing, subject line formulas, discount strategies, and real-world examples.</p>
-      <span class="blog-card-meta">March 12, 2026 · 9 min read</span>
-    </a>
+    <!-- Strategy -->
+    <article class="blog-card" data-cat="strategy">
+      <a href="switch-email-marketing-platform.html" aria-labelledby="card-15">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/migration.webp" alt="Migration arrows from one email platform to another" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Migration</span>
+          <h2 id="card-15" class="blog-card-title">How to Switch Email Marketing Platforms Without Losing Subscribers</h2>
+          <p class="blog-card-desc">Step-by-step migration guide covering Mailchimp, Klaviyo, ActiveCampaign, and more. Export, import, DNS, and warm-up — all covered.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-04-11">April 11, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>9 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="emails-going-to-spam.html" class="blog-card">
-      <p class="blog-card-category">Troubleshooting</p>
-      <h2 class="blog-card-title">Why Your Emails Go to Spam (And How to Fix It)</h2>
-      <p class="blog-card-desc">10 common reasons, diagnostic steps, specific fixes for each problem, and a prevention checklist.</p>
-      <span class="blog-card-meta">March 10, 2026 · 10 min read</span>
-    </a>
+    <article class="blog-card" data-cat="strategy">
+      <a href="email-marketing-local-business.html" aria-labelledby="card-16">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/inbox-preview.webp" alt="Small local business storefront with a customer entering" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Email Marketing</span>
+          <h2 id="card-16" class="blog-card-title">Email Marketing for Local Businesses: A No-Tech Guide</h2>
+          <p class="blog-card-desc">A complete guide for restaurants, boutiques, consultants, and service businesses. No technical skills required. Start in 5 minutes.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-04-01">April 1, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>10 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
-    <a href="email-vs-social-media.html" class="blog-card">
-      <p class="blog-card-category">Strategy</p>
-      <h2 class="blog-card-title">Email Marketing vs Social Media: ROI Comparison for Small Business</h2>
-      <p class="blog-card-desc">$36 ROI per $1 spent. Why email outperforms social, when to use each, and how to combine them.</p>
-      <span class="blog-card-meta">March 10, 2026 · 7 min read</span>
-    </a>
+    <article class="blog-card" data-cat="strategy">
+      <a href="budget-email-marketing.html" aria-labelledby="card-17">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/integrations.webp" alt="Coins and a calculator illustrating a budget email strategy" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Strategy</span>
+          <h2 id="card-17" class="blog-card-title">Small Business Email Marketing on a Budget: The $20/mo Strategy</h2>
+          <p class="blog-card-desc">Why email is the cheapest marketing channel with the highest ROI. A complete $20/mo email strategy for small businesses.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-14">March 14, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>8 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
 
+    <article class="blog-card" data-cat="strategy">
+      <a href="email-vs-social-media.html" aria-labelledby="card-18">
+        <div class="blog-card-thumb">
+          <img src="/assets/features/multichannel.webp" alt="Email and social media split-screen comparison" width="600" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-card-cat">Strategy</span>
+          <h2 id="card-18" class="blog-card-title">Email Marketing vs Social Media: ROI Comparison for Small Business</h2>
+          <p class="blog-card-desc">$36 ROI per $1 spent. Why email outperforms social, when to use each, and how to combine them.</p>
+          <div class="blog-card-meta">
+            <time datetime="2026-03-10">March 10, 2026</time>
+            <span aria-hidden="true">·</span>
+            <span>7 min read</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+  </main>
+
+  <p class="blog-empty" id="blog-empty" hidden>No articles in this category.</p>
+
+  <div class="blog-loadmore-wrap">
+    <button class="blog-loadmore" id="blog-loadmore" type="button">Show more articles</button>
   </div>
 
   <footer class="blog-footer">
     <p>© 2026 SwiftMail. <a href="/">Home</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p>
   </footer>
+
+  <script>
+    /* ──────────────────────────────────────────────────────────
+       Blog index — category filter + load-more pagination.
+       All 18 grid cards are in the HTML so search engines see
+       them; the `hidden` attribute is added to all but the first
+       6 on initial load and removed on category-filter or
+       load-more clicks.
+    ────────────────────────────────────────────────────────── */
+    (function () {
+      var INITIAL = 6;
+      var STEP = 6;
+      var grid = document.getElementById('blog-grid');
+      var loadMoreBtn = document.getElementById('blog-loadmore');
+      var loadMoreWrap = loadMoreBtn.parentElement;
+      var emptyEl = document.getElementById('blog-empty');
+      var chips = Array.prototype.slice.call(document.querySelectorAll('.blog-chip'));
+      var cards = Array.prototype.slice.call(grid.querySelectorAll('.blog-card'));
+      var activeCat = 'all';
+      var visibleCount = INITIAL;
+
+      function getMatching() {
+        return activeCat === 'all'
+          ? cards
+          : cards.filter(function (c) { return c.dataset.cat === activeCat; });
+      }
+
+      function render() {
+        var matching = getMatching();
+        // Hide all cards first
+        cards.forEach(function (c) { c.hidden = true; });
+        // Reveal up to visibleCount of matching cards
+        matching.slice(0, visibleCount).forEach(function (c) { c.hidden = false; });
+        // Toggle empty state
+        emptyEl.hidden = matching.length > 0;
+        // Toggle Load-more button
+        if (matching.length > visibleCount) {
+          loadMoreWrap.style.display = '';
+          loadMoreBtn.disabled = false;
+          loadMoreBtn.textContent = 'Show more articles (' + (matching.length - visibleCount) + ' left)';
+        } else {
+          loadMoreWrap.style.display = 'none';
+        }
+      }
+
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+          chip.setAttribute('aria-pressed', 'true');
+          activeCat = chip.dataset.cat;
+          visibleCount = INITIAL; // reset pagination on filter change
+          render();
+        });
+      });
+
+      loadMoreBtn.addEventListener('click', function () {
+        visibleCount += STEP;
+        render();
+      });
+
+      render();
+    })();
+  </script>
 
 </body>
 </html>
