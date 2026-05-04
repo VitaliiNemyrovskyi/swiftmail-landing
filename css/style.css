@@ -140,10 +140,20 @@ img { max-width: 100%; display: block; }
   font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4.75rem); font-weight: 900;
   letter-spacing: -0.04em; line-height: 1.02; color: var(--white); margin-bottom: 1.75rem;
 }
+/* Gradient text with safe fallback: visitors with forced-colors mode
+   active (Linux Chrome high-contrast theme, Windows high-contrast, etc.)
+   or session-replay engines that strip -webkit-text-fill-color: transparent
+   would otherwise see invisible text. The `color:` fallback shows solid
+   orange-light, and the @media override removes the transparent fill in
+   forced-colors mode. */
 .text-gradient {
   background: linear-gradient(135deg, var(--orange), var(--orange-light));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: #ff8c42;
+}
+@media (forced-colors: active) {
+  .text-gradient { background: none; -webkit-text-fill-color: #ff8c42; color: #ff8c42; }
 }
 
 .hero-subtitle {
