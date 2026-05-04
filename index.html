@@ -726,26 +726,8 @@
     @keyframes terminalType { from { opacity: 0; max-width: 0; } to { opacity: 1; max-width: 100%; } }
 
     /* Plus grid (everything else) */
-    .plus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
-    .plus-card { background: var(--light-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.75rem 1.5rem 1.5rem; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, border-color 0.3s; position: relative; overflow: hidden; }
-    .plus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--orange-light)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-    .plus-card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(234, 88, 12, 0.1), 0 4px 16px rgba(0, 0, 0, 0.05); border-color: rgba(234, 88, 12, 0.35); }
-    .plus-card:hover::before { transform: scaleX(1); }
-    .plus-card-icon { font-size: 1.75rem; margin-bottom: 0.875rem; display: inline-block; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s; animation: plusIconFloat 4s ease-in-out infinite; }
-    .plus-card:hover .plus-card-icon { transform: scale(1.25) rotate(-7deg); filter: drop-shadow(0 6px 14px rgba(234, 88, 12, 0.4)); animation-play-state: paused; }
-    @keyframes plusIconFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-    .plus-card:nth-child(1) .plus-card-icon { animation-delay: 0s; }
-    .plus-card:nth-child(2) .plus-card-icon { animation-delay: 0.4s; }
-    .plus-card:nth-child(3) .plus-card-icon { animation-delay: 0.8s; }
-    .plus-card:nth-child(4) .plus-card-icon { animation-delay: 1.2s; }
-    .plus-card:nth-child(5) .plus-card-icon { animation-delay: 1.6s; }
-    .plus-card:nth-child(6) .plus-card-icon { animation-delay: 2.0s; }
-    .plus-card:nth-child(7) .plus-card-icon { animation-delay: 2.4s; }
-    .plus-card:nth-child(8) .plus-card-icon { animation-delay: 2.8s; }
-    .plus-card:nth-child(9) .plus-card-icon { animation-delay: 3.2s; }
-    .plus-card h3 { font: 700 1rem var(--font-heading); color: var(--light-text); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
-    .plus-card p { font-size: 0.875rem; color: var(--light-muted); line-height: 1.55; }
-    @media (max-width: 768px) { .plus-grid { grid-template-columns: 1fr; } }
+    /* (Plus grid section removed for perf — 9 cards × infinite icon-float anims +
+       150 DOM nodes were redundant after the 7 detailed feature blocks.) */
 
     /* BUILT FOR */
     .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
@@ -1388,66 +1370,6 @@
     </div>
   </section>
 
-  <!-- ═══ EVERYTHING ELSE GRID ═══ -->
-  <section class="section-light">
-    <div class="container">
-      <p class="section-eyebrow animate-in">PLUS EVERYTHING ELSE</p>
-      <h2 class="pair-headline animate-in">
-        A toolbox <span class="pair-headline-em">deep enough</span> to replace your stack.
-      </h2>
-      <p class="pair-body animate-in">
-        Behavioral analytics, AI explanation, and multichannel automation are the headline. The rest of what you'd normally pay 4 vendors for — also included.
-      </p>
-
-      <div class="plus-grid stagger-children animate-in">
-        <div class="plus-card">
-          <div class="plus-card-icon">🎨</div>
-          <h3>AI brand analysis</h3>
-          <p>Paste a URL. We extract your colors, fonts, and logo automatically — every email matches your brand from day one.</p>
-        </div>
-        <div class="plus-card">
-          <div class="plus-card-icon">⚙️</div>
-          <h3>Visual flow builder</h3>
-          <p>20+ node types. Drag-and-drop. Conditional splits, time delays, behavioral triggers. No code, no flowchart certifications required.</p>
-        </div>
-        <div class="plus-card">
-          <div class="plus-card-icon">📧</div>
-          <h3>Multi-client preview</h3>
-          <p>See exactly how each campaign renders in 6 inbox clients (Gmail, Outlook, Apple Mail, Yahoo, etc.) in 3-5 seconds. Built in.</p>
-        </div>
-        <div class="plus-card">
-          <div class="plus-card-icon">🧪</div>
-          <h3>A/B testing with auto-winner</h3>
-          <p>Test variants. The system picks the winner once statistical significance hits, then sends the winning variant to the rest of the list automatically.</p>
-        </div>
-        <div class="plus-card">
-          <div class="plus-card-icon">⚡</div>
-          <h3>AI campaign generation</h3>
-          <p>Describe the campaign in one sentence. AI writes the copy and builds the email. <strong>$0.002</strong> per generated campaign.</p>
-        </div>
-        <div class="plus-card">
-          <div class="plus-card-icon">⏰</div>
-          <h3>Send-time AI</h3>
-          <p>Per-contact optimal hour, computed from each subscriber's engagement history. Everyone gets your email when they're most likely to open it.</p>
-        </div>
-        <div class="plus-card">
-          <div class="plus-card-icon">🛡</div>
-          <h3>Spam-score gate</h3>
-          <p>Every campaign scored 0-100 before send. Anything below 75 gets blocked automatically — no accidentally torching your sender reputation.</p>
-        </div>
-        <div class="plus-card">
-          <div class="plus-card-icon">🌍</div>
-          <h3>Multilingual auto-translate</h3>
-          <p>Write the campaign once. Send in 30+ languages with per-locale variants stored per template. AI handles the translation at send time.</p>
-        </div>
-        <div class="plus-card">
-          <div class="plus-card-icon">🗓</div>
-          <h3>Seasonal calendar</h3>
-          <p>AI generates 25-35 marketing events per year tuned to your industry. Pre-built campaigns for each one — never miss Black Friday again.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ═══ BUILT FOR ═══ -->
   <section class="section-light" id="for-who">
