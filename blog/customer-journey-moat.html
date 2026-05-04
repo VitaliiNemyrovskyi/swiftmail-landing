@@ -144,11 +144,11 @@
 
     <ol>
       <li><strong>EMAIL</strong> &mdash; if UTM source is your email tool, or special parameters like <code>sm_eid</code>/<code>sm_cid</code> are present</li>
-      <li><strong>PAID_SEARCH</strong> &mdash; if <code>gclid</code>/<code>msclkid</code> in URL, or paid-search UTM medium</li>
-      <li><strong>PAID_SOCIAL</strong> &mdash; if <code>fbclid</code>/<code>ttclid</code>/<code>li_fat_id</code>, or paid-social UTM medium</li>
+      <li><strong>Paid search</strong> &mdash; if <code>gclid</code>/<code>msclkid</code> in URL, or paid-search UTM medium</li>
+      <li><strong>Paid social</strong> &mdash; if <code>fbclid</code>/<code>ttclid</code>/<code>li_fat_id</code>, or paid-social UTM medium</li>
       <li><strong>EMAIL</strong> (again) &mdash; if UTM medium is "email" or referrer is a known webmail domain</li>
-      <li><strong>ORGANIC_SOCIAL</strong> &mdash; if referrer host matches Facebook, Twitter, LinkedIn, TikTok, Reddit, etc.</li>
-      <li><strong>ORGANIC_SEARCH</strong> &mdash; if referrer host matches Google, Bing, DuckDuckGo, Yandex, Brave</li>
+      <li><strong>Organic social</strong> &mdash; if referrer host matches Facebook, Twitter, LinkedIn, TikTok, Reddit, etc.</li>
+      <li><strong>Organic search</strong> &mdash; if referrer host matches Google, Bing, DuckDuckGo, Yandex, Brave</li>
       <li><strong>INTERNAL</strong> &mdash; if referrer matches one of your own domains</li>
       <li><strong>REFERRAL</strong> &mdash; referrer present but none of the above</li>
       <li><strong>DIRECT</strong> &mdash; no referrer, no UTM</li>
@@ -172,12 +172,12 @@
       </thead>
       <tbody>
         <tr>
-          <td class="model-name">FIRST_TOUCH</td>
+          <td class="model-name">First-touch</td>
           <td>100% credit to the first touchpoint</td>
           <td>Top-of-funnel awareness — what's bringing in net-new visitors</td>
         </tr>
         <tr>
-          <td class="model-name">LAST_TOUCH</td>
+          <td class="model-name">Last-touch</td>
           <td>100% credit to the last touchpoint before conversion</td>
           <td>Bottom-of-funnel — what closed the deal</td>
         </tr>
@@ -187,21 +187,21 @@
           <td>Long sales cycles where every touch counts equally</td>
         </tr>
         <tr>
-          <td class="model-name">POSITION_BASED</td>
+          <td class="model-name">Position-based</td>
           <td>40% first + 40% last + 20% middle (split evenly)</td>
           <td>Standard "U-shape" — emphasizes discovery and close</td>
         </tr>
         <tr>
-          <td class="model-name">TIME_DECAY</td>
+          <td class="model-name">Time-decay</td>
           <td>Recent touches get exponentially more credit (default 7-day half-life)</td>
           <td>Short consideration windows — recency matters</td>
         </tr>
       </tbody>
     </table>
 
-    <p>The reason you want all five, not just one, is that they answer different strategic questions. <strong>FIRST_TOUCH</strong> tells you which channels generate new audience. <strong>LAST_TOUCH</strong> tells you which channels close. The two often disagree dramatically &mdash; and the disagreement is the insight.</p>
+    <p>The reason you want all five, not just one, is that they answer different strategic questions. <strong>First-touch</strong> tells you which channels generate new audience. <strong>Last-touch</strong> tells you which channels close. The two often disagree dramatically &mdash; and the disagreement is the insight.</p>
 
-    <p>Concrete example. Run FIRST_TOUCH and you might see organic search drives 60% of conversions. Run LAST_TOUCH on the same journeys and you see email drives 70%. Both are true. The honest reading: <em>organic search builds the pipeline, email closes it</em>. Cutting your SEO budget because email "drives the conversions" would be a disaster.</p>
+    <p>Concrete example. Run First-touch and you might see organic search drives 60% of conversions. Run Last-touch on the same journeys and you see email drives 70%. Both are true. The honest reading: <em>organic search builds the pipeline, email closes it</em>. Cutting your SEO budget because email "drives the conversions" would be a disaster.</p>
 
     <h2>Stage and Status: Where Is This Customer Right Now?</h2>
 
@@ -231,11 +231,11 @@
 
     <p>Capturing the journey is half the value. Acting on it is the other half. Three kinds of triggers fire on journey events:</p>
 
-    <p><strong>JOURNEY_STAGE_CHANGED</strong> &mdash; fires the moment a customer moves from CONSIDERATION to DECISION, or AWARENESS to CONSIDERATION. Use it to send a stage-appropriate email: "we noticed you're comparing options, here's a head-to-head," or "thanks for showing interest, here's a getting-started guide."</p>
+    <p><strong>Journey stage changed</strong> &mdash; fires the moment a customer moves from CONSIDERATION to DECISION, or AWARENESS to CONSIDERATION. Use it to send a stage-appropriate email: "we noticed you're comparing options, here's a head-to-head," or "thanks for showing interest, here's a getting-started guide."</p>
 
-    <p><strong>RETURNING_AFTER_N_DAYS</strong> &mdash; fires when a customer comes back after a configured gap. Useful for re-engagement campaigns or "welcome back" messaging that's actually conditional on the gap, not just calendar-driven.</p>
+    <p><strong>Returning after N days</strong> &mdash; fires when a customer comes back after a configured gap. Useful for re-engagement campaigns or "welcome back" messaging that's actually conditional on the gap, not just calendar-driven.</p>
 
-    <p><strong>ABANDONED_JOURNEY_AT_STAGE</strong> &mdash; fires when a customer is classified ABANDONED while sitting in a particular stage. The treatment for abandoned-at-DECISION (lost a near-conversion) is very different from abandoned-at-AWARENESS (never engaged anyway). The trigger lets you send the right message based on how far they got.</p>
+    <p><strong>Abandoned at journey stage</strong> &mdash; fires when a customer is classified ABANDONED while sitting in a particular stage. The treatment for abandoned-at-DECISION (lost a near-conversion) is very different from abandoned-at-AWARENESS (never engaged anyway). The trigger lets you send the right message based on how far they got.</p>
 
     <p>Combine these with the channel adapter system and you can: trigger an SMS when a high-value customer enters DECISION, push a popup when a STUCK consideration-stage visitor returns, send a Slack notification to your sales team when a journey hits AWARENESS &rarr; CONSIDERATION on the enterprise pricing page. <em>Any journey event &rarr; any channel.</em></p>
 
@@ -259,7 +259,7 @@
 
     <div class="highlight-box">
       <h3>Customer Journey in SwiftMail</h3>
-      <p>SwiftMail is AI marketing automation for small business with full customer journey, multi-touch attribution across all 5 models, per-customer stage and status classifier, and three journey-scale Flow Builder triggers (<code>JOURNEY_STAGE_CHANGED</code>, <code>RETURNING_AFTER_N_DAYS</code>, <code>ABANDONED_JOURNEY_AT_STAGE</code>). From $20/mo &mdash; the same capability set enterprise CDPs charge $50K/yr for.</p>
+      <p>SwiftMail is AI marketing automation for small business with full customer journey, multi-touch attribution across all 5 models, per-customer stage and status classifier, and three journey-scale Flow Builder triggers (<code>Journey stage changed</code>, <code>Returning after N days</code>, <code>Abandoned at journey stage</code>). From $20/mo &mdash; the same capability set enterprise CDPs charge $50K/yr for.</p>
     </div>
 
     <h2>What to Do With This</h2>

@@ -12,7 +12,7 @@
   </script>
   <script>(function(){var loaded=false;var evs=['scroll','touchstart','keydown','mousemove','pointerdown'];function l(){if(loaded)return;loaded=true;evs.forEach(function(e){window.removeEventListener(e,l,{passive:true});});var s=document.createElement('script');s.src='https://app.swift-mail.app/sdk/sm.js';s.async=true;document.head.appendChild(s);}evs.forEach(function(e){window.addEventListener(e,l,{passive:true,once:true});});setTimeout(l,8000);})();</script>
   <title>How AI Tells You Exactly Why a Visitor Abandoned Your Checkout — SwiftMail</title>
-  <meta name="description" content="Most analytics tools tell you what visitors did. AI session insights tell you why — PRICE_HESITATION, FORM_FRICTION, TRUST_CONCERN, and 4 more reasons, with narrative explanations and suggested fixes.">
+  <meta name="description" content="Most analytics tools tell you what visitors did. AI session insights tell you why — Price hesitation, Form friction, Trust concern, and 4 more reasons, with narrative explanations and suggested fixes.">
   <meta name="keywords" content="AI session insights, why visitors abandon, checkout abandonment AI, behavioral AI analysis, session replay AI, conversion attribution AI">
   <link rel="canonical" href="https://swift-mail.app/blog/ai-explains-why-visitors-abandon.html">
 
@@ -136,25 +136,25 @@
     <p>The taxonomy isn't arbitrary &mdash; it's the set of behaviors that actually distinguish failed sessions in the wild. Here's what each one looks like, with the narrative an AI might generate and the action it would suggest.</p>
 
     <div class="reason-card">
-      <span class="reason-tag">PRICE_HESITATION</span>
+      <span class="reason-tag">Price hesitation</span>
       <p class="reason-narrative">"Visitor lingered on the pricing page for 4 minutes, scrolled the comparison table 3 times, opened a second tab (likely a competitor), came back, hovered the 'Buy' button without clicking, then left."</p>
       <p class="reason-action"><strong>Suggested action:</strong> Send a 24-hour discount code with a clear value-comparison narrative, not just "10% off."</p>
     </div>
 
     <div class="reason-card">
-      <span class="reason-tag">FORM_FRICTION</span>
+      <span class="reason-tag">Form friction</span>
       <p class="reason-narrative">"Visitor filled in 4 of 6 signup fields, then rage-clicked the submit button 3 times. The button only fired on the third click. They abandoned 8 seconds later."</p>
       <p class="reason-action"><strong>Suggested action:</strong> Fix the click handler bug. Send a recovery email with the form pre-filled from the captured data.</p>
     </div>
 
     <div class="reason-card">
-      <span class="reason-tag">TRUST_CONCERN</span>
+      <span class="reason-tag">Trust concern</span>
       <p class="reason-narrative">"Visitor reached the checkout page, then navigated to /privacy and /terms, spent 90 seconds reading both, returned to checkout, and bounced."</p>
       <p class="reason-action"><strong>Suggested action:</strong> Add visible trust signals near the payment form &mdash; security badges, money-back guarantee, support contact.</p>
     </div>
 
     <div class="reason-card">
-      <span class="reason-tag">COMPARISON_SHOPPING</span>
+      <span class="reason-tag">Comparison shopping</span>
       <p class="reason-narrative">"Visitor arrived from a Google search for 'swiftmail vs klaviyo,' bounced after 12 seconds on the homepage. Two more sessions same day, one from Reddit, one from a review site."</p>
       <p class="reason-action"><strong>Suggested action:</strong> Show a contextual popup with a head-to-head comparison page, or trigger a Reddit retargeting ad.</p>
     </div>
@@ -166,13 +166,13 @@
     </div>
 
     <div class="reason-card">
-      <span class="reason-tag">TECHNICAL_FAILURE</span>
+      <span class="reason-tag">Technical failure</span>
       <p class="reason-narrative">"Visitor clicked 'Add to cart,' the API returned a 500 error, the cart icon never updated. They tried twice more, then left. <code>fetch_error</code> events fired at 12:04:33, 12:04:51, 12:05:02."</p>
       <p class="reason-action"><strong>Suggested action:</strong> Auto-create an engineering ticket with the stack trace. Send a recovery email once the bug is confirmed fixed.</p>
     </div>
 
     <div class="reason-card">
-      <span class="reason-tag">UNKNOWN</span>
+      <span class="reason-tag">Unclear</span>
       <p class="reason-narrative">"Insufficient signal &mdash; visitor had a 6-second session with one page view and no other events."</p>
       <p class="reason-action"><strong>Suggested action:</strong> Don't trigger anything. Optimize landing page load time and first-impression copy instead.</p>
     </div>
@@ -184,15 +184,15 @@
     <p>The same model runs on converted sessions too &mdash; and that's arguably more valuable. If you understand <em>why</em> someone converted, you know what to amplify, not just what to fix.</p>
 
     <ul>
-      <li><strong><code>VALUE_FIT</code></strong> &mdash; product/price matched the need; straight browse-to-buy with minimal friction</li>
-      <li><strong><code>URGENCY</code></strong> &mdash; time-limited signal preceded the click (promo code, low-stock indicator, countdown)</li>
-      <li><strong><code>SOCIAL_PROOF</code></strong> &mdash; scrolled to reviews/testimonials/counts before converting</li>
-      <li><strong><code>CLEAR_CTA</code></strong> &mdash; short funnel, direct path: landing &rarr; product &rarr; buy; no detours</li>
-      <li><strong><code>RETURNING_INTENT</code></strong> &mdash; multi-session research, decision window closed; branded or direct referrer</li>
-      <li><strong><code>RECOMMENDATION_MATCH</code></strong> &mdash; arrived via email/push/retargeting campaign, landed on the recommended item</li>
+      <li><strong><code>Value fit</code></strong> &mdash; product/price matched the need; straight browse-to-buy with minimal friction</li>
+      <li><strong><code>Urgency</code></strong> &mdash; time-limited signal preceded the click (promo code, low-stock indicator, countdown)</li>
+      <li><strong><code>Social proof</code></strong> &mdash; scrolled to reviews/testimonials/counts before converting</li>
+      <li><strong><code>Clear CTA</code></strong> &mdash; short funnel, direct path: landing &rarr; product &rarr; buy; no detours</li>
+      <li><strong><code>Returning intent</code></strong> &mdash; multi-session research, decision window closed; branded or direct referrer</li>
+      <li><strong><code>Recommendation match</code></strong> &mdash; arrived via email/push/retargeting campaign, landed on the recommended item</li>
     </ul>
 
-    <p>If 60% of your conversions are <code>SOCIAL_PROOF</code>, you should be putting more reviews higher on the page. If 40% are <code>RETURNING_INTENT</code>, your job is to support multi-session decision-making with email nurture, not to push a hard CTA. The reason-mix tells you what your customers actually need from you.</p>
+    <p>If 60% of your conversions are <code>Social proof</code>, you should be putting more reviews higher on the page. If 40% are <code>Returning intent</code>, your job is to support multi-session decision-making with email nurture, not to push a hard CTA. The reason-mix tells you what your customers actually need from you.</p>
 
     <h2>How the Model Avoids Hallucinating</h2>
 
@@ -202,9 +202,9 @@
 
     <p><strong>1. Structured output, not free-text.</strong> The model isn't asked "what happened?" It's asked to pick one of seven abandonment reasons (or six conversion reasons) and produce a confidence score. Even if the narrative is loose, the categorical decision is bounded.</p>
 
-    <p><strong>2. Confidence scores, surfaced.</strong> Every insight ships with a confidence value. Low-confidence outputs (sparse signals, weird sessions) are flagged as <code>UNKNOWN</code> rather than guessed. The model is allowed to say "I don't know."</p>
+    <p><strong>2. Confidence scores, surfaced.</strong> Every insight ships with a confidence value. Low-confidence outputs (sparse signals, weird sessions) are flagged as <code>Unclear</code> rather than guessed. The model is allowed to say "I don't know."</p>
 
-    <p><strong>3. Suggested actions are bounded.</strong> The action set is a fixed taxonomy: <code>SEND_RECOVERY_EMAIL</code>, <code>TAG_CUSTOMER</code>, <code>ADD_TO_SEGMENT</code>, <code>TRIGGER_RETARGETING</code>, <code>CREATE_ENGINEERING_TICKET</code>, etc. The model can't invent actions, only choose from the registry. So even when the narrative is creative, the downstream behavior is predictable.</p>
+    <p><strong>3. Suggested actions are bounded.</strong> The action set is a fixed taxonomy: <code>Send recovery email</code>, <code>Tag customer</code>, <code>Add to segment</code>, <code>Trigger retargeting</code>, <code>Create engineering ticket</code>, etc. The model can't invent actions, only choose from the registry. So even when the narrative is creative, the downstream behavior is predictable.</p>
 
     <p>The combination &mdash; structured taxonomy + confidence + bounded actions &mdash; is what makes session insights production-safe rather than a fancy chatbot.</p>
 
@@ -212,7 +212,7 @@
 
     <p>Per-session insights are one half. The other half is aggregating across sessions to surface patterns.</p>
 
-    <p>Run the same model over 50 sessions in the past hour, weighted by recency, and you can ask: "What's the dominant abandonment reason on the /pricing page right now?" Answer: maybe <code>PRICE_HESITATION</code> jumped from 12% to 41% after you raised prices last Tuesday. That's an aggregate insight &mdash; a pattern across sessions, with a narrative ("a noticeable share of visitors are hesitating after the price increase, particularly on the Growth tier"), and a suggested aggregate action ("test a value-stack section above the pricing table").</p>
+    <p>Run the same model over 50 sessions in the past hour, weighted by recency, and you can ask: "What's the dominant abandonment reason on the /pricing page right now?" Answer: maybe <code>Price hesitation</code> jumped from 12% to 41% after you raised prices last Tuesday. That's an aggregate insight &mdash; a pattern across sessions, with a narrative ("a noticeable share of visitors are hesitating after the price increase, particularly on the Growth tier"), and a suggested aggregate action ("test a value-stack section above the pricing table").</p>
 
     <p>This is where behavioral AI moves from a debugging tool to a strategic one. You stop reading individual sessions and start reading the system. Same way doctors moved from diagnosing patients to interpreting epidemiology.</p>
 
