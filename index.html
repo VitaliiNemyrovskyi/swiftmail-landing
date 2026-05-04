@@ -82,15 +82,6 @@
     /* HERO */
     .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 6rem; position: relative; overflow: hidden; background-color: var(--dark); background-image: linear-gradient(180deg, rgba(11,19,37,0.45) 0%, rgba(11,19,37,0.78) 100%), url('/assets/hero-bg.webp'); background-size: cover; background-position: center; background-repeat: no-repeat; }
 
-    /* Hero signal grid — CSS pulses */
-    .signal-grid { position: absolute; inset: 0; z-index: 0; background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 28px 28px; mask: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 100%); -webkit-mask: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 100%); }
-    .signal-pulse { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--orange-light); box-shadow: 0 0 0 0 var(--orange-glow); animation: signalPulse 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
-    @keyframes signalPulse {
-      0% { transform: scale(0.5); opacity: 0; box-shadow: 0 0 0 0 rgba(234,88,12,0.6); }
-      30% { opacity: 1; }
-      100% { transform: scale(1.2); opacity: 0; box-shadow: 0 0 0 32px rgba(234,88,12,0); }
-    }
-
     .hero-content { position: relative; z-index: 2; max-width: 880px; }
 
     .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.125rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; color: var(--orange-light); background: rgba(234,88,12,0.1); border: 1px solid rgba(234,88,12,0.25); margin-bottom: 2.25rem; }
@@ -542,7 +533,6 @@
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="hero">
-    <div class="signal-grid" id="signal-grid"></div>
     <div class="hero-content">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
@@ -975,51 +965,6 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
     <span id="toast-text">Application received! We'll review and email you within 48 hours.</span>
   </div>
-
-  <!-- Hero signal-grid pulse generator
-       Init is deferred past the TBT measurement window so the IntersectionObserver
-       setup + first DOM mutation don't land in a long-task before TTI.
-       Pause-when-offscreen + pause-when-tab-hidden behavior unchanged. -->
-  <script>
-    (window.requestIdleCallback || function (cb) { return setTimeout(cb, 1500); })(function initSignalGrid() {
-      var grid = document.getElementById('signal-grid');
-      var hero = document.getElementById('hero') || (grid && grid.closest('.hero'));
-      if (!grid || !hero) return;
-      var timer = null;
-      var visible = true;
-      var inView = false;
-      function pulse() {
-        var dot = document.createElement('div');
-        dot.className = 'signal-pulse';
-        dot.style.left = (Math.random() * 100) + '%';
-        dot.style.top = (Math.random() * 100) + '%';
-        grid.appendChild(dot);
-        setTimeout(function () { dot.remove(); }, 1700);
-      }
-      function start() {
-        if (timer || !inView || !visible) return;
-        timer = setInterval(pulse, 220);
-      }
-      function stop() {
-        if (!timer) return;
-        clearInterval(timer);
-        timer = null;
-      }
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          inView = entries[0].isIntersecting;
-          inView ? start() : stop();
-        }, { threshold: 0 }).observe(hero);
-      } else {
-        inView = true;
-        start();
-      }
-      document.addEventListener('visibilitychange', function () {
-        visible = document.visibilityState === 'visible';
-        visible ? start() : stop();
-      });
-    }, { timeout: 3000 });
-  </script>
 
   <!-- Scripts (deferred) -->
   <script src="js/main.js" defer></script>
