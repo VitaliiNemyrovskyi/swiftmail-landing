@@ -19,21 +19,19 @@
   <meta property="og:description" content="Expert guides on email deliverability, automation, and growth.">
   <meta property="og:type" content="website">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../css/style.css"></noscript>
   <style>
     body { background: #f7f9fb; color: #191c1e; }
 
-    .blog-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(247,249,251,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(0,0,0,0.04); }
-    .blog-nav-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 800; font-style: italic; color: #191c1e; }
+    .blog-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(247,249,251,0.97); border-bottom: 1px solid rgba(0,0,0,0.04); }
+    .blog-nav-logo { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.25rem; font-weight: 800; font-style: italic; color: #191c1e; }
     .blog-nav-back { font-size: 0.875rem; color: #64748b; }
     .blog-nav-back:hover { color: #ea580c; }
 
     .blog-header { padding: 8rem 2rem 3rem; text-align: center; max-width: 800px; margin: 0 auto; }
     .blog-header-label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #ea580c; margin-bottom: 0.75rem; }
-    .blog-header h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.75rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem; }
+    .blog-header h1 { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 2.75rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem; }
     .blog-header p { font-size: 1.0625rem; color: #64748b; max-width: 560px; margin: 0 auto; }
 
     .blog-grid { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
@@ -41,7 +39,7 @@
     .blog-card { display: block; background: #fff; border-radius: 0.75rem; padding: 2rem; transition: transform 0.2s, box-shadow 0.2s; }
     .blog-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
     .blog-card-category { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #ea580c; margin-bottom: 0.5rem; }
-    .blog-card-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.375rem; font-weight: 800; letter-spacing: -0.02em; color: #191c1e; margin-bottom: 0.5rem; }
+    .blog-card-title { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.375rem; font-weight: 800; letter-spacing: -0.02em; color: #191c1e; margin-bottom: 0.5rem; }
     .blog-card-desc { font-size: 0.9375rem; color: #64748b; line-height: 1.6; margin-bottom: 0.75rem; }
     .blog-card-meta { font-size: 0.8125rem; color: #94a3b8; }
     .blog-card-read { font-size: 0.8125rem; font-weight: 600; color: #ea580c; }

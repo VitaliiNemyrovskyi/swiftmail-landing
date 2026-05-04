@@ -37,27 +37,25 @@
   }
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../css/style.css"></noscript>
   <style>
     body { background: #f7f9fb; color: #191c1e; }
 
-    .blog-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(247,249,251,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(0,0,0,0.04); }
-    .blog-nav-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 800; font-style: italic; color: #191c1e; }
+    .blog-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(247,249,251,0.97); border-bottom: 1px solid rgba(0,0,0,0.04); }
+    .blog-nav-logo { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.25rem; font-weight: 800; font-style: italic; color: #191c1e; }
     .blog-nav-back { font-size: 0.875rem; color: #64748b; }
     .blog-nav-back:hover { color: #ea580c; }
 
     .blog-hero { padding: 8rem 2rem 3rem; text-align: center; max-width: 800px; margin: 0 auto; }
     .blog-category { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #ea580c; margin-bottom: 1rem; }
-    .blog-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.75rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; color: #191c1e; margin-bottom: 1rem; }
+    .blog-title { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 2.75rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; color: #191c1e; margin-bottom: 1rem; }
     .blog-meta { font-size: 0.875rem; color: #64748b; margin-bottom: 2rem; }
     .blog-meta span { margin: 0 0.5rem; }
 
     .blog-content { max-width: 720px; margin: 0 auto; padding: 0 2rem 4rem; }
-    .blog-content h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: #191c1e; margin: 3rem 0 1rem; }
-    .blog-content h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 700; color: #191c1e; margin: 2rem 0 0.75rem; }
+    .blog-content h2 { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: #191c1e; margin: 3rem 0 1rem; }
+    .blog-content h3 { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.25rem; font-weight: 700; color: #191c1e; margin: 2rem 0 0.75rem; }
     .blog-content p { font-size: 1.0625rem; line-height: 1.8; color: #475569; margin-bottom: 1.25rem; }
     .blog-content ul, .blog-content ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
     .blog-content li { font-size: 1.0625rem; line-height: 1.8; color: #475569; margin-bottom: 0.5rem; }
@@ -72,7 +70,7 @@
     .blog-content .highlight-box a { color: #ff8c42; }
 
     .blog-cta { text-align: center; padding: 3rem 2rem; margin: 2rem 0; background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%); border-radius: 1rem; }
-    .blog-cta h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 0.75rem; }
+    .blog-cta h3 { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 0.75rem; }
     .blog-cta p { color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.9375rem; }
     .blog-cta a { display: inline-block; padding: 0.75rem 2rem; background: linear-gradient(135deg, #ea580c, #cc4900); color: #fff; border-radius: 0.5rem; font-weight: 600; font-size: 0.9375rem; }
 
