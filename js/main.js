@@ -271,12 +271,23 @@ function initLangSwitcher() {
   const switcher = document.getElementById('lang-switcher');
   if (!switcher) return;
   const btn = switcher.querySelector('.lang-btn');
+  const setExpanded = (open) => btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   btn.addEventListener('click', function(e) {
     e.stopPropagation();
-    switcher.classList.toggle('open');
+    const open = switcher.classList.toggle('open');
+    setExpanded(open);
   });
   document.addEventListener('click', function() {
     switcher.classList.remove('open');
+    setExpanded(false);
+  });
+  // Close on Escape — standard a11y pattern for popups
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && switcher.classList.contains('open')) {
+      switcher.classList.remove('open');
+      setExpanded(false);
+      btn.focus();
+    }
   });
 }
 
