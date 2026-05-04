@@ -4,14 +4,26 @@
    ═══════════════════════════════════════════════════════════ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Critical: scroll-fade observer (else .animate-in stays at opacity:0),
+  // navbar, FAQ, forms, lang switcher.
   initScrollAnimations();
-  initLazyVideos();
   initNavbar();
   initFAQ();
   initForms();
-  initCounters();
   initLangSwitcher();
-  trackPageView();
+});
+
+// Deferrable: counter animation, lazy-video play/pause observer, page-view
+// tracking. None of these affect what the user sees pre-scroll, so push
+// them past the TBT measurement window via requestIdleCallback. Falls back
+// to a 1.5s setTimeout on browsers without rIC.
+const __idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1500));
+window.addEventListener('load', () => {
+  __idle(() => {
+    initLazyVideos();
+    initCounters();
+    trackPageView();
+  }, { timeout: 3000 });
 });
 
 /* ── Scroll Animations (Intersection Observer) ───────────

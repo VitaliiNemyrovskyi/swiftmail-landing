@@ -969,11 +969,11 @@
   </div>
 
   <!-- Hero signal-grid pulse generator
-       Only runs when the hero is in viewport AND the tab is visible.
-       Otherwise the setInterval mutates the DOM ~5×/sec forever, hammering
-       style/layout (forced-reflow + main-thread work in Lighthouse). -->
+       Init is deferred past the TBT measurement window so the IntersectionObserver
+       setup + first DOM mutation don't land in a long-task before TTI.
+       Pause-when-offscreen + pause-when-tab-hidden behavior unchanged. -->
   <script>
-    (function initSignalGrid() {
+    (window.requestIdleCallback || function (cb) { return setTimeout(cb, 1500); })(function initSignalGrid() {
       var grid = document.getElementById('signal-grid');
       var hero = document.getElementById('hero') || (grid && grid.closest('.hero'));
       if (!grid || !hero) return;
@@ -1010,7 +1010,7 @@
         visible = document.visibilityState === 'visible';
         visible ? start() : stop();
       });
-    })();
+    }, { timeout: 3000 });
   </script>
 
   <!-- Scripts (deferred) -->
