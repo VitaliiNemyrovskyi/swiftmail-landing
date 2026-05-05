@@ -38,6 +38,12 @@ export async function complete({
   if (system) messages.push({ role: 'system', content: system });
   messages.push({ role: 'user', content: user });
 
+  // CPU-only Ollama hosts can take 10+ min for ~2000-token completions.
+  // Generous default; override per-call via opts.timeoutMs if needed.
+  const timeoutMs = process.env.OLLAMA_TIMEOUT_MS
+    ? Number(process.env.OLLAMA_TIMEOUT_MS)
+    : 30 * 60 * 1000; // 30 min
+
   const res = await fetch(`${url}/v1/chat/completions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -48,6 +54,7 @@ export async function complete({
       max_tokens: maxTokens,
       stream: false,
     }),
+    signal: AbortSignal.timeout(timeoutMs),
   });
 
   if (!res.ok) {
@@ -58,6 +65,10 @@ export async function complete({
   const json = await res.json();
   const content = json.choices?.[0]?.message?.content;
   if (!content) {
+    // Some models (e.g. qwen3) put output in `reasoning` field when thinking
+    // mode is on; surface that as content if main field is empty.
+    const reasoning = json.choices?.[0]?.message?.reasoning;
+    if (reasoning) return reasoning;
     throw new Error(`Ollama returned empty content: ${JSON.stringify(json).slice(0, 500)}`);
   }
   return content;
@@ -80,6 +91,10 @@ export async function chat({
   model = DEFAULT_MODEL,
   url = DEFAULT_URL,
 }) {
+  const timeoutMs = process.env.OLLAMA_TIMEOUT_MS
+    ? Number(process.env.OLLAMA_TIMEOUT_MS)
+    : 30 * 60 * 1000;
+
   const res = await fetch(`${url}/v1/chat/completions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -90,6 +105,7 @@ export async function chat({
       max_tokens: maxTokens,
       stream: false,
     }),
+    signal: AbortSignal.timeout(timeoutMs),
   });
 
   if (!res.ok) {
@@ -98,7 +114,7 @@ export async function chat({
   }
 
   const json = await res.json();
-  return json.choices[0].message.content;
+  return json.choices[0].message.content || json.choices[0].message.reasoning || '';
 }
 
 /**

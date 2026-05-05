@@ -226,7 +226,7 @@ Unique data hint: ${topic.unique_data_hint || '(none)'}
 Output ONLY a JSON array. No prose, no markdown fences. Each item:
   {"claim": "...", "source_type": "...", "credibility": "high|medium", "supports_angle": "yes|no|partially"}`;
 
-  const raw = await complete({ system, user, temperature: 0.3, maxTokens: 2000 });
+  const raw = await complete({ system, user, temperature: 0.3, maxTokens: 1200 });
   // Strip markdown fences if present
   const json = raw.replace(/```json\n?|\n?```/g, '').trim();
   try {
@@ -264,7 +264,7 @@ ${VOICE_MD.slice(0, 1500)}
 
 Design the article outline. Begin output directly with the first H2; no preamble.`;
 
-  return complete({ system, user, temperature: 0.7, maxTokens: 1500 });
+  return complete({ system, user, temperature: 0.7, maxTokens: 800 });
 }
 
 async function phaseDraft(topic, facts, outline) {
@@ -307,7 +307,7 @@ CONSTRAINTS:
 - DO NOT include frontmatter — that's added in next pass
 - Begin with body content directly (first H2 or first paragraph)`;
 
-  return complete({ system, user, temperature: 0.7, maxTokens: 8000 });
+  return complete({ system, user, temperature: 0.7, maxTokens: 3000 });
 }
 
 async function phaseStyleAlign(draft) {
@@ -328,7 +328,7 @@ ${feedback}
 
 Revise to fix these issues only. Keep all content, headings, and links.`;
 
-  return complete({ system, user, temperature: 0.3, maxTokens: 8000 });
+  return complete({ system, user, temperature: 0.3, maxTokens: 3000 });
 }
 
 async function phaseSeo(topic, body) {
