@@ -25,7 +25,7 @@
   unique_data_hint: 47% of beta-tester domains have DMARC at p=none after 6 months — too cautious; explain
   humor_level: 1
   status: idea
-  est_words: 1800
+  est_words: 1500
 - slug: spf-record-character-limit
   title: The SPF 10-Lookup Limit Most Senders Hit Without Knowing
   category: deliverability
@@ -50,7 +50,7 @@
   unique_data_hint: SwiftMail's open rate lift observed when one beta tester adopted BIMI
   humor_level: 1
   status: idea
-  est_words: 1600
+  est_words: 1500
 - slug: gmail-bulk-sender-2024-rules
   title: Gmail's 2024 Bulk Sender Rules — What Actually Got Enforced
   category: deliverability
@@ -62,7 +62,7 @@
   unique_data_hint: SwiftMail's beta-tester bounce rates pre/post Feb 2024
   humor_level: 1
   status: idea
-  est_words: 1800
+  est_words: 1500
 - slug: subdomain-strategy-marketing-vs-transactional
   title: Why You Should Send Marketing and Transactional Email From Different Subdomains
   category: deliverability
@@ -96,7 +96,7 @@
   unique_data_hint: Volume threshold where dedicated starts winning (from beta tester data)
   humor_level: 1
   status: idea
-  est_words: 1600
+  est_words: 1500
 - slug: dkim-key-rotation
   title: "DKIM Key Rotation: Why Annual Rotation Is the New Best Practice"
   category: deliverability
@@ -130,7 +130,7 @@
   unique_data_hint: SwiftMail's 12-signal set with frequency across 100 testers
   humor_level: 1
   status: idea
-  est_words: 2000
+  est_words: 1500
 - slug: cart-abandonment-real-reasons
   title: "The Real Reasons Carts Get Abandoned (Hint: It's Not \\\"They Got Distracted\\\")"
   category: behavioral
@@ -142,7 +142,7 @@
   unique_data_hint: SwiftMail's 7-reason taxonomy with actual frequencies (Price 34%, Form 22%, Trust 11%, etc.)
   humor_level: 1
   status: idea
-  est_words: 1900
+  est_words: 1500
 - slug: behavioral-vs-session-replay
   title: "Behavioral Triggers vs Session Replay: Different Tools for Different Problems"
   category: behavioral
@@ -164,7 +164,7 @@
   unique_data_hint: Time-to-insight comparison from SwiftMail beta testers vs prior tools
   humor_level: 1
   status: idea
-  est_words: 1700
+  est_words: 1500
 - slug: returning-visitor-windows
   title: When Does a Returning Visitor Become a New Visitor? (Industry Defaults Are Wrong)
   category: behavioral
@@ -187,7 +187,7 @@
   unique_data_hint: 11% of SwiftMail beta abandonments tagged TRUST_CONCERN — what they have in common
   humor_level: 1
   status: idea
-  est_words: 1600
+  est_words: 1500
 - slug: rage-click-as-bug-detector
   title: "Rage Clicks as Free QA: Letting Visitors Find Your Bugs"
   category: behavioral
@@ -209,7 +209,7 @@
   unique_data_hint: Conversion lift comparison from SwiftMail beta testers
   humor_level: 1
   status: idea
-  est_words: 1700
+  est_words: 1500
 - slug: customer-io-alternatives
   title: 5 Best Customer.io Alternatives in 2026 (For Multichannel Without the $1K/mo Floor)
   category: comparison
@@ -221,7 +221,7 @@
   unique_data_hint: Migration time observed from Customer.io to SwiftMail (one tester)
   humor_level: 1
   status: idea
-  est_words: 2200
+  est_words: 1500
 - slug: omnisend-vs-klaviyo-shopify
   title: Omnisend vs Klaviyo for Shopify Stores Under $1M GMV
   category: comparison
@@ -232,7 +232,7 @@
   unique_data_hint: SwiftMail's positioning vs both
   humor_level: 1
   status: idea
-  est_words: 2000
+  est_words: 1500
 - slug: encharge-vs-customer-io-saas
   title: Encharge vs Customer.io for SaaS Onboarding Flows
   category: comparison
@@ -243,7 +243,7 @@
   unique_data_hint: SwiftMail's onboarding flow design comparison
   humor_level: 0
   status: idea
-  est_words: 1800
+  est_words: 1500
 - slug: bloomreach-vs-mid-market
   title: Why Bloomreach Costs $50K and What You Get (vs $200/mo Alternatives)
   category: comparison
@@ -255,7 +255,7 @@
   unique_data_hint: SwiftMail's behavioral-feature parity check vs Bloomreach core
   humor_level: 2
   status: idea
-  est_words: 2200
+  est_words: 1500
 - slug: mailerlite-vs-brevo-budget
   title: MailerLite vs Brevo for Senders on a $30/mo Budget
   category: comparison
@@ -266,7 +266,7 @@
   unique_data_hint: Deliverability score comparison if available
   humor_level: 1
   status: idea
-  est_words: 1700
+  est_words: 1500
 - slug: postmark-vs-sendgrid-transactional
   title: Postmark vs SendGrid for Transactional Email (Speed, Deliverability, Cost)
   category: comparison
@@ -277,7 +277,7 @@
   unique_data_hint: Latency observation from SwiftMail testing
   humor_level: 1
   status: idea
-  est_words: 1900
+  est_words: 1500
 - slug: convertkit-vs-substack-creators
   title: ConvertKit vs Substack for Creators in 2026
   category: comparison
@@ -288,7 +288,7 @@
   unique_data_hint: How creators in SwiftMail beta use SwiftMail alongside Substack
   humor_level: 2
   status: idea
-  est_words: 1800
+  est_words: 1500
 - slug: drip-vs-active-campaign-ecommerce
   title: Drip vs ActiveCampaign for E-commerce Stores at $500K-$2M GMV
   category: comparison
@@ -299,7 +299,7 @@
   unique_data_hint: Customer profile differences observed in SwiftMail beta
   humor_level: 1
   status: idea
-  est_words: 1900
+  est_words: 1500
 - slug: post-purchase-flow-anatomy
   title: The Post-Purchase Email Flow That Actually Drives Repeat Purchase
   category: ecommerce
@@ -310,7 +310,7 @@
   unique_data_hint: Repeat-purchase rate lift from SwiftMail beta tester implementing 12-step flow
   humor_level: 1
   status: idea
-  est_words: 2000
+  est_words: 1500
 - slug: win-back-flow-90-180-365
   title: "Win-Back Flows: When 90/180/365 Days Are the Wrong Triggers"
   category: ecommerce
@@ -321,7 +321,7 @@
   unique_data_hint: Replenishment-cycle data from SwiftMail beta ecommerce testers
   humor_level: 0
   status: idea
-  est_words: 1700
+  est_words: 1500
 - slug: browse-abandonment-vs-cart-abandonment
   title: "Browse Abandonment Recovery: The 22% of Lost Revenue No One Tracks"
   category: ecommerce
@@ -332,7 +332,7 @@
   unique_data_hint: Browse-vs-cart abandonment ratio from beta testers
   humor_level: 1
   status: idea
-  est_words: 1800
+  est_words: 1500
 - slug: discount-strategy-no-margin-bleed
   title: "Discount Strategy Without Bleeding Margin: 4 Trigger Patterns That Don't Train Discount-Hunting"
   category: ecommerce
@@ -343,7 +343,7 @@
   unique_data_hint: Discount fatigue measurement from beta testers
   humor_level: 2
   status: idea
-  est_words: 1900
+  est_words: 1500
 - slug: vip-segment-when-to-create
   title: "VIP Customer Segment: When to Create It (And When It's Vanity)"
   category: ecommerce
@@ -376,7 +376,7 @@
   unique_data_hint: Review-rate by request-day data from SwiftMail beta testers
   humor_level: 1
   status: idea
-  est_words: 1600
+  est_words: 1500
 - slug: replenishment-flow-by-category
   title: "Replenishment Flows: 5 Categories Where Auto-Reorder Triggers Belong"
   category: ecommerce
@@ -387,7 +387,7 @@
   unique_data_hint: Optimal replenishment windows by category from SwiftMail data
   humor_level: 0
   status: idea
-  est_words: 1700
+  est_words: 1500
 - slug: email-marketing-no-list
   title: How to Start Email Marketing With Zero Subscribers (Realistic Path)
   category: strategy
@@ -398,7 +398,7 @@
   unique_data_hint: Time-to-first-1000 from SwiftMail beta testers who started from zero
   humor_level: 1
   status: idea
-  est_words: 2000
+  est_words: 1500
 - slug: email-frequency-by-vertical
   title: "Email Frequency by Vertical: 5 Real Cadences That Don't Annoy"
   category: strategy
@@ -409,7 +409,7 @@
   unique_data_hint: Unsubscribe rate by frequency observed in beta testers
   humor_level: 1
   status: idea
-  est_words: 1700
+  est_words: 1500
 - slug: list-cleaning-when-and-how
   title: When to Clean Your Email List (And Why You'll Want to Wait)
   category: strategy
@@ -431,7 +431,7 @@
   unique_data_hint: SwiftMail beta-tester DOI vs SOI deliverability comparison
   humor_level: 1
   status: idea
-  est_words: 1800
+  est_words: 1500
 - slug: gdpr-email-marketing-2026
   title: "GDPR Email Marketing in 2026: What Changed (And What Most Senders Still Do Wrong)"
   category: strategy
@@ -442,7 +442,7 @@
   unique_data_hint: GDPR compliance observation across SwiftMail beta testers
   humor_level: 1
   status: idea
-  est_words: 2000
+  est_words: 1500
 - slug: subject-line-formulas-that-work
   title: 7 Subject Line Formulas That Outperform \"Hi {first_name}\"
   category: strategy
@@ -486,7 +486,7 @@
   unique_data_hint: Channel-attribution data from SwiftMail multichannel beta testers
   humor_level: 1
   status: idea
-  est_words: 1900
+  est_words: 1500
 - slug: shopify-pixel-vs-email-platform
   title: "Shopify Web Pixel vs Email Platform Tracking: Which Fires First?"
   category: ecommerce
@@ -508,7 +508,7 @@
   unique_data_hint: Pixel-miss rate from SwiftMail beta testers (% of conversions missed by pixel-only)
   humor_level: 1
   status: idea
-  est_words: 1700
+  est_words: 1500
 - slug: identity-resolution-without-cookies
   title: "Identity Resolution After Third-Party Cookies: 5 Server-Side Patterns"
   category: behavioral
@@ -519,7 +519,7 @@
   unique_data_hint: SwiftMail's first-party identity approach
   humor_level: 0
   status: idea
-  est_words: 1900
+  est_words: 1500
 - slug: utm-grunge-cleanup
   title: "UTM Parameter Hygiene: How Bad UTMs Pollute Your Funnel Forever"
   category: strategy

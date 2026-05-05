@@ -31,9 +31,27 @@ import * as eeat from './checks/eeat.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 
-const VOICE_MD = fs.readFileSync(path.join(ROOT, 'voice.md'), 'utf8');
-const HUMANIZER_MD = fs.readFileSync(path.join(ROOT, 'humanizer.md'), 'utf8');
-const PRODUCT_CTX = fs.readFileSync(path.join(ROOT, 'product-context.md'), 'utf8');
+// voice.md is the full reference (200 lines) — use only for review.
+// voice-compact.md is the runtime version (~800 tokens) used in LLM prompts
+// because most local Ollama models default to 4096-token context, and the
+// full voice + humanizer + product-context easily exceeds that.
+const VOICE_COMPACT = fs.readFileSync(path.join(ROOT, 'voice-compact.md'), 'utf8');
+// product-context.md condensed: keep only the metrics + features section
+// for runtime use. Falls back to full file if not present.
+const PRODUCT_CTX_COMPACT = compactProductContext(
+  fs.readFileSync(path.join(ROOT, 'product-context.md'), 'utf8')
+);
+
+function compactProductContext(full) {
+  // Keep only "Real metrics" + "Core feature surface" + brand voice anchors
+  // — sections most useful for grounding article facts.
+  const sections = full.split(/^## /m);
+  const wanted = ['Real metrics', 'Core feature surface', 'Founder voice anchors', 'Stage'];
+  const keep = sections.filter((s) => wanted.some((w) => s.startsWith(w)));
+  return keep.length > 0
+    ? '## ' + keep.join('\n## ').slice(0, 1500)
+    : full.slice(0, 1500);
+}
 
 const TOPICS_PATH = path.join(ROOT, 'topics.yaml');
 const DRAFTS_DIR = path.join(ROOT, 'drafts');
@@ -259,9 +277,6 @@ Target word count: ~${topic.est_words}
 Researched facts:
 ${factsList}
 
-Voice context (must match):
-${VOICE_MD.slice(0, 1500)}
-
 Design the article outline. Begin output directly with the first H2; no preamble.`;
 
   return complete({ system, user, temperature: 0.7, maxTokens: 800 });
@@ -272,16 +287,12 @@ async function phaseDraft(topic, facts, outline) {
     .map((f) => `- ${f.claim} (source: ${f.source_type}, credibility: ${f.credibility})`)
     .join('\n');
 
-  const system = `${VOICE_MD}
-
-──────────────────────────────────────
-
-${HUMANIZER_MD}
+  const system = `${VOICE_COMPACT}
 
 ──────────────────────────────────────
 
 PRODUCT CONTEXT (for unique data points):
-${PRODUCT_CTX}`;
+${PRODUCT_CTX_COMPACT}`;
 
   const user = `Write the full article body in markdown.
 
