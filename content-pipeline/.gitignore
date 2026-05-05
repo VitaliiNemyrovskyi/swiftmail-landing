@@ -1,0 +1,6 @@
+.env
+node_modules/
+logs/
+drafts/*.md
+drafts/*.original.md
+!drafts/.gitkeep

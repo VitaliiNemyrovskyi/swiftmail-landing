@@ -1,0 +1,25 @@
+{
+  "name": "swiftmail-content-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Drafts, checks, translates, and publishes SwiftMail blog articles via Ollama",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "draft": "node pipeline.mjs draft",
+    "draft-next": "node pipeline.mjs draft-next",
+    "check": "node pipeline.mjs check",
+    "translate": "node translate.mjs",
+    "publish": "node publish.mjs",
+    "status": "node pipeline.mjs status",
+    "report": "node daily-report.mjs",
+    "ollama:check": "node -e \"import('./lib/ollama-client.mjs').then(async m=>{console.log('ping:', await m.ping()); console.log('models:', await m.listModels());})\"",
+    "help": "node pipeline.mjs help"
+  },
+  "dependencies": {
+    "yaml": "^2.6.0",
+    "nodemailer": "^6.9.16"
+  }
+}

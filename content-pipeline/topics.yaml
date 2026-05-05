@@ -1,0 +1,556 @@
+# Topics backlog — 50 email-niche article ideas, queued for pipeline.mjs.
+# See content-pipeline/README.md for usage.
+
+- slug: warm-up-transactional-sender
+  title: How to Warm Up a New Transactional Sender Without Triggering Throttling
+  category: deliverability
+  target_keyword: transactional email warm-up
+  angle: Most warm-up guides assume marketing volume. Transactional patterns are different — lower volume, higher consistency, different ESP heuristics.
+  sources_hint:
+    - transactional email warm-up best practices 2026
+    - mailgun docs on sender reputation
+    - postmark warm-up schedule
+  unique_data_hint: SwiftMail's average warm-up to "good reputation" is 18 days from new domain — share schedule
+  humor_level: 0
+  status: idea
+  est_words: 1500
+- slug: dmarc-reject-vs-quarantine-when
+  title: When to Move DMARC from Quarantine to Reject (And When Not To)
+  category: deliverability
+  target_keyword: DMARC reject mode
+  angle: The reflexive "always p=reject" advice misses the half-year of monitoring most senders need first. Step-by-step decision criteria.
+  sources_hint:
+    - DMARC reject vs quarantine
+    - dmarc.org docs
+  unique_data_hint: 47% of beta-tester domains have DMARC at p=none after 6 months — too cautious; explain
+  humor_level: 1
+  status: idea
+  est_words: 1800
+- slug: spf-record-character-limit
+  title: The SPF 10-Lookup Limit Most Senders Hit Without Knowing
+  category: deliverability
+  target_keyword: SPF lookup limit
+  angle: Adding \"include:\" entries hits the silent limit. Explains how to detect, what flattening means, when it's worth doing.
+  sources_hint:
+    - SPF 10 DNS lookup limit
+    - rfc 7208
+  unique_data_hint: How many beta-tester domains have hit this; common offenders (Salesforce + ConvertKit + own ESP = boom)
+  humor_level: 0
+  status: idea
+  est_words: 1400
+- slug: bimi-worth-it-2026
+  title: Is BIMI Worth $1500/yr for Small Senders in 2026?
+  category: deliverability
+  target_keyword: BIMI cost worth it
+  angle: BIMI's VMC requirement adds significant cost. For SMBs the math rarely works yet — but it's changing.
+  sources_hint:
+    - BIMI VMC cost
+    - Apple BIMI support
+    - DigiCert/Entrust pricing
+  unique_data_hint: SwiftMail's open rate lift observed when one beta tester adopted BIMI
+  humor_level: 1
+  status: idea
+  est_words: 1600
+- slug: gmail-bulk-sender-2024-rules
+  title: Gmail's 2024 Bulk Sender Rules — What Actually Got Enforced
+  category: deliverability
+  target_keyword: Gmail bulk sender requirements
+  angle: 18 months in, what's actually being enforced (and what was theater). Real rejection rates vs spam-folder demotion.
+  sources_hint:
+    - Gmail sender requirements 2024 enforcement
+    - postmark gmail bulk sender analysis
+  unique_data_hint: SwiftMail's beta-tester bounce rates pre/post Feb 2024
+  humor_level: 1
+  status: idea
+  est_words: 1800
+- slug: subdomain-strategy-marketing-vs-transactional
+  title: Why You Should Send Marketing and Transactional Email From Different Subdomains
+  category: deliverability
+  target_keyword: marketing transactional email subdomain
+  angle: Mixing the two on the same domain means a marketing-spam complaint can blacklist your transactional. Walk through subdomain split.
+  sources_hint:
+    - transactional vs marketing subdomain
+  unique_data_hint: One beta tester's deliverability score before/after split
+  humor_level: 0
+  status: idea
+  est_words: 1400
+- slug: feedback-loop-monitoring
+  title: "ISP Feedback Loops: The Free Deliverability Signal Most Senders Ignore"
+  category: deliverability
+  target_keyword: email feedback loop ISP
+  angle: Each ISP offers FBL signups; few senders register them. Walkthrough across Yahoo, AOL, Microsoft, Comcast.
+  sources_hint:
+    - email feedback loop signup
+  unique_data_hint: Spam-rate baseline observed across 100 beta testers
+  humor_level: 0
+  status: idea
+  est_words: 1500
+- slug: shared-vs-dedicated-ip
+  title: "Shared IP vs Dedicated IP: When the $200/mo Upgrade Pays Off"
+  category: deliverability
+  target_keyword: dedicated IP email worth it
+  angle: ESP marketing pushes dedicated IPs as the next tier. Real threshold is volume + sender stability — most SMBs don't qualify yet.
+  sources_hint:
+    - dedicated IP vs shared deliverability
+    - sendgrid dedicated IP pricing
+  unique_data_hint: Volume threshold where dedicated starts winning (from beta tester data)
+  humor_level: 1
+  status: idea
+  est_words: 1600
+- slug: dkim-key-rotation
+  title: "DKIM Key Rotation: Why Annual Rotation Is the New Best Practice"
+  category: deliverability
+  target_keyword: DKIM key rotation schedule
+  angle: 2048-bit keys hold up but rotation is increasingly expected. How to rotate without breaking signed messages in transit.
+  sources_hint:
+    - DKIM key rotation best practice
+  unique_data_hint: How SwiftMail handles rotation for beta testers
+  humor_level: 0
+  status: idea
+  est_words: 1400
+- slug: postmaster-tools-explained
+  title: "Google Postmaster Tools: 5 Metrics That Predict Inbox Placement"
+  category: deliverability
+  target_keyword: google postmaster tools guide
+  angle: GPT shows different signals than ESP dashboards. Which 5 GPT metrics actually correlate with placement.
+  sources_hint:
+    - google postmaster tools tutorial
+  unique_data_hint: Correlation observed across SwiftMail beta-tester GPT data and inbox placement
+  humor_level: 0
+  status: idea
+  est_words: 1500
+- slug: form-friction-detection-12-signals
+  title: "Form Friction: 12 Signals Your Analytics Misses"
+  category: behavioral
+  target_keyword: form abandonment signals
+  angle: Beyond \"they didn't submit\" — rage-click on submit, field-rewrite, tab-switch, paste-into-field, autofill rejection.
+  sources_hint:
+    - form abandonment behavioral signals
+    - hotjar form analytics
+  unique_data_hint: SwiftMail's 12-signal set with frequency across 100 testers
+  humor_level: 1
+  status: idea
+  est_words: 2000
+- slug: cart-abandonment-real-reasons
+  title: "The Real Reasons Carts Get Abandoned (Hint: It's Not \\\"They Got Distracted\\\")"
+  category: behavioral
+  target_keyword: cart abandonment reasons 2026
+  angle: Industry surveys say "comparison shopping" is dominant — behavioral data says different. 7 actual reasons by frequency.
+  sources_hint:
+    - shopping cart abandonment reasons survey
+    - baymard institute cart abandonment
+  unique_data_hint: SwiftMail's 7-reason taxonomy with actual frequencies (Price 34%, Form 22%, Trust 11%, etc.)
+  humor_level: 1
+  status: idea
+  est_words: 1900
+- slug: behavioral-vs-session-replay
+  title: "Behavioral Triggers vs Session Replay: Different Tools for Different Problems"
+  category: behavioral
+  target_keyword: behavioral marketing vs session replay
+  angle: Hotjar/FullStory show what happened. Behavioral triggers act on it. Most teams need both — for different reasons.
+  sources_hint:
+    - session replay vs behavioral analytics
+  unique_data_hint: SwiftMail vs Hotjar use-case overlap from beta testers
+  humor_level: 0
+  status: idea
+  est_words: 1500
+- slug: ai-explanation-vs-tagging
+  title: Why AI Reasons Beat Manual Tagging for Conversion Triage
+  category: behavioral
+  target_keyword: AI conversion analysis
+  angle: Manual UTM/tag systems work at small scale. AI-generated reasons scale better as journey complexity grows. Trade-offs.
+  sources_hint:
+    - manual tagging vs AI attribution
+  unique_data_hint: Time-to-insight comparison from SwiftMail beta testers vs prior tools
+  humor_level: 1
+  status: idea
+  est_words: 1700
+- slug: returning-visitor-windows
+  title: When Does a Returning Visitor Become a New Visitor? (Industry Defaults Are Wrong)
+  category: behavioral
+  target_keyword: returning visitor session window
+  angle: Default 30-min sessions don't fit modern shopping behavior. Better defaults by vertical.
+  sources_hint:
+    - session timeout best practice
+    - Google Analytics session settings
+  unique_data_hint: SwiftMail beta-tester journey lengths by vertical
+  humor_level: 0
+  status: idea
+  est_words: 1300
+- slug: trust-concern-checkout-fixes
+  title: "Trust Concerns at Checkout: 5 Specific Fixes That Move Conversion"
+  category: behavioral
+  target_keyword: checkout trust signals
+  angle: Trust badges are noise. Real trust signals are policy clarity, support visibility, payment method count.
+  sources_hint:
+    - checkout trust signals conversion
+  unique_data_hint: 11% of SwiftMail beta abandonments tagged TRUST_CONCERN — what they have in common
+  humor_level: 1
+  status: idea
+  est_words: 1600
+- slug: rage-click-as-bug-detector
+  title: "Rage Clicks as Free QA: Letting Visitors Find Your Bugs"
+  category: behavioral
+  target_keyword: rage click detection
+  angle: Track rage clicks → cluster by element → top 5 are usually real bugs your team didn't know about.
+  sources_hint:
+    - rage click bug detection
+  unique_data_hint: Top 3 rage-click clusters across 100 beta testers (the universal bugs)
+  humor_level: 2
+  status: idea
+  est_words: 1500
+- slug: behavioral-personalization-vs-segmentation
+  title: Behavioral Personalization Beats Demographic Segmentation Every Time
+  category: behavioral
+  target_keyword: behavioral personalization vs segmentation
+  angle: '"Targeting women aged 25-34" is dead. "Targeting users who hesitated at checkout" works. Why behavior > demographics.'
+  sources_hint:
+    - behavioral targeting vs demographic
+  unique_data_hint: Conversion lift comparison from SwiftMail beta testers
+  humor_level: 1
+  status: idea
+  est_words: 1700
+- slug: customer-io-alternatives
+  title: 5 Best Customer.io Alternatives in 2026 (For Multichannel Without the $1K/mo Floor)
+  category: comparison
+  target_keyword: customer.io alternatives
+  angle: Customer.io's $250-1000/mo pricing leaves a gap below it for small senders needing multichannel.
+  sources_hint:
+    - customer.io alternatives
+    - customer.io pricing
+  unique_data_hint: Migration time observed from Customer.io to SwiftMail (one tester)
+  humor_level: 1
+  status: idea
+  est_words: 2200
+- slug: omnisend-vs-klaviyo-shopify
+  title: Omnisend vs Klaviyo for Shopify Stores Under $1M GMV
+  category: comparison
+  target_keyword: omnisend vs klaviyo
+  angle: Both target Shopify. Real cost crossover happens around 8K subscribers. Honest comparison without affiliate fluff.
+  sources_hint:
+    - omnisend vs klaviyo comparison
+  unique_data_hint: SwiftMail's positioning vs both
+  humor_level: 1
+  status: idea
+  est_words: 2000
+- slug: encharge-vs-customer-io-saas
+  title: Encharge vs Customer.io for SaaS Onboarding Flows
+  category: comparison
+  target_keyword: encharge vs customer.io
+  angle: Both target SaaS. Different design philosophies (visual flow vs code-first). When each wins.
+  sources_hint:
+    - encharge vs customer.io
+  unique_data_hint: SwiftMail's onboarding flow design comparison
+  humor_level: 0
+  status: idea
+  est_words: 1800
+- slug: bloomreach-vs-mid-market
+  title: Why Bloomreach Costs $50K and What You Get (vs $200/mo Alternatives)
+  category: comparison
+  target_keyword: bloomreach pricing alternatives
+  angle: Enterprise-priced behavioral marketing is real but most SMBs don't need 80% of it. Feature-by-feature breakdown.
+  sources_hint:
+    - bloomreach pricing
+    - bloomreach features
+  unique_data_hint: SwiftMail's behavioral-feature parity check vs Bloomreach core
+  humor_level: 2
+  status: idea
+  est_words: 2200
+- slug: mailerlite-vs-brevo-budget
+  title: MailerLite vs Brevo for Senders on a $30/mo Budget
+  category: comparison
+  target_keyword: mailerlite vs brevo
+  angle: Both compete in the budget tier. Real differences in deliverability, automation depth, and scaling cliffs.
+  sources_hint:
+    - mailerlite vs brevo
+  unique_data_hint: Deliverability score comparison if available
+  humor_level: 1
+  status: idea
+  est_words: 1700
+- slug: postmark-vs-sendgrid-transactional
+  title: Postmark vs SendGrid for Transactional Email (Speed, Deliverability, Cost)
+  category: comparison
+  target_keyword: postmark vs sendgrid
+  angle: Different design philosophies — Postmark small/fast, SendGrid sprawling/cheap. When each wins.
+  sources_hint:
+    - postmark vs sendgrid
+  unique_data_hint: Latency observation from SwiftMail testing
+  humor_level: 1
+  status: idea
+  est_words: 1900
+- slug: convertkit-vs-substack-creators
+  title: ConvertKit vs Substack for Creators in 2026
+  category: comparison
+  target_keyword: convertkit vs substack
+  angle: ConvertKit changed name to Kit; Substack keeps mutating its newsletter-vs-platform identity. Where each fits creator strategies.
+  sources_hint:
+    - convertkit substack comparison
+  unique_data_hint: How creators in SwiftMail beta use SwiftMail alongside Substack
+  humor_level: 2
+  status: idea
+  est_words: 1800
+- slug: drip-vs-active-campaign-ecommerce
+  title: Drip vs ActiveCampaign for E-commerce Stores at $500K-$2M GMV
+  category: comparison
+  target_keyword: drip vs activecampaign
+  angle: Both target ecommerce mid-market. Drip more vertical, ActiveCampaign more horizontal. Real fit comparison.
+  sources_hint:
+    - drip vs activecampaign
+  unique_data_hint: Customer profile differences observed in SwiftMail beta
+  humor_level: 1
+  status: idea
+  est_words: 1900
+- slug: post-purchase-flow-anatomy
+  title: The Post-Purchase Email Flow That Actually Drives Repeat Purchase
+  category: ecommerce
+  target_keyword: post-purchase email flow
+  angle: Most post-purchase flows are 3 emails (confirmation/shipping/feedback). Real repeat-driver flows are 8-12 with behavioral branches.
+  sources_hint:
+    - post-purchase email flow ecommerce
+  unique_data_hint: Repeat-purchase rate lift from SwiftMail beta tester implementing 12-step flow
+  humor_level: 1
+  status: idea
+  est_words: 2000
+- slug: win-back-flow-90-180-365
+  title: "Win-Back Flows: When 90/180/365 Days Are the Wrong Triggers"
+  category: ecommerce
+  target_keyword: win-back email flow timing
+  angle: Generic 90-day win-backs ignore product replenishment cycles. Tailor windows by SKU category.
+  sources_hint:
+    - win-back email timing
+  unique_data_hint: Replenishment-cycle data from SwiftMail beta ecommerce testers
+  humor_level: 0
+  status: idea
+  est_words: 1700
+- slug: browse-abandonment-vs-cart-abandonment
+  title: "Browse Abandonment Recovery: The 22% of Lost Revenue No One Tracks"
+  category: ecommerce
+  target_keyword: browse abandonment email
+  angle: Cart abandonment gets all the attention; browse abandonment is bigger and more recoverable.
+  sources_hint:
+    - browse abandonment email
+  unique_data_hint: Browse-vs-cart abandonment ratio from beta testers
+  humor_level: 1
+  status: idea
+  est_words: 1800
+- slug: discount-strategy-no-margin-bleed
+  title: "Discount Strategy Without Bleeding Margin: 4 Trigger Patterns That Don't Train Discount-Hunting"
+  category: ecommerce
+  target_keyword: ecommerce discount strategy
+  angle: Constant promo emails train customers to wait. Trigger discounts on actual abandonment behavior, not calendar.
+  sources_hint:
+    - ecommerce discount fatigue
+  unique_data_hint: Discount fatigue measurement from beta testers
+  humor_level: 2
+  status: idea
+  est_words: 1900
+- slug: vip-segment-when-to-create
+  title: "VIP Customer Segment: When to Create It (And When It's Vanity)"
+  category: ecommerce
+  target_keyword: VIP customer segment ecommerce
+  angle: VIP segments work at scale but premature creation hurts. Threshold + criteria for when it earns its slot.
+  sources_hint:
+    - VIP customer segment criteria
+  unique_data_hint: SwiftMail beta tester thresholds where VIP segments started lifting metrics
+  humor_level: 1
+  status: idea
+  est_words: 1500
+- slug: shipping-shock-recovery
+  title: "Shipping Shock: The 11% Cart Abandonment You Can Actually Recover"
+  category: ecommerce
+  target_keyword: shipping cost cart abandonment
+  angle: Surprise shipping costs abandon ~11% of carts. Recovery flow + UX preventatives.
+  sources_hint:
+    - shipping cost abandonment recovery
+  unique_data_hint: SwiftMail data confirming 11% figure
+  humor_level: 0
+  status: idea
+  est_words: 1500
+- slug: review-request-timing
+  title: When to Ask for a Product Review (And Why Day 7 Is Wrong)
+  category: ecommerce
+  target_keyword: when to ask for product review
+  angle: Day-7 review requests are convention without basis. Real timing depends on product category and use frequency.
+  sources_hint:
+    - post-purchase review request timing
+  unique_data_hint: Review-rate by request-day data from SwiftMail beta testers
+  humor_level: 1
+  status: idea
+  est_words: 1600
+- slug: replenishment-flow-by-category
+  title: "Replenishment Flows: 5 Categories Where Auto-Reorder Triggers Belong"
+  category: ecommerce
+  target_keyword: replenishment email flow
+  angle: Consumables, beauty, pet food, supplements — but NOT apparel. Why behavioral data should drive the schedule.
+  sources_hint:
+    - replenishment email flow
+  unique_data_hint: Optimal replenishment windows by category from SwiftMail data
+  humor_level: 0
+  status: idea
+  est_words: 1700
+- slug: email-marketing-no-list
+  title: How to Start Email Marketing With Zero Subscribers (Realistic Path)
+  category: strategy
+  target_keyword: start email marketing no list
+  angle: Most "build a list" guides assume audience already exists. Real path from 0→1000 with content + lead magnet basics.
+  sources_hint:
+    - build email list from scratch
+  unique_data_hint: Time-to-first-1000 from SwiftMail beta testers who started from zero
+  humor_level: 1
+  status: idea
+  est_words: 2000
+- slug: email-frequency-by-vertical
+  title: "Email Frequency by Vertical: 5 Real Cadences That Don't Annoy"
+  category: strategy
+  target_keyword: email frequency best practice
+  angle: '"1-2 per week" is generic. Ecommerce should email more, B2B SaaS less, B2C services it depends. Vertical-specific cadences.'
+  sources_hint:
+    - email frequency best practice 2026
+  unique_data_hint: Unsubscribe rate by frequency observed in beta testers
+  humor_level: 1
+  status: idea
+  est_words: 1700
+- slug: list-cleaning-when-and-how
+  title: When to Clean Your Email List (And Why You'll Want to Wait)
+  category: strategy
+  target_keyword: email list cleaning
+  angle: Constant cleaning hurts list growth math. Optimal cadence depends on list age + complaint signals.
+  sources_hint:
+    - email list hygiene
+  unique_data_hint: Cleaning cadence trade-offs from SwiftMail beta testers
+  humor_level: 0
+  status: idea
+  est_words: 1500
+- slug: double-opt-in-still-worth-it
+  title: Is Double Opt-In Still Worth the 30% Conversion Drop in 2026?
+  category: strategy
+  target_keyword: double opt-in worth it
+  angle: GDPR + Gmail's bulk-sender rules push toward DOI. Math on whether the drop is offset by deliverability gains.
+  sources_hint:
+    - double opt-in pros cons
+  unique_data_hint: SwiftMail beta-tester DOI vs SOI deliverability comparison
+  humor_level: 1
+  status: idea
+  est_words: 1800
+- slug: gdpr-email-marketing-2026
+  title: "GDPR Email Marketing in 2026: What Changed (And What Most Senders Still Do Wrong)"
+  category: strategy
+  target_keyword: GDPR email marketing 2026
+  angle: Recent enforcement clarifies a few things — and most senders still operate on outdated 2018 understanding.
+  sources_hint:
+    - GDPR email marketing 2025 enforcement
+  unique_data_hint: GDPR compliance observation across SwiftMail beta testers
+  humor_level: 1
+  status: idea
+  est_words: 2000
+- slug: subject-line-formulas-that-work
+  title: 7 Subject Line Formulas That Outperform \"Hi {first_name}\"
+  category: strategy
+  target_keyword: subject line formulas
+  angle: Most subject-line guides are pattern-matching. Real formulas + when each works.
+  sources_hint:
+    - email subject line formulas 2026
+  unique_data_hint: Open-rate lift by formula from SwiftMail beta testers
+  humor_level: 1
+  status: idea
+  est_words: 1500
+- slug: ab-test-volume-required
+  title: How Many Subscribers Before A/B Tests Mean Anything?
+  category: strategy
+  target_keyword: email A/B test sample size
+  angle: Most ESPs let you A/B test at any volume. Statistical reality — you need ~5K opens per variant for meaningful results.
+  sources_hint:
+    - email A/B test sample size
+  unique_data_hint: How many beta testers had statistical power for A/B tests vs how many actually ran them
+  humor_level: 2
+  status: idea
+  est_words: 1500
+- slug: from-name-strategy
+  title: The "From" Name Affects Open Rate More Than Subject — Here's Why
+  category: strategy
+  target_keyword: email from name best practice
+  angle: Test data consistently shows from-name (person vs brand) moves open rates 8-15%. Strategy implications for B2B vs B2C.
+  sources_hint:
+    - email from name open rate
+  unique_data_hint: Open-rate comparison from-name tests in SwiftMail beta
+  humor_level: 1
+  status: idea
+  est_words: 1500
+- slug: email-vs-sms-when
+  title: "Email vs SMS: When to Use Which (and Why the Answer Is Both)"
+  category: strategy
+  target_keyword: email vs SMS marketing
+  angle: ESPs push email; SMS-platforms push SMS. Truth is they have different jobs — coexist optimally with behavioral triggers.
+  sources_hint:
+    - email vs SMS marketing
+  unique_data_hint: Channel-attribution data from SwiftMail multichannel beta testers
+  humor_level: 1
+  status: idea
+  est_words: 1900
+- slug: shopify-pixel-vs-email-platform
+  title: "Shopify Web Pixel vs Email Platform Tracking: Which Fires First?"
+  category: ecommerce
+  target_keyword: shopify web pixel email tracking
+  angle: Shopify's web pixel and email-platform pixel both fire on conversion. Order matters for attribution. Practical config.
+  sources_hint:
+    - shopify web pixel email tracking
+  unique_data_hint: Order-of-fire observation from SwiftMail beta testers on Shopify
+  humor_level: 0
+  status: idea
+  est_words: 1500
+- slug: webhook-vs-pixel-conversion-tracking
+  title: "Webhook vs Pixel Conversion Tracking: When Pixels Are Wrong"
+  category: behavioral
+  target_keyword: webhook vs pixel tracking
+  angle: Pixels miss server-side conversions, ad-blocked users, mobile-app traffic. Webhooks catch them but require tech setup.
+  sources_hint:
+    - webhook conversion tracking
+  unique_data_hint: Pixel-miss rate from SwiftMail beta testers (% of conversions missed by pixel-only)
+  humor_level: 1
+  status: idea
+  est_words: 1700
+- slug: identity-resolution-without-cookies
+  title: "Identity Resolution After Third-Party Cookies: 5 Server-Side Patterns"
+  category: behavioral
+  target_keyword: identity resolution post-cookies
+  angle: Cookies are dying; first-party identity matters more. Server-side patterns that work in 2026.
+  sources_hint:
+    - identity resolution server side
+  unique_data_hint: SwiftMail's first-party identity approach
+  humor_level: 0
+  status: idea
+  est_words: 1900
+- slug: utm-grunge-cleanup
+  title: "UTM Parameter Hygiene: How Bad UTMs Pollute Your Funnel Forever"
+  category: strategy
+  target_keyword: UTM parameter best practice
+  angle: Inconsistent UTM naming creates years of unfixable analytics debt. Standards + cleanup approach.
+  sources_hint:
+    - UTM naming convention
+  unique_data_hint: UTM-mess severity observed across SwiftMail beta testers
+  humor_level: 2
+  status: idea
+  est_words: 1500
+- slug: zapier-vs-native-integration
+  title: When Zapier Integration Is Fine — And When It'll Cost You at Scale
+  category: strategy
+  target_keyword: zapier vs native integration
+  angle: Zapier's per-task pricing scales linearly. Native integration is upfront cost + zero variable. Crossover math.
+  sources_hint:
+    - zapier vs native integration cost
+  unique_data_hint: SwiftMail integration setup time vs Zapier-equivalent
+  humor_level: 1
+  status: idea
+  est_words: 1500
+- slug: api-rate-limits-bulk-sends
+  title: "API Rate Limits Across Major ESPs: Reality of Bulk Sending in 2026"
+  category: deliverability
+  target_keyword: ESP API rate limits
+  angle: Marketing pages claim \"unlimited\"; APIs say otherwise. Real rate limits across SendGrid, Postmark, Mailgun, SwiftMail.
+  sources_hint:
+    - sendgrid api rate limits
+    - postmark rate limits
+  unique_data_hint: SwiftMail's rate-limit posture
+  humor_level: 1
+  status: idea
+  est_words: 1400

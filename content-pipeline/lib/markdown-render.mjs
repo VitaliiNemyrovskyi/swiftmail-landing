@@ -1,0 +1,287 @@
+// Markdown → HTML renderer for blog posts. Outputs HTML compatible with the
+// existing blog post template (see blog/abandoned-cart-email.html for shape).
+//
+// Why hand-roll instead of using markdown-it / marked?
+//   - Our markdown subset is small (headings, paragraphs, links, code, lists)
+//   - We want exact control over class names + attributes Cloudflare/SEO needs
+//   - One file, no dependency, no surprises
+
+import { urlFor } from './slug.mjs';
+
+/**
+ * Convert a draft markdown body to HTML wrapped in the blog post template.
+ *
+ * @param {object} opts
+ * @param {object} opts.frontmatter - Article metadata
+ * @param {string} opts.body - Markdown body
+ * @param {string} opts.lang - 'en' | 'es' | 'fr' | 'de' | 'pt'
+ * @param {object} opts.i18n - i18n strings (loaded from i18n.yaml)
+ * @param {Record<string, string>} opts.translatedSlugs - {en: slug, es: slug, ...} same-slug today but futurized
+ * @returns {string} Full <!doctype html>...</html>
+ */
+export function renderArticle({ frontmatter, body, lang, i18n, translatedSlugs }) {
+  const t = (key, vars = {}) => {
+    let s = i18n[key]?.[lang] ?? i18n[key]?.en ?? key;
+    for (const [k, v] of Object.entries(vars)) s = s.replace(`{${k}}`, v);
+    return s;
+  };
+
+  const title = frontmatter.title;
+  const desc = frontmatter.description;
+  const slug = frontmatter.slug;
+  const category = frontmatter.category;
+  const date = frontmatter.date;
+  const readTime = frontmatter.read_time;
+  const author = frontmatter.author || 'SwiftMail';
+  const heroImg = frontmatter.hero_image || `/assets/features/${categoryToImage(category)}.webp`;
+  const heroAlt = frontmatter.hero_alt || title;
+
+  const pathPrefix = lang === 'en' ? '' : '../';
+  const homePath = lang === 'en' ? '/' : `/${lang}/`;
+
+  const contentHtml = mdToHtml(body);
+
+  const hreflang = ['en', 'es', 'fr', 'de', 'pt']
+    .map((l) => `  <link rel="alternate" hreflang="${l}" href="${urlFor(translatedSlugs[l] || slug, l)}">`)
+    .join('\n');
+
+  return `<!DOCTYPE html>
+<html lang="${lang}">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo-orange.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    !function(s){s.sm=s.sm||function(){(s.sm.q=s.sm.q||[]).push(arguments)}}(window);
+    sm('init', 'pk_live_bea0d715ec2ca156ebe31e205c5364fc', { siteId: '2cff4622-a98a-455f-85c5-db0f3f827b25' });
+  </script>
+  <script>(function(){var loaded=false;var evs=['scroll','touchstart','keydown','mousemove','pointerdown'];function l(){if(loaded)return;loaded=true;evs.forEach(function(e){window.removeEventListener(e,l,{passive:true});});var s=document.createElement('script');s.src='https://app.swift-mail.app/sdk/sm.js';s.async=true;document.head.appendChild(s);}evs.forEach(function(e){window.addEventListener(e,l,{passive:true,once:true});});setTimeout(l,8000);})();</script>
+
+  <title>${escapeHtml(title)} — SwiftMail</title>
+  <meta name="description" content="${escapeHtml(desc)}">
+  <link rel="canonical" href="${urlFor(slug, lang)}">
+
+  <!-- hreflang cross-language -->
+${hreflang}
+  <link rel="alternate" hreflang="x-default" href="${urlFor(slug, 'en')}">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(desc)}">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="${urlFor(slug, lang)}">
+  <meta property="og:image" content="https://swift-mail.app${heroImg}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- JSON-LD Article schema -->
+  <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": ${JSON.stringify(title)},
+    "description": ${JSON.stringify(desc)},
+    "image": "https://swift-mail.app${heroImg}",
+    "author": { "@type": "Person", "name": ${JSON.stringify(author)} },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SwiftMail",
+      "logo": { "@type": "ImageObject", "url": "https://swift-mail.app/assets/logo-orange.svg" }
+    },
+    "datePublished": ${JSON.stringify(date)},
+    "dateModified": ${JSON.stringify(date)},
+    "mainEntityOfPage": { "@type": "WebPage", "@id": ${JSON.stringify(urlFor(slug, lang))} },
+    "inLanguage": ${JSON.stringify(lang)}
+  }</script>
+
+  <link rel="stylesheet" href="${pathPrefix}../css/style.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="${pathPrefix}../css/style.css"></noscript>
+  <style>
+    body { background: #f7f9fb; color: #191c1e; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
+    .blog-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(247,249,251,0.97); border-bottom: 1px solid rgba(0,0,0,0.04); }
+    .blog-nav-logo { font-size: 1.25rem; font-weight: 800; font-style: italic; color: #191c1e; }
+    .blog-nav-back { font-size: 0.875rem; color: #64748b; }
+    .blog-nav-back:hover { color: #c2410c; }
+
+    .blog-hero { padding: 8rem 2rem 2rem; max-width: 800px; margin: 0 auto; text-align: center; }
+    .blog-category { display: inline-block; padding: 0.25rem 0.625rem; border-radius: 9999px; background: rgba(234,88,12,0.08); font: 700 0.625rem system-ui, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #c2410c; margin-bottom: 1rem; }
+    .blog-title { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; color: #0f172a; margin-bottom: 1rem; }
+    .blog-meta { font-size: 0.875rem; color: #64748b; margin-bottom: 2rem; }
+    .blog-meta span { margin: 0 0.5rem; }
+
+    .blog-hero-img { max-width: 800px; margin: 0 auto 3rem; padding: 0 2rem; }
+    .blog-hero-img img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; border-radius: 14px; box-shadow: 0 24px 48px rgba(15,23,42,0.10); }
+
+    .blog-content { max-width: 720px; margin: 0 auto; padding: 0 2rem 4rem; }
+    .blog-content h2 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: #0f172a; margin: 3rem 0 1rem; line-height: 1.2; }
+    .blog-content h3 { font-size: 1.25rem; font-weight: 700; color: #0f172a; margin: 2rem 0 0.75rem; }
+    .blog-content p { font-size: 1.0625rem; line-height: 1.75; color: #475569; margin-bottom: 1.25rem; }
+    .blog-content ul, .blog-content ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .blog-content li { font-size: 1.0625rem; line-height: 1.7; color: #475569; margin-bottom: 0.5rem; }
+    .blog-content strong { color: #0f172a; }
+    .blog-content a { color: #c2410c; text-decoration: underline; text-underline-offset: 3px; }
+    .blog-content code { background: #f1f5f9; padding: 0.1875rem 0.375rem; border-radius: 0.25rem; font: 0.875rem 'SF Mono', Monaco, Consolas, monospace; color: #0f172a; }
+    .blog-content pre { background: #0b1325; color: #dbe2fb; padding: 1.25rem; border-radius: 0.625rem; overflow-x: auto; margin: 1.5rem 0; }
+    .blog-content pre code { background: none; padding: 0; color: inherit; font-size: 0.875rem; line-height: 1.6; }
+    .blog-content blockquote { border-left: 3px solid #c2410c; padding: 0.5rem 1.5rem; margin: 1.5rem 0; background: #fff; border-radius: 0 0.5rem 0.5rem 0; }
+    .blog-content blockquote p { color: #475569; font-style: italic; margin: 0; }
+    .blog-content table { border-collapse: collapse; margin: 1.5rem 0; width: 100%; }
+    .blog-content th, .blog-content td { padding: 0.625rem 0.875rem; border: 1px solid #e8eaef; text-align: left; font-size: 0.9375rem; }
+    .blog-content th { background: #f7f9fb; font-weight: 700; color: #0f172a; }
+    .blog-content hr { border: 0; border-top: 1px solid #e8eaef; margin: 2.5rem 0; }
+
+    .blog-cta { text-align: center; padding: 3rem 2rem; margin: 2.5rem 0; background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%); border-radius: 1rem; }
+    .blog-cta h3 { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 0.75rem; }
+    .blog-cta p { color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.9375rem; }
+    .blog-cta a { display: inline-block; padding: 0.75rem 2rem; background: linear-gradient(135deg, #c2410c, #9a3412); color: #fff; border-radius: 0.5rem; font-weight: 600; text-decoration: none; }
+
+    .blog-footer { text-align: center; padding: 2.5rem 2rem; color: #94a3b8; font-size: 0.8125rem; border-top: 1px solid #e8eaef; }
+    .blog-footer a { color: #64748b; }
+
+    @media (max-width: 768px) {
+      .blog-title { font-size: 1.75rem; }
+      .blog-content h2 { font-size: 1.375rem; }
+      .blog-content h3 { font-size: 1.125rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="blog-nav" aria-label="Site navigation">
+    <a href="${homePath}" class="blog-nav-logo">SwiftMail</a>
+    <a href="${pathPrefix}blog/" class="blog-nav-back">${escapeHtml(t('nav_back'))}</a>
+  </nav>
+
+  <header class="blog-hero">
+    <p class="blog-category">${escapeHtml(category)}</p>
+    <h1 class="blog-title">${escapeHtml(title)}</h1>
+    <p class="blog-meta">
+      <time datetime="${date}">${formatDate(date, lang)}</time>
+      <span aria-hidden="true">·</span>
+      <span>${t('read_time', { n: readTime })}</span>
+    </p>
+  </header>
+
+  <figure class="blog-hero-img">
+    <img src="${heroImg}" alt="${escapeHtml(heroAlt)}" width="800" height="500" loading="eager" decoding="async">
+  </figure>
+
+  <main class="blog-content">
+${contentHtml}
+  </main>
+
+  <footer class="blog-footer">
+    <p>© 2026 SwiftMail. <a href="${homePath}">${t('footer_home')}</a> · <a href="${homePath}privacy.html">${t('footer_privacy')}</a> · <a href="${homePath}terms.html">${t('footer_terms')}</a></p>
+  </footer>
+</body>
+</html>
+`;
+}
+
+// ── Markdown subset → HTML ────────────────────────────────────────────
+
+function mdToHtml(md) {
+  // Step 1: extract code blocks (so they're not touched by other transforms)
+  const codeBlocks = [];
+  md = md.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
+    const idx = codeBlocks.length;
+    codeBlocks.push({ lang, code: escapeHtml(code) });
+    return ` CODEBLOCK${idx} `;
+  });
+
+  // Step 2: blocks (paragraphs, headings, lists, quotes)
+  const blocks = md.split(/\n\n+/).map(processBlock).join('\n\n');
+
+  // Step 3: re-inject code blocks
+  return blocks.replace(/ CODEBLOCK(\d+) /g, (_, idx) => {
+    const { lang, code } = codeBlocks[Number(idx)];
+    return `<pre><code${lang ? ` class="language-${lang}"` : ''}>${code}</code></pre>`;
+  });
+}
+
+function processBlock(block) {
+  block = block.trim();
+  if (!block) return '';
+
+  // Heading
+  if (block.startsWith('### ')) return `    <h3>${inline(block.slice(4))}</h3>`;
+  if (block.startsWith('## ')) return `    <h2>${inline(block.slice(3))}</h2>`;
+  if (block.startsWith('# ')) return `    <h1>${inline(block.slice(2))}</h1>`;
+
+  // Horizontal rule
+  if (/^---+$/.test(block)) return '    <hr>';
+
+  // Blockquote
+  if (block.startsWith('> ')) {
+    const lines = block.split('\n').map((l) => l.replace(/^> ?/, '')).join(' ');
+    return `    <blockquote><p>${inline(lines)}</p></blockquote>`;
+  }
+
+  // Unordered list
+  if (/^[-*]\s/.test(block)) {
+    const items = block.split('\n').filter((l) => /^[-*]\s/.test(l));
+    return `    <ul>\n${items.map((l) => `      <li>${inline(l.replace(/^[-*]\s/, ''))}</li>`).join('\n')}\n    </ul>`;
+  }
+
+  // Ordered list
+  if (/^\d+\.\s/.test(block)) {
+    const items = block.split('\n').filter((l) => /^\d+\.\s/.test(l));
+    return `    <ol>\n${items.map((l) => `      <li>${inline(l.replace(/^\d+\.\s/, ''))}</li>`).join('\n')}\n    </ol>`;
+  }
+
+  // Codeblock placeholder pass-through (lone)
+  if (/^ CODEBLOCK\d+ $/.test(block)) return block;
+
+  // Default: paragraph
+  return `    <p>${inline(block.replace(/\n/g, ' '))}</p>`;
+}
+
+function inline(text) {
+  // First, escape HTML in plain text (but preserve our markers)
+  text = escapeHtml(text);
+  // Inline code (escape happens before; but we want to UN-double-escape in code)
+  text = text.replace(/`([^`]+)`/g, (_, code) => `<code>${code}</code>`);
+  // Bold
+  text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  // Italic (only single asterisk not adjacent to alpha — minimal heuristic)
+  text = text.replace(/\*([^*\s][^*]*[^*\s])\*/g, '<em>$1</em>');
+  // Links
+  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, txt, href) => {
+    const rel = href.startsWith('http') && !href.includes('swift-mail.app')
+      ? ' rel="noopener" target="_blank"'
+      : '';
+    return `<a href="${href}"${rel}>${txt}</a>`;
+  });
+  return text;
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────
+
+function formatDate(iso, lang) {
+  const d = new Date(iso);
+  const localeMap = { en: 'en-US', es: 'es-ES', fr: 'fr-FR', de: 'de-DE', pt: 'pt-BR' };
+  return d.toLocaleDateString(localeMap[lang] || 'en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+function categoryToImage(category) {
+  const map = {
+    behavioral: 'behavioral-capture',
+    deliverability: 'realtime-intervention',
+    ecommerce: 'multichannel',
+    comparison: 'integrations',
+    strategy: 'inbox-preview',
+  };
+  return map[category] || 'inbox-preview';
+}
