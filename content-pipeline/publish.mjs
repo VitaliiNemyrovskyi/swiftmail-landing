@@ -31,6 +31,7 @@ import * as aiTells from './checks/ai-tells.mjs';
 import * as quality from './checks/quality-heuristics.mjs';
 import * as eeat from './checks/eeat.mjs';
 import * as editorialDiff from './checks/editorial-diff.mjs';
+import { regenerate as regenSitemap } from './lib/sitemap.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -85,7 +86,11 @@ const targetLangs = ['en', ...(flags.langs === 'all' ? ['es', 'fr', 'de', 'pt'] 
   // 4. Update topics.yaml status
   updateTopicStatus(slug, 'published');
 
-  // 5. git commit + push
+  // 5. Regenerate sitemap.xml (scans repo, picks up new HTML, updates lastmod)
+  const sitemapResult = regenSitemap(REPO_ROOT);
+  console.log(`  ✓ sitemap.xml updated (${sitemapResult.pageCount} pages)`);
+
+  // 6. git commit + push
   if (!flags.noPush) {
     gitCommitAndPush(slug, generated);
   }
