@@ -271,3 +271,16 @@ If Ollama runs on a CPU-only host (no GPU offload):
 **SMTP daily report not sending:**
 - Verify Gmail app password (not your regular password)
 - Test: `pnpm report` will fall back to stdout if creds missing
+
+**Pipeline fails with "fetch failed" after exactly 5 minutes:**
+- This is Node's `fetch` (undici) **undocumented 5-minute `bodyTimeout`**
+  — it kills requests where no body chunk arrives for 300s.
+- Ollama's `stream: false` mode buffers all output and sends it as a
+  single chunk at the end. CPU inference at 5-10 tok/s means responses
+  longer than ~1500 tokens take >5 min, hitting the timeout before
+  the server flushes.
+- Already fixed: `lib/ollama-client.mjs` uses `stream: true` and
+  accumulates NDJSON chunks. Each token arrives within ms, keeping
+  the body alive indefinitely.
+- If you see this resurface: confirm `streamChat()` is being called
+  in ollama-client (not the legacy non-streaming path).
