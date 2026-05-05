@@ -39,47 +39,19 @@ export async function complete({
   messages.push({ role: 'user', content: user });
 
   // CPU-only Ollama hosts can take 10+ min for ~2000-token completions.
-  // Generous default; override per-call via opts.timeoutMs if needed.
+  // Override via OLLAMA_TIMEOUT_MS env var.
   const timeoutMs = process.env.OLLAMA_TIMEOUT_MS
     ? Number(process.env.OLLAMA_TIMEOUT_MS)
     : 30 * 60 * 1000; // 30 min
 
-  // Default Ollama n_ctx is 4096 which is too small for our draft phase
-  // (system prompt + facts + outline + user prompt + 3000 output tokens
-  // exceeds 4096). Use Ollama-native /api/chat which accepts options.num_ctx.
+  // Ollama default n_ctx=4096 too small for draft phase. 8192 fits.
   const numCtx = process.env.OLLAMA_NUM_CTX ? Number(process.env.OLLAMA_NUM_CTX) : 8192;
 
-  const res = await fetch(`${url}/api/chat`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model,
-      messages,
-      stream: false,
-      options: {
-        temperature,
-        num_predict: maxTokens,
-        num_ctx: numCtx,
-      },
-    }),
-    signal: AbortSignal.timeout(timeoutMs),
-  });
-
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Ollama ${res.status}: ${body.slice(0, 500)}`);
-  }
-
-  const json = await res.json();
-  // /api/chat shape:  { message: { content, role }, done: true, ... }
-  const content = json.message?.content;
-  if (!content) {
-    // qwen3 thinking-mode fallback (rare on /api/chat but defensive)
-    const reasoning = json.message?.reasoning;
-    if (reasoning) return reasoning;
-    throw new Error(`Ollama returned empty content: ${JSON.stringify(json).slice(0, 500)}`);
-  }
-  return content;
+  // CRITICAL: stream=true avoids Node's undocumented 5-min bodyTimeout.
+  // With stream=false, Ollama buffers all tokens then writes one chunk —
+  // if generation > 5 min, Node aborts with "fetch failed" before chunk arrives.
+  // Streaming chunks arrive every few hundred ms, keeping the body alive.
+  return streamChat({ url, model, messages, temperature, maxTokens, numCtx, timeoutMs });
 }
 
 /**
@@ -104,13 +76,22 @@ export async function chat({
     : 30 * 60 * 1000;
   const numCtx = process.env.OLLAMA_NUM_CTX ? Number(process.env.OLLAMA_NUM_CTX) : 8192;
 
+  return streamChat({ url, model, messages, temperature, maxTokens, numCtx, timeoutMs });
+}
+
+/**
+ * Streaming chat — accumulates tokens from NDJSON response chunks.
+ * Keeps the HTTP body alive while CPU model generates, avoiding
+ * Node's 5-min bodyTimeout that bites on long stream=false requests.
+ */
+async function streamChat({ url, model, messages, temperature, maxTokens, numCtx, timeoutMs }) {
   const res = await fetch(`${url}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model,
       messages,
-      stream: false,
+      stream: true,
       options: {
         temperature,
         num_predict: maxTokens,
@@ -125,8 +106,37 @@ export async function chat({
     throw new Error(`Ollama ${res.status}: ${body.slice(0, 500)}`);
   }
 
-  const json = await res.json();
-  return json.message?.content || json.message?.reasoning || '';
+  // Ollama streams NDJSON: one JSON object per line.
+  // Each line: { message: { content: "<delta>", role: "assistant" }, done: false }
+  // Final line:  { ..., done: true, total_duration, eval_count, ... }
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let assembled = '';
+
+  for await (const chunk of res.body) {
+    buffer += decoder.decode(chunk, { stream: true });
+    let nl;
+    while ((nl = buffer.indexOf('\n')) !== -1) {
+      const line = buffer.slice(0, nl).trim();
+      buffer = buffer.slice(nl + 1);
+      if (!line) continue;
+      try {
+        const obj = JSON.parse(line);
+        if (obj.message?.content) assembled += obj.message.content;
+        if (obj.message?.reasoning) assembled += obj.message.reasoning;
+        if (obj.error) throw new Error(`Ollama stream error: ${obj.error}`);
+        if (obj.done && obj.done_reason && obj.done_reason !== 'stop' && obj.done_reason !== 'length') {
+          throw new Error(`Ollama done with reason: ${obj.done_reason}`);
+        }
+      } catch (err) {
+        if (err.message.startsWith('Ollama')) throw err;
+        // Malformed JSON line — skip (rare, defensive)
+      }
+    }
+  }
+
+  if (!assembled) throw new Error('Ollama stream returned empty content');
+  return assembled;
 }
 
 /**
