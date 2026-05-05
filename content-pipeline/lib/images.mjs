@@ -24,17 +24,22 @@ const PEXELS_API = 'https://api.pexels.com/v1/search';
 
 /**
  * Search Pexels for a photo matching the query.
- * Returns the best match: highest engagement (avg_color brightness as a
- * proxy for visual interest), preferring landscape.
+ *
+ * When multiple articles share a query (e.g. "warning red sign" for both
+ * spam-score and emails-going-to-spam), picking the top result every time
+ * yields duplicate photos. Pass `slug` to deterministically pick from the
+ * top-N candidates instead — same slug always gets same photo, different
+ * slugs get different photos even on identical queries.
  *
  * @param {object} opts
  * @param {string} opts.query - search term
- * @param {string} [opts.orientation='landscape'] - 'landscape' | 'portrait' | 'square'
- * @param {number} [opts.perPage=10] - candidates to consider
- * @param {string} [opts.apiKey] - PEXELS_API_KEY
+ * @param {string} [opts.slug] - article slug for hash-based candidate selection
+ * @param {string} [opts.orientation='landscape']
+ * @param {number} [opts.perPage=15] - candidates considered
+ * @param {string} [opts.apiKey]
  * @returns {Promise<{id, photographer, src, alt} | null>}
  */
-export async function search({ query, orientation = 'landscape', perPage = 10, apiKey }) {
+export async function search({ query, slug, orientation = 'landscape', perPage = 15, apiKey }) {
   const key = apiKey || process.env.PEXELS_API_KEY;
   if (!key) throw new Error('PEXELS_API_KEY missing. Get one at https://www.pexels.com/api/');
 
@@ -50,9 +55,10 @@ export async function search({ query, orientation = 'landscape', perPage = 10, a
   const json = await res.json();
   if (!json.photos || json.photos.length === 0) return null;
 
-  // Pick first result (Pexels relevance is decent). Could also rank by
-  // resolution or color diversity, but first-match works for B2B blog imagery.
-  const p = json.photos[0];
+  // Slug-hash → candidate index. Stays in top-15 (high-quality matches still),
+  // but deterministically picks a DIFFERENT photo per slug even on same query.
+  const idx = slug ? hashSlug(slug) % json.photos.length : 0;
+  const p = json.photos[idx];
   return {
     id: p.id,
     photographer: p.photographer,
@@ -65,6 +71,15 @@ export async function search({ query, orientation = 'landscape', perPage = 10, a
     },
     alt: p.alt || query,
   };
+}
+
+function hashSlug(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) {
+    h = ((h << 5) - h) + s.charCodeAt(i);
+    h |= 0;
+  }
+  return Math.abs(h);
 }
 
 /**
@@ -92,7 +107,7 @@ export async function download({ slug, url }) {
  * @returns {Promise<{path, bytes, photographer, sourceUrl, alt} | null>}
  */
 export async function fetchOne({ slug, query, apiKey }) {
-  const photo = await search({ query, apiKey });
+  const photo = await search({ query, slug, apiKey });
   if (!photo) return null;
   // Prefer 'large' (~940x627) for blog hero — good size:quality balance.
   // Fallback to 'landscape' (~1200x627) if large unavailable.
