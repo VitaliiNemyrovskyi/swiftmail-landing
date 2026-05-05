@@ -166,6 +166,53 @@ Set up as cron on the server:
 Sends summary of last 24h to `REPORT_TO` (your Gmail). Without SMTP creds,
 prints to stdout.
 
+### Autonomous mode (full automation via cron)
+
+```bash
+pnpm auto              # picks next status:idea → draft → translate → publish
+pnpm auto:dry          # generate + check, no publish/push
+pnpm auto:en           # English only, skip translations
+```
+
+Schedules nicely as cron (server, 03:00 nightly):
+```cron
+0 3 * * *  cd /home/deploy/swiftmail-landing/content-pipeline && \
+           /home/deploy/.nvm/versions/node/v22.22.2/bin/node \
+           --env-file-if-exists=.env auto-publish.mjs >> logs/auto.log 2>&1
+```
+
+**⚠ Trade-off — read this before turning on auto:**
+
+Without a human edit pass, the **editorial-diff gate can't fire** — it
+measures the diff between LLM output and the human-edited final, but
+in autonomous mode there's no diff to measure.
+
+The 4 other hard gates STILL apply:
+- Originality (n-gram similarity vs sources)
+- AI-tells (banned phrases, em-dash overuse, etc.)
+- Quality heuristics (sentence variance, specificity, first-person)
+- EEAT (author byline, citations, internal links, unique data)
+
+If those gates fail, `auto-publish.mjs` does NOT use `--skip-checks` —
+it ABORTS and emails you the failure. So the floor is "passes 4/5 gates"
+not "publishes anything".
+
+But: even quality-passing AI-only content at scale is the exact pattern
+[Google's Helpful Content Update](https://developers.google.com/search/docs/essentials)
+penalizes. High-volume autonomous publishing risks:
+- 3-6 months of OK ranking, then sudden site-wide demotion
+- Manual action removing whole domain from index
+- EEAT trust score collapse (no real "experience" signal)
+
+**Recommended hybrid:**
+1. `pnpm draft-next` daily (Ollama generates 1 draft)
+2. Edit it 30%+ in the morning (real customer quote, founder take, real metric)
+3. `pnpm publish <slug> --langs=all`
+4. Use `pnpm auto` only as a fallback when you're traveling / sick
+
+If you turn on full auto: **read every daily report email** and `git revert`
+anything that smells off. The repo is the source of truth.
+
 ## Files
 
 ```

@@ -115,9 +115,11 @@ async function runPrePublishGate(slug) {
 
   let allPassed = true;
 
-  // Editorial diff
+  // Editorial diff (can be selectively skipped for autonomous mode)
   const diffResult = editorialDiff.check(slug, DRAFTS_DIR);
-  if (diffResult.warning) {
+  if (flags.skipEditorialDiff) {
+    console.log(`  ⊘ Editorial diff: SKIPPED (--skip-editorial-diff). Other gates still apply.`);
+  } else if (diffResult.warning) {
     console.log(`  ⚠  Editorial diff: ${diffResult.detail}`);
   } else if (!diffResult.passed) {
     console.log(`  ✗ Editorial diff: ${diffResult.detail}`);
@@ -318,6 +320,7 @@ function parseFlags(argv) {
   for (const a of argv) {
     if (a.startsWith('--langs=')) flags.langs = a.slice(8);
     else if (a === '--skip-checks') flags.skipChecks = true;
+    else if (a === '--skip-editorial-diff') flags.skipEditorialDiff = true;
     else if (a === '--no-push') flags.noPush = true;
   }
   return flags;
