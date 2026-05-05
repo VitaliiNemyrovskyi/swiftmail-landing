@@ -1,169 +1,184 @@
-# UI strings used by publish.mjs to render blog/index.html in 5 languages.
-# Add new keys here when blog UI grows. All translations stay in one file
-# so it's easy to grep for context.
-
-# Blog index header
 blog_eyebrow:
   en: SwiftMail Blog
   es: Blog de SwiftMail
   fr: Blog SwiftMail
   de: SwiftMail Blog
   pt: Blog da SwiftMail
-
+  uk: Блог SwiftMail
 blog_h1:
   en: Behavioral Marketing for Small Business
   es: Marketing conductual para pequeñas empresas
   fr: Marketing comportemental pour PME
   de: Behavioral Marketing für kleine Unternehmen
   pt: Marketing comportamental para pequenas empresas
-
+  uk: Behavioral marketing для малого бізнесу
 blog_lead:
-  en: Why email-only marketing is half-blind, how AI explains visitor behavior, and how the $50K Bloomreach category dropped to $20/mo. Plus migration guides, deliverability deep-dives, and ecommerce playbooks.
-  es: Por qué el marketing solo por email es medio ciego, cómo la IA explica el comportamiento del visitante y cómo la categoría de $50K Bloomreach cayó a $20/mes. Más guías de migración, deep-dives de entregabilidad y playbooks de ecommerce.
-  fr: Pourquoi le marketing email-uniquement est à moitié aveugle, comment l'IA explique le comportement des visiteurs, et comment la catégorie Bloomreach à 50K$ est tombée à 20$/mois. Plus des guides de migration, des analyses de délivrabilité et des playbooks ecommerce.
-  de: Warum reines E-Mail-Marketing halbblind ist, wie KI das Besucherverhalten erklärt, und wie die $50.000-Bloomreach-Kategorie auf $20/Monat fiel. Plus Migrationsleitfäden, Deliverability-Tieftauchgänge und E-Commerce-Playbooks.
-  pt: Por que marketing só com email é meio cego, como a IA explica o comportamento do visitante e como a categoria de $50K da Bloomreach caiu para $20/mês. Além de guias de migração, deep-dives de entregabilidade e playbooks de ecommerce.
-
-# Filter chips
+  en: Why email-only marketing is half-blind, how AI explains visitor behavior,
+    and how the $50K Bloomreach category dropped to $20/mo. Plus migration
+    guides, deliverability deep-dives, and ecommerce playbooks.
+  es: Por qué el marketing solo por email es medio ciego, cómo la IA explica el
+    comportamiento del visitante y cómo la categoría de $50K Bloomreach cayó a
+    $20/mes. Más guías de migración, deep-dives de entregabilidad y playbooks de
+    ecommerce.
+  fr: Pourquoi le marketing email-uniquement est à moitié aveugle, comment l'IA
+    explique le comportement des visiteurs, et comment la catégorie Bloomreach à
+    50K$ est tombée à 20$/mois. Plus des guides de migration, des analyses de
+    délivrabilité et des playbooks ecommerce.
+  de: Warum reines E-Mail-Marketing halbblind ist, wie KI das Besucherverhalten
+    erklärt, und wie die $50.000-Bloomreach-Kategorie auf $20/Monat fiel. Plus
+    Migrationsleitfäden, Deliverability-Tieftauchgänge und E-Commerce-Playbooks.
+  pt: Por que marketing só com email é meio cego, como a IA explica o
+    comportamento do visitante e como a categoria de $50K da Bloomreach caiu
+    para $20/mês. Além de guias de migração, deep-dives de entregabilidade e
+    playbooks de ecommerce.
+  uk: Чому маркетинг тільки через email — це half-blind, як AI пояснює поведінку
+    відвідувачів, і як 50K$ категорія Bloomreach стала $20/міс. Плюс гайди по
+    міграції, deliverability deep-dives і ecommerce playbooks.
 filter_all:
   en: All
   es: Todos
   fr: Tous
   de: Alle
   pt: Todos
-
+  uk: Усі
 filter_behavioral:
   en: Behavioral & AI
   es: Comportamental e IA
   fr: Comportemental & IA
   de: Behavioral & KI
   pt: Comportamental e IA
-
+  uk: Behavioral & AI
 filter_comparison:
   en: Comparisons
   es: Comparaciones
   fr: Comparaisons
   de: Vergleiche
   pt: Comparações
-
+  uk: Порівняння
 filter_deliverability:
   en: Deliverability
   es: Entregabilidad
   fr: Délivrabilité
   de: Zustellbarkeit
   pt: Entregabilidade
-
+  uk: Deliverability
 filter_ecommerce:
   en: E-commerce
   es: E-commerce
   fr: E-commerce
   de: E-Commerce
   pt: E-commerce
-
+  uk: E-commerce
 filter_strategy:
   en: Strategy
   es: Estrategia
   fr: Stratégie
   de: Strategie
   pt: Estratégia
-
-# Featured tag
+  uk: Стратегія
 featured_tag:
   en: Featured
   es: Destacado
   fr: À la une
   de: Empfohlen
   pt: Destaque
-
-# Card meta
+  uk: Обране
 read_time:
   en: "{n} min read"
   es: "{n} min de lectura"
   fr: "{n} min de lecture"
   de: "{n} Min. Lesezeit"
-  pt: "Leitura de {n} min"
-
-# Load more button (with N-left placeholder)
+  pt: Leitura de {n} min
+  uk: "{n} хв читання"
 loadmore_initial:
   en: Show more articles
   es: Mostrar más artículos
   fr: Afficher plus d'articles
   de: Mehr Artikel anzeigen
   pt: Mostrar mais artigos
-
+  uk: Показати більше статей
 loadmore_with_count:
-  en: "Show more articles ({n} left)"
-  es: "Mostrar más artículos (quedan {n})"
-  fr: "Afficher plus d'articles ({n} restants)"
-  de: "Mehr Artikel anzeigen ({n} verbleibend)"
-  pt: "Mostrar mais artigos (faltam {n})"
-
-# Empty state
+  en: Show more articles ({n} left)
+  es: Mostrar más artículos (quedan {n})
+  fr: Afficher plus d'articles ({n} restants)
+  de: Mehr Artikel anzeigen ({n} verbleibend)
+  pt: Mostrar mais artigos (faltam {n})
+  uk: Показати більше статей (залишилось {n})
 empty_state:
   en: No articles in this category.
   es: No hay artículos en esta categoría.
   fr: Aucun article dans cette catégorie.
   de: Keine Artikel in dieser Kategorie.
   pt: Nenhum artigo nesta categoria.
-
-# Nav
+  uk: Немає статей у цій категорії.
 nav_back:
   en: ← Back to Home
   es: ← Volver al inicio
   fr: ← Retour à l'accueil
   de: ← Zurück zur Startseite
   pt: ← Voltar ao início
-
-# Footer
+  uk: ← На головну
 footer_home:
   en: Home
   es: Inicio
   fr: Accueil
   de: Startseite
   pt: Início
-
+  uk: Головна
 footer_privacy:
   en: Privacy
   es: Privacidad
   fr: Confidentialité
   de: Datenschutz
   pt: Privacidade
-
+  uk: Приватність
 footer_terms:
   en: Terms
   es: Términos
   fr: Conditions
   de: AGB
   pt: Termos
-
-# Page <title>
+  uk: Умови
 page_title:
-  en: "Blog — SwiftMail · Behavioral Marketing & Email Strategy for Small Business"
-  es: "Blog — SwiftMail · Marketing conductual y estrategia de email para pequeñas empresas"
-  fr: "Blog — SwiftMail · Marketing comportemental & stratégie email pour PME"
-  de: "Blog — SwiftMail · Behavioral Marketing & E-Mail-Strategie für kleine Unternehmen"
-  pt: "Blog — SwiftMail · Marketing comportamental e estratégia de email para pequenas empresas"
-
-# Page meta description
+  en: Blog — SwiftMail · Behavioral Marketing & Email Strategy for Small Business
+  es: Blog — SwiftMail · Marketing conductual y estrategia de email para pequeñas
+    empresas
+  fr: Blog — SwiftMail · Marketing comportemental & stratégie email pour PME
+  de: Blog — SwiftMail · Behavioral Marketing & E-Mail-Strategie für kleine
+    Unternehmen
+  pt: Blog — SwiftMail · Marketing comportamental e estratégia de email para
+    pequenas empresas
+  uk: Блог — SwiftMail · Behavioral marketing і email-стратегія для малого бізнесу
 page_description:
-  en: Behavioral marketing, AI explanations, deliverability, e-commerce flows, and budget strategy. In-depth guides for small businesses moving past basic email tools.
-  es: Marketing conductual, explicaciones con IA, entregabilidad, flujos de e-commerce y estrategia con presupuesto. Guías en profundidad para pequeñas empresas que superan las herramientas básicas de email.
-  fr: Marketing comportemental, explications par IA, délivrabilité, workflows ecommerce et stratégie budget. Guides approfondis pour les PME qui dépassent les outils email basiques.
-  de: Behavioral Marketing, KI-Erklärungen, Zustellbarkeit, E-Commerce-Flows und Budgetstrategie. Tiefgehende Leitfäden für kleine Unternehmen, die über grundlegende E-Mail-Tools hinausgehen.
-  pt: Marketing comportamental, explicações com IA, entregabilidade, fluxos de e-commerce e estratégia com orçamento. Guias detalhados para pequenas empresas que vão além das ferramentas básicas de email.
-
-# Date format pattern (used in JS toLocaleDateString)
+  en: Behavioral marketing, AI explanations, deliverability, e-commerce flows, and
+    budget strategy. In-depth guides for small businesses moving past basic
+    email tools.
+  es: Marketing conductual, explicaciones con IA, entregabilidad, flujos de
+    e-commerce y estrategia con presupuesto. Guías en profundidad para pequeñas
+    empresas que superan las herramientas básicas de email.
+  fr: Marketing comportemental, explications par IA, délivrabilité, workflows
+    ecommerce et stratégie budget. Guides approfondis pour les PME qui dépassent
+    les outils email basiques.
+  de: Behavioral Marketing, KI-Erklärungen, Zustellbarkeit, E-Commerce-Flows und
+    Budgetstrategie. Tiefgehende Leitfäden für kleine Unternehmen, die über
+    grundlegende E-Mail-Tools hinausgehen.
+  pt: Marketing comportamental, explicações com IA, entregabilidade, fluxos de
+    e-commerce e estratégia com orçamento. Guias detalhados para pequenas
+    empresas que vão além das ferramentas básicas de email.
+  uk: Behavioral marketing, AI-пояснення, deliverability, e-commerce flows і
+    budget-стратегія. Глибокі гайди для малого бізнесу що виходить за межі
+    базових email-тулзів.
 locale:
   en: en-US
   es: es-ES
   fr: fr-FR
   de: de-DE
   pt: pt-BR
-
-# Language code (ISO 639-1)
+  uk: uk-UA
 lang_code:
   en: en
   es: es
   fr: fr
   de: de
   pt: pt
+  uk: uk

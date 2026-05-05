@@ -40,7 +40,7 @@ const DRAFTS_DIR = path.join(ROOT, 'drafts');
 
 const I18N = yaml.parse(fs.readFileSync(path.join(ROOT, 'i18n.yaml'), 'utf8'));
 
-const ALL_LANGS = ['en', 'es', 'fr', 'de', 'pt'];
+const ALL_LANGS = ['en', 'es', 'fr', 'de', 'pt', 'uk'];
 
 // ── Argv ─────────────────────────────────────────────────────────────
 

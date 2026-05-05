@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const SITE = 'https://swift-mail.app';
-const LANGS = ['en', 'es', 'fr', 'de', 'pt'];
+const LANGS = ['en', 'es', 'fr', 'de', 'pt', 'uk'];
 
 // Priority by URL pattern. Tuned for SEO weight Google's already learned.
 function priority(relPath) {

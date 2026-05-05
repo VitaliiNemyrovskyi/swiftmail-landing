@@ -48,7 +48,7 @@ export function assertValid(slug) {
 /**
  * Build the public URL for a slug + language.
  * @param {string} slug
- * @param {string} lang - 'en' | 'es' | 'fr' | 'de' | 'pt'
+ * @param {string} lang - 'en' | 'es' | 'fr' | 'de' | 'pt' | 'uk'
  * @returns {string}
  */
 export function urlFor(slug, lang = 'en') {

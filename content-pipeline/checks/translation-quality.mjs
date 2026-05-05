@@ -141,7 +141,7 @@ export function check(source, translation, lang, opts = {}) {
   const tgtWords = translation.split(/\s+/).filter(Boolean).length;
   const lengthRatio = tgtWords / srcWords;
   // Different languages have different natural ratios:
-  const expected = { es: 1.15, fr: 1.18, de: 1.25, pt: 1.12 };
+  const expected = { es: 1.15, fr: 1.18, de: 1.25, pt: 1.12, uk: 1.20 };
   const expectedRatio = expected[lang] || 1.0;
   const deviation = Math.abs(lengthRatio - expectedRatio) / expectedRatio;
   if (deviation > 0.4) {

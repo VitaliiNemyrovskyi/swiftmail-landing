@@ -67,11 +67,45 @@
       letter-spacing: -0.02em; color: var(--ink);
     }
     .blog-nav-logo img { width: 24px; height: 24px; }
+    .blog-nav-right {
+      display: flex; align-items: center; gap: 1rem;
+    }
     .blog-nav-back {
       font-size: 0.875rem; color: var(--ink-muted); font-weight: 500;
       transition: color 0.15s;
     }
     .blog-nav-back:hover { color: var(--orange-deep); }
+    /* Lang switcher (light-theme variant) */
+    .blog-lang { position: relative; }
+    .blog-lang-btn {
+      display: flex; align-items: center; gap: 4px;
+      background: none; border: 0;
+      color: var(--ink-muted); font-size: 0.8125rem; font-weight: 600;
+      cursor: pointer; padding: 6px 10px; border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .blog-lang-btn:hover { color: var(--ink); background: rgba(15, 23, 42, 0.04); }
+    .blog-lang-arrow { transition: transform 0.15s; }
+    .blog-lang.open .blog-lang-arrow { transform: rotate(180deg); }
+    .blog-lang-dropdown {
+      position: absolute; top: calc(100% + 6px); right: 0;
+      background: #fff; border: 1px solid var(--rule);
+      border-radius: 8px; padding: 6px; min-width: 160px;
+      opacity: 0; visibility: hidden; transform: translateY(-4px);
+      transition: all 0.15s;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.10);
+      z-index: 110;
+    }
+    .blog-lang.open .blog-lang-dropdown {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+    .blog-lang-option {
+      display: block; padding: 7px 12px;
+      font-size: 0.8125rem; color: var(--ink-muted);
+      border-radius: 4px; transition: background 0.15s, color 0.15s;
+    }
+    .blog-lang-option:hover { background: var(--paper); color: var(--ink); }
+    .blog-lang-option.active { color: var(--orange-deep); font-weight: 600; }
 
     /* ── Header ───────────────────────────────────────────── */
     .blog-header {
@@ -316,7 +350,23 @@
     <a href="/" class="blog-nav-logo">
       <img src="/assets/logo-orange.svg" alt="" width="24" height="24">SwiftMail
     </a>
-    <a href="/" class="blog-nav-back">← Back to Home</a>
+    <div class="blog-nav-right">
+      <div class="blog-lang" id="blog-lang">
+        <button class="blog-lang-btn" type="button" aria-label="Change language" aria-haspopup="true" aria-expanded="false">
+          <span>EN</span>
+          <svg class="blog-lang-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="blog-lang-dropdown" role="menu">
+          <a class="blog-lang-option active" href="/blog/" hreflang="en" role="menuitem">English</a>
+          <a class="blog-lang-option" href="/es/blog/" hreflang="es" role="menuitem">Español</a>
+          <a class="blog-lang-option" href="/fr/blog/" hreflang="fr" role="menuitem">Français</a>
+          <a class="blog-lang-option" href="/de/blog/" hreflang="de" role="menuitem">Deutsch</a>
+          <a class="blog-lang-option" href="/pt/blog/" hreflang="pt" role="menuitem">Português</a>
+          <a class="blog-lang-option" href="/uk/blog/" hreflang="uk" role="menuitem">Українська</a>
+        </div>
+      </div>
+      <a href="/" class="blog-nav-back">← Back to Home</a>
+    </div>
   </nav>
 
   <header class="blog-header">
@@ -709,6 +759,30 @@
        6 on initial load and removed on category-filter or
        load-more clicks.
     ────────────────────────────────────────────────────────── */
+    /* Language switcher toggle */
+    (function () {
+      var sw = document.getElementById('blog-lang');
+      if (!sw) return;
+      var btn = sw.querySelector('.blog-lang-btn');
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = sw.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', function () {
+        sw.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && sw.classList.contains('open')) {
+          sw.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.focus();
+        }
+      });
+    })();
+
+    /* Filter chips + load-more */
     (function () {
       var INITIAL = 6;
       var STEP = 6;

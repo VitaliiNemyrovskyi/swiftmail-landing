@@ -28,7 +28,7 @@ import * as transQuality from './checks/translation-quality.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 const DRAFTS_DIR = path.join(ROOT, 'drafts');
-const ALL_LANGS = ['es', 'fr', 'de', 'pt'];
+const ALL_LANGS = ['es', 'fr', 'de', 'pt', 'uk'];
 
 const TRANSLATION_RULES = fs.readFileSync(path.join(ROOT, 'translation-rules.md'), 'utf8');
 const VOICE = {
@@ -36,6 +36,7 @@ const VOICE = {
   fr: fs.readFileSync(path.join(ROOT, 'voice-fr.md'), 'utf8'),
   de: fs.readFileSync(path.join(ROOT, 'voice-de.md'), 'utf8'),
   pt: fs.readFileSync(path.join(ROOT, 'voice-pt.md'), 'utf8'),
+  uk: fs.readFileSync(path.join(ROOT, 'voice-uk.md'), 'utf8'),
 };
 
 // ── Entrypoint ────────────────────────────────────────────────────────
@@ -131,7 +132,7 @@ async function translateOne(slug, srcFm, srcBody, lang, retryWithFeedback = '') 
 }
 
 async function translateBody(srcBody, lang, retryFeedback = '') {
-  const langName = { es: 'Spanish', fr: 'French', de: 'German', pt: 'Portuguese (pt-BR)' }[lang];
+  const langName = { es: 'Spanish', fr: 'French', de: 'German', pt: 'Portuguese (pt-BR)', uk: 'Ukrainian' }[lang];
 
   const system = `${TRANSLATION_RULES}
 
@@ -156,7 +157,7 @@ ${srcBody}`;
 }
 
 async function translateFrontmatter(srcFm, lang) {
-  const langName = { es: 'Spanish', fr: 'French', de: 'German', pt: 'Portuguese (pt-BR)' }[lang];
+  const langName = { es: 'Spanish', fr: 'French', de: 'German', pt: 'Portuguese (pt-BR)', uk: 'Ukrainian' }[lang];
 
   const system = `Translate the title, description, and hero_alt fields of a blog post frontmatter. Preserve brand names (SwiftMail, Klaviyo, etc.) and technical acronyms (DKIM, SPF, etc.) exactly. Output ONLY a JSON object with the translated fields, no other text.`;
 
