@@ -227,7 +227,11 @@ function updateBlogIndex(lang, articleData) {
   };
 
   const cardId = `card-${articleData.slug}`;
-  const heroImg = fm.hero_image || `/assets/features/${categoryToImage(fm.category)}.webp`;
+  // Per-article image (Pexels-fetched) → fallback to legacy feature webp
+  const heroImg = fm.hero_image
+    || (fs.existsSync(path.join(REPO_ROOT, 'assets', 'blog', `${articleData.slug}.jpg`))
+        ? `/assets/blog/${articleData.slug}.jpg`
+        : `/assets/features/${categoryToImage(fm.category)}.webp`);
 
   const cardHtml = `
     <article class="blog-card" data-cat="${fm.category}">

@@ -33,7 +33,10 @@ export function renderArticle({ frontmatter, body, lang, i18n, translatedSlugs }
   const date = frontmatter.date;
   const readTime = frontmatter.read_time;
   const author = frontmatter.author || 'SwiftMail';
-  const heroImg = frontmatter.hero_image || `/assets/features/${categoryToImage(category)}.webp`;
+  // Prefer per-article Pexels-fetched image (/assets/blog/<slug>.jpg) over
+  // the legacy reused feature webp. Frontmatter hero_image override wins
+  // over both.
+  const heroImg = frontmatter.hero_image || `/assets/blog/${slug}.jpg`;
   const heroAlt = frontmatter.hero_alt || title;
 
   const pathPrefix = lang === 'en' ? '' : '../';

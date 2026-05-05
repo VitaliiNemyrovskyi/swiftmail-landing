@@ -24,6 +24,7 @@ import { complete, ping, listModels } from './lib/ollama-client.mjs';
 import { slugify, assertValid } from './lib/slug.mjs';
 import { serialize as serializeFm, parse as parseFm, assertFields } from './lib/frontmatter.mjs';
 import { log } from './lib/log.mjs';
+import { fetchOne as fetchImage, buildQuery as buildImageQuery } from './lib/images.mjs';
 import * as aiTells from './checks/ai-tells.mjs';
 import * as quality from './checks/quality-heuristics.mjs';
 import * as eeat from './checks/eeat.mjs';
@@ -145,6 +146,27 @@ async function draftBySlug(slug) {
   console.log('  [5/5] SEO + frontmatter…');
   const final = await phaseSeo(topic, aligned);
   log('draft.seo', { slug });
+
+  // Phase 6 (silent): fetch a relevant Pexels image for the article.
+  // Skipped if PEXELS_API_KEY missing or fetch fails — pipeline continues.
+  if (process.env.PEXELS_API_KEY) {
+    console.log('  [+] Fetching relevant image via Pexels…');
+    try {
+      const query = buildImageQuery(topic);
+      const result = await fetchImage({ slug, query });
+      if (result) {
+        log('draft.image', { slug, query, photographer: result.photographer, bytes: result.bytes });
+        console.log(`      ✓ ${result.bytes / 1024 | 0}KB · ${result.photographer}`);
+      } else {
+        console.log(`      · no Pexels result for "${query}"`);
+      }
+    } catch (err) {
+      console.log(`      · image fetch skipped: ${err.message}`);
+      log('draft.image-failed', { slug, error: err.message });
+    }
+  } else {
+    console.log('  [+] Skipping image fetch (PEXELS_API_KEY not set)');
+  }
 
   // Save .original.md (immutable LLM output) + .md (editable)
   const draftPath = path.join(DRAFTS_DIR, `${slug}.md`);
