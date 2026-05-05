@@ -44,15 +44,23 @@ export async function complete({
     ? Number(process.env.OLLAMA_TIMEOUT_MS)
     : 30 * 60 * 1000; // 30 min
 
-  const res = await fetch(`${url}/v1/chat/completions`, {
+  // Default Ollama n_ctx is 4096 which is too small for our draft phase
+  // (system prompt + facts + outline + user prompt + 3000 output tokens
+  // exceeds 4096). Use Ollama-native /api/chat which accepts options.num_ctx.
+  const numCtx = process.env.OLLAMA_NUM_CTX ? Number(process.env.OLLAMA_NUM_CTX) : 8192;
+
+  const res = await fetch(`${url}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model,
       messages,
-      temperature,
-      max_tokens: maxTokens,
       stream: false,
+      options: {
+        temperature,
+        num_predict: maxTokens,
+        num_ctx: numCtx,
+      },
     }),
     signal: AbortSignal.timeout(timeoutMs),
   });
@@ -63,11 +71,11 @@ export async function complete({
   }
 
   const json = await res.json();
-  const content = json.choices?.[0]?.message?.content;
+  // /api/chat shape:  { message: { content, role }, done: true, ... }
+  const content = json.message?.content;
   if (!content) {
-    // Some models (e.g. qwen3) put output in `reasoning` field when thinking
-    // mode is on; surface that as content if main field is empty.
-    const reasoning = json.choices?.[0]?.message?.reasoning;
+    // qwen3 thinking-mode fallback (rare on /api/chat but defensive)
+    const reasoning = json.message?.reasoning;
     if (reasoning) return reasoning;
     throw new Error(`Ollama returned empty content: ${JSON.stringify(json).slice(0, 500)}`);
   }
@@ -94,16 +102,20 @@ export async function chat({
   const timeoutMs = process.env.OLLAMA_TIMEOUT_MS
     ? Number(process.env.OLLAMA_TIMEOUT_MS)
     : 30 * 60 * 1000;
+  const numCtx = process.env.OLLAMA_NUM_CTX ? Number(process.env.OLLAMA_NUM_CTX) : 8192;
 
-  const res = await fetch(`${url}/v1/chat/completions`, {
+  const res = await fetch(`${url}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model,
       messages,
-      temperature,
-      max_tokens: maxTokens,
       stream: false,
+      options: {
+        temperature,
+        num_predict: maxTokens,
+        num_ctx: numCtx,
+      },
     }),
     signal: AbortSignal.timeout(timeoutMs),
   });
@@ -114,7 +126,7 @@ export async function chat({
   }
 
   const json = await res.json();
-  return json.choices[0].message.content || json.choices[0].message.reasoning || '';
+  return json.message?.content || json.message?.reasoning || '';
 }
 
 /**
