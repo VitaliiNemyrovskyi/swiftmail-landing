@@ -224,11 +224,29 @@ or other flags — it logs warnings but never blocks (false positives are too hi
 ## Cost
 
 Per article (English + 4 translations) at ~5k words:
-- **Ollama Llama 3.3 70B** locally: $0 (just compute time, ~3-5 min)
-- **Ollama Llama 3.1 8B** locally: $0, but quality drops noticeably for longer drafts
-- **Anthropic API hybrid** (only for final voice-pass): ~$0.30-0.40
+- **Ollama 70B w/ GPU**: $0 (compute), ~3-5 min/article
+- **Ollama 8B on CPU only**: $0, ~10-25 min/article. Workable as overnight cron, slow for interactive use.
+- **Anthropic API** (Claude Sonnet 4.5): ~$0.30-0.50/article
 
 At 1-2 articles/day, monthly: 0$ if all-Ollama, or ~$15-25/mo if hybrid.
+
+## CPU-only Ollama notes
+
+If Ollama runs on a CPU-only host (no GPU offload):
+
+- **Model choice matters.** llama3.1:8b reliable on CPU. qwen2.5:14b risks OOM
+  on hosts with <16 GB RAM. qwen3:8b runs but uses thinking-mode that
+  consumes most max_tokens on internal reasoning — pipeline falls back to
+  surfacing reasoning text as content if main field is empty.
+- **Context window is 4096 by default.** Pipeline uses voice-compact.md
+  (not the full voice.md) for system prompt to fit prompt + outline + facts
+  inside the window.
+- **Token output speed: 5-15 tok/sec.** A 1500-word article (~2200 tokens)
+  takes ~3-7 min per phase × 5 phases = 15-35 min total per draft.
+- **Set OLLAMA_TIMEOUT_MS** env var if you need longer than 30 min default
+  (most CPU drafts complete inside that window).
+- **Run via cron at night** (e.g. 03:00) if pipeline is shared with
+  other server workloads.
 
 ## Troubleshooting
 
