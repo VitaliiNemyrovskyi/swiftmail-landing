@@ -18,6 +18,8 @@
     "auto": "node --env-file-if-exists=.env auto-publish.mjs",
     "auto:dry": "node --env-file-if-exists=.env auto-publish.mjs --dry-run",
     "auto:en": "node --env-file-if-exists=.env auto-publish.mjs --en-only",
+    "news:fetch": "node --env-file-if-exists=.env news-fetch.mjs",
+    "news:dry": "node --env-file-if-exists=.env news-fetch.mjs --dry-run",
     "setup:smtp": "node setup-smtp.mjs",
     "setup:smtp:test": "node --env-file-if-exists=.env setup-smtp.mjs --test",
     "ollama:check": "node --env-file-if-exists=.env -e \"import('./lib/ollama-client.mjs').then(async m=>{console.log('ping:', await m.ping()); console.log('models:', await m.listModels());})\"",

@@ -1,0 +1,119 @@
+# News sources for content-pipeline. Fetched by news-fetch.mjs and converted
+# to status:idea topics in topics.yaml. auto-publish.mjs alternates between
+# news-flagged topics and evergreen ones.
+#
+# RSS feeds — no API keys needed. Parsed by lib/news.mjs.
+
+rss_feeds:
+  # ─── Email marketing / deliverability blogs ──────────────────────────
+  # NOTE: many ESP blogs lack public RSS or have moved feeds. Most reliable
+  # sources are Reddit + Google News + Hacker News (below).
+  - name: Litmus Blog
+    url: https://www.litmus.com/blog/feed/
+    boost_keywords: [email design, deliverability, inbox preview]
+
+  # ─── Reddit communities (RSS endpoints — no auth needed) ─────────────
+  - name: Reddit r/Emailmarketing
+    url: https://www.reddit.com/r/Emailmarketing/.rss
+    boost_keywords: [klaviyo, mailchimp, deliverability, automation]
+
+  - name: Reddit r/SaaS
+    url: https://www.reddit.com/r/SaaS/.rss
+    keywords_required: [email, marketing, automation, growth, churn, retention]
+
+  - name: Reddit r/Shopify
+    url: https://www.reddit.com/r/Shopify/.rss
+    keywords_required: [email, abandoned cart, klaviyo, marketing, automation]
+
+  # ─── Google News — narrow + boosted keyword searches ─────────────────
+  # Use boost+required to filter stock-photo / unrelated articles.
+  - name: Google News — email deliverability
+    url: https://news.google.com/rss/search?q=%22email+deliverability%22&hl=en-US&gl=US&ceid=US:en
+    keywords_required: [deliverability, sender, dkim, spf, dmarc, bounce, gmail]
+    boost_keywords: [enforcement, ruling, change, update]
+
+  - name: Google News — Klaviyo / Mailchimp / Brevo
+    url: https://news.google.com/rss/search?q=Klaviyo+OR+Mailchimp+OR+ActiveCampaign+OR+Brevo&hl=en-US&gl=US&ceid=US:en
+    keywords_required: [Klaviyo, Mailchimp, ActiveCampaign, Brevo, MailerLite]
+    boost_keywords: [pricing, acquisition, change, update, alternative]
+
+  - name: Google News — Gmail / Apple email
+    url: https://news.google.com/rss/search?q=%22Gmail+bulk+sender%22+OR+%22Yahoo+sender%22+OR+%22Apple+MPP%22+OR+%22iOS+Mail+privacy%22&hl=en-US&gl=US&ceid=US:en
+    keywords_required: [Gmail, Yahoo, Apple, sender, MPP, privacy, requirement]
+
+  # ─── Hacker News (firebase API, but RSS works too) ───────────────────
+  - name: Hacker News — email
+    url: https://hnrss.org/newest?q=email+marketing+OR+deliverability+OR+SMTP
+
+# ── Filter rules ──────────────────────────────────────────────────────
+
+# Items with at least one of these in title/summary survive baseline filter.
+relevance_keywords:
+  - email
+  - inbox
+  - deliverability
+  - newsletter
+  - SMTP
+  - DKIM
+  - SPF
+  - DMARC
+  - BIMI
+  - bounce rate
+  - sender reputation
+  - Klaviyo
+  - Mailchimp
+  - ActiveCampaign
+  - HubSpot
+  - Brevo
+  - Postmark
+  - SendGrid
+  - Mailgun
+  - abandoned cart
+  - automation flow
+  - lifecycle
+  - segmentation
+  - personalization
+  - cold email
+  - transactional
+  - opt-in
+  - unsubscribe
+
+# Items mentioning these get boosted (more likely to become topics)
+high_value_keywords:
+  - SwiftMail
+  - Klaviyo pricing
+  - Mailchimp pricing
+  - Gmail bulk sender
+  - Apple MPP
+  - DMARC reject
+  - GDPR enforcement
+  - cookie deprecation
+  - first-party data
+  - server-side tracking
+
+# Items containing these are SKIPPED entirely
+exclude_keywords:
+  - "buy followers"
+  - "review bot"
+  - "free $"
+  - "earn money"
+  - "make money fast"
+  - "OnlyFans"
+  - "crypto airdrop"
+
+# ── Behavior ──────────────────────────────────────────────────────────
+
+# Min relevance score (sum of keyword matches) to consider an item.
+min_relevance: 1
+
+# Max age in days. Don't write articles about week-old news.
+max_age_days: 5
+
+# Max news items added to topics.yaml per fetch run.
+max_per_fetch: 5
+
+# Mix mode for auto-publish topic selection:
+#   alternate     → news, evergreen, news, evergreen…
+#   news_first    → exhaust news before falling back to evergreen
+#   evergreen_first → opposite
+mix_mode: alternate

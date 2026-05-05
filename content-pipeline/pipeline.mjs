@@ -230,12 +230,28 @@ Env:
 
 async function phaseResearch(topic) {
   // Researcher prompt: extract factual claims from the topic angle/sources_hint.
-  // We don't actually fetch URLs (that would need a separate scraper); instead
-  // we ask the LLM to brainstorm credible facts based on its training,
-  // attributed to the kind of source the user would reference.
-  const system = `You are a research analyst gathering FACTS (not opinions or expression) about an email-marketing topic. Output JSON only — an array of objects with fields {claim, source_type, credibility, supports_angle}. Source types: "rfc-spec", "esp-docs", "industry-research", "primary-data". Aim for 8-12 high-quality factual claims.`;
+  // For news topics, we explicitly cite the source URL as the primary fact source.
+  const isNews = topic.source_type === 'news';
 
-  const user = `Topic: ${topic.title}
+  const system = isNews
+    ? `You are a research analyst commenting on a news item from the email-marketing industry. The source URL is the primary fact source — extract the news, then propose 6-10 secondary facts and SwiftMail-specific angles that frame our take. Output JSON only — array of {claim, source_type, credibility, supports_angle}. Source types: "primary-news" (from the cited URL), "industry-context", "swiftmail-pov", "esp-docs".`
+    : `You are a research analyst gathering FACTS (not opinions or expression) about an email-marketing topic. Output JSON only — an array of objects with fields {claim, source_type, credibility, supports_angle}. Source types: "rfc-spec", "esp-docs", "industry-research", "primary-data". Aim for 8-12 high-quality factual claims.`;
+
+  const user = isNews
+    ? `News topic: ${topic.title}
+Target keyword: ${topic.target_keyword}
+Angle: ${topic.angle}
+Source URL (primary): ${topic.source_url}
+Source feed: ${topic.source_feed}
+Source publication date: ${topic.source_pubdate}
+Unique data hint: ${topic.unique_data_hint || '(none)'}
+
+Output ONLY a JSON array. Each item:
+  {"claim": "...", "source_type": "primary-news|industry-context|swiftmail-pov|esp-docs", "credibility": "high|medium", "supports_angle": "yes|no|partially"}
+
+The first 3-4 claims should restate the news facts (from the source URL).
+The remaining 4-6 should be SwiftMail's framing — what this means for SMB email senders, our beta-tester data if applicable, and the action item for readers.`
+    : `Topic: ${topic.title}
 Target keyword: ${topic.target_keyword}
 Angle: ${topic.angle}
 Source hints: ${(topic.sources_hint || []).join(', ')}
@@ -287,6 +303,17 @@ async function phaseDraft(topic, facts, outline) {
     .map((f) => `- ${f.claim} (source: ${f.source_type}, credibility: ${f.credibility})`)
     .join('\n');
 
+  const isNews = topic.source_type === 'news';
+  const newsContext = isNews
+    ? `\n\nNEWS CONTEXT: This article responds to a news item.
+- Primary source URL (cite explicitly with [text](url) in body): ${topic.source_url}
+- Original feed: ${topic.source_feed}
+- Source pub-date: ${topic.source_pubdate}
+- The first paragraph MUST cite the source URL and quote/paraphrase 1-2 lines.
+- The middle MUST contain SwiftMail's POV — what it means for our SMB / Shopify ICP, with our internal data if applicable.
+- The closing MUST give the reader a concrete action: what to check / change / monitor as a result.\n`
+    : '';
+
   const system = `${VOICE_COMPACT}
 
 ──────────────────────────────────────
@@ -301,7 +328,7 @@ Target keyword: ${topic.target_keyword}
 Angle: ${topic.angle}
 Target word count: ${topic.est_words} (±15%)
 Humor level: ${topic.humor_level || 0} (0=none, 1=one wry aside max, 2=opinionated piece)
-
+${newsContext}
 OUTLINE TO FOLLOW:
 ${outline}
 

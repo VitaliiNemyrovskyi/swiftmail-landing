@@ -69,17 +69,18 @@ const flags = parseFlags(process.argv.slice(2));
       throw new Error('Ollama not reachable. Check OLLAMA_URL.');
     }
 
-    // Step 1: pick next topic
+    // Step 1: pick next topic — alternate news / evergreen for content variety
     const topics = yaml.parse(fs.readFileSync(TOPICS_PATH, 'utf8'));
-    const topic = topics.find((t) => t.status === 'idea');
+    const topic = pickNextTopic(topics);
     if (!topic) {
-      console.log('  No status:idea topics in queue. Refill topics.yaml.');
+      console.log('  No status:idea topics in queue. Refill topics.yaml or run news-fetch.');
       log('auto.no-topics');
       sendReport(); // user gets a "nothing to publish today" digest
       releaseLock();
       process.exit(0);
     }
     const slug = topic.slug;
+    console.log(`  Source type: ${topic.source_type || 'evergreen'}`);
 
     console.log(`\n  ⌘  Auto-publishing: ${slug}`);
     console.log(`     "${topic.title}"`);
@@ -164,8 +165,48 @@ function parseFlags(argv) {
     if (a.startsWith('--langs=')) flags.langs = a.slice(8);
     else if (a === '--en-only') flags.enOnly = true;
     else if (a === '--dry-run') flags.dryRun = true;
+    else if (a.startsWith('--mix=')) flags.mix = a.slice(6); // alternate | news_first | evergreen_first | news_only | evergreen_only
   }
   return flags;
+}
+
+/**
+ * Pick the next status:idea topic, alternating between news and evergreen
+ * to keep content varied. Reads news-sources.yaml mix_mode as default.
+ */
+function pickNextTopic(topics) {
+  const ideas = topics.filter((t) => t.status === 'idea');
+  if (ideas.length === 0) return null;
+
+  const news = ideas.filter((t) => t.source_type === 'news');
+  const evergreen = ideas.filter((t) => t.source_type !== 'news');
+
+  // Look at most recently published topic to alternate.
+  const published = topics.filter((t) => t.status === 'published');
+  published.sort((a, b) => new Date(b.published_at || 0) - new Date(a.published_at || 0));
+  const lastPublishedWasNews = published[0]?.source_type === 'news';
+
+  // Read mix mode (CLI flag overrides config)
+  let mixMode = flags.mix;
+  if (!mixMode) {
+    try {
+      const cfg = yaml.parse(fs.readFileSync(path.join(ROOT, 'news-sources.yaml'), 'utf8'));
+      mixMode = cfg.mix_mode || 'alternate';
+    } catch { mixMode = 'alternate'; }
+  }
+
+  switch (mixMode) {
+    case 'news_only':       return news[0] || null;
+    case 'evergreen_only':  return evergreen[0] || null;
+    case 'news_first':      return news[0] || evergreen[0];
+    case 'evergreen_first': return evergreen[0] || news[0];
+    case 'alternate':
+    default: {
+      // If last was news → prefer evergreen; else prefer news
+      if (lastPublishedWasNews) return evergreen[0] || news[0];
+      return news[0] || evergreen[0];
+    }
+  }
 }
 
 function acquireLock() {
