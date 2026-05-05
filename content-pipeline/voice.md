@@ -85,14 +85,57 @@ The reader is technically literate. Skipping the definition signals expertise.
 ## Data & Specificity
 
 Exceptionally high density. Always prefer:
-- Exact percentages: "70.19%", "85%", not "high engagement"
-- Numbered claims: "4 signals", "7 reasons", "12 signal types"
+- Exact percentages from SwiftMail's product context: "34%", "22%", "47%"
+- Numbered claims about SwiftMail's own capabilities: "12 signal types", "5 attribution models"
 - Named competitors: Klaviyo, Mailchimp, ActiveCampaign, Bloomreach, Customer.io, Drip, Omnisend
-- Pricing specifics: "$50K infrastructure cost", "$20/month", "25% bill increase"
-- Real technical detail: actual SPF record syntax, real DKIM key sizes, real bounce-rate thresholds
-- Time anchors: "Before iOS 15...", "Klaviyo's May 2024 pricing change", "Apple's MPP rollout..."
+- SwiftMail's own pricing: "$20/month locked-in beta price"
+- Real technical detail: actual SPF record syntax, real DKIM key sizes, RFC-defined limits
+- Time anchors that are common knowledge: iOS 15, Apple MPP rollout (Sept 2021)
 
 Each article should have **min 3 specific data points** that aren't generic.
+
+## Verified vs invented numbers — CRITICAL
+
+The pipeline does not fact-check against external sources. The model must therefore
+self-restrict: never invent a specific number for a thing you can't verify from your
+own product context, sources_hint, or universally known facts (RFCs, public iOS
+release dates).
+
+**SwiftMail's own metrics — VERIFIED, use freely**
+The percentages in product-context.md (34% price hesitation, 22% form friction,
+47% multi-session journeys, 18-day warm-up, etc.) are real beta-tester data. Cite freely.
+
+**Competitor pricing — NOT verified, use qualitative**
+Bloomreach / Klaviyo / Mailchimp / ActiveCampaign / Customer.io / Drip do not publish
+full pricing publicly. Industry numbers floating around are often wrong or out of date.
+
+❌ "Bloomreach starts at $50,000 a year"
+✅ "Bloomreach is enterprise-priced — five-figure annual contracts"
+✅ "Bloomreach's entry tier is well outside SMB budget"
+
+❌ "Klaviyo charges $150/mo for 5,000 contacts"
+✅ "Klaviyo's tiered active-profile billing climbs sharply past 5,000 contacts"
+✅ "Klaviyo's May 2024 pricing change shifted billing from list size to active profiles"
+   (only OK if it's in sources_hint — otherwise drop the date)
+
+**Feature counts on competitors — qualitative only**
+❌ "Klaviyo tracks 4 signals" (where did 4 come from?)
+✅ "Klaviyo tracks send-side signals — opens, clicks, bounces, unsubscribes — and stops there"
+✅ "Email-marketing platforms generally cover post-send engagement, not pre-send behavior"
+
+**Market-share / category-spend percentages — never invent**
+❌ "70% of marketers use platform X" / "$2B category"
+✅ Drop the figure entirely or attribute: "according to [specific source]"
+
+**Time anchors — only universally known**
+✅ "Before iOS 15" (public release date, fact)
+✅ "After Apple MPP" (public, well-documented)
+❌ "Mailchimp's August 2023 price increase" (only if you have a source)
+
+**The replacement test:** before writing any specific number about a competitor,
+ask "do I have this from a source?" If no, rewrite as a qualitative descriptor.
+Quality of the article is not damaged by "enterprise-priced" instead of "$50K/yr" —
+but the article's credibility is destroyed if the number is wrong.
 
 ## First-Person & Reader Address
 

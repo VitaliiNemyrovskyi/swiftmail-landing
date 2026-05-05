@@ -47,6 +47,18 @@ sometimes 4, sometimes 7. NEVER three "X, Y, and Z" enumerations in a row.
 - ≥2 internal links to other SwiftMail blog/feature pages
 - Specific numbers, named brands, real dates. NOT "many businesses" or "various tools"
 
+## Numerical claims about competitors — DO NOT invent specifics
+SwiftMail's own numbers: use freely from product context (verified).
+Competitor numbers (prices, market share, signal counts, dates of pricing changes):
+NEVER invent a specific figure. Use qualitative descriptors instead.
+- Bloomreach pricing: write "enterprise tier" or "five-figure annual contract" — NOT "$50K/yr"
+- Klaviyo pricing: write "active-profile billing" or "tiered by list size" — NOT a specific $/mo
+- Mailchimp / ActiveCampaign / Customer.io / Drip pricing: same. Ranges or qualitative only.
+- Feature counts ("tracks 4 signals", "12 event types") — only when comparing to SwiftMail's own
+  capability surface (which is verified). For competitors, use "limited" / "extensive" / "ESP-grade".
+- Pricing-change dates ("Klaviyo's May 2024 change") — only if it's in your sources_hint or topic.
+If you'd write a number you can't verify, REPHRASE in qualitative terms.
+
 ## Preferred phrasing
 - "Here's what actually happens:"
 - "Here's the catch:"
