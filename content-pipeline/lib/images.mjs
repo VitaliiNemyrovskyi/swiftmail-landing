@@ -168,20 +168,36 @@ function slugToSubject(slug) {
     [/abandoned-cart/, 'empty shopping cart'],
     [/cold-email/, 'laptop email message'],
     [/cart|checkout/, 'online checkout'],
-    [/spam|spam-score|going-to-spam/, 'warning red sign'],
+
+    // Spam pair — distinct visuals: a "score" speedometer/gauge vs a literal trash bin
+    [/spam-score/, 'speedometer dashboard gauge'],
+    [/going-to-spam|inbox-placement/, 'crumpled paper trash bin'],
+    [/\bspam\b/, 'warning red sign'],
+
     [/spf-dkim-dmarc|dns/, 'security padlock server'],
     [/dmarc/, 'security shield'],
     [/warm-?up|warmup/, 'fire torch flame'],
     [/deliverability/, 'mailbox letters'],
-    [/migration|switch/, 'moving boxes road'],
-    [/klaviyo|mailchimp|alternative/, 'comparison choice options'],
+    [/migration|switch.*platform|switch.*marketing/, 'moving boxes truck'],
+
+    // Brand-alternative trio — three distinct comparison metaphors
+    [/klaviyo-alternative/, 'climbing ladder upward steps'],
+    [/mailchimp-alternative/, 'balance scale weighing two'],
+    [/best.*(?:platform|email-marketing)|email-marketing-platform/, 'professional toolbox workspace desk'],
+    [/alternative/, 'comparison choice options paths'],
+
     [/shopify/, 'online shop ecommerce'],
     [/local-business/, 'small shop main street'],
     [/budget|pricing/, 'coins calculator desk'],
     [/social-media/, 'phone social media'],
     [/customer-journey|journey/, 'winding road map'],
     [/ai-explain|behavioral-ai/, 'brain neural network abstract'],
+
+    // Behavioral-marketing pair — distinct: a $50K "category" piece vs a vs-email comparison
+    [/behavioral-marketing-50k|50k-category|enterprise-tier/, 'business meeting boardroom skyline'],
+    [/behavioral-marketing-vs|vs-email-marketing|email-vs-behavioral/, 'split crossroads two paths'],
     [/behavioral-marketing/, 'analytics dashboard data'],
+
     [/ecommerce-email|automation-flow/, 'workflow diagram chart'],
     [/transactional/, 'envelope letter delivery'],
     [/bulk-sender|gmail/, 'inbox notification phone'],
@@ -191,7 +207,8 @@ function slugToSubject(slug) {
     [/dedicated-ip/, 'server rack hardware'],
     [/key-rotation/, 'security key cryptography'],
     [/postmaster|reputation/, 'analytics chart growth'],
-    [/form-friction|form/, 'person filling form online'],
+    // /form/ used to match "platforms" → fixed with word boundaries
+    [/form-friction|filling-form|\bform-builder\b/, 'person filling form online'],
     [/post-purchase|repeat/, 'happy customer package'],
     [/win-back/, 'reaching hand reconnect'],
     [/browse-abandonment/, 'person browsing store'],
