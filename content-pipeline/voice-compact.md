@@ -25,6 +25,19 @@ leverage (verb), unleash, elevate, transform your, navigate (figurative),
 arguably, perhaps, potentially, in some cases, world-class, next-level,
 moreover, furthermore (max 1/article), additionally (max 1/article).
 
+## Banned framing patterns
+- "It's not just X — it's Y" / "not just A, but B" — AI scaffolding, drop it.
+- Title-case-then-colon-then-lowercase ("Strategy: how to do X") — sounds
+  like an AI section title. Use a real heading or full sentence instead.
+
+## Punctuation
+- Use straight quotes only: " ' (NOT "smart" curly “”‘’).
+- Em-dashes max 2 per article. Replace excess with commas or new sentences.
+
+## Rule-of-3 bias
+AI loves triads. Vary list lengths. If you want 3 items, sometimes use 2,
+sometimes 4, sometimes 7. NEVER three "X, Y, and Z" enumerations in a row.
+
 ## REQUIRED in every article
 - ≥1 first-person experience marker: "we tested", "our SwiftMail data shows",
   "I queried", "when we migrated [Customer]"

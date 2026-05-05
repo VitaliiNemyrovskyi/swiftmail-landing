@@ -52,6 +52,22 @@ const BANNED_PHRASES = [
   { pattern: /\bnext-?level\b/i, suggestion: 'concrete attribute' },
   { pattern: /\bworld-?class\b/i, suggestion: 'concrete attribute' },
 
+  // "Not just X, it's Y" framing — extremely common AI scaffolding
+  { pattern: /\b(?:it|this|that)\'?s\s+not\s+just\b/i, suggestion: 'AI scaffolding — drop "it\'s not just X", say what it IS' },
+  { pattern: /\b(?:it|this|that)\s+(?:isn|wasn)\'?t\s+just\b/i, suggestion: 'AI scaffolding — drop "isn\'t just X" framing' },
+  { pattern: /\bnot\s+(?:just|merely|simply)\s+\w+(?:\s+\w+){0,3}[,—–-]\s+(?:it\'?s|but)\b/i, suggestion: '"not just X, it\'s Y" is AI-template framing' },
+
+  // "X — and Y" structure when overused (em-dash structural caught separately)
+  // ─ no extra phrase pattern; em-dash count handles it
+
+  // Title case followed by colon, then lowercase expansion ("Strategy: how to...")
+  // — common AI heading + explanation pattern. Flag when in body prose, not in
+  // headings (those start with ##/###).
+  { pattern: /^(?!#)[A-Z][a-zA-Z\s]{2,40}:\s+[a-z]/m, suggestion: 'Title-case-then-lowercase pattern reads as AI heading+expansion. Use a full sentence or actual heading.' },
+
+  // Smart curly quotes (AI tools often output "smart quotes" automatically)
+  { pattern: /[‘’“”]/, suggestion: 'Curly "smart quotes" are an AI giveaway. Use straight \' and " — markdown converts them per platform.' },
+
   // Other languages — Spanish AI-tells
   { pattern: /\ben\s+el\s+mundo\s+actual\b/i, suggestion: '(ES) cite year/event' },
   { pattern: /\bsoluciones?\s+integrales?\b/i, suggestion: '(ES) pick concrete claim' },
@@ -74,6 +90,7 @@ const STRUCTURAL_LIMITS = {
   maxAdditionally: 1,
   maxHowever: 2,
   maxMoreover: 0,            // banned outright
+  maxTripleListBias: 3,      // "X, Y, and Z" — AI loves rule-of-3 to a fault
 };
 
 const MAX_HITS_BEFORE_BLOCK = 5;
@@ -112,6 +129,20 @@ export function check(body) {
   const additionallyCount = (body.match(/\badditionally\b/gi) || []).length;
   const howeverCount = (body.match(/\bhowever\b/gi) || []).length;
   const moreoverCount = (body.match(/\bmoreover\b/gi) || []).length;
+  // Triple-list bias: prose enumerations of exactly 3 items "X, Y, and Z"
+  // and three-item bullet groupings. AI defaults to triads — humans vary.
+  const tripleProseCount = (body.match(/\b\w+,\s+\w+(?:\s+\w+)?,\s+(?:and|or)\s+\w+/g) || []).length;
+  // Three-bullet groups: count separators between consecutive lists of 3
+  let threeBulletGroups = 0;
+  for (let i = 0; i < lines.length - 2; i++) {
+    const isBullet = (s) => /^\s*[-*]\s/.test(s);
+    if (isBullet(lines[i]) && isBullet(lines[i + 1]) && isBullet(lines[i + 2])) {
+      const isFourth = i + 3 < lines.length && isBullet(lines[i + 3]);
+      const wasZero = i === 0 || !isBullet(lines[i - 1]);
+      if (!isFourth && wasZero) threeBulletGroups++;
+    }
+  }
+  const tripleListBiasTotal = tripleProseCount + threeBulletGroups;
 
   if (emDashCount > STRUCTURAL_LIMITS.maxEmDashes) {
     hits.push({
@@ -181,10 +212,21 @@ export function check(body) {
     });
   }
 
+  if (tripleListBiasTotal > STRUCTURAL_LIMITS.maxTripleListBias) {
+    hits.push({
+      type: 'structural',
+      check: 'rule-of-3 / triple-list bias',
+      count: tripleListBiasTotal,
+      breakdown: { proseEnumerations: tripleProseCount, threeBulletGroups },
+      limit: STRUCTURAL_LIMITS.maxTripleListBias,
+      suggestion: 'AI defaults to enumerations of exactly 3. Vary list lengths (2/4/5/7), or convert some to prose with em-dash or "—"',
+    });
+  }
+
   return {
     passed: hits.length <= MAX_HITS_BEFORE_BLOCK,
     hits,
-    stats: { wordCount, emDashCount, exclamationCount, bulletListCount, furthermoreCount, additionallyCount, howeverCount, moreoverCount },
+    stats: { wordCount, emDashCount, exclamationCount, bulletListCount, furthermoreCount, additionallyCount, howeverCount, moreoverCount, tripleListBiasTotal },
   };
 }
 
