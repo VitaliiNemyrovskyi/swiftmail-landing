@@ -51,6 +51,17 @@ const flags = parseFlags(process.argv.slice(2));
   // Concurrency lock (don't run two cron passes at once)
   acquireLock();
 
+  let sentReport = false;
+  const sendReport = () => {
+    if (sentReport) return;
+    sentReport = true;
+    try {
+      runStep(['node', '--env-file-if-exists=.env', 'daily-report.mjs'], 'report', { silent: true });
+    } catch (e) {
+      console.error(`  ⚠ daily-report send failed: ${e.message}`);
+    }
+  };
+
   try {
     // Sanity check Ollama
     const alive = await ping();
@@ -64,6 +75,8 @@ const flags = parseFlags(process.argv.slice(2));
     if (!topic) {
       console.log('  No status:idea topics in queue. Refill topics.yaml.');
       log('auto.no-topics');
+      sendReport(); // user gets a "nothing to publish today" digest
+      releaseLock();
       process.exit(0);
     }
     const slug = topic.slug;
@@ -115,7 +128,7 @@ const flags = parseFlags(process.argv.slice(2));
 
     // Step 6: trigger daily-report immediately (so user sees what just shipped)
     console.log(`\n  → Sending publish summary email…`);
-    runStep(['node', '--env-file-if-exists=.env', 'daily-report.mjs'], 'report', { silent: true });
+    sendReport();
 
     console.log(`\n  ✓ Auto-publish complete: ${slug}`);
     console.log(`    Live: https://swift-mail.app/blog/${slug}.html\n`);
@@ -123,10 +136,7 @@ const flags = parseFlags(process.argv.slice(2));
   } catch (err) {
     console.error(`\n  ✗ Auto-publish failed: ${err.message}\n`);
     log('auto.error', { error: err.message });
-    // Send error email immediately (don't wait for next 9 AM cron)
-    try {
-      runStep(['node', '--env-file-if-exists=.env', 'daily-report.mjs'], 'error-report', { silent: true });
-    } catch {}
+    sendReport(); // also email on failure
     process.exit(1);
   } finally {
     releaseLock();
