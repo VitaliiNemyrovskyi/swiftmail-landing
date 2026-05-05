@@ -156,18 +156,33 @@ function rewriteBlogIndex(updates) {
 
 /**
  * Update individual blog post HTML files to use the new image.
- * The blog post template has the hero image as <img src="..." in <figure class="blog-hero-img">.
+ * The blog post template wraps the hero image in either <figure class="blog-hero-img">
+ * or <div class="blog-hero-img"> — match both. Also rewrites the og:image meta tag
+ * if it currently points at any non-/assets/blog/ URL (e.g. Unsplash).
  */
 function rewriteArticlePages(updates) {
   for (const u of updates) {
     const articlePath = path.join(BLOG_DIR, `${u.slug}.html`);
     if (!fs.existsSync(articlePath)) continue;
     let html = fs.readFileSync(articlePath, 'utf8');
-    const re = /(<figure class="blog-hero-img">\s*<img\s+src=")[^"]+("[^>]*alt=")[^"]*("[^>]*>)/;
-    if (re.test(html)) {
-      html = html.replace(re, (m, p1, p2, p3) => `${p1}/assets/blog/${u.slug}.jpg${p2}${escapeHtml(u.alt)}${p3}`);
-      fs.writeFileSync(articlePath, html);
+    let changed = false;
+
+    // Hero <img> inside <figure|div class="blog-hero-img">
+    const heroRe = /(<(?:figure|div) class="blog-hero-img">\s*<img\s+src=")[^"]+("[^>]*alt=")[^"]*("[^>]*>)/;
+    if (heroRe.test(html)) {
+      html = html.replace(heroRe, (m, p1, p2, p3) => `${p1}/assets/blog/${u.slug}.jpg${p2}${escapeHtml(u.alt)}${p3}`);
+      changed = true;
     }
+
+    // og:image (only rewrite if it's pointing at a hosted image, not already at /assets/blog/)
+    const ogRe = /(<meta\s+property="og:image"\s+content=")[^"]+(")/;
+    const ogMatch = html.match(ogRe);
+    if (ogMatch && !ogMatch[0].includes('/assets/blog/')) {
+      html = html.replace(ogRe, `$1https://swift-mail.app/assets/blog/${u.slug}.jpg$2`);
+      changed = true;
+    }
+
+    if (changed) fs.writeFileSync(articlePath, html);
   }
 }
 
