@@ -6,7 +6,25 @@
 //   - We want exact control over class names + attributes Cloudflare/SEO needs
 //   - One file, no dependency, no surprises
 
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { urlFor } from './slug.mjs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = path.resolve(__dirname, '..', '..');
+
+// Map category → legacy fallback image name. Mirrors publish.mjs#categoryToImage —
+// keep in sync. Used only when /assets/blog/<slug>.jpg is absent at render time.
+function categoryToFallbackImage(cat) {
+  return {
+    behavioral: 'behavioral-capture',
+    deliverability: 'realtime-intervention',
+    ecommerce: 'multichannel',
+    comparison: 'integrations',
+    strategy: 'inbox-preview',
+  }[cat] || 'inbox-preview';
+}
 
 /**
  * Convert a draft markdown body to HTML wrapped in the blog post template.
@@ -35,8 +53,14 @@ export function renderArticle({ frontmatter, body, lang, i18n, translatedSlugs }
   const author = frontmatter.author || 'SwiftMail';
   // Prefer per-article Pexels-fetched image (/assets/blog/<slug>.jpg) over
   // the legacy reused feature webp. Frontmatter hero_image override wins
-  // over both.
-  const heroImg = frontmatter.hero_image || `/assets/blog/${slug}.jpg`;
+  // over both. CRITICAL: check fs.existsSync — if .jpg doesn't actually
+  // exist on disk at render time, fall back to category webp instead of
+  // shipping a broken <img src> that Cloudflare would 404 against.
+  const blogJpgPath = path.join(REPO_ROOT, 'assets', 'blog', `${slug}.jpg`);
+  const heroImg = frontmatter.hero_image
+    || (fs.existsSync(blogJpgPath)
+        ? `/assets/blog/${slug}.jpg`
+        : `/assets/features/${categoryToFallbackImage(category)}.webp`);
   const heroAlt = frontmatter.hero_alt || title;
 
   const pathPrefix = lang === 'en' ? '' : '../';

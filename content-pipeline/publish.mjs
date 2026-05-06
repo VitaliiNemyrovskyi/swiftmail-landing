@@ -68,6 +68,9 @@ const targetLangs = ['en', ...(flags.langs === 'all' ? ['es', 'fr', 'de', 'pt'] 
     console.log('\n  ✓ All checks passed\n');
   }
 
+  // 1.5. Ensure hero image exists (self-heal if pipeline draft phase was bypassed)
+  await ensureHeroImage(slug);
+
   // 2. Render + write HTML for each language
   console.log(`  Rendering languages: ${targetLangs.join(', ')}`);
   const generated = [];
@@ -103,6 +106,58 @@ const targetLangs = ['en', ...(flags.langs === 'all' ? ['es', 'fr', 'de', 'pt'] 
   console.error('\n✗ Publish failed:', err.message);
   process.exit(1);
 });
+
+// ── Hero image self-heal ──────────────────────────────────────────────
+//
+// Background: pipeline.mjs phaseDraft normally fetches a Pexels photo at
+// /assets/blog/<slug>.jpg AS PART OF DRAFTING. But if a draft is created
+// any other way (manually written, copied from elsewhere, dropped onto the
+// machine), the image step is skipped and the rendered HTML points to a
+// non-existent file. publish.mjs then commits the .html with a broken
+// <img src> reference and Cloudflare serves the SPA 404 fallback in its
+// place — the article ships looking incomplete.
+//
+// This function makes publish self-healing: if the .jpg is missing at
+// publish time, fetch one synchronously before rendering. Failure is
+// non-fatal — the existing renderForLang fallback chain (frontmatter
+// hero_image → /assets/blog/<slug>.jpg → category webp) catches it.
+async function ensureHeroImage(slug) {
+  const expectedPath = path.join(REPO_ROOT, 'assets', 'blog', `${slug}.jpg`);
+  if (fs.existsSync(expectedPath)) return; // already there — pipeline did its job
+
+  if (!process.env.PEXELS_API_KEY) {
+    console.log(`  ⚠ Hero image missing for ${slug} but PEXELS_API_KEY not set — render will use category fallback`);
+    return;
+  }
+
+  // Look up the topic for query hints. Falls back to bare {slug} if topics.yaml
+  // doesn't have it (e.g. ad-hoc article not from queue) — buildQuery handles that.
+  let topic = { slug };
+  try {
+    const topicsPath = path.join(ROOT, 'topics.yaml');
+    if (fs.existsSync(topicsPath)) {
+      const topics = yaml.parse(fs.readFileSync(topicsPath, 'utf8'));
+      const found = topics.find((t) => t.slug === slug);
+      if (found) topic = found;
+    }
+  } catch (e) {
+    console.log(`  ⚠ Could not read topics.yaml for image query: ${e.message}`);
+  }
+
+  console.log(`  ⚠ Hero image missing for ${slug} — fetching from Pexels (self-heal)…`);
+  try {
+    const { fetchOne, buildQuery } = await import('./lib/images.mjs');
+    const query = buildQuery(topic);
+    const result = await fetchOne({ slug, query, apiKey: process.env.PEXELS_API_KEY });
+    if (result) {
+      console.log(`  ✓ Hero image fetched: ${(result.bytes / 1024).toFixed(0)} KB, photo by ${result.photographer}`);
+    } else {
+      console.log(`  ⚠ Pexels returned no photos for query "${query}" — render will use category fallback`);
+    }
+  } catch (e) {
+    console.log(`  ⚠ Hero image fetch failed: ${e.message} — render will use category fallback`);
+  }
+}
 
 // ── Pre-publish gate ──────────────────────────────────────────────────
 
