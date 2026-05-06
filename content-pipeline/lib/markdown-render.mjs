@@ -80,9 +80,19 @@ export function renderArticle({ frontmatter, body, lang, i18n, translatedSlugs }
     { code: 'pt', label: 'Português' },
     { code: 'uk', label: 'Українська' },
   ];
+  // Switcher points to the same article in the target language. The old
+  // behavior of always linking to /<lang>/blog/ broke the UX: /uk/blog/
+  // (and similarly for es/fr/de/pt) doesn't exist as a static index, so
+  // Cloudflare served the SPA homepage fallback. The translated article
+  // page itself does exist (we just rendered it), so link directly to it.
+  // Fall back to current slug if a translatedSlugs entry is missing
+  // (shared-slug strategy makes this near-always correct).
   const langSwitcherHtml = langOptions
     .map((o) => {
-      const href = o.code === 'en' ? '/blog/' : `/${o.code}/blog/`;
+      const targetSlug = translatedSlugs[o.code] || slug;
+      const href = o.code === 'en'
+        ? `/blog/${targetSlug}`
+        : `/${o.code}/blog/${targetSlug}`;
       const active = o.code === lang ? ' active' : '';
       return `            <a class="blog-lang-option${active}" href="${href}" hreflang="${o.code}" role="menuitem">${o.label}</a>`;
     })
