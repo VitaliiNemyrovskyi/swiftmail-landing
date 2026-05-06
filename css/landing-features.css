@@ -114,8 +114,7 @@
     .feature-block + .feature-block { padding-top: 0; }
     .feature-eyebrow { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #c2410c; margin-bottom: 1rem; }
     .feature-headline { font-family: var(--font-heading); font-size: clamp(1.875rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.25rem; max-width: 720px; }
-    .feature-headline-em { background: linear-gradient(135deg, var(--orange), var(--orange-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: #ff8c42; }
-    @media (forced-colors: active) { .feature-headline-em { background: none; -webkit-text-fill-color: #ff8c42; color: #ff8c42; } }
+    .feature-headline-em { color: #ff8c42; }
     .section-dark .feature-headline { color: var(--white); }
     .feature-body { font-size: 1.0625rem; line-height: 1.75; max-width: 640px; margin-bottom: 2.5rem; }
     .section-dark .feature-body { color: var(--text-muted-dark); }
