@@ -1,0 +1,120 @@
+name: Auto-publish blog post
+
+# Runs on the self-hosted runner on the SwiftMail VPS so it can use the local
+# Ollama instance for drafting + translation. Replaces the previous host crontab.
+#
+# After this workflow pushes to main, deploy.yml fires and Cloudflare Pages
+# picks up the new article.
+
+on:
+  schedule:
+    # 05:00 UTC = 07:00 CEST (summer) / 06:00 CET (winter).
+    # Slightly later than overnight DB jobs so OOM killer doesn't fire.
+    - cron: '0 5 * * *'
+
+  workflow_dispatch:
+    inputs:
+      langs:
+        description: 'Comma-separated languages to translate (default: es,fr,de,pt)'
+        required: false
+        default: 'es,fr,de,pt'
+      en_only:
+        description: 'EN only — skip translations'
+        type: boolean
+        required: false
+        default: false
+      dry_run:
+        description: 'Dry run — generate + check, no publish or push'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+# Never overlap two auto-publish runs (also: in-code lock file in logs/)
+concurrency:
+  group: auto-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: [self-hosted, swiftmail]
+    timeout-minutes: 240   # 4h ceiling — draft ~25min, translate ~30min/lang × 4 langs
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Need git log/history for the publish step to compose decent commit msg.
+          fetch-depth: 50
+
+      - name: Setup PATH for nvm node
+        run: |
+          # systemd-spawned runner has minimal PATH; nvm bin is not in it.
+          NODE_BIN="$HOME/.nvm/versions/node/v22.22.2/bin"
+          if [ -d "$NODE_BIN" ]; then
+            echo "$NODE_BIN" >> "$GITHUB_PATH"
+            echo "node version: $($NODE_BIN/node -v)"
+          else
+            echo "::error::nvm node not found at $NODE_BIN"
+            exit 1
+          fi
+
+      - name: Verify Ollama reachable
+        run: |
+          if ! curl -sf http://localhost:11434/api/tags >/dev/null; then
+            echo "::error::Ollama not reachable on localhost:11434"
+            exit 1
+          fi
+          echo "ollama-ok"
+
+      - name: Stage pipeline .env from server canonical copy
+        run: |
+          # Secrets (SMTP, PEXELS_API_KEY, OLLAMA_URL) live in the operator's
+          # .env at /home/deploy/swiftmail-landing — we re-use it instead of
+          # mirroring 8 secrets into Actions.
+          SRC="/home/deploy/swiftmail-landing/content-pipeline/.env"
+          DST="content-pipeline/.env"
+          if [ ! -f "$SRC" ]; then
+            echo "::error::canonical .env missing at $SRC — cannot proceed"
+            exit 1
+          fi
+          cp "$SRC" "$DST"
+          echo "env-copied ($(wc -l < $DST) lines)"
+
+      - name: Run auto-publish
+        working-directory: content-pipeline
+        env:
+          PIPELINE_GIT_NAME: 'SwiftMail Pipeline'
+          PIPELINE_GIT_EMAIL: 'pipeline@swift-mail.app'
+        run: |
+          ARGS=""
+          if [ "${{ inputs.en_only }}" = "true" ]; then ARGS="$ARGS --en-only"; fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          if [ -n "${{ inputs.langs }}" ] && [ "${{ inputs.en_only }}" != "true" ]; then
+            ARGS="$ARGS --langs=${{ inputs.langs }}"
+          fi
+          echo "Running: node auto-publish.mjs $ARGS"
+          node --env-file-if-exists=.env auto-publish.mjs $ARGS
+
+      - name: Push to main (uses workflow GITHUB_TOKEN auth)
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          # publish.mjs does `git push origin main` — but that runs inside the
+          # script's own subprocess and may have inherited the wrong remote URL
+          # if the runner workdir was set up with a different origin. Belt+suspenders:
+          # ensure remote is the BoberFamily HTTPS URL (actions/checkout auth)
+          # and re-push if anything ahead of origin/main.
+          git remote set-url origin "https://github.com/BoberFamily/swiftmail-landing.git"
+          if [ -n "$(git log origin/main..HEAD --oneline 2>/dev/null)" ]; then
+            git push origin main
+          else
+            echo "Nothing to push — working tree at origin/main"
+          fi
+
+      - name: Cleanup .env (don't leave secrets in runner workdir)
+        if: always()
+        run: |
+          rm -f content-pipeline/.env
+          echo "env-cleared"
