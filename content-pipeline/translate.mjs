@@ -182,7 +182,17 @@ ${chunk}`;
   // Each chunk is small — cap maxTokens so we don't waste budget if model
   // accidentally repeats. Most H2 sections are <500 input words, so 1500
   // output tokens is plenty.
-  return complete({ system, user, temperature: 0.4, maxTokens: 1500 });
+  //
+  // Model selection: when LLM_PROVIDER=groq, use a smaller model for translation
+  // because chunked translation fires 9× back-to-back requests in <1min, easily
+  // exceeding the 70b's free-tier 12k TPM. The 8b model has 30k TPM and produces
+  // adequate translation quality (matches what local Ollama did anyway, just
+  // 100× faster). Override via GROQ_TRANSLATE_MODEL env if needed. For local
+  // Ollama, model param is ignored (uses OLLAMA_MODEL env or default).
+  const model = (process.env.LLM_PROVIDER || '').toLowerCase() === 'groq'
+    ? (process.env.GROQ_TRANSLATE_MODEL || 'llama-3.1-8b-instant')
+    : undefined;
+  return complete({ system, user, temperature: 0.4, maxTokens: 1500, model });
 }
 
 async function translateFrontmatter(srcFm, lang) {

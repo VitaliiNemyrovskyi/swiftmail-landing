@@ -102,7 +102,7 @@ export async function chat({
  */
 async function streamChat({ url, model, messages, temperature, maxTokens, numCtx, timeoutMs }) {
   if ((process.env.LLM_PROVIDER || 'ollama').toLowerCase() === 'groq') {
-    return streamChatGroq({ messages, temperature, maxTokens, timeoutMs });
+    return streamChatGroq({ messages, temperature, maxTokens, timeoutMs, model });
   }
   const res = await fetch(`${url}/api/chat`, {
     method: 'POST',
@@ -169,30 +169,57 @@ async function streamChat({ url, model, messages, temperature, maxTokens, numCtx
  * Drop-in replacement for streamChat — same input fields used, same
  * string return.
  */
-async function streamChatGroq({ messages, temperature, maxTokens, timeoutMs }) {
+async function streamChatGroq({ messages, temperature, maxTokens, timeoutMs, model: callerModel }) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error('GROQ_API_KEY missing — set in .env or unset LLM_PROVIDER');
-  const model = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+  // Caller can override model (e.g. translate.mjs uses 8b to fit TPM limits);
+  // otherwise pick from env or default to versatile 70b for drafting.
+  // Groq IDs use dots/hyphens like "llama-3.1-8b-instant"; Ollama uses
+  // colons like "llama3.1:8b". Detect by absence of ":" (the Ollama tag
+  // separator) — Groq ids never contain it.
+  const looksLikeGroqId = callerModel && !callerModel.includes(':');
+  const model = (looksLikeGroqId ? callerModel : null)
+    || process.env.GROQ_MODEL
+    || 'llama-3.3-70b-versatile';
 
-  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model,
-      messages,
-      temperature,
-      max_tokens: maxTokens,
-      stream: true,
-    }),
-    signal: AbortSignal.timeout(timeoutMs),
-  });
+  // Free tier TPM (tokens per minute) rolling-window limits trigger 429s
+  // when chunked calls fire back-to-back (e.g. translate.mjs 9-chunk loops).
+  // Groq returns "Please try again in X.Ys" — parse it, sleep, retry. The
+  // window is rolling, so a single retry may still bump into accumulated
+  // budget — try up to 5 times with the server-recommended delay each.
+  let res;
+  let lastBody = '';
+  for (let attempt = 0; attempt < 5; attempt++) {
+    res = await fetchGroq();
+    if (res.status !== 429) break;
+    lastBody = await res.text();
+    const m = /try again in ([\d.]+)s/i.exec(lastBody);
+    const waitSec = m ? Math.min(parseFloat(m[1]) + 2, 90) : 30;
+    console.log(`     · Groq 429 (attempt ${attempt + 1}/5) — waiting ${waitSec.toFixed(1)}s…`);
+    await new Promise((r) => setTimeout(r, waitSec * 1000));
+  }
 
   if (!res.ok) {
-    const body = await res.text();
+    const body = res.status === 429 ? lastBody : await res.text();
     throw new Error(`Groq ${res.status}: ${body.slice(0, 500)}`);
+  }
+
+  async function fetchGroq() {
+    return fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        temperature,
+        max_tokens: maxTokens,
+        stream: true,
+      }),
+      signal: AbortSignal.timeout(timeoutMs),
+    });
   }
 
   // Parse Server-Sent Events. Each event: "data: {...json...}\n" with
