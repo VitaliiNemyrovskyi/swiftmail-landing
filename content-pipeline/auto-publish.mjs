@@ -107,17 +107,43 @@ const flags = parseFlags(process.argv.slice(2));
       process.exit(0);
     }
 
-    // Step 4: translate
+    // Step 4: translate (best-effort — partial failures must not block EN publish)
     if (!flags.enOnly) {
       const translateLangs = flags.langs || 'es,fr,de,pt';
       console.log(`\n  → Translating to ${translateLangs} (4 LLM calls per language, ~30-60 min CPU)…`);
-      runStep(['node', '--env-file-if-exists=.env', 'translate.mjs', slug, translateLangs], 'translate');
+      try {
+        runStep(['node', '--env-file-if-exists=.env', 'translate.mjs', slug, translateLangs], 'translate');
+      } catch (err) {
+        // translate.mjs may have partially completed — continue. publish step
+        // below filters to only languages that actually have draft files.
+        console.log(`  ⚠  translate process error: ${err.message.slice(0, 200)}`);
+        console.log(`     Continuing — will publish whatever languages got drafted.`);
+        log('auto.translate-error', { slug, error: err.message.slice(0, 500) });
+      }
     } else {
       console.log(`\n  ⊘ --en-only flag — skipping translations.`);
     }
 
-    // Step 5: publish (skipping editorial-diff since no human edit, but other gates apply)
-    const publishLangs = flags.enOnly ? '' : `--langs=${flags.langs || 'all'}`;
+    // Step 5: publish (skipping editorial-diff since no human edit, but other gates apply).
+    // Compute which languages actually have draft files before passing to publish —
+    // a translate step that died mid-way leaves some langs un-translated, and
+    // publish would otherwise crash rendering a missing file.
+    let publishLangs = '';
+    if (!flags.enOnly) {
+      const wantedLangs = (flags.langs || 'es,fr,de,pt').split(',').map((s) => s.trim());
+      const availableLangs = wantedLangs.filter((l) =>
+        fs.existsSync(path.join(DRAFTS_DIR, `${slug}.${l}.md`))
+      );
+      if (availableLangs.length > 0) {
+        publishLangs = `--langs=${availableLangs.join(',')}`;
+        const missingCount = wantedLangs.length - availableLangs.length;
+        if (missingCount > 0) {
+          console.log(`  ⚠  Publishing EN + ${availableLangs.join(',')} — ${missingCount} translation(s) missing`);
+        }
+      } else {
+        console.log(`  ⚠  Publishing EN only — no translations available`);
+      }
+    }
     const publishArgs = [
       'node', '--env-file-if-exists=.env', 'publish.mjs',
       slug,
