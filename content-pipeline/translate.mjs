@@ -141,19 +141,48 @@ async function translateBody(srcBody, lang, retryFeedback = '') {
 TARGET LANGUAGE VOICE:
 ${VOICE[lang]}`;
 
-  let user = `Translate this article from English to ${langName}.
+  // Split body at H2 boundaries. Translating a 1500-word article in one shot
+  // takes 30+ minutes on CPU Ollama (8b model at ~3 tok/s × 2000 output tokens).
+  // That hits our 30-min HTTP timeout. Chunk by H2 instead — each section is
+  // 100-300 words, completes in 1-3 minutes, well under the timeout.
+  //
+  // Match the position right BEFORE each `## ` line, so the heading is kept
+  // with its body. The first chunk is everything before the first H2 (intro
+  // paragraphs); each subsequent chunk is one H2 section.
+  const chunks = srcBody.split(/(?=^## )/m).map((c) => c.trim()).filter((c) => c.length > 0);
 
-Output ONLY the translated markdown body. No preamble, no frontmatter, no commentary.
+  if (chunks.length <= 1) {
+    // No H2 boundaries — translate as one shot (rare; short articles)
+    return translateChunk(chunks[0] || srcBody, lang, langName, system, retryFeedback);
+  }
+
+  console.log(`     Translating ${chunks.length} sections sequentially…`);
+  const translated = [];
+  for (let i = 0; i < chunks.length; i++) {
+    const t = await translateChunk(chunks[i], lang, langName, system, retryFeedback);
+    translated.push(t.trim());
+    console.log(`       ✓ section ${i + 1}/${chunks.length} (${chunks[i].split(/\s+/).length}w → ${t.split(/\s+/).length}w)`);
+  }
+  return translated.join('\n\n');
+}
+
+async function translateChunk(chunk, lang, langName, system, retryFeedback = '') {
+  let user = `Translate this markdown section from English to ${langName}.
+
+Output ONLY the translated markdown. Preserve ALL formatting exactly: headings (## level intact), links [text](url), lists, bold, italic, tables, inline code. No preamble, no commentary.
 
 Source:
 
-${srcBody}`;
+${chunk}`;
 
   if (retryFeedback) {
     user += `\n\nPREVIOUS ATTEMPT HAD ISSUES:\n${retryFeedback}\n\nFix these issues. Output corrected translation.`;
   }
 
-  return complete({ system, user, temperature: 0.4, maxTokens: 8000 });
+  // Each chunk is small — cap maxTokens so we don't waste budget if model
+  // accidentally repeats. Most H2 sections are <500 input words, so 1500
+  // output tokens is plenty.
+  return complete({ system, user, temperature: 0.4, maxTokens: 1500 });
 }
 
 async function translateFrontmatter(srcFm, lang) {
