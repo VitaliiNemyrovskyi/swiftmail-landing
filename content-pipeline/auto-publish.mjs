@@ -109,7 +109,7 @@ const flags = parseFlags(process.argv.slice(2));
 
     // Step 4: translate (best-effort — partial failures must not block EN publish)
     if (!flags.enOnly) {
-      const translateLangs = flags.langs || 'es,fr,de,pt';
+      const translateLangs = flags.langs || 'es,fr,de,pt,uk';
       console.log(`\n  → Translating to ${translateLangs} (4 LLM calls per language, ~30-60 min CPU)…`);
       try {
         runStep(['node', '--env-file-if-exists=.env', 'translate.mjs', slug, translateLangs], 'translate');
@@ -130,7 +130,7 @@ const flags = parseFlags(process.argv.slice(2));
     // publish would otherwise crash rendering a missing file.
     let publishLangs = '';
     if (!flags.enOnly) {
-      const wantedLangs = (flags.langs || 'es,fr,de,pt').split(',').map((s) => s.trim());
+      const wantedLangs = (flags.langs || 'es,fr,de,pt,uk').split(',').map((s) => s.trim());
       const availableLangs = wantedLangs.filter((l) =>
         fs.existsSync(path.join(DRAFTS_DIR, `${slug}.${l}.md`))
       );

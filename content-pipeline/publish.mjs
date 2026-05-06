@@ -54,7 +54,7 @@ if (!slug || slug === '--help' || slug === 'help') {
 
 assertValid(slug);
 
-const targetLangs = ['en', ...(flags.langs === 'all' ? ['es', 'fr', 'de', 'pt'] : (flags.langs ? flags.langs.split(',') : []))];
+const targetLangs = ['en', ...(flags.langs === 'all' ? ['es', 'fr', 'de', 'pt', 'uk'] : (flags.langs ? flags.langs.split(',') : []))];
 
 (async () => {
   // 1. Pre-publish gate

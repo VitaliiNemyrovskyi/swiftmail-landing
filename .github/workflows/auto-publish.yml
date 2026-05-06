@@ -15,9 +15,9 @@ on:
   workflow_dispatch:
     inputs:
       langs:
-        description: 'Comma-separated languages to translate (default: es,fr,de,pt)'
+        description: 'Comma-separated languages to translate (default: es,fr,de,pt,uk)'
         required: false
-        default: 'es,fr,de,pt'
+        default: 'es,fr,de,pt,uk'
       en_only:
         description: 'EN only — skip translations'
         type: boolean
