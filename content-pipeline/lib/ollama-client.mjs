@@ -12,6 +12,17 @@
 //   import { complete, chat } from './lib/ollama-client.mjs';
 //   const text = await complete({ system: '...', user: '...' });
 
+// Override Node's undici fetch timeouts. Defaults are 5min for both
+// headersTimeout and bodyTimeout — bites us on CPU Ollama where the
+// draft phase's prompt eval can take ≥5min before the first response
+// chunk arrives. Symptom: "fetch failed" exactly 5m1s into draft.
+import { Agent, setGlobalDispatcher } from 'undici';
+setGlobalDispatcher(new Agent({
+  headersTimeout: 30 * 60 * 1000, // 30 min
+  bodyTimeout:    30 * 60 * 1000, // 30 min
+  keepAliveTimeout: 60 * 1000,
+}));
+
 const DEFAULT_URL = process.env.OLLAMA_URL || 'http://localhost:11434';
 const DEFAULT_MODEL = process.env.OLLAMA_MODEL || 'llama3.3:70b';
 
