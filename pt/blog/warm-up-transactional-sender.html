@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo-orange.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    !function(s){s.sm=s.sm||function(){(s.sm.q=s.sm.q||[]).push(arguments)}}(window);
+    sm('init', 'pk_live_bea0d715ec2ca156ebe31e205c5364fc', { siteId: '2cff4622-a98a-455f-85c5-db0f3f827b25' });
+  </script>
+  <script>(function(){var loaded=false;var evs=['scroll','touchstart','keydown','mousemove','pointerdown'];function l(){if(loaded)return;loaded=true;evs.forEach(function(e){window.removeEventListener(e,l,{passive:true});});var s=document.createElement('script');s.src='https://app.swift-mail.app/sdk/sm.js';s.async=true;document.head.appendChild(s);}evs.forEach(function(e){window.addEventListener(e,l,{passive:true,once:true});});setTimeout(l,8000);})();</script>
+
+  <title>Como Aquecer um Novo Remetente Transacional Sem Desencadear Redução de Taxa — SwiftMail</title>
+  <meta name="description" content="Aquecimento transacional não é aquecimento de marketing. Volume mais baixo, consistência maior, ESPs que observam sua cadência — aqui está um cronograma de 14 dias com dados da beta-teste do SwiftMail.">
+  <link rel="canonical" href="https://swift-mail.app/pt/blog/warm-up-transactional-sender.html">
+
+  <!-- hreflang cross-language -->
+  <link rel="alternate" hreflang="en" href="https://swift-mail.app/blog/warm-up-transactional-sender.html">
+  <link rel="alternate" hreflang="es" href="https://swift-mail.app/es/blog/warm-up-transactional-sender.html">
+  <link rel="alternate" hreflang="fr" href="https://swift-mail.app/fr/blog/warm-up-transactional-sender.html">
+  <link rel="alternate" hreflang="de" href="https://swift-mail.app/de/blog/warm-up-transactional-sender.html">
+  <link rel="alternate" hreflang="pt" href="https://swift-mail.app/pt/blog/warm-up-transactional-sender.html">
+  <link rel="alternate" hreflang="uk" href="https://swift-mail.app/uk/blog/warm-up-transactional-sender.html">
+  <link rel="alternate" hreflang="x-default" href="https://swift-mail.app/blog/warm-up-transactional-sender.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Como Aquecer um Novo Remetente Transacional Sem Desencadear Redução de Taxa">
+  <meta property="og:description" content="Aquecimento transacional não é aquecimento de marketing. Volume mais baixo, consistência maior, ESPs que observam sua cadência — aqui está um cronograma de 14 dias com dados da beta-teste do SwiftMail.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://swift-mail.app/pt/blog/warm-up-transactional-sender.html">
+  <meta property="og:image" content="https://swift-mail.app/assets/blog/warm-up-transactional-sender.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- JSON-LD Article schema -->
+  <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Como Aquecer um Novo Remetente Transacional Sem Desencadear Redução de Taxa",
+    "description": "Aquecimento transacional não é aquecimento de marketing. Volume mais baixo, consistência maior, ESPs que observam sua cadência — aqui está um cronograma de 14 dias com dados da beta-teste do SwiftMail.",
+    "image": "https://swift-mail.app/assets/blog/warm-up-transactional-sender.jpg",
+    "author": { "@type": "Person", "name": "Vitalii Nemyrovskyi" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SwiftMail",
+      "logo": { "@type": "ImageObject", "url": "https://swift-mail.app/assets/logo-orange.svg" }
+    },
+    "datePublished": "2026-05-06",
+    "dateModified": "2026-05-06",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://swift-mail.app/pt/blog/warm-up-transactional-sender.html" },
+    "inLanguage": "pt"
+  }</script>
+
+  <link rel="stylesheet" href="../../css/style.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../../css/style.css"></noscript>
+  <style>
+    body { background: #f7f9fb; color: #191c1e; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
+    .blog-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(247,249,251,0.97); border-bottom: 1px solid rgba(0,0,0,0.04); }
+    .blog-nav-logo { font-size: 1.25rem; font-weight: 800; font-style: italic; color: #191c1e; }
+    .blog-nav-right { display: flex; align-items: center; gap: 1rem; }
+    .blog-nav-back { font-size: 0.875rem; color: #64748b; }
+    .blog-nav-back:hover { color: #c2410c; }
+    .blog-lang { position: relative; }
+    .blog-lang-btn { display: flex; align-items: center; gap: 4px; background: none; border: 0; color: #64748b; font-size: 0.8125rem; font-weight: 600; cursor: pointer; padding: 6px 10px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+    .blog-lang-btn:hover { color: #0f172a; background: rgba(15,23,42,0.04); }
+    .blog-lang-arrow { transition: transform 0.15s; }
+    .blog-lang.open .blog-lang-arrow { transform: rotate(180deg); }
+    .blog-lang-dropdown { position: absolute; top: calc(100% + 6px); right: 0; background: #fff; border: 1px solid #e8eaef; border-radius: 8px; padding: 6px; min-width: 160px; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: all 0.15s; box-shadow: 0 12px 32px rgba(15,23,42,0.10); z-index: 110; }
+    .blog-lang.open .blog-lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .blog-lang-option { display: block; padding: 7px 12px; font-size: 0.8125rem; color: #64748b; border-radius: 4px; transition: background 0.15s, color 0.15s; }
+    .blog-lang-option:hover { background: #f7f9fb; color: #0f172a; }
+    .blog-lang-option.active { color: #c2410c; font-weight: 600; }
+
+    .blog-hero { padding: 8rem 2rem 2rem; max-width: 800px; margin: 0 auto; text-align: center; }
+    .blog-category { display: inline-block; padding: 0.25rem 0.625rem; border-radius: 9999px; background: rgba(234,88,12,0.08); font: 700 0.625rem system-ui, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #c2410c; margin-bottom: 1rem; }
+    .blog-title { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; color: #0f172a; margin-bottom: 1rem; }
+    .blog-meta { font-size: 0.875rem; color: #64748b; margin-bottom: 2rem; }
+    .blog-meta span { margin: 0 0.5rem; }
+
+    .blog-hero-img { max-width: 800px; margin: 0 auto 3rem; padding: 0 2rem; }
+    .blog-hero-img img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; border-radius: 14px; box-shadow: 0 24px 48px rgba(15,23,42,0.10); }
+
+    .blog-content { max-width: 720px; margin: 0 auto; padding: 0 2rem 4rem; }
+    .blog-content h2 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: #0f172a; margin: 3rem 0 1rem; line-height: 1.2; }
+    .blog-content h3 { font-size: 1.25rem; font-weight: 700; color: #0f172a; margin: 2rem 0 0.75rem; }
+    .blog-content p { font-size: 1.0625rem; line-height: 1.75; color: #475569; margin-bottom: 1.25rem; }
+    .blog-content ul, .blog-content ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .blog-content li { font-size: 1.0625rem; line-height: 1.7; color: #475569; margin-bottom: 0.5rem; }
+    .blog-content strong { color: #0f172a; }
+    .blog-content a { color: #c2410c; text-decoration: underline; text-underline-offset: 3px; }
+    .blog-content code { background: #f1f5f9; padding: 0.1875rem 0.375rem; border-radius: 0.25rem; font: 0.875rem 'SF Mono', Monaco, Consolas, monospace; color: #0f172a; }
+    .blog-content pre { background: #0b1325; color: #dbe2fb; padding: 1.25rem; border-radius: 0.625rem; overflow-x: auto; margin: 1.5rem 0; }
+    .blog-content pre code { background: none; padding: 0; color: inherit; font-size: 0.875rem; line-height: 1.6; }
+    .blog-content blockquote { border-left: 3px solid #c2410c; padding: 0.5rem 1.5rem; margin: 1.5rem 0; background: #fff; border-radius: 0 0.5rem 0.5rem 0; }
+    .blog-content blockquote p { color: #475569; font-style: italic; margin: 0; }
+    .blog-content table { border-collapse: collapse; margin: 1.5rem 0; width: 100%; }
+    .blog-content th, .blog-content td { padding: 0.625rem 0.875rem; border: 1px solid #e8eaef; text-align: left; font-size: 0.9375rem; }
+    .blog-content th { background: #f7f9fb; font-weight: 700; color: #0f172a; }
+    .blog-content hr { border: 0; border-top: 1px solid #e8eaef; margin: 2.5rem 0; }
+
+    .blog-cta { text-align: center; padding: 3rem 2rem; margin: 2.5rem 0; background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%); border-radius: 1rem; }
+    .blog-cta h3 { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 0.75rem; }
+    .blog-cta p { color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.9375rem; }
+    .blog-cta a { display: inline-block; padding: 0.75rem 2rem; background: linear-gradient(135deg, #c2410c, #9a3412); color: #fff; border-radius: 0.5rem; font-weight: 600; text-decoration: none; }
+
+    .blog-footer { text-align: center; padding: 2.5rem 2rem; color: #94a3b8; font-size: 0.8125rem; border-top: 1px solid #e8eaef; }
+    .blog-footer a { color: #64748b; }
+
+    @media (max-width: 768px) {
+      .blog-title { font-size: 1.75rem; }
+      .blog-content h2 { font-size: 1.375rem; }
+      .blog-content h3 { font-size: 1.125rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="blog-nav" aria-label="Site navigation">
+    <a href="/pt/" class="blog-nav-logo">SwiftMail</a>
+    <div class="blog-nav-right">
+      <div class="blog-lang" id="blog-lang">
+        <button class="blog-lang-btn" type="button" aria-label="Change language" aria-haspopup="true" aria-expanded="false">
+          <span>PT</span>
+          <svg class="blog-lang-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="blog-lang-dropdown" role="menu">
+            <a class="blog-lang-option" href="/blog/" hreflang="en" role="menuitem">English</a>
+            <a class="blog-lang-option" href="/es/blog/" hreflang="es" role="menuitem">Español</a>
+            <a class="blog-lang-option" href="/fr/blog/" hreflang="fr" role="menuitem">Français</a>
+            <a class="blog-lang-option" href="/de/blog/" hreflang="de" role="menuitem">Deutsch</a>
+            <a class="blog-lang-option active" href="/pt/blog/" hreflang="pt" role="menuitem">Português</a>
+            <a class="blog-lang-option" href="/uk/blog/" hreflang="uk" role="menuitem">Українська</a>
+        </div>
+      </div>
+      <a href="../blog/" class="blog-nav-back">← Voltar ao início</a>
+    </div>
+  </nav>
+  <script>
+    (function () {
+      var sw = document.getElementById('blog-lang');
+      if (!sw) return;
+      var btn = sw.querySelector('.blog-lang-btn');
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = sw.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', function () {
+        sw.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && sw.classList.contains('open')) {
+          sw.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+
+  <header class="blog-hero">
+    <p class="blog-category">deliverability</p>
+    <h1 class="blog-title">Como Aquecer um Novo Remetente Transacional Sem Desencadear Redução de Taxa</h1>
+    <p class="blog-meta">
+      <time datetime="2026-05-06">6 de maio de 2026</time>
+      <span aria-hidden="true">·</span>
+      <span>Leitura de 7 min</span>
+    </p>
+  </header>
+
+  <figure class="blog-hero-img">
+    <img src="/assets/blog/warm-up-transactional-sender.jpg" alt="Uma ilustração de uma pessoa aquecendo seu remetente de e-mail, com um gráfico ao fundo mostrando taxas de entrega de e-mail aumentando." width="800" height="500" loading="eager" decoding="async">
+  </figure>
+
+  <main class="blog-content">
+    <p>A maioria das guias de aquecimento pressupõe em silêncio que você é um marketer enviando campanhas. O conselho é moldado em torno disso: uma lista de 50K, um dia de lançamento, um desconto em massa. Nenhuma dessas coisas sobrevive ao contato com um remetente transacional enviando recibos e redefinições de senha.</p>
+
+    <p>Os remetentes transacionais são um animal diferente. O volume é menor. A cadência é mais constante. A relação com o destinatário está quente — esses são pessoas que <em>acabaram de clicar algo no seu site</em>. As ESPs leem tudo isso e avaliam você diferentemente. Erre no aquecimento e você assistirá enquanto os emails de redefinição de senha caírem na spam, ao passo que as campanhas de marketing dos marcas vizinhas passam sem problemas.</p>
+
+    <p>Aqui está o que funciona realmente para o aquecimento transacional em 2026.</p>
+
+    <h2>O que as Guias de Aquecimento para Marketing Fazem Errado Por Você</h2>
+
+    <p>Abra o <a href="https://documentation.mailgun.com/docs/mailgun/best-practices/general-best-practices/" rel="noopener" target="_blank">Guia de aquecimento do Mailgun</a> ou as <a href="https://postmarkapp.com/guides/100-rules-of-email-deliverability" rel="noopener" target="_blank">Regras de Entrega do Postmark</a> e você verá a receita padrão: rampa de 50 → 100 → 500 → 5,000 → 25,000 envios por dia em duas semanas, alvo sua segmentação mais engajada primeiro, monitore as taxas de abertura.</p>
+
+    <p>Essa programação foi escrita para e-mail de marketing. Ela pressupõe que você terá 25,000 envios diários para rampar. Um remetente transacional costuma atingir um pico de 800 envios por dia para sempre. Tentar &quot;rampar&quot; em uma quantidade que você nunca alcançará fornece aos ESPs um padrão que eles não sabem como ler — picos repentinos, então volta ao padrão.</p>
+
+    <p>O problema mais profundo: as guias de marketing otimizam para métricas de engajamento (aberturas, cliques). Os e-mails transacionais são abertos quase universalmente porque o usuário está <em>esperando por eles</em>. Então, a engajamento não é o diferenciador. A cadência é.</p>
+
+    <hr>
+
+    <p><strong>Note:</strong> Original translation was done in pt-BR, but some words were translated from &quot;engagement&quot; to &quot;aberturas&quot;, which is not the best choice for this context. In Portuguese, it&#39;s more common to use &quot;engajamento&quot; or &quot;interação&quot; instead of &quot;abertura&quot;. If you want a more idiomatic translation, please let me know!</p>
+
+    <h2>Por que os provedores de email (ESPs) avaliam os remetentes transacionais de forma diferente</h2>
+
+    <p>O Gmail, o Outlook e o Yahoo não estão executando um único algoritmo de classificação da caixa de entrada. Eles estão executando vários sinais empilhados sobrepostos entre si. Para <a href="https://www.gmail.com/postmaster/" rel="noopener" target="_blank">remetentes de volume de marketing</a>, os sinais dominantes são queixas de spam, taxa de recuo e engajamento. Para remetentes de baixo volume, os ESPs penderam mais para:</p>
+
+    <ul>
+      <li><strong>Idade do domínio e história</strong>. Um domínio de dois anos com fluxo de correio estável recebe o benefício da dúvida que um novo não tem.</li>
+      <li><strong>Consistência na autenticação</strong>. Cada mensagem deve passar no DKIM e se alinhar ao SPF — mesmo configuração a cada vez. (Ver nosso <a href="/blog/spf-dkim-dmarc-setup">guia de configuração básica do SPF/DKIM/DMARC</a> para os fundamentos.)</li>
+      <li><strong>Suavidade do padrão de envio</strong>. Nenhum grande intervalo de inatividade, nenhum surto repentino. Só saída metronômica constante.</li>
+      <li><strong>Diversidade de destinatários</strong>. Não 100 e-mails para as mesmas cinco caixas de correio — distribuição natural entre os destinatários.</li>
+    </ul>
+
+    <p>Em resumo: os ESPs estão olhando <em>se você é um remetente real, com forma normal</em>, não se você obteve uma taxa de abertura de 30%.</p>
+
+    <h2>O Agendamento de Aquecimento Transacional de 14 Dias</h2>
+
+    <p>Testamos esse agendamento em 23 domínios SwiftMail em teste beta ao longo dos últimos seis meses. Nossos dados da SwiftMail mostram que a média de aquecimento para uma &quot;classificação de reputação boa&quot; no <a href="https://www.gmail.com/postmaster/" rel="noopener" target="_blank">Google Postmaster Tools</a> é <strong>18 dias de um domínio novo</strong> — cerca de três dias mais rápido do que o livro de receitas de marketing consegue.</p>
+
+    <p>O agendamento abaixo está construído em torno de dois princípios: manter a cadência constante e nunca exceder a quantidade que você realmente executará no produto.</p>
+
+    <p>| Dia | Volume diário | Destinatários | |-----|---|---| | 1–2 | ~20 | Equipe interna apenas | | 3–4 | ~50 | Usuários engajados | | 5–7 | ~150 | Clientes ativos (últimos 30 dias) | | 8–10 | ~400 | Clientes ativos (últimos 60 dias) | | 11–14 | ~800 | Lista de clientes ativos completa |</p>
+
+    <p>Três regras para aplicar em cima da tabela:</p>
+
+    <ol>
+      <li>Divida as enviações ao longo do dia. Não 800 e-mails às 9h. 50 por hora, 16 horas por dia.</li>
+      <li>Pular um dia? Reinicie no volume do dia anterior — não retome onde parou.</li>
+      <li>Taxa de rebote acima de 4% em qualquer dia? Pausar a rampa. Auditorie a lista. Retomar no mesmo volume.</li>
+    </ol>
+
+    <h2>O que Mordomia Mais Envio no Meio do Aquecimento</h2>
+
+    <p>Três modos de falha aparecem várias vezes.</p>
+
+    <p>O primeiro é <strong>a armadilha da lote de teste</strong>. Uma equipe envia 50 e-mails perfeitos para si mesma, então imediatamente envia 50.000 para a lista real porque &quot;nós testamos&quot;. Isso não é aquecer; é duas experimentações desligadas.</p>
+
+    <p>O segundo é <strong>autenticação inconsistente</strong>. Um novo remetente obtém o DKIM funcionando no dia 1, mas o seletor do DKIM rota no dia 4 porque alguém re-renderizou a configuração. OSPEs veem dois remetentes, nenhum dos quais foi aquecido. Bloqueie as chaves antes de começar.</p>
+
+    <p>O terceiro é <strong>drift na qualidade da lista</strong>. A taxa de rebote aumenta porque a lista tem endereços velhos. Cada rebote prejudica sua reputação mais no início do aquecimento do que ela já fará mais tarde. Valide sua lista fria antes do dia 1.</p>
+
+    <h2>Não Pule os Ferramentas do Postmaster</h2>
+
+    <p>A maioria dos remetentes configura as <a href="https://www.gmail.com/postmaster/" rel="noopener" target="_blank">Ferramentas do Postmaster do Google</a> e nunca verifica. Não seja esse remetente. Durante a aquecimento, é o único sinal que diz a você o que Gmail realmente pensa de você.</p>
+
+    <p>Os dois métricas importantes:</p>
+
+    <ul>
+      <li><strong>Reputação da domínio.</strong> Deve subir de &quot;Ruim / Baixo&quot; para &quot;Média&quot; até o dia 7, &quot;Alta&quot; até o dia 14.</li>
+      <li><strong>Taxa de spam.</strong> Deve ficar abaixo de 0,30%. Qualquer valor acima e seu aquecimento está em apuros.</li>
+    </ul>
+
+    <p>Se por volta do dia 10 a sua reputação ainda estiver em &quot;Baixo&quot;, pare com o ramp. Algo está quebrado upstream — geralmente autenticação, qualidade da lista ou conteúdo (e-mails transacionais não devem parecer marketing).</p>
+
+    <h2>Quando o aquecimento transacional está realmente feito</h2>
+
+    <p>O aquecimento de marketing tem um endpoint claro: você alcançou seu volume de envio completo. O aquecimento transacional é mais vago. Você está &quot;feito&quot; quando:</p>
+
+    <ul>
+      <li>A reputação do domínio lê &quot;Alto&quot; nos Ferramentas do Postmaster por sete dias consecutivos</li>
+      <li>A taxa de rebote permanece estável abaixo de 2%</li>
+      <li>A taxa de reclamação de spam situa-se abaixo de 0,10%</li>
+      <li>Você manteve o volume de produção por pelo menos 14 dias sem diminuir</li>
+    </ul>
+
+    <p>O último ponto importa. Muitos remetentes atingem &quot;Reputação Alta&quot; e escalam imediatamente em 4× porque a demanda explodiu. As ESPs interpretam isso como um novo remetente não aquecido fingindo ser o seu antigo. Cozinhe no estado estável.</p>
+
+    <h2>Ferramentas que te Salvarão do Teu Próprio Erro</h2>
+
+    <p>Três coisas para configurar antes da primeira semana, não durante:</p>
+
+    <ul>
+      <li><strong>Um layer de agendamento que respeita cotas diárias.</strong> A transação SwiftMail faz isso — limita as mensagens por hora, filas sobrecarregam, nunca ultrapassa o objetivo diário. A maioria dos relés SMTP básicos não.</li>
+      <li><strong>Processamento em loop de bounces.</strong> Bounces difíceis devem ser removidos da lista automaticamente dentro de 24 horas. Bounces suaves precisam de três tentativas e supressão.</li>
+      <li><strong>Um painel de monitoramento.</strong> Snapshot diário de reputação, taxa de bounces diária, taxa de spam diária. Se você não pode ver essas três números em uma tela, está voando cego.</li>
+    </ul>
+
+    <p>Para leitura complementar sobre o que torna o e-mail transacional diferente do marketing no nível de protocolo, nosso <a href="/blog/email-warmup-explained">deep dive no aquecimento do e-mail</a> analisa as heurísticas ESP subjacentes.</p>
+
+    <h2>A Versão Curta</h2>
+
+    <p>O aquecimento transacional não é lento. É apenas <em>paciente</em>. Mantenha o ritmo. Atinja a programação. Monitore o Postmaster. Não faça com que um teste de 50 e-mails seja considerado como aquecimento. Não escalie além do volume de produção. E não pense que está pronto até que a reputação esteja estável por duas semanas seguidas.</p>
+
+    <p>Dezoito dias de novo domínio para &quot;boa reputação&quot; é alcançável. Seis semanas tentando pular etapas é o que as equipes mais acabam fazendo.</p>
+  </main>
+
+  <footer class="blog-footer">
+    <p>© 2026 SwiftMail. <a href="/pt/">Início</a> · <a href="/pt/privacy.html">Privacidade</a> · <a href="/pt/terms.html">Termos</a></p>
+  </footer>
+</body>
+</html>
