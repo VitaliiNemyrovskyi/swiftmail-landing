@@ -94,8 +94,16 @@ export async function chat({
  * Streaming chat — accumulates tokens from NDJSON response chunks.
  * Keeps the HTTP body alive while CPU model generates, avoiding
  * Node's 5-min bodyTimeout that bites on long stream=false requests.
+ *
+ * Dispatches to Groq cloud (OpenAI-compatible API) when LLM_PROVIDER=groq
+ * is set in env. Same input shape, same string return type — drop-in.
+ * Groq runs the same llama-family models 50-300× faster on optimized
+ * hardware, eliminating the OOM/timeout issues we hit on CPU Ollama.
  */
 async function streamChat({ url, model, messages, temperature, maxTokens, numCtx, timeoutMs }) {
+  if ((process.env.LLM_PROVIDER || 'ollama').toLowerCase() === 'groq') {
+    return streamChatGroq({ messages, temperature, maxTokens, timeoutMs });
+  }
   const res = await fetch(`${url}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -151,6 +159,77 @@ async function streamChat({ url, model, messages, temperature, maxTokens, numCtx
 }
 
 /**
+ * Groq cloud variant — OpenAI-compatible chat completions API at
+ * https://api.groq.com/openai/v1/chat/completions. Uses SSE streaming.
+ *
+ * Model picked from GROQ_MODEL env (default: llama-3.3-70b-versatile —
+ * Groq free tier, 128k ctx, way smarter than llama3.1:8b we run locally).
+ * GROQ_API_KEY must be set; throws otherwise.
+ *
+ * Drop-in replacement for streamChat — same input fields used, same
+ * string return.
+ */
+async function streamChatGroq({ messages, temperature, maxTokens, timeoutMs }) {
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) throw new Error('GROQ_API_KEY missing — set in .env or unset LLM_PROVIDER');
+  const model = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model,
+      messages,
+      temperature,
+      max_tokens: maxTokens,
+      stream: true,
+    }),
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Groq ${res.status}: ${body.slice(0, 500)}`);
+  }
+
+  // Parse Server-Sent Events. Each event: "data: {...json...}\n" with
+  // a final "data: [DONE]" sentinel. Each JSON has shape
+  // { choices: [{ delta: { content: "..." } }] }.
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let assembled = '';
+
+  for await (const chunk of res.body) {
+    buffer += decoder.decode(chunk, { stream: true });
+    let nl;
+    while ((nl = buffer.indexOf('\n')) !== -1) {
+      const line = buffer.slice(0, nl);
+      buffer = buffer.slice(nl + 1);
+      if (!line.startsWith('data: ')) continue;
+      const data = line.slice(6).trim();
+      if (data === '[DONE]') continue;
+      if (!data) continue;
+      try {
+        const obj = JSON.parse(data);
+        const delta = obj.choices?.[0]?.delta?.content;
+        if (delta) assembled += delta;
+        const errMsg = obj.error?.message;
+        if (errMsg) throw new Error(`Groq stream error: ${errMsg}`);
+      } catch (err) {
+        if (err.message.startsWith('Groq')) throw err;
+        // Malformed SSE line — skip (rare, defensive)
+      }
+    }
+  }
+
+  if (!assembled) throw new Error('Groq stream returned empty content');
+  return assembled;
+}
+
+/**
  * List available models. Useful for diagnostics / setup wizard.
  * @returns {Promise<Array<{name: string, size: number}>>}
  */
@@ -167,10 +246,23 @@ export async function listModels({ url = DEFAULT_URL } = {}) {
 }
 
 /**
- * Health-check.
+ * Health-check. For Groq mode, just verifies API key is present and the
+ * /openai/v1/models endpoint responds — no need to ping localhost.
  * @returns {Promise<boolean>}
  */
 export async function ping({ url = DEFAULT_URL } = {}) {
+  if ((process.env.LLM_PROVIDER || 'ollama').toLowerCase() === 'groq') {
+    if (!process.env.GROQ_API_KEY) return false;
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/models', {
+        headers: { 'Authorization': `Bearer ${process.env.GROQ_API_KEY}` },
+        signal: AbortSignal.timeout(5000),
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  }
   try {
     const res = await fetch(`${url}/api/tags`, { signal: AbortSignal.timeout(3000) });
     return res.ok;
