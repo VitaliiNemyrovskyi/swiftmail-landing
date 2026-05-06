@@ -83,6 +83,17 @@ jobs:
           cp "$SRC" "$DST"
           echo "env-copied ($(wc -l < $DST) lines)"
 
+      - name: Install pipeline dependencies
+        working-directory: content-pipeline
+        run: |
+          # Fresh checkout each run — node_modules absent. pnpm uses the host's
+          # content-addressed store, so after first run installs are ~5s hardlinks.
+          if ! command -v pnpm >/dev/null 2>&1; then
+            corepack enable && corepack prepare pnpm@latest --activate
+          fi
+          pnpm install --frozen-lockfile --prefer-offline
+          echo "deps-installed"
+
       - name: Run auto-publish
         working-directory: content-pipeline
         env:
