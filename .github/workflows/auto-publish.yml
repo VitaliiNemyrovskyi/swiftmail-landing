@@ -1,7 +1,10 @@
 name: Auto-publish blog post
 
-# Runs on the self-hosted runner on the SwiftMail VPS so it can use the local
-# Ollama instance for drafting + translation. Replaces the previous host crontab.
+# Runs on the self-hosted runner on the SwiftMail VPS. Originally used a
+# local Ollama container (decommissioned 2026-05-08); now uses Groq cloud
+# (LLM_PROVIDER=groq env on prod), which is 50-300× faster and free up
+# to 14 400 RPD per model. The pipeline supports both back-ends — switch
+# by setting LLM_PROVIDER in /home/deploy/swiftmail-landing/content-pipeline/.env.
 #
 # After this workflow pushes to main, deploy.yml fires and Cloudflare Pages
 # picks up the new article.
@@ -15,9 +18,14 @@ on:
   workflow_dispatch:
     inputs:
       langs:
-        description: 'Comma-separated languages to translate (default: es,fr,de,pt,uk)'
+        # UK was dropped from default 2026-05-08 — translation quality not
+        # acceptable (see Revert commit 5a4ac08), and there's no `uk/blog/`
+        # destination folder, so leaving it default crashed publish.mjs on
+        # path creation. Manual dispatch can still pass `langs: es,fr,de,pt,uk`
+        # if the UK quality bar is ever re-met.
+        description: 'Comma-separated languages to translate (default: es,fr,de,pt)'
         required: false
-        default: 'es,fr,de,pt,uk'
+        default: 'es,fr,de,pt'
       en_only:
         description: 'EN only — skip translations'
         type: boolean
@@ -61,19 +69,12 @@ jobs:
             exit 1
           fi
 
-      - name: Verify Ollama reachable
-        run: |
-          if ! curl -sf http://localhost:11434/api/tags >/dev/null; then
-            echo "::error::Ollama not reachable on localhost:11434"
-            exit 1
-          fi
-          echo "ollama-ok"
-
       - name: Stage pipeline .env from server canonical copy
         run: |
-          # Secrets (SMTP, PEXELS_API_KEY, OLLAMA_URL) live in the operator's
-          # .env at /home/deploy/swiftmail-landing — we re-use it instead of
-          # mirroring 8 secrets into Actions.
+          # Secrets (SMTP, PEXELS_API_KEY, GROQ_API_KEY, GEMINI_API_KEY,
+          # LLM_PROVIDER) live in the operator's .env at
+          # /home/deploy/swiftmail-landing/content-pipeline/.env. We re-use
+          # it instead of mirroring 10+ secrets into Actions secrets.
           SRC="/home/deploy/swiftmail-landing/content-pipeline/.env"
           DST="content-pipeline/.env"
           if [ ! -f "$SRC" ]; then
@@ -82,6 +83,41 @@ jobs:
           fi
           cp "$SRC" "$DST"
           echo "env-copied ($(wc -l < $DST) lines)"
+
+      - name: Verify configured LLM provider reachable
+        # Was previously a hard-coded `curl localhost:11434/api/tags`. After
+        # Ollama was decommissioned 2026-05-08 the env switched to
+        # LLM_PROVIDER=groq but the workflow still ran the localhost curl
+        # → fail-fast every morning. This step now reads .env and pings the
+        # actual configured provider via the pipeline's own ping() helper.
+        working-directory: content-pipeline
+        run: |
+          # Source the staged .env so $LLM_PROVIDER, $GROQ_API_KEY, $OLLAMA_URL
+          # are visible to the shell + child node.
+          set -a; . ./.env; set +a
+          PROVIDER="${LLM_PROVIDER:-ollama}"
+          echo "configured provider: $PROVIDER"
+          case "$PROVIDER" in
+            groq)
+              if ! curl -sf -H "Authorization: Bearer $GROQ_API_KEY" \
+                   https://api.groq.com/openai/v1/models -o /dev/null; then
+                echo "::error::Groq API not reachable / GROQ_API_KEY invalid"
+                exit 1
+              fi
+              echo "groq-ok"
+              ;;
+            ollama)
+              if ! curl -sf "${OLLAMA_URL:-http://localhost:11434}/api/tags" -o /dev/null; then
+                echo "::error::Ollama not reachable at ${OLLAMA_URL:-http://localhost:11434}"
+                exit 1
+              fi
+              echo "ollama-ok"
+              ;;
+            *)
+              echo "::error::unknown LLM_PROVIDER='$PROVIDER' — supported: ollama, groq"
+              exit 1
+              ;;
+          esac
 
       - name: Install pipeline dependencies
         working-directory: content-pipeline
