@@ -42,8 +42,10 @@
   unique_data_hint: How many beta-tester domains have hit this; common offenders
     (Salesforce + ConvertKit + own ESP = boom)
   humor_level: 0
-  status: idea
+  status: published
   est_words: 1400
+  drafted_at: 2026-05-08T16:36:27.752Z
+  published_at: 2026-05-08T16:36:40.913Z
 - slug: bimi-worth-it-2026
   title: Is BIMI Worth $1500/yr for Small Senders in 2026?
   category: deliverability

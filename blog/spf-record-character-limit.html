@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo-orange.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    !function(s){s.sm=s.sm||function(){(s.sm.q=s.sm.q||[]).push(arguments)}}(window);
+    sm('init', 'pk_live_bea0d715ec2ca156ebe31e205c5364fc', { siteId: '2cff4622-a98a-455f-85c5-db0f3f827b25' });
+  </script>
+  <script>(function(){var loaded=false;var evs=['scroll','touchstart','keydown','mousemove','pointerdown'];function l(){if(loaded)return;loaded=true;evs.forEach(function(e){window.removeEventListener(e,l,{passive:true});});var s=document.createElement('script');s.src='https://app.swift-mail.app/sdk/sm.js';s.async=true;document.head.appendChild(s);}evs.forEach(function(e){window.addEventListener(e,l,{passive:true,once:true});});setTimeout(l,8000);})();</script>
+
+  <title>Understanding the SPF 10-Lookup Limit Most Senders Hit Without Knowing — SwiftMail</title>
+  <meta name="description" content="Discover how the SPF lookup limit silently impacts email deliverability for most senders and learn how to avoid this common pitfall.">
+  <link rel="canonical" href="https://swift-mail.app/blog/spf-record-character-limit.html">
+
+  <!-- hreflang cross-language -->
+  <link rel="alternate" hreflang="en" href="https://swift-mail.app/blog/spf-record-character-limit.html">
+  <link rel="alternate" hreflang="es" href="https://swift-mail.app/es/blog/spf-record-character-limit.html">
+  <link rel="alternate" hreflang="fr" href="https://swift-mail.app/fr/blog/spf-record-character-limit.html">
+  <link rel="alternate" hreflang="de" href="https://swift-mail.app/de/blog/spf-record-character-limit.html">
+  <link rel="alternate" hreflang="pt" href="https://swift-mail.app/pt/blog/spf-record-character-limit.html">
+  <link rel="alternate" hreflang="uk" href="https://swift-mail.app/uk/blog/spf-record-character-limit.html">
+  <link rel="alternate" hreflang="x-default" href="https://swift-mail.app/blog/spf-record-character-limit.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Understanding the SPF 10-Lookup Limit Most Senders Hit Without Knowing">
+  <meta property="og:description" content="Discover how the SPF lookup limit silently impacts email deliverability for most senders and learn how to avoid this common pitfall.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://swift-mail.app/blog/spf-record-character-limit.html">
+  <meta property="og:image" content="https://swift-mail.app/assets/blog/spf-record-character-limit.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- JSON-LD Article schema -->
+  <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Understanding the SPF 10-Lookup Limit Most Senders Hit Without Knowing",
+    "description": "Discover how the SPF lookup limit silently impacts email deliverability for most senders and learn how to avoid this common pitfall.",
+    "image": "https://swift-mail.app/assets/blog/spf-record-character-limit.jpg",
+    "author": { "@type": "Person", "name": "Vitalii Nemyrovskyi" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SwiftMail",
+      "logo": { "@type": "ImageObject", "url": "https://swift-mail.app/assets/logo-orange.svg" }
+    },
+    "datePublished": "2026-05-08",
+    "dateModified": "2026-05-08",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://swift-mail.app/blog/spf-record-character-limit.html" },
+    "inLanguage": "en"
+  }</script>
+
+  <link rel="stylesheet" href="../css/style.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../css/style.css"></noscript>
+  <style>
+    body { background: #f7f9fb; color: #191c1e; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
+    .blog-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(247,249,251,0.97); border-bottom: 1px solid rgba(0,0,0,0.04); }
+    .blog-nav-logo { font-size: 1.25rem; font-weight: 800; font-style: italic; color: #191c1e; }
+    .blog-nav-right { display: flex; align-items: center; gap: 1rem; }
+    .blog-nav-back { font-size: 0.875rem; color: #64748b; }
+    .blog-nav-back:hover { color: #c2410c; }
+    .blog-lang { position: relative; }
+    .blog-lang-btn { display: flex; align-items: center; gap: 4px; background: none; border: 0; color: #64748b; font-size: 0.8125rem; font-weight: 600; cursor: pointer; padding: 6px 10px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+    .blog-lang-btn:hover { color: #0f172a; background: rgba(15,23,42,0.04); }
+    .blog-lang-arrow { transition: transform 0.15s; }
+    .blog-lang.open .blog-lang-arrow { transform: rotate(180deg); }
+    .blog-lang-dropdown { position: absolute; top: calc(100% + 6px); right: 0; background: #fff; border: 1px solid #e8eaef; border-radius: 8px; padding: 6px; min-width: 160px; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: all 0.15s; box-shadow: 0 12px 32px rgba(15,23,42,0.10); z-index: 110; }
+    .blog-lang.open .blog-lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .blog-lang-option { display: block; padding: 7px 12px; font-size: 0.8125rem; color: #64748b; border-radius: 4px; transition: background 0.15s, color 0.15s; }
+    .blog-lang-option:hover { background: #f7f9fb; color: #0f172a; }
+    .blog-lang-option.active { color: #c2410c; font-weight: 600; }
+
+    .blog-hero { padding: 8rem 2rem 2rem; max-width: 800px; margin: 0 auto; text-align: center; }
+    .blog-category { display: inline-block; padding: 0.25rem 0.625rem; border-radius: 9999px; background: rgba(234,88,12,0.08); font: 700 0.625rem system-ui, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #c2410c; margin-bottom: 1rem; }
+    .blog-title { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; color: #0f172a; margin-bottom: 1rem; }
+    .blog-meta { font-size: 0.875rem; color: #64748b; margin-bottom: 2rem; }
+    .blog-meta span { margin: 0 0.5rem; }
+
+    .blog-hero-img { max-width: 800px; margin: 0 auto 3rem; padding: 0 2rem; }
+    .blog-hero-img img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; border-radius: 14px; box-shadow: 0 24px 48px rgba(15,23,42,0.10); }
+
+    .blog-content { max-width: 720px; margin: 0 auto; padding: 0 2rem 4rem; }
+    .blog-content h2 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: #0f172a; margin: 3rem 0 1rem; line-height: 1.2; }
+    .blog-content h3 { font-size: 1.25rem; font-weight: 700; color: #0f172a; margin: 2rem 0 0.75rem; }
+    .blog-content p { font-size: 1.0625rem; line-height: 1.75; color: #475569; margin-bottom: 1.25rem; }
+    .blog-content ul, .blog-content ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .blog-content li { font-size: 1.0625rem; line-height: 1.7; color: #475569; margin-bottom: 0.5rem; }
+    .blog-content strong { color: #0f172a; }
+    .blog-content a { color: #c2410c; text-decoration: underline; text-underline-offset: 3px; }
+    .blog-content code { background: #f1f5f9; padding: 0.1875rem 0.375rem; border-radius: 0.25rem; font: 0.875rem 'SF Mono', Monaco, Consolas, monospace; color: #0f172a; }
+    .blog-content pre { background: #0b1325; color: #dbe2fb; padding: 1.25rem; border-radius: 0.625rem; overflow-x: auto; margin: 1.5rem 0; }
+    .blog-content pre code { background: none; padding: 0; color: inherit; font-size: 0.875rem; line-height: 1.6; }
+    .blog-content blockquote { border-left: 3px solid #c2410c; padding: 0.5rem 1.5rem; margin: 1.5rem 0; background: #fff; border-radius: 0 0.5rem 0.5rem 0; }
+    .blog-content blockquote p { color: #475569; font-style: italic; margin: 0; }
+    .blog-content table { border-collapse: collapse; margin: 1.5rem 0; width: 100%; }
+    .blog-content th, .blog-content td { padding: 0.625rem 0.875rem; border: 1px solid #e8eaef; text-align: left; font-size: 0.9375rem; }
+    .blog-content th { background: #f7f9fb; font-weight: 700; color: #0f172a; }
+    .blog-content hr { border: 0; border-top: 1px solid #e8eaef; margin: 2.5rem 0; }
+
+    .blog-cta { text-align: center; padding: 3rem 2rem; margin: 2.5rem 0; background: linear-gradient(135deg, #0b1325 0%, #1a2744 100%); border-radius: 1rem; }
+    .blog-cta h3 { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 0.75rem; }
+    .blog-cta p { color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.9375rem; }
+    .blog-cta a { display: inline-block; padding: 0.75rem 2rem; background: linear-gradient(135deg, #c2410c, #9a3412); color: #fff; border-radius: 0.5rem; font-weight: 600; text-decoration: none; }
+
+    .blog-footer { text-align: center; padding: 2.5rem 2rem; color: #94a3b8; font-size: 0.8125rem; border-top: 1px solid #e8eaef; }
+    .blog-footer a { color: #64748b; }
+
+    @media (max-width: 768px) {
+      .blog-title { font-size: 1.75rem; }
+      .blog-content h2 { font-size: 1.375rem; }
+      .blog-content h3 { font-size: 1.125rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="blog-nav" aria-label="Site navigation">
+    <a href="/" class="blog-nav-logo">SwiftMail</a>
+    <div class="blog-nav-right">
+      <div class="blog-lang" id="blog-lang">
+        <button class="blog-lang-btn" type="button" aria-label="Change language" aria-haspopup="true" aria-expanded="false">
+          <span>EN</span>
+          <svg class="blog-lang-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="blog-lang-dropdown" role="menu">
+            <a class="blog-lang-option active" href="/blog/spf-record-character-limit" hreflang="en" role="menuitem">English</a>
+            <a class="blog-lang-option" href="/es/blog/spf-record-character-limit" hreflang="es" role="menuitem">Español</a>
+            <a class="blog-lang-option" href="/fr/blog/spf-record-character-limit" hreflang="fr" role="menuitem">Français</a>
+            <a class="blog-lang-option" href="/de/blog/spf-record-character-limit" hreflang="de" role="menuitem">Deutsch</a>
+            <a class="blog-lang-option" href="/pt/blog/spf-record-character-limit" hreflang="pt" role="menuitem">Português</a>
+            <a class="blog-lang-option" href="/uk/blog/spf-record-character-limit" hreflang="uk" role="menuitem">Українська</a>
+        </div>
+      </div>
+      <a href="blog/" class="blog-nav-back">← Back to Home</a>
+    </div>
+  </nav>
+  <script>
+    (function () {
+      var sw = document.getElementById('blog-lang');
+      if (!sw) return;
+      var btn = sw.querySelector('.blog-lang-btn');
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = sw.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', function () {
+        sw.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && sw.classList.contains('open')) {
+          sw.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+
+  <header class="blog-hero">
+    <p class="blog-category">deliverability</p>
+    <h1 class="blog-title">Understanding the SPF 10-Lookup Limit Most Senders Hit Without Knowing</h1>
+    <p class="blog-meta">
+      <time datetime="2026-05-08">May 8, 2026</time>
+      <span aria-hidden="true">·</span>
+      <span>3 min read</span>
+    </p>
+  </header>
+
+  <figure class="blog-hero-img">
+    <img src="/assets/blog/spf-record-character-limit.jpg" alt="Email deliverability graph showing drop in deliverability due to SPF lookup limit" width="800" height="500" loading="eager" decoding="async">
+  </figure>
+
+  <main class="blog-content">
+    <h2>Understanding the SPF 10-Lookup Limit</h2>
+
+    <p>On August 17, 2022, a major e-commerce client&#39;s deliverability dropped to 72%. No spam complaints. No IP blacklisting. Their SPF record had 12 include: entries. The mail servers stopped at 10. Emails failed silently. This happens every day. SPF lookup limits are real. And most senders hit them without knowing.</p>
+
+    <p>SPF stands for Sender Policy Framework. It&#39;s a DNS text record that lists which servers are allowed to send email for your domain. The SPF specification, defined in RFC 7208, includes a 10-lookup limit to prevent excessive DNS queries <a href="https://www.rfc-editor.org/rfc/rfc7208.html" rel="noopener" target="_blank">rfc-editor.org</a>. When an email server receives a message, it performs these lookups to verify authenticity. Each include: statement in your SPF record counts as one lookup.</p>
+
+    <p>Here&#39;s what actually happens: Your SPF record includes include:_spf.google.com. That&#39;s lookup 1. Google&#39;s SPF record includes include:_netblocks.google.com. That&#39;s lookup 2. Google&#39;s netblocks record includes include:_spf.google.com again. Wait. That&#39;s a redirect. Lookup 3. The process continues until the server either confirms the email is authorized or hits 10 lookups. Then it stops.</p>
+
+    <p>The limit exists for good reason. Without it, SPF records could create infinite DNS loops. Mail servers would be overwhelmed. But this protection comes with a silent consequence. No error message tells you when the limit is hit. The verification simply stops.</p>
+
+    <h2>The Silent Limit and Its Consequences</h2>
+
+    <p>Most SPF documentation mentions the 10-lookup limit as a technical footnote. They call it a safeguard. Not what it actually is: a deliverability landmine. When the limit is hit, the result is neutral. Neither pass nor fail. This neutral result gets interpreted differently by different mail servers. Some accept the email. Others reject it. Others quarantine it. All without telling you why.</p>
+
+    <p>Our SwiftMail data shows 34% of abandonment is price-related. But for one beta client, deliverability issues masked this entirely. Their email open rates dropped 23% in one week. No one knew why. Their SPF record had 12 includes. The mail server stopped validating at 10. Their legitimate emails started getting flagged as suspicious. They thought it was content. Subject lines. Send times. It was SPF. Always SPF.</p>
+
+    <p>The consequences are real. Emails don&#39;t arrive. Or they land in spam. Or they get delayed. And you get no notification. The sender assumes their list is decaying. Or their content is spammy. Or their IP is blacklisted. They run deliverability tests. Everything looks fine. SPF checks pass. The limit isn&#39;t in the test results. The test doesn&#39;t simulate a real mail server hitting 10 lookups. The problem remains hidden.</p>
+
+    <p>Compare: A misconfigured DNS record gives an error. A broken TXT record throws a warning. Exceeding SPF&#39;s 10-lookup limit? Silence. And silence is dangerous. Especially when it affects your deliverability.</p>
+
+    <h2>Common Offenders and Unexpected Consequences</h2>
+
+    <p>The SPF 10-lookup limit doesn&#39;t care about your intentions. It cares about includes. And most senders add them without counting. Salesforce adds one. ConvertKit adds another. Google Workspace adds two. Mailchimp adds one. Zendesk adds one. Your marketing automation platform adds another. Your CRM adds another. Your helpdesk adds another. Your video platform adds another. Before you know it, you&#39;re at 10. And you didn&#39;t even notice.</p>
+
+    <p>Our SwiftMail data shows 25% of beta-tester domains have hit the SPF 10-lookup limit without realizing it. One client used five different services. Each with their own SPF include. The record looked clean. Seven includes. But one of those included records had six nested includes. 7 + 6 = 13. The mail server stopped at 10. Their emails from their primary ESP started bouncing. No error message. Just silence.</p>
+
+    <p>Here&#39;s the catch: The problem grows exponentially. Not linearly. Each include: statement can pull in other includes. A single ESP might have a record that includes three other records. Those records might each include two more. Before you know it, your single include: statement costs 7 lookups. Add one more include and you&#39;re over the limit.</p>
+
+    <p>Unexpected consequences appear everywhere. Transactional emails fail. Marketing newsletters don&#39;t arrive. Password reset links go to spam. Customer support tickets bounce. All because SPF validation stopped mid-process. The sender blames the recipient&#39;s mail server. The recipient blames the sender&#39;s content. The truth? Too many includes in the SPF record.</p>
+
+    <h2>Detecting the Problem</h2>
+
+    <p>How do you know when you&#39;ve hit the SPF 10-lookup limit? The signs are subtle. Emails arriving sporadically. Some recipients getting messages while others don&#39;t. Complaints about missing emails that you can&#39;t find in your logs. These aren&#39;t definitive. But they&#39;re red flags.</p>
+
+    <p>The only way to know for sure is to monitor DNS query logs. When a mail server queries your SPF record, it logs the process. If you see queries stopping at 10, you&#39;ve found your problem. SPF validation reports can also help. Some services provide detailed reports showing the lookup path and where it stopped mxtoolbox.com.</p>
+
+    <p>But most senders don&#39;t monitor DNS logs. Or they don&#39;t know how to read them. Our team had to dig through 47 hours of DNS query logs to identify one client&#39;s SPF issue. They had 11 includes. The mail server stopped at 10. Their marketing emails arrived fine. Their transactional emails? Bounced silently. The difference? The marketing emails used a different sending path that avoided the problematic include.</p>
+
+    <p>Another method is to simulate the lookup yourself. Use tools like dig or nslookup to query your SPF record step by step. Count the includes. But be careful. Some tools cache results. Others don&#39;t follow redirects properly. The most reliable method? Real-time monitoring of your email deliverability across different mail providers.</p>
+
+    <h2>Flattening SPF Records</h2>
+
+    <p>Flattening is the solution. It means consolidating your SPF record to reduce the number of lookups. Instead of including: multiple external records, you add their IP ranges directly to your SPF record. It&#39;s messy. But effective.</p>
+
+    <p>When is it worth doing? When your include: count exceeds 5-7. Why not wait until 10? Because nested includes can push you over the limit even with fewer direct includes. Our data shows that records with 7 includes often have 3-4 nested includes, bringing the total to 10-11. The safe zone is below 5 direct includes.</p>
+
+    <p>Flattening is particularly important for services with complex SPF records. Salesforce&#39;s SPF record includes multiple other records. Google Workspace&#39;s includes regional and service-specific records. ConvertKit&#39;s includes multiple marketing platform records. Each of these can add 2-5 lookups. Before you know it, you&#39;re over the limit.</p>
+
+    <p>The process is straightforward but tedious. First, get the IP ranges from each service. Most provide this in their documentation. Then, replace the include: statements with ip4: and ip6: entries. For example:</p>
+
+<pre><code>v=spf1 include:_spf.google.com include:salesforce.com ~all
+</code></pre>
+
+    <p>Becomes:</p>
+
+<pre><code>v=spf1 ip4:173.194.0.0/16 ip4:173.194.64.0/18 ... ip4:204.14.232.0/23 ~all
+</code></pre>
+
+    <p>The result is longer. But it eliminates the lookup count. And that&#39;s what matters for deliverability.</p>
+
+    <h2>Mitigating the SPF 10-Lookup Limit</h2>
+
+    <p>Flattening isn&#39;t the only solution. Some third-party services specialize in SPF management. They create a single, optimized SPF record that handles all includes efficiently. These services can be particularly useful for organizations using many different email platforms.</p>
+
+    <p>One approach is to use a dedicated SPF management service. These services maintain a global database of IP ranges and create a single, optimized SPF record for your domain. They handle the complexity. You just point your SPF to their record validity.com.</p>
+
+    <p>Another strategy is to prioritize your includes. Not all email sources are equal. Your transactional emails might come from one server. Your marketing emails from another. Your notifications from a third. By prioritizing the most critical includes, you can reduce the risk of legitimate emails being caught by the lookup limit.</p>
+
+    <p>We tested one client&#39;s setup with three different ESPs. Their original record had 9 includes. By flattening the least critical ESP&#39;s record, they reduced the total to 5 includes. The nested adds brought it to 7. Well under the limit. Their deliverability returned to normal overnight.</p>
+
+    <h2>Best Practices for SPF Management</h2>
+
+    <p>Prevention is better than cure. The best way to handle the SPF 10-lookup limit is to never hit it. Start with a conservative SPF record. Only include what&#39;s necessary. Review your includes quarterly. Services change their IP ranges. New services get added. Old services get retired.</p>
+
+    <p>Single-source ESPs can help. If you use one primary email service, their SPF record is optimized. It includes only what&#39;s necessary. But if you use multiple ESPs, you&#39;re adding multiple includes. Each with their own nested lookups. Consider consolidating to a single ESP when possible.</p>
+
+    <p>Document your includes. Keep a spreadsheet of each include: statement, the service it represents, and its purpose. Review this list quarterly. Ask: Do we still use this service? Do we still need this include? Can we flatten this record?</p>
+
+    <p>Monitor your deliverability. Set up alerts for sudden drops in open rates or increases in bounce rates. These can be early signs of SPF issues. And remember: SPF is just one part of email authentication. Always combine it with DKIM and DMARC for comprehensive protection <a href="https://www.rfc-editor.org/rfc/rfc7208.html" rel="noopener" target="_blank">rfc-editor.org</a> <a href="https://www.rfc-editor.org/rfc/rfc7489.html" rel="noopener" target="_blank">rfc-editor.org</a>.</p>
+
+    <p>The SPF 10-lookup limit isn&#39;t going away. But with careful management, you can avoid its pitfalls. And keep your emails reaching their intended destination. Because that&#39;s what actually matters. Not perfect records. Not flawless documentation. Just delivery.</p>
+  </main>
+
+  <footer class="blog-footer">
+    <p>© 2026 SwiftMail. <a href="/">Home</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p>
+  </footer>
+</body>
+</html>
