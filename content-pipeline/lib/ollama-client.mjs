@@ -300,6 +300,16 @@ async function streamChatGlm({ messages, temperature, maxTokens, timeoutMs, mode
       temperature,
       max_tokens: maxTokens,
       stream: true,
+      // CRITICAL: disable thinking-mode preamble. GLM 4.5/4.7-flash by
+      // default streams `delta.reasoning_content` chunks BEFORE the
+      // actual `delta.content` — and the reasoning eats the entire
+      // max_tokens budget on small calls (we'd hit max_tokens on
+      // reasoning, never reach content, and our SSE parser only watches
+      // `delta.content` so `assembled` stayed empty → "GLM stream
+      // returned empty content" thrown). With thinking disabled the
+      // model produces visible content immediately. Verified 2026-05-08
+      // against /api/paas/v4/chat/completions.
+      thinking: { type: 'disabled' },
     }),
     signal: AbortSignal.timeout(timeoutMs),
   });
