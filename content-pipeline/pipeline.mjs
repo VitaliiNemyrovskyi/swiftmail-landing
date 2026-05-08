@@ -67,20 +67,31 @@ const arg = process.argv[3];
 const CMDS_NEEDING_OLLAMA = new Set(['draft', 'draft-next']);
 
 (async () => {
-  // Sanity check Ollama is reachable
+  // Sanity check that the configured LLM provider is reachable.
   if (cmd && CMDS_NEEDING_OLLAMA.has(cmd)) {
+    const provider = (process.env.LLM_PROVIDER || 'ollama').toLowerCase();
     const alive = await ping();
     if (!alive) {
-      console.error(`✗ Ollama not reachable at ${process.env.OLLAMA_URL || 'http://localhost:11434'}`);
-      console.error('  Set OLLAMA_URL env var, or run: ollama serve');
+      if (provider === 'groq') {
+        console.error('✗ Groq not reachable — check GROQ_API_KEY validity at https://console.groq.com');
+      } else {
+        console.error(`✗ Ollama not reachable at ${process.env.OLLAMA_URL || 'http://localhost:11434'}`);
+        console.error('  Set OLLAMA_URL env var, or run: ollama serve');
+      }
       process.exit(1);
     }
-    const models = await listModels();
-    const target = process.env.OLLAMA_MODEL || 'llama3.3:70b';
-    if (!models.find((m) => m.name === target)) {
-      console.error(`✗ Model "${target}" not loaded.  Available: ${models.map((m) => m.name).join(', ')}`);
-      console.error(`  Pull it:  ollama pull ${target}`);
-      process.exit(1);
+    // The "is the model loaded?" check is Ollama-specific (cloud providers
+    // serve all their models on demand, no pre-pull needed). Skip it for
+    // any non-Ollama provider — listModels() hits /api/tags which only
+    // exists on the Ollama server.
+    if (provider === 'ollama') {
+      const models = await listModels();
+      const target = process.env.OLLAMA_MODEL || 'llama3.3:70b';
+      if (!models.find((m) => m.name === target)) {
+        console.error(`✗ Model "${target}" not loaded.  Available: ${models.map((m) => m.name).join(', ')}`);
+        console.error(`  Pull it:  ollama pull ${target}`);
+        process.exit(1);
+      }
     }
   }
 

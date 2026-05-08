@@ -63,10 +63,15 @@ const flags = parseFlags(process.argv.slice(2));
   };
 
   try {
-    // Sanity check Ollama
+    // Sanity check the configured LLM provider (Groq / Ollama).
+    const provider = (process.env.LLM_PROVIDER || 'ollama').toLowerCase();
     const alive = await ping();
     if (!alive) {
-      throw new Error('Ollama not reachable. Check OLLAMA_URL.');
+      throw new Error(
+        provider === 'groq'
+          ? 'Groq not reachable. Check GROQ_API_KEY at console.groq.com.'
+          : 'Ollama not reachable. Check OLLAMA_URL or run: ollama serve.',
+      );
     }
 
     // Step 1: pick next topic — alternate news / evergreen for content variety
@@ -87,7 +92,11 @@ const flags = parseFlags(process.argv.slice(2));
     log('auto.start', { slug, title: topic.title });
 
     // Step 2: draft
-    console.log(`\n  → Drafting (5 phases via Ollama, ~15-25 min on CPU)…`);
+    const draftEta =
+      provider === 'groq'
+        ? '5 phases via Groq cloud, ~30-60 sec total'
+        : '5 phases via Ollama, ~15-25 min on CPU';
+    console.log(`\n  → Drafting (${draftEta})…`);
     runStep(['node', '--env-file-if-exists=.env', 'pipeline.mjs', 'draft', slug], 'draft');
 
     // Step 3: verify draft + checks before translating
