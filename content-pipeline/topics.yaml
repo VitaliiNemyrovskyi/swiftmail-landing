@@ -26,8 +26,10 @@
   unique_data_hint: 47% of beta-tester domains have DMARC at p=none after 6 months
     — too cautious; explain
   humor_level: 1
-  status: idea
+  status: published
   est_words: 1500
+  drafted_at: 2026-05-08T15:17:27.327Z
+  published_at: 2026-05-08T15:17:41.137Z
 - slug: spf-record-character-limit
   title: The SPF 10-Lookup Limit Most Senders Hit Without Knowing
   category: deliverability
