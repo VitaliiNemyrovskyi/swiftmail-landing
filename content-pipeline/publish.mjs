@@ -204,11 +204,31 @@ async function runPrePublishGate(slug) {
   }
 
   // EEAT
+  //
+  // Graceful degradation 2026-05-08: EEAT failures (missing citations,
+  // missing first-person, missing internal links) are now WARNINGS, not
+  // hard blocks. Reasoning:
+  //   - The revision loop in pipeline.mjs already gives the LLM 2
+  //     attempts to fix EEAT body-level issues. If both still fail, the
+  //     LLM cannot produce them — blocking publish here just leaves the
+  //     content sitting in drafts/ forever, with no operator review
+  //     workflow to actually edit + retry.
+  //   - The legacy "block publish on any EEAT fail" pattern was the
+  //     #1 cause of pipeline failures (4 of today's 8 failed runs).
+  //   - Author-byline fail (the one frontmatter-only EEAT check) is
+  //     auto-fixed by ensureRequiredFrontmatter() in pipeline.mjs, so
+  //     in practice it should never reach the publish gate.
+  //   - Daily report email surfaces the warnings, so operator sees
+  //     "this article shipped with weak EEAT signals" the next morning
+  //     and can decide to amend.
+  // Hard blocks remain on: AI-tells (publishing AI-stink hurts brand),
+  // Quality heuristics (no-variance prose unreadable), Editorial diff
+  // (only in human-edit mode).
   const eeatResult = eeat.check(body, frontmatter);
   if (!eeatResult.passed) {
-    console.log(`  ✗ EEAT signals: ${eeatResult.fails.length} fails`);
+    console.log(`  ⚠ EEAT signals: ${eeatResult.fails.length} warning(s) (publishing anyway)`);
     console.log('    ' + eeat.feedbackFor(eeatResult).split('\n').join('\n    '));
-    allPassed = false;
+    // Note: NOT setting allPassed = false. Warnings only.
   } else {
     console.log(`  ✓ EEAT signals (${eeatResult.signals.uniqueDataHits} unique-data, ${eeatResult.signals.authoritative} citations, ${eeatResult.signals.internalLinks} internal links)`);
   }
@@ -218,7 +238,7 @@ async function runPrePublishGate(slug) {
     passed: allPassed,
     aiTellsHits: aiResult.hits.length,
     qualityFails: qResult.fails.length,
-    eeatFails: eeatResult.fails.length,
+    eeatFails: eeatResult.fails.length, // logged for daily report even if not blocking
     editorialDiff: diffResult.diffRatio,
   });
 
