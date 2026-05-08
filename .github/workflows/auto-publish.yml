@@ -106,6 +106,15 @@ jobs:
               fi
               echo "groq-ok"
               ;;
+            glm)
+              GLM_BASE="${GLM_BASE_URL:-https://api.z.ai/api/paas/v4}"
+              if ! curl -sf -H "Authorization: Bearer $GLM_API_KEY" \
+                   "$GLM_BASE/models" -o /dev/null; then
+                echo "::error::GLM (z.ai) API not reachable / GLM_API_KEY invalid"
+                exit 1
+              fi
+              echo "glm-ok"
+              ;;
             ollama)
               if ! curl -sf "${OLLAMA_URL:-http://localhost:11434}/api/tags" -o /dev/null; then
                 echo "::error::Ollama not reachable at ${OLLAMA_URL:-http://localhost:11434}"
@@ -114,7 +123,7 @@ jobs:
               echo "ollama-ok"
               ;;
             *)
-              echo "::error::unknown LLM_PROVIDER='$PROVIDER' — supported: ollama, groq"
+              echo "::error::unknown LLM_PROVIDER='$PROVIDER' — supported: ollama, groq, glm"
               exit 1
               ;;
           esac

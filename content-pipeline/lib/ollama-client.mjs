@@ -101,8 +101,12 @@ export async function chat({
  * hardware, eliminating the OOM/timeout issues we hit on CPU Ollama.
  */
 async function streamChat({ url, model, messages, temperature, maxTokens, numCtx, timeoutMs }) {
-  if ((process.env.LLM_PROVIDER || 'ollama').toLowerCase() === 'groq') {
+  const provider = (process.env.LLM_PROVIDER || 'ollama').toLowerCase();
+  if (provider === 'groq') {
     return streamChatGroq({ messages, temperature, maxTokens, timeoutMs, model });
+  }
+  if (provider === 'glm') {
+    return streamChatGlm({ messages, temperature, maxTokens, timeoutMs, model });
   }
   const res = await fetch(`${url}/api/chat`, {
     method: 'POST',
@@ -257,6 +261,87 @@ async function streamChatGroq({ messages, temperature, maxTokens, timeoutMs, mod
 }
 
 /**
+ * GLM (z.ai) variant — OpenAI-compatible chat completions API at
+ * https://api.z.ai/api/paas/v4/chat/completions. SSE streaming.
+ *
+ * Default model `glm-4.7-flash` is permanently free per Zhipu AI's
+ * pricing page (https://docs.z.ai/guides/overview/pricing). No
+ * published RPM at time of writing — server just 429s when overloaded.
+ *
+ * Different training distribution from Groq's llama-family (Zhipu AI is
+ * a Chinese lab, distinct priors from Western Llama/OpenAI stacks),
+ * which is the reason we add it as an alternative provider rather than
+ * just a fallback URL.
+ *
+ * Drop-in replacement for streamChat — same input fields, same string return.
+ */
+async function streamChatGlm({ messages, temperature, maxTokens, timeoutMs, model: callerModel }) {
+  const apiKey = process.env.GLM_API_KEY;
+  if (!apiKey) throw new Error('GLM_API_KEY missing — set in .env or unset LLM_PROVIDER');
+
+  // Caller can override model with a glm-* id; otherwise pick from env
+  // or default to the free flash. GLM model ids start with "glm-".
+  const looksLikeGlmId = callerModel && callerModel.startsWith('glm-');
+  const model = (looksLikeGlmId ? callerModel : null)
+    || process.env.GLM_MODEL
+    || 'glm-4.7-flash';
+
+  const baseUrl = process.env.GLM_BASE_URL || 'https://api.z.ai/api/paas/v4';
+
+  const res = await fetch(`${baseUrl}/chat/completions`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model,
+      messages,
+      temperature,
+      max_tokens: maxTokens,
+      stream: true,
+    }),
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`GLM ${res.status}: ${body.slice(0, 500)}`);
+  }
+
+  // Same SSE parsing as Groq — both speak OpenAI-format streaming.
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let assembled = '';
+
+  for await (const chunk of res.body) {
+    buffer += decoder.decode(chunk, { stream: true });
+    let nl;
+    while ((nl = buffer.indexOf('\n')) !== -1) {
+      const line = buffer.slice(0, nl);
+      buffer = buffer.slice(nl + 1);
+      if (!line.startsWith('data: ')) continue;
+      const data = line.slice(6).trim();
+      if (data === '[DONE]') continue;
+      if (!data) continue;
+      try {
+        const obj = JSON.parse(data);
+        const delta = obj.choices?.[0]?.delta?.content;
+        if (delta) assembled += delta;
+        const errMsg = obj.error?.message;
+        if (errMsg) throw new Error(`GLM stream error: ${errMsg}`);
+      } catch (err) {
+        if (err.message.startsWith('GLM')) throw err;
+        // Malformed SSE line — skip (rare, defensive)
+      }
+    }
+  }
+
+  if (!assembled) throw new Error('GLM stream returned empty content');
+  return assembled;
+}
+
+/**
  * List available models. Useful for diagnostics / setup wizard.
  * @returns {Promise<Array<{name: string, size: number}>>}
  */
@@ -273,16 +358,30 @@ export async function listModels({ url = DEFAULT_URL } = {}) {
 }
 
 /**
- * Health-check. For Groq mode, just verifies API key is present and the
- * /openai/v1/models endpoint responds — no need to ping localhost.
+ * Health-check. Cloud providers (groq / glm) verify API key + reach
+ * their /models endpoint. Ollama-mode pings the local /api/tags.
  * @returns {Promise<boolean>}
  */
 export async function ping({ url = DEFAULT_URL } = {}) {
-  if ((process.env.LLM_PROVIDER || 'ollama').toLowerCase() === 'groq') {
+  const provider = (process.env.LLM_PROVIDER || 'ollama').toLowerCase();
+  if (provider === 'groq') {
     if (!process.env.GROQ_API_KEY) return false;
     try {
       const res = await fetch('https://api.groq.com/openai/v1/models', {
         headers: { 'Authorization': `Bearer ${process.env.GROQ_API_KEY}` },
+        signal: AbortSignal.timeout(5000),
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  }
+  if (provider === 'glm') {
+    if (!process.env.GLM_API_KEY) return false;
+    try {
+      const baseUrl = process.env.GLM_BASE_URL || 'https://api.z.ai/api/paas/v4';
+      const res = await fetch(`${baseUrl}/models`, {
+        headers: { 'Authorization': `Bearer ${process.env.GLM_API_KEY}` },
         signal: AbortSignal.timeout(5000),
       });
       return res.ok;
