@@ -299,10 +299,37 @@ function processBlock(block) {
   block = block.trim();
   if (!block) return '';
 
-  // Heading
-  if (block.startsWith('### ')) return `    <h3>${inline(block.slice(4))}</h3>`;
-  if (block.startsWith('## ')) return `    <h2>${inline(block.slice(3))}</h2>`;
-  if (block.startsWith('# ')) return `    <h1>${inline(block.slice(2))}</h1>`;
+  // Heading.
+  //
+  // Bug fix 2026-05-08: a "block" can be a heading line followed by
+  // paragraph text without an intervening blank line — that's invalid
+  // markdown but llama-3.3-70b regularly produces it (e.g.
+  // `## My Heading\nFirst paragraph...` inside a single \n\n-separated
+  // chunk). The OLD logic blindly wrapped the WHOLE block in <h2>,
+  // causing the entire paragraph to render as a heading (font-weight
+  // 800, body color reused) — visible on the live blog as "the article
+  // looks bold". Now we split on the first \n: line[0] is the heading,
+  // remainder is recursively processed as its own paragraph block(s).
+  for (const [prefix, tag] of [['### ', 'h3'], ['## ', 'h2'], ['# ', 'h1']]) {
+    if (block.startsWith(prefix)) {
+      const nlIdx = block.indexOf('\n');
+      if (nlIdx === -1) {
+        // Pure heading: one line, no trailing content.
+        return `    <${tag}>${inline(block.slice(prefix.length))}</${tag}>`;
+      }
+      const heading = block.slice(prefix.length, nlIdx).trim();
+      const rest = block.slice(nlIdx + 1).trim();
+      // Recurse on the trailing content so it gets paragraph/list/etc.
+      // wrapping. Re-split on \n\n in case the model jammed multiple
+      // paragraphs into one heading-prefixed chunk too.
+      const restRendered = rest
+        .split(/\n\n+/)
+        .map(processBlock)
+        .filter(Boolean)
+        .join('\n');
+      return `    <${tag}>${inline(heading)}</${tag}>\n${restRendered}`;
+    }
+  }
 
   // Horizontal rule
   if (/^---+$/.test(block)) return '    <hr>';
@@ -332,6 +359,54 @@ function processBlock(block) {
   return `    <p>${inline(block.replace(/\n/g, ' '))}</p>`;
 }
 
+/**
+ * Outbound-domain whitelist. Mirrors AUTHORITATIVE_DOMAINS in
+ * checks/eeat.mjs — kept as separate constant rather than imported to
+ * avoid a circular-ish import (this file is plain renderer, eeat is a
+ * gate). Update both lists together when adding a domain.
+ *
+ * Why filter at render time: even after PR #4's revision loop and the
+ * SUGGESTED_URLS_BY_CATEGORY hint table in pipeline.mjs, llama-3.3-70b
+ * still hallucinates outbound URLs to plausible-looking but non-existent
+ * domains (observed 2026-05-08 first real article: rfc-spec.com,
+ * esp-docs.com, industry-research.com — none real). The renderer is the
+ * last gate before HTML lands in git, so we strip the broken links
+ * here. The link TEXT is preserved as plain prose so the article still
+ * reads coherently — it just stops linking to nowhere.
+ */
+const RENDERER_OUTBOUND_WHITELIST = [
+  'rfc-editor.org',
+  'datatracker.ietf.org',
+  'w3.org',
+  'mailgun.com',
+  'postmarkapp.com',
+  'sendgrid.com',
+  'klaviyo.com',
+  'mailchimp.com',
+  'activecampaign.com',
+  'developers.google.com',
+  'support.google.com',
+  'support.apple.com',
+  'docs.microsoft.com',
+  'learn.microsoft.com',
+  'baymard.com',
+  'litmus.com',
+  'returnpath.com',
+  'searchengineland.com',
+  'searchengineroundtable.com',
+  'martech.org',
+  'gdpr.eu',
+  'cookielaw.org',
+  'similarweb.com',
+  'statista.com',
+];
+
+function isAuthoritativeOutbound(url) {
+  if (!/^https?:\/\//i.test(url)) return true; // relative / mailto / etc — leave alone
+  if (url.includes('swift-mail.app')) return true; // internal — always keep
+  return RENDERER_OUTBOUND_WHITELIST.some((d) => url.includes(d));
+}
+
 function inline(text) {
   // First, escape HTML in plain text (but preserve our markers)
   text = escapeHtml(text);
@@ -341,8 +416,12 @@ function inline(text) {
   text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   // Italic (only single asterisk not adjacent to alpha — minimal heuristic)
   text = text.replace(/\*([^*\s][^*]*[^*\s])\*/g, '<em>$1</em>');
-  // Links
+  // Links — strip non-whitelisted outbound, keep link text as prose.
   text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, txt, href) => {
+    if (!isAuthoritativeOutbound(href)) {
+      // Hallucinated / dead link. Keep the visible text only.
+      return txt;
+    }
     const rel = href.startsWith('http') && !href.includes('swift-mail.app')
       ? ' rel="noopener" target="_blank"'
       : '';

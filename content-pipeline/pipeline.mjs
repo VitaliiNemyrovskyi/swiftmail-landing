@@ -525,32 +525,43 @@ function scoreDraft(body, topic) {
  * list in checks/eeat.mjs; URLs verified to exist on real domains
  * (no spot-check that they 200 — that's a P1 follow-up).
  */
+/**
+ * Curated 2026-05-08 from the AUTHORITATIVE_DOMAINS list in checks/eeat.mjs.
+ * URLs were spot-checked for HTTP 200 at curation time; lib/markdown-render
+ * also strips any non-whitelist link from the rendered HTML as a second
+ * defence layer (the model still occasionally invents URLs not on this
+ * list — they get downgraded to plain text so the article doesn't ship
+ * dead links).
+ *
+ * Followup (P1): periodic CI check that re-curls every URL here and fails
+ * the build if any 404. For now operator updates manually.
+ */
 const SUGGESTED_URLS_BY_CATEGORY = {
   deliverability: [
-    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC RFC)',
-    'https://datatracker.ietf.org/doc/html/rfc6376 (DKIM RFC)',
-    'https://datatracker.ietf.org/doc/html/rfc7208 (SPF RFC)',
+    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC RFC 7489)',
+    'https://datatracker.ietf.org/doc/html/rfc6376 (DKIM RFC 6376)',
+    'https://datatracker.ietf.org/doc/html/rfc7208 (SPF RFC 7208)',
     'https://www.mailgun.com/blog/email/email-deliverability/ (vendor docs)',
-    'https://postmarkapp.com/blog/category/deliverability (deliverability tips)',
-    'https://support.google.com/mail/answer/81126 (Gmail bulk-sender requirements)',
+    'https://postmarkapp.com/guides/dmarc (Postmark DMARC guide)',
+    'https://postmarkapp.com/guides/spf (Postmark SPF guide)',
     'https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/email-authentication-about (MS docs)',
   ],
   warmup: [
     'https://www.mailgun.com/blog/email/email-warmup/',
     'https://postmarkapp.com/guides/spf',
+    'https://postmarkapp.com/guides/dmarc',
     'https://datatracker.ietf.org/doc/html/rfc7489',
-    'https://support.google.com/mail/answer/81126',
   ],
   ecommerce: [
     'https://baymard.com/lists/cart-abandonment-rate (cart-abandonment research)',
     'https://www.klaviyo.com/blog (competitor reference for comparison articles)',
-    'https://litmus.com/blog (email-marketing research)',
-    'https://postmarkapp.com/blog/category/transactional-email',
+    'https://www.litmus.com/blog (email-marketing research)',
+    'https://postmarkapp.com/guides/dmarc',
   ],
   automation: [
-    'https://www.mailchimp.com/resources/marketing-automation-101/',
-    'https://www.activecampaign.com/blog/marketing-automation',
-    'https://litmus.com/blog/email-automation',
+    'https://mailchimp.com/resources/marketing-automation-101/',
+    'https://www.activecampaign.com/blog/',
+    'https://www.litmus.com/blog',
   ],
   comparison: [
     'https://www.klaviyo.com/pricing',
@@ -560,10 +571,10 @@ const SUGGESTED_URLS_BY_CATEGORY = {
   ],
   // Generic fallback for topics that don't match the above
   default: [
-    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC)',
+    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC RFC)',
     'https://www.mailgun.com/blog/',
-    'https://postmarkapp.com/blog/',
-    'https://litmus.com/blog/',
+    'https://postmarkapp.com/guides/dmarc',
+    'https://www.litmus.com/blog',
     'https://baymard.com/research',
   ],
 };
@@ -713,8 +724,76 @@ Output ONLY the frontmatter, including the --- delimiters.`;
   // Trim any preamble/trailing
   const cleanFm = fm.replace(/^[^-]*?(---)/m, '$1').replace(/(---)[^-]*$/m, '$1');
 
+  // Validate / repair the frontmatter. The LLM occasionally drops the
+  // `title:` line entirely (or echoes the placeholder `<string, max 70
+  // chars>` literal back), which then renders as the literal word
+  // "undefined" in the published HTML title tag (observed 2026-05-08
+  // first real article). Fall back to topic data for any missing field
+  // so we never ship a draft with undefined fields.
+  const repaired = ensureRequiredFrontmatter(cleanFm.trim(), topic, body);
+
   // Combine: frontmatter + blank line + body
-  return `${cleanFm.trim()}\n\n${body.trim()}\n`;
+  return `${repaired}\n\n${body.trim()}\n`;
+}
+
+/**
+ * Make sure the frontmatter block has every required field. Missing
+ * fields are filled from `topic` (the topics.yaml entry) or computed
+ * from the body. Returns a cleaned frontmatter string with `---`
+ * delimiters intact.
+ */
+function ensureRequiredFrontmatter(fmRaw, topic, body) {
+  // Parse rough YAML — we just need key:value pairs.
+  const lines = fmRaw.split('\n');
+  const fields = {};
+  let inFm = false;
+  for (const line of lines) {
+    if (line.trim() === '---') {
+      inFm = !inFm;
+      continue;
+    }
+    if (!inFm) continue;
+    const m = /^([a-zA-Z_][a-zA-Z0-9_]*):\s*(.*)$/.exec(line);
+    if (!m) continue;
+    let v = m[2].trim();
+    // Strip surrounding quotes
+    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+      v = v.slice(1, -1);
+    }
+    // If LLM left placeholder like <string, max 70 chars> verbatim,
+    // treat as missing.
+    if (/^<.*>$/.test(v) || v === 'undefined' || v === '') v = '';
+    fields[m[1]] = v;
+  }
+
+  // Fill defaults for missing fields.
+  const today = new Date().toISOString().slice(0, 10);
+  const wordsPerMin = 220;
+  const readTime = Math.max(1, Math.round(wordCount(body) / wordsPerMin));
+
+  if (!fields.title) fields.title = topic.title;
+  if (!fields.description) {
+    fields.description = (topic.angle || `${topic.title} — for SwiftMail customers.`)
+      .slice(0, 160);
+  }
+  if (!fields.slug) fields.slug = topic.slug;
+  if (!fields.category) fields.category = topic.category || 'general';
+  if (!fields.target_keyword) fields.target_keyword = topic.target_keyword || '';
+  if (!fields.date) fields.date = today;
+  if (!fields.author) fields.author = 'Vitalii Nemyrovskyi';
+  if (!fields.read_time) fields.read_time = String(readTime);
+  if (!fields.hero_alt) fields.hero_alt = topic.title;
+
+  // Quote values that contain colons or other YAML metacharacters.
+  const yaml = Object.entries(fields)
+    .map(([k, v]) => {
+      const needsQuote = /[:#\n"]/.test(v) || v.startsWith('-');
+      const safe = needsQuote ? `"${v.replace(/"/g, '\\"')}"` : v;
+      return `${k}: ${safe}`;
+    })
+    .join('\n');
+
+  return `---\n${yaml}\n---`;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────
