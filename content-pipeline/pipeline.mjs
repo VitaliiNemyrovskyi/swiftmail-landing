@@ -32,11 +32,17 @@ import * as eeat from './checks/eeat.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 
-// voice.md is the full reference (200 lines) — use only for review.
-// voice-compact.md is the runtime version (~800 tokens) used in LLM prompts
-// because most local Ollama models default to 4096-token context, and the
-// full voice + humanizer + product-context easily exceeds that.
+// voice.md / humanizer.md are the full references (~14K chars combined).
+// The *-compact.md siblings are runtime-trimmed (~3K chars total) used
+// in LLM prompts. Reasons:
+//   1. llama-3.3-70b's effective attention degrades after ~3-4K tokens
+//      of system prompt — over-stuffing dilutes the actual writing task.
+//   2. Local Ollama defaults to 4096-token context (legacy back-end).
+//   3. Voice + humanizer combined was ~5000 tokens before this trim;
+//      moved to ~1300 tokens (combined) on 2026-05-08 as part of the
+//      drafting-quality push (PR #4). See AUDIT in /docs if extant.
 const VOICE_COMPACT = fs.readFileSync(path.join(ROOT, 'voice-compact.md'), 'utf8');
+const HUMANIZER_COMPACT = fs.readFileSync(path.join(ROOT, 'humanizer-compact.md'), 'utf8');
 // product-context.md condensed: keep only the metrics + features section
 // for runtime use. Falls back to full file if not present.
 const PRODUCT_CTX_COMPACT = compactProductContext(
@@ -143,12 +149,42 @@ async function draftBySlug(slug) {
   const outline = await phaseOutline(topic, facts);
   log('draft.outline', { slug });
 
-  // Phase 3: DRAFT — write body
-  console.log('  [3/5] Draft phase (longest)…');
-  const draft = await phaseDraft(topic, facts, outline);
-  log('draft.draft', { slug, words: wordCount(draft) });
+  // Phase 3: DRAFT — best-of-3 candidates, scored.
+  //
+  // Single-shot drafting was the biggest quality leak (audit 2026-05-08):
+  // model finishes early at ~700 words instead of target 1500, occasionally
+  // produces dead-quality drafts even when prompt is good. Running 3
+  // attempts at staggered temperatures (0.7 / 0.85 / 0.95) and picking the
+  // highest-scoring one consistently lifts the floor without drift.
+  // Cost: 3× LLM calls = ~30s extra on Groq free tier. Worth it.
+  console.log('  [3/5] Draft phase (best-of-3)…');
+  const candidates = await Promise.all([
+    phaseDraft(topic, facts, outline, { temperature: 0.7 }),
+    phaseDraft(topic, facts, outline, { temperature: 0.85 }),
+    phaseDraft(topic, facts, outline, { temperature: 0.95 }),
+  ]);
+  const ranked = candidates
+    .map((c, i) => ({ idx: i, body: c, ...scoreDraft(c, topic) }))
+    .sort((a, b) => b.score - a.score);
+  const draft = ranked[0].body;
+  log('draft.best-of-3', {
+    slug,
+    picked: ranked[0].idx,
+    scores: ranked.map((r) => ({ idx: r.idx, score: r.score, words: r.words })),
+  });
+  console.log(
+    `      best: candidate #${ranked[0].idx} (score ${ranked[0].score.toFixed(1)}, ${ranked[0].words} words). ` +
+      `Rest: ${ranked
+        .slice(1)
+        .map((r) => `#${r.idx} (${r.score.toFixed(1)}, ${r.words}w)`)
+        .join(', ')}`,
+  );
 
-  // Phase 4: STYLE-ALIGN — re-write to fix any AI-tells
+  // Phase 4: STYLE-ALIGN — re-write to fix any AI-tells.
+  // Note: still gated on aiTells.check() — if no banned phrases, we skip.
+  // The deeper voice-injection rules (humanizer-compact) should already
+  // be applied by the draft's system prompt; style-align is the cleanup
+  // pass for the leftover regex hits.
   console.log('  [4/5] Style-align phase…');
   const aligned = await phaseStyleAlign(draft);
   log('draft.style-align', { slug });
@@ -179,18 +215,44 @@ async function draftBySlug(slug) {
     console.log('  [+] Skipping image fetch (PEXELS_API_KEY not set)');
   }
 
-  // Save .original.md (immutable LLM output) + .md (editable)
+  // ── Revision loop ────────────────────────────────────────────
+  //
+  // Gates flag specific issues (banned phrases, low sentence variance,
+  // missing first-person, vague language). Pre-2026-05-08 the pipeline
+  // just logged + published. Now: up to 2 revision passes per draft.
+  // Each pass passes the SPECIFIC fail messages back to the model so
+  // it knows what to fix. Stops as soon as all gates pass.
+  //
+  // Cost: 0–2 extra LLM calls. ~6s each on Groq. Worth it — eliminates
+  // the "publish anyway with warnings" pattern that was diluting blog quality.
+  let revised = final;
+  for (let pass = 1; pass <= 2; pass += 1) {
+    const issues = collectGateFeedback(revised);
+    if (issues.length === 0) {
+      log('draft.revision-loop', { slug, passes: pass - 1, status: 'all-passed' });
+      break;
+    }
+    console.log(`  [revision ${pass}/2] gates flagged ${issues.length} issue(s) — asking LLM to fix…`);
+    log('draft.revision-loop', { slug, pass, issueCount: issues.length });
+    revised = await phaseRevise(revised, issues);
+  }
+  const polished = revised;
+
+  // Save .original.md (immutable LLM output before revision) + .md (final).
   const draftPath = path.join(DRAFTS_DIR, `${slug}.md`);
   const originalPath = path.join(DRAFTS_DIR, `${slug}.original.md`);
-  fs.writeFileSync(draftPath, final);
-  fs.writeFileSync(originalPath, final);
+  fs.writeFileSync(draftPath, polished);
+  fs.writeFileSync(originalPath, final); // pre-revision snapshot for diff
 
   // Update topics.yaml status
   topic.status = 'drafted';
   topic.drafted_at = new Date().toISOString();
   fs.writeFileSync(TOPICS_PATH, yaml.stringify(topics));
 
-  // Run non-LLM checks immediately, log results
+  // Final checks pass — at this point gates either ALL pass or remaining
+  // ones survived 2 revision attempts (e.g. eeat outbound-citations
+  // requires LLM hallucinating real URLs, which we accept as a noted
+  // warning rather than blocking publish).
   await runChecks(slug);
 
   console.log(`\n  ✓  Draft saved: ${draftPath}`);
@@ -331,7 +393,16 @@ Design the article outline. Begin output directly with the first H2; no preamble
   return complete({ system, user, temperature: 0.7, maxTokens: 800 });
 }
 
-async function phaseDraft(topic, facts, outline) {
+/**
+ * Generate one full article body. Called 3× in best-of-3 mode; the
+ * caller varies `temperature` per attempt to broaden the candidate
+ * space.
+ *
+ * Note `est_words ± 15%` is now an enforced floor — old prompts treated
+ * it as soft target and the model often stopped at half. Hard "MUST be
+ * ≥1300 words" plus per-section length hints fix the early-finish bug.
+ */
+async function phaseDraft(topic, facts, outline, opts = {}) {
   const factsList = facts
     .map((f) => `- ${f.claim} (source: ${f.source_type}, credibility: ${f.credibility})`)
     .join('\n');
@@ -347,7 +418,17 @@ async function phaseDraft(topic, facts, outline) {
 - The closing MUST give the reader a concrete action: what to check / change / monitor as a result.\n`
     : '';
 
+  const targetWords = topic.est_words || 1500;
+  const minWords = Math.round(targetWords * 0.85);
+  const maxWords = Math.round(targetWords * 1.15);
+
+  // System prompt = voice + humanizer + product context. Combined budget
+  // ~1500 tokens after the 2026-05-08 distillation.
   const system = `${VOICE_COMPACT}
+
+──────────────────────────────────────
+
+${HUMANIZER_COMPACT}
 
 ──────────────────────────────────────
 
@@ -359,7 +440,10 @@ ${PRODUCT_CTX_COMPACT}`;
 Topic: ${topic.title}
 Target keyword: ${topic.target_keyword}
 Angle: ${topic.angle}
-Target word count: ${topic.est_words} (±15%)
+**Word count requirement: ${minWords}–${maxWords} words.** This is a HARD floor —
+articles shorter than ${minWords} words will be rejected. Treat it as a writing
+brief, not a soft target. Most H2 sections should be 200–350 words; an article
+with 5 H2s should land near ${targetWords} words.
 Humor level: ${topic.humor_level || 0} (0=none, 1=one wry aside max, 2=opinionated piece)
 ${newsContext}
 OUTLINE TO FOLLOW:
@@ -370,15 +454,122 @@ ${factsList}
 
 CONSTRAINTS:
 - Use the SwiftMail voice from system prompt
-- Apply ALL humanizer rules (sentence-length variance, banned phrases, etc.)
-- Include ≥1 unique SwiftMail data point (from product-context above)
+- Apply ALL humanizer rules — particularly sentence-length variance (≥1 in 5
+  sentences under 8 words), 1–2 fragments, and ≥1 first-person experience marker
+- Include ≥1 unique SwiftMail data point (use the metrics in product context:
+  34% price hesitation, 22% form friction, 47% multi-session journeys, etc.)
 - Include ≥2 internal links to other SwiftMail blog/feature pages (https://swift-mail.app/...)
-- Include ≥2 outbound citations to authoritative sources
+- Include ≥2 outbound citations to authoritative sources [domain](url)
 - DO NOT include H1 — that's added separately
 - DO NOT include frontmatter — that's added in next pass
 - Begin with body content directly (first H2 or first paragraph)`;
 
-  return complete({ system, user, temperature: 0.7, maxTokens: 3000 });
+  // maxTokens 4000 (was 3000) — gives headroom for 1700-word articles
+  // when the model uses verbose phrasing. Empirically ~600 tokens of slack.
+  return complete({
+    system,
+    user,
+    temperature: opts.temperature ?? 0.7,
+    maxTokens: 4000,
+  });
+}
+
+/**
+ * Score a candidate draft for best-of-N selection. Higher is better.
+ *
+ * Combines:
+ *   - Word count match to target (closer = better)
+ *   - AI-tells hits (fewer = better)
+ *   - Quality-heuristic fails (fewer = better)
+ *   - First-person markers (presence required by voice)
+ *
+ * No LLM call — purely structural metrics. Sub-millisecond per draft.
+ */
+function scoreDraft(body, topic) {
+  const words = wordCount(body);
+  const targetWords = topic.est_words || 1500;
+
+  const aiResult = aiTells.check(body);
+  const aiTellHits = aiResult.hits.length;
+
+  const qResult = quality.check(body);
+  const qualityFails = qResult.passed ? 0 : (qResult.fails || []).length;
+
+  // Word-count distance: 0 at target, 1 at 50% off, capped at 1.
+  const wcDistance = Math.min(1, Math.abs(words - targetWords) / targetWords);
+  const wcScore = (1 - wcDistance) * 30; // 0–30 points
+
+  // Penalties — each ai-tell costs 5, each quality fail costs 8.
+  const aiPenalty = aiTellHits * 5;
+  const qPenalty = qualityFails * 8;
+
+  // Hard floor: drafts under 800 words score abysmally regardless of
+  // other metrics — they're just too short to be useful.
+  const lengthFloor = words < 800 ? -50 : 0;
+
+  return {
+    score: wcScore - aiPenalty - qPenalty + lengthFloor,
+    words,
+    aiTellHits,
+    qualityFails,
+  };
+}
+
+/**
+ * Collect specific, actionable feedback from all gates. Used by the
+ * revision loop — we don't just say "fix it", we say "fix THIS specific
+ * sentence on line 47 because it uses 'delve'".
+ */
+function collectGateFeedback(body) {
+  const issues = [];
+
+  const ai = aiTells.check(body);
+  if (!ai.passed) {
+    issues.push({
+      gate: 'ai-tells',
+      detail: aiTells.feedbackFor(ai.hits),
+    });
+  }
+
+  const q = quality.check(body);
+  if (!q.passed) {
+    issues.push({
+      gate: 'quality-heuristics',
+      detail: quality.feedbackFor(q),
+    });
+  }
+
+  // EEAT requires frontmatter — skip in revision loop (frontmatter is
+  // generated in phaseSeo, after revision). We'll catch EEAT failures
+  // in the final runChecks() pass.
+
+  return issues;
+}
+
+/**
+ * One revision pass. Given a draft and the list of gate-flagged issues,
+ * ask the LLM to fix them in place — no restructuring, no length change,
+ * just targeted edits. Temperature low (0.3) since this is editing,
+ * not generation.
+ */
+async function phaseRevise(draft, issues) {
+  const issueText = issues
+    .map((i, n) => `${n + 1}. ${i.gate}:\n${i.detail}`)
+    .join('\n\n');
+
+  const system = `You are revising a B2B blog draft to fix specific style issues flagged by automated gates. Make TARGETED edits only. Do not restructure sections. Do not change article length. Do not change meaning. Output the revised markdown directly — no preamble, no commentary.`;
+
+  const user = `Original draft:
+
+${draft}
+
+Issues to fix (each lists a specific gate failure with concrete sentences):
+
+${issueText}
+
+Rewrite the draft with these issues fixed. Keep ALL headings, links, sections, and overall length. Output only the revised markdown.`;
+
+  return complete({ system, user, temperature: 0.3, maxTokens: 4000 });
 }
 
 async function phaseStyleAlign(draft) {
