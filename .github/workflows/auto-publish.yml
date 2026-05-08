@@ -84,49 +84,61 @@ jobs:
           cp "$SRC" "$DST"
           echo "env-copied ($(wc -l < $DST) lines)"
 
-      - name: Verify configured LLM provider reachable
-        # Was previously a hard-coded `curl localhost:11434/api/tags`. After
-        # Ollama was decommissioned 2026-05-08 the env switched to
-        # LLM_PROVIDER=groq but the workflow still ran the localhost curl
-        # → fail-fast every morning. This step now reads .env and pings the
-        # actual configured provider via the pipeline's own ping() helper.
+      - name: Verify at least one provider reachable
+        # Pipeline now uses a fallback chain (LLM_PROVIDER_CHAIN) instead
+        # of a single LLM_PROVIDER. We just need ONE provider in the chain
+        # to be up — others can be down (rate-limited, key invalid, etc.)
+        # and the pipeline will gracefully fall through to next.
+        # If a chain isn't set, fall back to the legacy single-provider
+        # check.
         working-directory: content-pipeline
         run: |
-          # Source the staged .env so $LLM_PROVIDER, $GROQ_API_KEY, $OLLAMA_URL
-          # are visible to the shell + child node.
           set -a; . ./.env; set +a
-          PROVIDER="${LLM_PROVIDER:-ollama}"
-          echo "configured provider: $PROVIDER"
-          case "$PROVIDER" in
-            groq)
-              if ! curl -sf -H "Authorization: Bearer $GROQ_API_KEY" \
-                   https://api.groq.com/openai/v1/models -o /dev/null; then
-                echo "::error::Groq API not reachable / GROQ_API_KEY invalid"
-                exit 1
-              fi
-              echo "groq-ok"
-              ;;
-            glm)
-              GLM_BASE="${GLM_BASE_URL:-https://api.z.ai/api/paas/v4}"
-              if ! curl -sf -H "Authorization: Bearer $GLM_API_KEY" \
-                   "$GLM_BASE/models" -o /dev/null; then
-                echo "::error::GLM (z.ai) API not reachable / GLM_API_KEY invalid"
-                exit 1
-              fi
-              echo "glm-ok"
-              ;;
-            ollama)
-              if ! curl -sf "${OLLAMA_URL:-http://localhost:11434}/api/tags" -o /dev/null; then
-                echo "::error::Ollama not reachable at ${OLLAMA_URL:-http://localhost:11434}"
-                exit 1
-              fi
-              echo "ollama-ok"
-              ;;
-            *)
-              echo "::error::unknown LLM_PROVIDER='$PROVIDER' — supported: ollama, groq, glm"
-              exit 1
-              ;;
-          esac
+          CHAIN="${LLM_PROVIDER_CHAIN:-${LLM_PROVIDER:-ollama}}"
+          echo "provider chain: $CHAIN"
+
+          check_provider() {
+            local p="$1"
+            case "$p" in
+              groq)
+                curl -sf -H "Authorization: Bearer $GROQ_API_KEY" \
+                  https://api.groq.com/openai/v1/models -o /dev/null
+                ;;
+              glm)
+                local base="${GLM_BASE_URL:-https://api.z.ai/api/paas/v4}"
+                curl -sf -H "Authorization: Bearer $GLM_API_KEY" \
+                  "$base/models" -o /dev/null
+                ;;
+              gemini)
+                curl -sf -H "x-goog-api-key: $GEMINI_API_KEY" \
+                  https://generativelanguage.googleapis.com/v1beta/models -o /dev/null
+                ;;
+              ollama)
+                curl -sf "${OLLAMA_URL:-http://localhost:11434}/api/tags" -o /dev/null
+                ;;
+              *)
+                return 1
+                ;;
+            esac
+          }
+
+          ok_count=0
+          IFS=',' read -ra PROVIDERS <<< "$CHAIN"
+          for p in "${PROVIDERS[@]}"; do
+            p="$(echo "$p" | tr -d ' ')"
+            if check_provider "$p"; then
+              echo "  ✓ $p"
+              ok_count=$((ok_count + 1))
+            else
+              echo "  ✗ $p (down or key invalid)"
+            fi
+          done
+
+          if [ "$ok_count" -eq 0 ]; then
+            echo "::error::no providers reachable. Pipeline cannot draft."
+            exit 1
+          fi
+          echo "$ok_count provider(s) up — pipeline can run with fallback."
 
       - name: Install pipeline dependencies
         working-directory: content-pipeline
@@ -167,6 +179,25 @@ jobs:
             git push origin main
           else
             echo "Nothing to push — working tree at origin/main"
+          fi
+
+      - name: Trigger Cloudflare Pages deploy
+        # Pipeline pushes via GITHUB_TOKEN, which by GHA design does NOT
+        # fire push-event workflows (loop-prevention). Without this step
+        # CF Pages stays idle and the new article never goes live until
+        # someone manually pushes a commit. We trigger deploy.yml via
+        # workflow_dispatch from here — that runs as a separate workflow
+        # and DOES fire the deploy.
+        if: ${{ inputs.dry_run != 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if command -v gh >/dev/null 2>&1; then
+            gh workflow run deploy.yml --repo BoberFamily/swiftmail-landing --ref main \
+              && echo "deploy triggered via workflow_dispatch" \
+              || echo "::warning::deploy trigger failed — run gh workflow run deploy.yml manually"
+          else
+            echo "::warning::gh CLI not available on runner — deploy not auto-triggered. Run: gh workflow run deploy.yml --repo BoberFamily/swiftmail-landing"
           fi
 
       - name: Cleanup .env (don't leave secrets in runner workdir)

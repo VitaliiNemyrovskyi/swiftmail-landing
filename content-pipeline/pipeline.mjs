@@ -20,7 +20,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import yaml from 'yaml';
-import { complete, ping, listModels } from './lib/ollama-client.mjs';
+import { complete, ping, pingAll, listModels } from './lib/ollama-client.mjs';
 import { slugify, assertValid } from './lib/slug.mjs';
 import { serialize as serializeFm, parse as parseFm, assertFields } from './lib/frontmatter.mjs';
 import { log } from './lib/log.mjs';
@@ -73,30 +73,51 @@ const arg = process.argv[3];
 const CMDS_NEEDING_OLLAMA = new Set(['draft', 'draft-next']);
 
 (async () => {
-  // Sanity check that the configured LLM provider is reachable.
+  // Provider chain pre-flight check. If LLM_PROVIDER_CHAIN is set we
+  // ping every provider in the chain; succeed if AT LEAST ONE is up.
+  // Single-provider mode (legacy) keeps the old strict check.
   if (cmd && CMDS_NEEDING_OLLAMA.has(cmd)) {
-    const provider = (process.env.LLM_PROVIDER || 'ollama').toLowerCase();
-    const alive = await ping();
-    if (!alive) {
-      if (provider === 'groq') {
-        console.error('✗ Groq not reachable — check GROQ_API_KEY validity at https://console.groq.com');
-      } else {
-        console.error(`✗ Ollama not reachable at ${process.env.OLLAMA_URL || 'http://localhost:11434'}`);
-        console.error('  Set OLLAMA_URL env var, or run: ollama serve');
-      }
-      process.exit(1);
-    }
-    // The "is the model loaded?" check is Ollama-specific (cloud providers
-    // serve all their models on demand, no pre-pull needed). Skip it for
-    // any non-Ollama provider — listModels() hits /api/tags which only
-    // exists on the Ollama server.
-    if (provider === 'ollama') {
-      const models = await listModels();
-      const target = process.env.OLLAMA_MODEL || 'llama3.3:70b';
-      if (!models.find((m) => m.name === target)) {
-        console.error(`✗ Model "${target}" not loaded.  Available: ${models.map((m) => m.name).join(', ')}`);
-        console.error(`  Pull it:  ollama pull ${target}`);
+    const chainEnv = process.env.LLM_PROVIDER_CHAIN;
+    if (chainEnv) {
+      const status = await pingAll();
+      const upCount = Object.values(status).filter(Boolean).length;
+      const summary = Object.entries(status)
+        .map(([p, ok]) => `${p}=${ok ? 'up' : 'DOWN'}`)
+        .join(', ');
+      console.log(`  Provider chain: ${summary}`);
+      if (upCount === 0) {
+        console.error('✗ All providers in chain are down. Check API keys + network.');
         process.exit(1);
+      }
+      if (upCount < Object.keys(status).length) {
+        console.log(`  ⚠ ${Object.keys(status).length - upCount}/${Object.keys(status).length} providers down — continuing with available fallbacks.`);
+      }
+    } else {
+      // Legacy single-provider mode.
+      const provider = (process.env.LLM_PROVIDER || 'ollama').toLowerCase();
+      const alive = await ping();
+      if (!alive) {
+        if (provider === 'groq') {
+          console.error('✗ Groq not reachable — check GROQ_API_KEY validity at https://console.groq.com');
+        } else if (provider === 'glm') {
+          console.error('✗ GLM not reachable — check GLM_API_KEY validity at https://docs.z.ai');
+        } else if (provider === 'gemini') {
+          console.error('✗ Gemini not reachable — check GEMINI_API_KEY validity at https://aistudio.google.com/apikey');
+        } else {
+          console.error(`✗ Ollama not reachable at ${process.env.OLLAMA_URL || 'http://localhost:11434'}`);
+          console.error('  Set OLLAMA_URL env var, or run: ollama serve');
+        }
+        process.exit(1);
+      }
+      // Ollama-only: also verify the requested model is loaded.
+      if (provider === 'ollama') {
+        const models = await listModels();
+        const target = process.env.OLLAMA_MODEL || 'llama3.3:70b';
+        if (!models.find((m) => m.name === target)) {
+          console.error(`✗ Model "${target}" not loaded. Available: ${models.map((m) => m.name).join(', ')}`);
+          console.error(`  Pull it:  ollama pull ${target}`);
+          process.exit(1);
+        }
       }
     }
   }
@@ -149,36 +170,22 @@ async function draftBySlug(slug) {
   const outline = await phaseOutline(topic, facts);
   log('draft.outline', { slug });
 
-  // Phase 3: DRAFT — best-of-3 candidates, scored.
+  // Phase 3: DRAFT — single call with provider-chain auto-fallback.
   //
-  // Single-shot drafting was the biggest quality leak (audit 2026-05-08):
-  // model finishes early at ~700 words instead of target 1500, occasionally
-  // produces dead-quality drafts even when prompt is good. Running 3
-  // attempts at staggered temperatures (0.7 / 0.85 / 0.95) and picking the
-  // highest-scoring one consistently lifts the floor without drift.
-  // Cost: 3× LLM calls = ~30s extra on Groq free tier. Worth it.
-  console.log('  [3/5] Draft phase (best-of-3)…');
-  const candidates = await Promise.all([
-    phaseDraft(topic, facts, outline, { temperature: 0.7 }),
-    phaseDraft(topic, facts, outline, { temperature: 0.85 }),
-    phaseDraft(topic, facts, outline, { temperature: 0.95 }),
-  ]);
-  const ranked = candidates
-    .map((c, i) => ({ idx: i, body: c, ...scoreDraft(c, topic) }))
-    .sort((a, b) => b.score - a.score);
-  const draft = ranked[0].body;
-  log('draft.best-of-3', {
-    slug,
-    picked: ranked[0].idx,
-    scores: ranked.map((r) => ({ idx: r.idx, score: r.score, words: r.words })),
-  });
-  console.log(
-    `      best: candidate #${ranked[0].idx} (score ${ranked[0].score.toFixed(1)}, ${ranked[0].words} words). ` +
-      `Rest: ${ranked
-        .slice(1)
-        .map((r) => `#${r.idx} (${r.score.toFixed(1)}, ${r.words}w)`)
-        .join(', ')}`,
-  );
+  // Was best-of-3 across 3 paralleль calls to the same provider. That
+  // burst pattern triggered free-tier rate limits (Groq 429 TPD,
+  // GLM 1302 RPM). The fallback chain inside complete() now does the
+  // resilience job — if Groq returns 429, try GLM; if GLM 1302, try
+  // Gemini. Single call = no burst = stable. We trade "best-of-N
+  // diversity" for "actually-publishes-an-article" reliability —
+  // the audit's #1 stability win was supposed to be best-of-3, but
+  // in practice it was the #1 cause of run failures. Revision loop
+  // (downstream) catches quality issues per-pass.
+  console.log('  [3/5] Draft phase…');
+  const draft = await phaseDraft(topic, facts, outline, { temperature: 0.85 });
+  const score = scoreDraft(draft, topic);
+  log('draft.draft', { slug, words: score.words, score: score.score });
+  console.log(`      drafted: ${score.words} words, score ${score.score.toFixed(1)}, ${score.aiTellHits} AI-tell hits`);
 
   // Phase 4: STYLE-ALIGN — re-write to fix any AI-tells.
   // Note: still gated on aiTells.check() — if no banned phrases, we skip.

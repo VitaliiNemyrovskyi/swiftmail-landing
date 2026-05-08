@@ -3,6 +3,14 @@ name: Deploy to Cloudflare Pages
 on:
   push:
     branches: [main]
+  # Manual trigger — needed because pushes from auto-publish.yml use the
+  # workflow's GITHUB_TOKEN, which by GHA design does NOT trigger
+  # downstream push-event workflows (loop-prevention safety). So when
+  # the pipeline pushes a new article, deploy.yml stays idle. With
+  # workflow_dispatch we can trigger it via:
+  #   gh workflow run deploy.yml --repo BoberFamily/swiftmail-landing
+  # …or have auto-publish.yml call this workflow at the end (followup).
+  workflow_dispatch:
 
 jobs:
   deploy:
