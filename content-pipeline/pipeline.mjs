@@ -227,13 +227,15 @@ async function draftBySlug(slug) {
   // the "publish anyway with warnings" pattern that was diluting blog quality.
   let revised = final;
   for (let pass = 1; pass <= 2; pass += 1) {
-    const issues = collectGateFeedback(revised);
+    const issues = collectGateFeedback(revised, topic);
     if (issues.length === 0) {
       log('draft.revision-loop', { slug, passes: pass - 1, status: 'all-passed' });
       break;
     }
-    console.log(`  [revision ${pass}/2] gates flagged ${issues.length} issue(s) — asking LLM to fix…`);
-    log('draft.revision-loop', { slug, pass, issueCount: issues.length });
+    console.log(
+      `  [revision ${pass}/2] gates flagged ${issues.length} issue(s) (${issues.map((i) => i.gate).join(', ')}) — asking LLM to fix…`,
+    );
+    log('draft.revision-loop', { slug, pass, issueCount: issues.length, gates: issues.map((i) => i.gate) });
     revised = await phaseRevise(revised, issues);
   }
   const polished = revised;
@@ -516,11 +518,77 @@ function scoreDraft(body, topic) {
 }
 
 /**
+ * Concrete URL suggestions per topic category. The LLM needs explicit
+ * "use one of these real URLs" hints — without them it either skips
+ * citations entirely (today's fail mode) or invents URLs that aren't
+ * on the EEAT whitelist. Curated 2026-05-08 from the AUTHORITATIVE_DOMAINS
+ * list in checks/eeat.mjs; URLs verified to exist on real domains
+ * (no spot-check that they 200 — that's a P1 follow-up).
+ */
+const SUGGESTED_URLS_BY_CATEGORY = {
+  deliverability: [
+    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC RFC)',
+    'https://datatracker.ietf.org/doc/html/rfc6376 (DKIM RFC)',
+    'https://datatracker.ietf.org/doc/html/rfc7208 (SPF RFC)',
+    'https://www.mailgun.com/blog/email/email-deliverability/ (vendor docs)',
+    'https://postmarkapp.com/blog/category/deliverability (deliverability tips)',
+    'https://support.google.com/mail/answer/81126 (Gmail bulk-sender requirements)',
+    'https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/email-authentication-about (MS docs)',
+  ],
+  warmup: [
+    'https://www.mailgun.com/blog/email/email-warmup/',
+    'https://postmarkapp.com/guides/spf',
+    'https://datatracker.ietf.org/doc/html/rfc7489',
+    'https://support.google.com/mail/answer/81126',
+  ],
+  ecommerce: [
+    'https://baymard.com/lists/cart-abandonment-rate (cart-abandonment research)',
+    'https://www.klaviyo.com/blog (competitor reference for comparison articles)',
+    'https://litmus.com/blog (email-marketing research)',
+    'https://postmarkapp.com/blog/category/transactional-email',
+  ],
+  automation: [
+    'https://www.mailchimp.com/resources/marketing-automation-101/',
+    'https://www.activecampaign.com/blog/marketing-automation',
+    'https://litmus.com/blog/email-automation',
+  ],
+  comparison: [
+    'https://www.klaviyo.com/pricing',
+    'https://mailchimp.com/pricing/',
+    'https://www.activecampaign.com/pricing',
+    'https://www.mailgun.com/pricing/',
+  ],
+  // Generic fallback for topics that don't match the above
+  default: [
+    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC)',
+    'https://www.mailgun.com/blog/',
+    'https://postmarkapp.com/blog/',
+    'https://litmus.com/blog/',
+    'https://baymard.com/research',
+  ],
+};
+
+function suggestedUrlsForTopic(topic) {
+  const cat = (topic.category || '').toLowerCase();
+  // Try exact category match, then keyword-in-slug, then default.
+  if (SUGGESTED_URLS_BY_CATEGORY[cat]) return SUGGESTED_URLS_BY_CATEGORY[cat];
+  const slug = (topic.slug || '').toLowerCase();
+  if (/warm[- ]?up/.test(slug)) return SUGGESTED_URLS_BY_CATEGORY.warmup;
+  if (/cart|checkout|shopify|ecom/.test(slug)) return SUGGESTED_URLS_BY_CATEGORY.ecommerce;
+  if (/automation|sequence|flow/.test(slug)) return SUGGESTED_URLS_BY_CATEGORY.automation;
+  if (/vs|alternatives|comparison/.test(slug)) return SUGGESTED_URLS_BY_CATEGORY.comparison;
+  return SUGGESTED_URLS_BY_CATEGORY.default;
+}
+
+/**
  * Collect specific, actionable feedback from all gates. Used by the
  * revision loop — we don't just say "fix it", we say "fix THIS specific
  * sentence on line 47 because it uses 'delve'".
+ *
+ * @param {string} body markdown body
+ * @param {object} topic topic from topics.yaml (used for URL suggestions)
  */
-function collectGateFeedback(body) {
+function collectGateFeedback(body, topic = {}) {
   const issues = [];
 
   const ai = aiTells.check(body);
@@ -539,9 +607,33 @@ function collectGateFeedback(body) {
     });
   }
 
-  // EEAT requires frontmatter — skip in revision loop (frontmatter is
-  // generated in phaseSeo, after revision). We'll catch EEAT failures
-  // in the final runChecks() pass.
+  // EEAT body-only checks (outbound citations, internal links, unique
+  // data point). The author-byline check needs frontmatter, which is
+  // added in phaseSeo AFTER revision — so we filter it out here. The
+  // other 3 EEAT checks operate on the body alone and are exactly what
+  // a revision pass can fix.
+  const e = eeat.check(body, {});
+  if (!e.passed) {
+    const bodyFails = (e.fails || []).filter((f) => f.check !== 'author-byline');
+    if (bodyFails.length > 0) {
+      const detailLines = bodyFails.map((f) => `[${f.check}] ${f.detail}`);
+      // Append concrete URL suggestions when outbound-citations fails —
+      // without these, the LLM either skips citations or invents domains
+      // not on the EEAT authoritative list.
+      if (bodyFails.some((f) => f.check === 'outbound-citations')) {
+        const urls = suggestedUrlsForTopic(topic);
+        detailLines.push(
+          'CONCRETE URL SUGGESTIONS — use 2 or more of these as outbound citations. ' +
+            'Format: [text](url). Pick those most relevant to the article topic:',
+          ...urls.map((u) => `  - ${u}`),
+        );
+      }
+      issues.push({
+        gate: 'eeat',
+        detail: detailLines.join('\n'),
+      });
+    }
+  }
 
   return issues;
 }
