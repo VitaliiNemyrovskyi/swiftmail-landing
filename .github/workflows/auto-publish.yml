@@ -39,6 +39,12 @@ on:
 
 permissions:
   contents: write
+  # `actions: write` is required for the "Trigger Cloudflare Pages deploy"
+  # step at the end of this job — it POSTs to GitHub's
+  # /actions/workflows/{file}/dispatches endpoint to fire deploy.yml,
+  # because pushes from this workflow's GITHUB_TOKEN don't trigger
+  # other push-event workflows automatically (GHA loop-prevention).
+  actions: write
 
 # Never overlap two auto-publish runs (also: in-code lock file in logs/)
 concurrency:
@@ -186,18 +192,32 @@ jobs:
         # fire push-event workflows (loop-prevention). Without this step
         # CF Pages stays idle and the new article never goes live until
         # someone manually pushes a commit. We trigger deploy.yml via
-        # workflow_dispatch from here — that runs as a separate workflow
-        # and DOES fire the deploy.
+        # the workflow_dispatch REST endpoint — runs as a separate
+        # workflow and DOES fire the deploy.
+        #
+        # Originally we used `gh workflow run` here, but the self-hosted
+        # runner doesn't have gh CLI installed (and we don't want to
+        # take that maintenance burden). curl is universal — already
+        # there on every runner via base ubuntu image / debian package.
+        # GITHUB_TOKEN with `actions: write` is enough auth.
         if: ${{ inputs.dry_run != 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if command -v gh >/dev/null 2>&1; then
-            gh workflow run deploy.yml --repo BoberFamily/swiftmail-landing --ref main \
-              && echo "deploy triggered via workflow_dispatch" \
-              || echo "::warning::deploy trigger failed — run gh workflow run deploy.yml manually"
+          HTTP_STATUS=$(curl -sS -o /tmp/dispatch-resp -w '%{http_code}' \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/BoberFamily/swiftmail-landing/actions/workflows/deploy.yml/dispatches" \
+            -d '{"ref":"main"}')
+          if [ "$HTTP_STATUS" = "204" ]; then
+            echo "✓ deploy triggered via workflow_dispatch API"
           else
-            echo "::warning::gh CLI not available on runner — deploy not auto-triggered. Run: gh workflow run deploy.yml --repo BoberFamily/swiftmail-landing"
+            echo "::warning::deploy trigger failed — HTTP $HTTP_STATUS"
+            cat /tmp/dispatch-resp 2>/dev/null | head -c 500
+            echo ""
+            echo "::warning::Run manually: gh workflow run deploy.yml --repo BoberFamily/swiftmail-landing"
           fi
 
       - name: Cleanup .env (don't leave secrets in runner workdir)
