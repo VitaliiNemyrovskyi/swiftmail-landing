@@ -62,6 +62,13 @@ export function renderArticle({ frontmatter, body, lang, i18n, translatedSlugs }
         ? `/assets/blog/${slug}.jpg`
         : `/assets/features/${categoryToFallbackImage(category)}.webp`);
   const heroAlt = frontmatter.hero_alt || title;
+  // SEO + social fields. Falling back gracefully when frontmatter is missing
+  // them — never emit empty `content=""` because that confuses some parsers.
+  const targetKeyword = frontmatter.target_keyword || '';
+  const articleTags = frontmatter.tags
+    ? (Array.isArray(frontmatter.tags) ? frontmatter.tags : String(frontmatter.tags).split(',').map((s) => s.trim()).filter(Boolean))
+    : (targetKeyword ? [targetKeyword] : []);
+  const lastModified = frontmatter.modified || frontmatter.date;
 
   const pathPrefix = lang === 'en' ? '' : '../';
   const homePath = lang === 'en' ? '/' : `/${lang}/`;
@@ -70,6 +77,17 @@ export function renderArticle({ frontmatter, body, lang, i18n, translatedSlugs }
 
   const hreflang = ['en', 'es', 'fr', 'de', 'pt', 'uk']
     .map((l) => `  <link rel="alternate" hreflang="${l}" href="${urlFor(translatedSlugs[l] || slug, l)}">`)
+    .join('\n');
+
+  // Open Graph article-spec tags require BCP-47-style locales — Facebook,
+  // LinkedIn, Telegram all expect underscore-form (en_US, es_ES). Twitter
+  // takes them too. Pick a reasonable region per language; if the site
+  // adds more languages later, extend here.
+  const ogLocaleMap = { en: 'en_US', es: 'es_ES', fr: 'fr_FR', de: 'de_DE', pt: 'pt_BR', uk: 'uk_UA' };
+  const ogLocale = ogLocaleMap[lang] || 'en_US';
+  const ogLocaleAlternate = Object.entries(ogLocaleMap)
+    .filter(([l]) => l !== lang)
+    .map(([, locale]) => `  <meta property="og:locale:alternate" content="${locale}">`)
     .join('\n');
 
   const langOptions = [
@@ -116,36 +134,82 @@ export function renderArticle({ frontmatter, body, lang, i18n, translatedSlugs }
   <meta name="description" content="${escapeHtml(desc)}">
   <link rel="canonical" href="${urlFor(slug, lang)}">
 
+  <!-- Crawl directives — 'max-image-preview:large' enables big hero
+       thumbnail in Google search results, observed CTR uplift vs default. -->
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="author" content="${escapeHtml(author)}">
+  ${(articleTags.length > 0 || targetKeyword)
+      ? `<meta name="keywords" content="${
+          (articleTags.length > 0 ? articleTags : [targetKeyword])
+            .map(escapeHtml)
+            .join(', ')
+        }">`
+      : ''}
+
   <!-- hreflang cross-language -->
 ${hreflang}
   <link rel="alternate" hreflang="x-default" href="${urlFor(slug, 'en')}">
 
-  <!-- Open Graph -->
+  <!-- Open Graph + article-spec extension (Facebook, LinkedIn, Slack
+       previews use these; missing fields → social cards show "no date"
+       instead of "Published 2 days ago"). -->
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(desc)}">
   <meta property="og:type" content="article">
   <meta property="og:url" content="${urlFor(slug, lang)}">
   <meta property="og:image" content="https://swift-mail.app${heroImg}">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image:alt" content="${escapeHtml(heroAlt)}">
+  <meta property="og:site_name" content="SwiftMail">
+  <meta property="og:locale" content="${ogLocale}">
+${ogLocaleAlternate}
+  <meta property="article:published_time" content="${date}">
+  <meta property="article:modified_time" content="${lastModified}">
+  <meta property="article:author" content="${escapeHtml(author)}">
+  <meta property="article:section" content="${escapeHtml(category)}">
+${articleTags.map((tag) => `  <meta property="article:tag" content="${escapeHtml(tag)}">`).join('\n')}
 
-  <!-- JSON-LD Article schema -->
-  <script type="application/ld+json">{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": ${JSON.stringify(title)},
-    "description": ${JSON.stringify(desc)},
-    "image": "https://swift-mail.app${heroImg}",
-    "author": { "@type": "Person", "name": ${JSON.stringify(author)} },
-    "publisher": {
-      "@type": "Organization",
-      "name": "SwiftMail",
-      "logo": { "@type": "ImageObject", "url": "https://swift-mail.app/assets/logo-orange.svg" }
-    },
-    "datePublished": ${JSON.stringify(date)},
-    "dateModified": ${JSON.stringify(date)},
-    "mainEntityOfPage": { "@type": "WebPage", "@id": ${JSON.stringify(urlFor(slug, lang))} },
-    "inLanguage": ${JSON.stringify(lang)}
-  }</script>
+  <!-- Twitter Card — explicit fields override og:* fallbacks. Some
+       Twitter previews ignore og:* entirely; explicit is reliable. -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(title)}">
+  <meta name="twitter:description" content="${escapeHtml(desc)}">
+  <meta name="twitter:image" content="https://swift-mail.app${heroImg}">
+  <meta name="twitter:image:alt" content="${escapeHtml(heroAlt)}">
+
+  <!-- JSON-LD: Article (existing rich-result data) + BreadcrumbList
+       (gives Google's blue-link preview a navigation row underneath
+       the title — measurable CTR uplift on tracked SERPs). -->
+  <script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        headline: title,
+        description: desc,
+        image: `https://swift-mail.app${heroImg}`,
+        author: { '@type': 'Person', name: author, url: 'https://swift-mail.app/' },
+        publisher: {
+          '@type': 'Organization',
+          name: 'SwiftMail',
+          logo: { '@type': 'ImageObject', url: 'https://swift-mail.app/assets/logo-orange.svg' },
+        },
+        datePublished: date,
+        dateModified: lastModified,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': urlFor(slug, lang) },
+        inLanguage: lang,
+        articleSection: category,
+        ...(articleTags.length ? { keywords: articleTags.join(', ') } : {}),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: lang === 'en' ? 'https://swift-mail.app/' : `https://swift-mail.app/${lang}/` },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: lang === 'en' ? 'https://swift-mail.app/blog/' : `https://swift-mail.app/${lang}/blog/` },
+          { '@type': 'ListItem', position: 3, name: title, item: urlFor(slug, lang) },
+        ],
+      },
+    ],
+  })}</script>
 
   <link rel="stylesheet" href="${pathPrefix}../css/style.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="${pathPrefix}../css/style.css"></noscript>
