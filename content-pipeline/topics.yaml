@@ -58,8 +58,10 @@
     - DigiCert/Entrust pricing
   unique_data_hint: SwiftMail's open rate lift observed when one beta tester adopted BIMI
   humor_level: 1
-  status: idea
+  status: published
   est_words: 1500
+  drafted_at: 2026-05-09T07:07:45.985Z
+  published_at: 2026-05-09T07:31:30.668Z
 - slug: gmail-bulk-sender-2024-rules
   title: Gmail's 2024 Bulk Sender Rules — What Actually Got Enforced
   category: deliverability
