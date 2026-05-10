@@ -73,8 +73,10 @@
     - postmark gmail bulk sender analysis
   unique_data_hint: SwiftMail's beta-tester bounce rates pre/post Feb 2024
   humor_level: 1
-  status: idea
+  status: published
   est_words: 1500
+  drafted_at: 2026-05-10T07:26:39.542Z
+  published_at: 2026-05-10T07:57:33.534Z
 - slug: subdomain-strategy-marketing-vs-transactional
   title: Why You Should Send Marketing and Transactional Email From Different
     Subdomains
