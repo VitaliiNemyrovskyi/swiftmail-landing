@@ -465,10 +465,44 @@ const RENDERER_OUTBOUND_WHITELIST = [
   'statista.com',
 ];
 
+/**
+ * Domains we deliberately want to dilute SEO equity to. Direct
+ * SwiftMail competitors — every <a> we ship to them passes link juice
+ * (PageRank-like signal) that boosts THEIR ranking and proportionally
+ * dings ours. So we keep them in the whitelist (the link is OK to
+ * appear, especially in comparison/alternatives articles where the
+ * reader expects it), but emit `rel="nofollow noopener"` to opt out
+ * of the SEO contribution.
+ *
+ * Note that "transactional ESPs" (Postmark, Mailgun, SendGrid) are
+ * NOT competitors — different category (developer-API for
+ * transactional email), so those stay regular do-follow.
+ */
+const COMPETITOR_DOMAINS = [
+  'klaviyo.com',
+  'mailchimp.com',
+  'activecampaign.com',
+  'customer.io',
+  'drip.com',
+  'omnisend.com',
+  'brevo.com',
+  'mailerlite.com',
+  'encharge.io',
+  'bloomreach.com',
+  'contentsquare.com',
+  'hotjar.com',
+  'mouseflow.com',
+];
+
 function isAuthoritativeOutbound(url) {
   if (!/^https?:\/\//i.test(url)) return true; // relative / mailto / etc — leave alone
   if (url.includes('swift-mail.app')) return true; // internal — always keep
   return RENDERER_OUTBOUND_WHITELIST.some((d) => url.includes(d));
+}
+
+function isCompetitorOutbound(url) {
+  if (!/^https?:\/\//i.test(url)) return false;
+  return COMPETITOR_DOMAINS.some((d) => url.includes(d));
 }
 
 function inline(text) {
@@ -481,14 +515,20 @@ function inline(text) {
   // Italic (only single asterisk not adjacent to alpha — minimal heuristic)
   text = text.replace(/\*([^*\s][^*]*[^*\s])\*/g, '<em>$1</em>');
   // Links — strip non-whitelisted outbound, keep link text as prose.
+  // Competitor outbound gets `rel="nofollow noopener"` so we don't pass
+  // SEO juice to direct competitors (klaviyo / mailchimp / etc) even
+  // when they're legitimately referenced in comparison articles.
   text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, txt, href) => {
     if (!isAuthoritativeOutbound(href)) {
       // Hallucinated / dead link. Keep the visible text only.
       return txt;
     }
-    const rel = href.startsWith('http') && !href.includes('swift-mail.app')
-      ? ' rel="noopener" target="_blank"'
-      : '';
+    let rel = '';
+    if (href.startsWith('http') && !href.includes('swift-mail.app')) {
+      rel = isCompetitorOutbound(href)
+        ? ' rel="nofollow noopener" target="_blank"'
+        : ' rel="noopener" target="_blank"';
+    }
     return `<a href="${href}"${rel}>${txt}</a>`;
   });
   return text;

@@ -561,14 +561,15 @@ const SUGGESTED_URLS_BY_CATEGORY = {
   ],
   ecommerce: [
     'https://baymard.com/lists/cart-abandonment-rate (cart-abandonment research)',
-    'https://www.klaviyo.com/blog (competitor reference for comparison articles)',
     'https://www.litmus.com/blog (email-marketing research)',
     'https://postmarkapp.com/guides/dmarc',
+    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC RFC, for technical depth)',
   ],
   automation: [
-    'https://mailchimp.com/resources/marketing-automation-101/',
-    'https://www.activecampaign.com/blog/',
     'https://www.litmus.com/blog',
+    'https://postmarkapp.com/guides/dmarc',
+    'https://baymard.com/research',
+    'https://datatracker.ietf.org/doc/html/rfc7208',
   ],
   comparison: [
     'https://www.klaviyo.com/pricing',
