@@ -28,6 +28,7 @@ import { fetchOne as fetchImage, buildQuery as buildImageQuery } from './lib/ima
 import * as aiTells from './checks/ai-tells.mjs';
 import * as quality from './checks/quality-heuristics.mjs';
 import * as eeat from './checks/eeat.mjs';
+import * as factGrounding from './checks/fact-grounding.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -291,15 +292,30 @@ async function runChecks(slug) {
   console.log(`  ${eeatResult.passed ? '✓' : '✗'} EEAT signals`);
   if (!eeatResult.passed) console.log(eeat.feedbackFor(eeatResult));
 
+  // Look up the topic so fact-grounding can read its sources_hint /
+  // unique_data_hint. If the slug isn't in topics.yaml (e.g. a manual
+  // draft), fall back to an empty topic — fact-grounding will only
+  // accept numbers verifiable from product-context.md.
+  const topics = loadTopics();
+  const topic = topics.find((t) => t.slug === slug) || {};
+  const factResult = factGrounding.check(body, {
+    topic,
+    productContext: PRODUCT_CTX_COMPACT,
+  });
+  console.log(`  ${factResult.passed ? '✓' : '✗'} Fact-grounding${factResult.passed ? '' : ` (${factResult.fails.length} unverified specifics)`}`);
+  if (!factResult.passed) console.log(factGrounding.feedbackFor(factResult));
+
   log('check.done', {
     slug,
     aiTellsPassed: aiResult.passed,
     qualityPassed: qualityResult.passed,
     eeatPassed: eeatResult.passed,
+    factGroundingPassed: factResult.passed,
     hits: aiResult.hits.length,
+    factFails: factResult.fails.length,
   });
 
-  return { aiResult, qualityResult, eeatResult };
+  return { aiResult, qualityResult, eeatResult, factResult };
 }
 
 async function showStatus() {
@@ -652,6 +668,23 @@ function collectGateFeedback(body, topic = {}) {
         detail: detailLines.join('\n'),
       });
     }
+  }
+
+  // Fact-grounding: catch invented numbers (prices, percentages, dates)
+  // that appear near competitor names but aren't in any provided source.
+  // The LLM regularly fabricates Klaviyo / DigiCert / Bloomreach prices
+  // ("$1500/yr for VMC" when DigiCert is actually $400) — that's an
+  // E-E-A-T penalty AND brand-credibility hit. Revision loop catches it
+  // and asks LLM to either cite the source or qualitatively rewrite.
+  const fg = factGrounding.check(body, {
+    topic,
+    productContext: PRODUCT_CTX_COMPACT,
+  });
+  if (!fg.passed) {
+    issues.push({
+      gate: 'fact-grounding',
+      detail: factGrounding.feedbackFor(fg),
+    });
   }
 
   return issues;
