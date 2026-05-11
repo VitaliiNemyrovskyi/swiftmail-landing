@@ -88,8 +88,10 @@
     - transactional vs marketing subdomain
   unique_data_hint: One beta tester's deliverability score before/after split
   humor_level: 0
-  status: idea
+  status: published
   est_words: 1400
+  drafted_at: 2026-05-11T08:22:54.061Z
+  published_at: 2026-05-11T08:40:21.263Z
 - slug: feedback-loop-monitoring
   title: "ISP Feedback Loops: The Free Deliverability Signal Most Senders Ignore"
   category: deliverability
