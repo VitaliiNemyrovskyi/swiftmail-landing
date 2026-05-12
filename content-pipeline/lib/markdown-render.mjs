@@ -439,43 +439,27 @@ function processBlock(block) {
  * reads coherently — it just stops linking to nowhere.
  */
 /**
- * Domains we'll allow as outbound citations. Curated to exclude any
- * email-space vendor — even transactional ESPs (Postmark, Mailgun,
- * SendGrid) and marketing-automation rivals (Klaviyo, Mailchimp,
- * ActiveCampaign). All of those compete with SwiftMail for the same
- * customer search/intent, and linking to them passes SEO equity AND
- * sends our reader straight at the competitor.
+ * As of 2026-05-12 the whitelist is intentionally EMPTY — operator
+ * decision to keep 100% of link-juice on-domain. No outbound `<a>`
+ * tags are emitted from the renderer at all. Source names (RFC 7489,
+ * Microsoft docs, etc.) survive as plain text via the `inline()`
+ * function below, so articles still cite authority without sending a
+ * single reader off-brand.
  *
- * What's left: standards bodies, platform docs (Google, Apple,
- * Microsoft), research orgs, news/trade publications. Plenty for
- * authoritative citations without sending a single reader off-brand.
+ * Tradeoff: Google's EEAT classifier likes seeing 2-3 outbound
+ * citations to authoritative sources, so this aggressive posture
+ * MAY soften "expertise" signal. Worth it per current operator stance.
  *
- * If a vendor link genuinely belongs in a comparison article ("Klaviyo
- * Alternatives"), that piece can hand-add the link in topics.yaml
- * frontmatter — but the default renderer pipeline strips them.
+ * To re-allow specific domains, add them back here. To re-allow ALL
+ * authoritative sources, restore the pre-2026-05-12 list:
+ *   rfc-editor.org, datatracker.ietf.org, w3.org,
+ *   developers.google.com, support.google.com, support.apple.com,
+ *   docs.microsoft.com, learn.microsoft.com,
+ *   baymard.com, litmus.com,
+ *   searchengineland.com, searchengineroundtable.com, martech.org,
+ *   gdpr.eu, cookielaw.org, similarweb.com, statista.com
  */
-const RENDERER_OUTBOUND_WHITELIST = [
-  // Standards bodies — neutral, evergreen, never compete.
-  'rfc-editor.org',
-  'datatracker.ietf.org',
-  'w3.org',
-  // Platform documentation — neutral infrastructure providers.
-  'developers.google.com',
-  'support.google.com',
-  'support.apple.com',
-  'docs.microsoft.com',
-  'learn.microsoft.com',
-  // Research / compliance / news — not vendors in our space.
-  'baymard.com',
-  'litmus.com',           // email-testing (not sending) — gray but kept; review later
-  'searchengineland.com',
-  'searchengineroundtable.com',
-  'martech.org',
-  'gdpr.eu',
-  'cookielaw.org',
-  'similarweb.com',
-  'statista.com',
-];
+const RENDERER_OUTBOUND_WHITELIST = [];
 
 /**
  * Domains we deliberately want to dilute SEO equity to. Direct

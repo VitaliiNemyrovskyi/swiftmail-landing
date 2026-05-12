@@ -71,22 +71,24 @@ export function check(body, frontmatter = {}) {
     });
   }
 
-  // 2. Outbound authoritative citations (≥2)
+  // 2. Outbound authoritative citations — DISABLED 2026-05-12.
+  // Operator decision: 100% of link-juice stays on-domain, so we no
+  // longer require outbound citations at all. The check is left in
+  // place (still counts what's there for the signals dict + daily
+  // report email) but no longer enters `fails` → won't block publish
+  // or trigger a revision pass.
+  //
+  // Trade-off: Google's EEAT classifier rewards 2-3 outbound to real
+  // authority. This stance MAY soften "expertise" signal. Revert by
+  // moving the `if (authoritative.length < 2)` block back into
+  // `fails.push(...)` and re-populating SUGGESTED_URLS_BY_CATEGORY +
+  // RENDERER_OUTBOUND_WHITELIST.
   const outbound = extractLinks(body).filter((l) =>
     !l.url.includes('swift-mail.app') && /^https?:\/\//.test(l.url)
   );
   const authoritative = outbound.filter((l) =>
     AUTHORITATIVE_DOMAINS.some((d) => l.url.includes(d))
   );
-  if (authoritative.length < 2) {
-    fails.push({
-      check: 'outbound-citations',
-      score: authoritative.length,
-      threshold: 2,
-      detail: `Only ${authoritative.length} citations to authoritative sources. Add ≥2 (e.g. mailgun.com docs, postmarkapp.com, RFC, Google support, Baymard research).`,
-      suggestion: AUTHORITATIVE_DOMAINS.slice(0, 8).join(', '),
-    });
-  }
 
   // 3. Unique data point (≥1 SwiftMail-specific marker)
   let uniqueDataHits = 0;

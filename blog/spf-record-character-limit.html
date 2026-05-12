@@ -140,7 +140,7 @@
             <a class="blog-lang-option" href="/uk/blog/spf-record-character-limit" hreflang="uk" role="menuitem">Українська</a>
         </div>
       </div>
-      <a href="blog/" class="blog-nav-back">← Back to Home</a>
+      ← Back to Home
     </div>
   </nav>
   <script>
@@ -185,7 +185,7 @@
 
     <p>On August 17, 2022, a major e-commerce client&#39;s deliverability dropped to 72%. No spam complaints. No IP blacklisting. Their SPF record had 12 include: entries. The mail servers stopped at 10. Emails failed silently. This happens every day. SPF lookup limits are real. And most senders hit them without knowing.</p>
 
-    <p>SPF stands for Sender Policy Framework. It&#39;s a DNS text record that lists which servers are allowed to send email for your domain. The SPF specification, defined in RFC 7208, includes a 10-lookup limit to prevent excessive DNS queries <a href="https://www.rfc-editor.org/rfc/rfc7208.html" rel="noopener" target="_blank">rfc-editor.org</a>. When an email server receives a message, it performs these lookups to verify authenticity. Each include: statement in your SPF record counts as one lookup.</p>
+    <p>SPF stands for Sender Policy Framework. It&#39;s a DNS text record that lists which servers are allowed to send email for your domain. The SPF specification, defined in RFC 7208, includes a 10-lookup limit to prevent excessive DNS queries rfc-editor.org. When an email server receives a message, it performs these lookups to verify authenticity. Each include: statement in your SPF record counts as one lookup.</p>
 
     <p>Here&#39;s what actually happens: Your SPF record includes include:_spf.google.com. That&#39;s lookup 1. Google&#39;s SPF record includes include:_netblocks.google.com. That&#39;s lookup 2. Google&#39;s netblocks record includes include:_spf.google.com again. Wait. That&#39;s a redirect. Lookup 3. The process continues until the server either confirms the email is authorized or hits 10 lookups. Then it stops.</p>
 
@@ -259,7 +259,7 @@
 
     <p>Document your includes. Keep a spreadsheet of each include: statement, the service it represents, and its purpose. Review this list quarterly. Ask: Do we still use this service? Do we still need this include? Can we flatten this record?</p>
 
-    <p>Monitor your deliverability. Set up alerts for sudden drops in open rates or increases in bounce rates. These can be early signs of SPF issues. And remember: SPF is just one part of email authentication. Always combine it with DKIM and DMARC for comprehensive protection <a href="https://www.rfc-editor.org/rfc/rfc7208.html" rel="noopener" target="_blank">rfc-editor.org</a> <a href="https://www.rfc-editor.org/rfc/rfc7489.html" rel="noopener" target="_blank">rfc-editor.org</a>.</p>
+    <p>Monitor your deliverability. Set up alerts for sudden drops in open rates or increases in bounce rates. These can be early signs of SPF issues. And remember: SPF is just one part of email authentication. Always combine it with DKIM and DMARC for comprehensive protection rfc-editor.org rfc-editor.org.</p>
 
     <p>The SPF 10-lookup limit isn&#39;t going away. But with careful management, you can avoid its pitfalls. And keep your emails reaching their intended destination. Because that&#39;s what actually matters. Not perfect records. Not flawless documentation. Just delivery.</p>
   </main>
