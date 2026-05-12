@@ -102,8 +102,10 @@
     - email feedback loop signup
   unique_data_hint: Spam-rate baseline observed across 100 beta testers
   humor_level: 0
-  status: idea
+  status: published
   est_words: 1500
+  drafted_at: 2026-05-12T07:41:01.526Z
+  published_at: 2026-05-12T08:16:09.539Z
 - slug: shared-vs-dedicated-ip
   title: "Shared IP vs Dedicated IP: When the $200/mo Upgrade Pays Off"
   category: deliverability
