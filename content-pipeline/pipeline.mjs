@@ -560,65 +560,23 @@ function scoreDraft(body, topic) {
  * the build if any 404. For now operator updates manually.
  */
 /**
- * Curated 2026-05-12 after a sweep that removed all email-space
- * vendor URLs (Postmark, Mailgun, SendGrid) — including transactional
- * ESPs whose blog posts the LLM was happily citing because they
- * formally weren't on the "marketing-automation" competitor list.
- * From SwiftMail's GTM angle they ARE competitors (same readers, same
- * trade press, same search intent), so we stop sending readers there.
+ * As of 2026-05-12 the table is intentionally empty for every
+ * category — operator decision: 100% of link-juice stays on-domain,
+ * so the LLM should NOT be encouraged to add outbound citations at
+ * all. Source names can still be cited as plain text ("according to
+ * RFC 7489...") and that survives the renderer.
  *
- * What's left: standards bodies (RFC), platform docs (Microsoft,
- * Google support), research (Baymard, Litmus, Statista). All
- * neutral, none compete for SwiftMail's user.
- *
- * `comparison` is the one category where citing competitors is the
- * whole point — those URLs stay, but the renderer slaps `rel="nofollow
- * noopener"` on them automatically (lib/markdown-render.mjs).
+ * If you later re-allow outbound, restore from the prior version of
+ * this file. See lib/markdown-render.mjs's RENDERER_OUTBOUND_WHITELIST
+ * — both lists should be edited together to stay in sync.
  */
 const SUGGESTED_URLS_BY_CATEGORY = {
-  deliverability: [
-    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC RFC 7489)',
-    'https://datatracker.ietf.org/doc/html/rfc6376 (DKIM RFC 6376)',
-    'https://datatracker.ietf.org/doc/html/rfc7208 (SPF RFC 7208)',
-    'https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/email-authentication-about (MS docs)',
-    'https://support.google.com/a/answer/2466580 (Google Workspace authentication)',
-    'https://www.litmus.com/blog (email-deliverability research)',
-  ],
-  warmup: [
-    'https://datatracker.ietf.org/doc/html/rfc7489',
-    'https://datatracker.ietf.org/doc/html/rfc6376',
-    'https://datatracker.ietf.org/doc/html/rfc7208',
-    'https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/email-authentication-about',
-    'https://www.litmus.com/blog',
-  ],
-  ecommerce: [
-    'https://baymard.com/lists/cart-abandonment-rate (cart-abandonment research)',
-    'https://www.litmus.com/blog (email research)',
-    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC RFC)',
-    'https://www.statista.com/topics/871/online-shopping/ (e-commerce stats)',
-  ],
-  automation: [
-    'https://www.litmus.com/blog',
-    'https://baymard.com/research',
-    'https://datatracker.ietf.org/doc/html/rfc7208',
-    'https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/email-authentication-about',
-  ],
-  // Comparison articles are the ONLY place where direct competitor
-  // links are appropriate (reader explicitly wants to compare). The
-  // renderer auto-adds rel="nofollow noopener" to anything in
-  // COMPETITOR_DOMAINS so we still don't pass SEO juice.
-  comparison: [
-    'https://www.klaviyo.com/pricing',
-    'https://mailchimp.com/pricing/',
-    'https://www.activecampaign.com/pricing',
-  ],
-  // Generic fallback for topics that don't match the above
-  default: [
-    'https://datatracker.ietf.org/doc/html/rfc7489 (DMARC RFC)',
-    'https://www.litmus.com/blog',
-    'https://baymard.com/research',
-    'https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/email-authentication-about',
-  ],
+  deliverability: [],
+  warmup: [],
+  ecommerce: [],
+  automation: [],
+  comparison: [],
+  default: [],
 };
 
 function suggestedUrlsForTopic(topic) {
