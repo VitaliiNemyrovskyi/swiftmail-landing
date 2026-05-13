@@ -117,8 +117,10 @@
     - sendgrid dedicated IP pricing
   unique_data_hint: Volume threshold where dedicated starts winning (from beta tester data)
   humor_level: 1
-  status: idea
+  status: published
   est_words: 1500
+  drafted_at: 2026-05-13T07:46:43.153Z
+  published_at: 2026-05-13T08:15:17.512Z
 - slug: dkim-key-rotation
   title: "DKIM Key Rotation: Why Annual Rotation Is the New Best Practice"
   category: deliverability
