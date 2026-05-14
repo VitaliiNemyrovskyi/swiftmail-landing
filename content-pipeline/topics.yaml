@@ -131,8 +131,10 @@
     - DKIM key rotation best practice
   unique_data_hint: How SwiftMail handles rotation for beta testers
   humor_level: 0
-  status: idea
+  status: published
   est_words: 1400
+  drafted_at: 2026-05-14T07:40:13.688Z
+  published_at: 2026-05-14T08:08:32.938Z
 - slug: postmaster-tools-explained
   title: "Google Postmaster Tools: 5 Metrics That Predict Inbox Placement"
   category: deliverability
