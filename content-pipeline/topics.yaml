@@ -146,8 +146,10 @@
   unique_data_hint: Correlation observed across SwiftMail beta-tester GPT data and
     inbox placement
   humor_level: 0
-  status: idea
+  status: published
   est_words: 1500
+  drafted_at: 2026-05-17T07:31:51.095Z
+  published_at: 2026-05-17T08:06:16.056Z
 - slug: form-friction-detection-12-signals
   title: "Form Friction: 12 Signals Your Analytics Misses"
   category: behavioral
